@@ -1,0 +1,143 @@
+.project-card {
+  background: #dbd8ce;
+  border-radius: 20px;
+  box-shadow: 0 0 6.3px 1px #2a2a2a;
+  padding: 10px 19px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Header row: number + tags */
+.project-card__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -8px;
+}
+
+.project-card__number {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #555553;
+  line-height: normal;
+}
+
+.project-card__tags {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Image */
+.project-card__image {
+  height: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.project-card__image img,
+.project-card__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Body */
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-card__title {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #2a2a2a;
+  line-height: normal;
+  margin: 0;
+}
+
+.project-card__description {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #555553;
+  line-height: normal;
+  margin: 0;
+}
+
+/* Metadata */
+.project-card__meta {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: -20px;
+  transition:
+    max-height 0.4s ease,
+    padding-top 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+.project-card--clickable {
+  cursor: pointer;
+}
+
+.project-card:hover .project-card__meta {
+  max-height: 160px;
+  padding-top: 4px;
+  margin-top: 0;
+}
+
+.project-card__divider {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(85, 85, 83, 0.3) 0,
+    rgba(85, 85, 83, 0.3) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.project-card__table {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.project-card__labels,
+.project-card__values {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card__labels span,
+.project-card__values span {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.project-card__labels span {
+  font-family: 'Source Code Pro', monospace;
+  color: #555553;
+  padding-right: 10px;
+}
+
+.project-card__values span {
+  font-family: 'DM Sans', sans-serif;
+  color: #555553;
+  padding: 0 10px;
+}

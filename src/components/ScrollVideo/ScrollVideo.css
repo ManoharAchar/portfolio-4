@@ -1,0 +1,50 @@
+.scroll-video {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.scroll-video__el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.scroll-video__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  z-index: 10;
+}
+
+.scroll-video__scrub {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 1px;
+  cursor: grab;
+}
+
+.scroll-video__scrub--dragging {
+  cursor: grabbing;
+}
+
+.scroll-video__thumb {
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 7px;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}

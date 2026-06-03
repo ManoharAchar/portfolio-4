@@ -1,0 +1,984 @@
+/* ════════════════════════════════════════════════════════════
+   GuestArchivePage — values taken directly from Figma
+   ════════════════════════════════════════════════════════════ */
+
+.ga-layout {
+  min-height: 100vh;
+  background: #2a2a2a;
+}
+
+.ga-main {
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Figma: main content left:64 top:64, width:1512 (inside 1640px area) */
+.ga-content {
+  padding: 64px 64px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1240px;
+}
+
+/* ── Header ──────────────────────────────────────────────────
+   Figma: flex-col gap-[14px], top:64 left:64
+   ─────────────────────────────────────────────────────────── */
+
+.ga-header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 9px; /* top:207 - (64+16+14+13+14+13) = 207-134 = 73 → 64 + gap ~= matches */
+}
+
+.ga-breadcrumb {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 1.5px;
+  margin: 0;
+  line-height: normal;
+}
+
+.ga-title {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  font-weight: 400;
+  color: #faf8f1;
+  margin: 0;
+  line-height: normal;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+.ga-subtitle {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 1.5px;
+  margin: 0;
+  line-height: normal;
+}
+
+/* ── YouPanel ────────────────────────────────────────────────
+   Figma: bg-[#dbd8ce] gap-[26px] h-[370px] pt-[29px] px-[33px]
+   Note: no pb — Figma has pt+px only
+   ─────────────────────────────────────────────────────────── */
+
+.ga-you-panel {
+  background: #dbd8ce;
+  border-radius: 14px;
+  padding: 29px 33px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-height: 370px;
+  overflow: visible;
+}
+
+.ga-you-panel__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #555553;
+  letter-spacing: 0.8px;
+  line-height: normal;
+  flex-shrink: 0;
+  height: 16px;
+  white-space: nowrap;
+}
+
+/* Figma: gap-[32px] items-center, card col w-[481.23px] h-[261.592px] */
+.ga-you-panel__body {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Card wrapper: 481×262 container, card at ~0.778 scale (0.864 × 0.9), rotated -2° */
+.ga-you-panel__card-wrap {
+  width: 481px;
+  height: 262px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* card-scale handles the absolute centering + visual scale + rotation.
+   TiltCard (.tilt-card) sits inside and only adds the perspective tilt. */
+.ga-you-panel__card-scale {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.778) rotate(-2deg);
+  transform-origin: center center;
+  transform-style: preserve-3d;
+}
+
+.ga-you-panel__card-scale .tilt-card .pass-card {
+  width: 576px;
+  max-width: none;
+  height: 270px;
+}
+
+/* Figma: gap-[14px] w-[588px] — flex:1 so it fills remaining space
+   and never overflows the panel at sub-1920 viewports */
+.ga-you-panel__result {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Figma: Fraunces text-[35px] text-[#2a2a2a] SOFT0 WONK1 */
+.ga-you-panel__archetype-title {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  font-weight: 400;
+  color: #2a2a2a;
+  margin: 0;
+  line-height: normal;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+/* Figma: DM_Sans:Regular leading-[23px] text-[16px] text-[#555553] opsz:14 */
+.ga-you-panel__archetype-blurb {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #555553;
+  line-height: 23px;
+  margin: 0;
+  font-variation-settings: 'opsz' 14;
+}
+
+/* ── Metric Cards ────────────────────────────────────────────
+   Figma: gap-[24px], each card: bg-[#ece9e1] flex-col gap-[24px] p-[13px] rounded-[12px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-metric-cards {
+  display: flex;
+  gap: 24px;
+}
+
+.ga-metric-card {
+  background: #ece9e1;
+  border-radius: 12px;
+  padding: 13px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Figma: Source_Code_Pro text-[13px] text-[#798c6d] tracking-[1.35px] */
+.ga-metric-card__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #798c6d;
+  letter-spacing: 1.35px;
+  line-height: normal;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Figma: Fraunces leading-[32px] text-[30px] text-[#555553] SOFT0 WONK1 */
+.ga-metric-card__value {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #555553;
+  line-height: 32px;
+  display: block;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+/* ── Page Sections ───────────────────────────────────────────
+   Figma: flex-col gap-[24px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 16px;
+}
+
+/* ── Archetype Section ───────────────────────────────────────
+   Figma: bg-[#3c3c3a] h-[506px] px-[33px] py-[29px] rounded-[14px]
+   Inner: flex-col gap-[24px] w-[1110px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-archetype-section {
+  background: #3c3c3a;
+  border-radius: 14px;
+  padding: 29px 33px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Figma copy block: flex-col gap-[20px] w-[475px] */
+.ga-archetype-section__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 475px;
+}
+
+/* Figma: Source_Code_Pro text-[13px] text-[#dbd8ce] tracking-[1px] */
+.ga-section-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 1px;
+  line-height: normal;
+  margin: 0;
+}
+
+/* Figma: DM_Sans:Regular leading-[23px] text-[16px] text-[#dbd8ce] opsz:14 */
+.ga-archetype-section__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #dbd8ce;
+  line-height: 23px;
+  margin: 0;
+  font-variation-settings: 'opsz' 14;
+}
+
+/* Figma: Fraunces leading-[42px] text-[35px] text-[#faf8f1] w-[350px] SOFT0 WONK1 */
+.ga-archetype-section__headline {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: 42px;
+  width: 350px;
+  margin: 0;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+/* Figma: tiles row h-[208px] justify-between w-full
+   flex: 1 on each tile so they share space equally at any viewport width */
+.ga-archetype-tiles {
+  display: flex;
+  gap: 24px;
+  height: 208px;
+}
+
+/* Figma: each tile h-full p-[20px] rounded-[14px] w-[262px] items-center justify-center */
+.ga-archetype-tile {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px; /* gap-[18px] between labels group and desc */
+}
+
+/* Figma: labels container — flex-col items-start, Fraunces 25px */
+.ga-archetype-tile__labels {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Figma: name p h-[40px] leading-[46px] text-[#faf8f1] text-[25px] SOFT0 WONK1 */
+.ga-archetype-tile__name {
+  font-family: 'Fraunces', serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #faf8f1;
+  height: 40px;
+  line-height: 46px;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Figma: pct p h-[40px] leading-[38px] text-[#faf8f1] text-[25px] SOFT0 WONK1 */
+.ga-archetype-tile__pct {
+  font-family: 'Fraunces', serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #faf8f1;
+  height: 40px;
+  line-height: 38px;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  width: 100%;
+}
+
+/* Figma: DM_Sans:Regular leading-[16px] text-[13px] text-[rgba(243,238,219,0.84)] opsz:14 */
+.ga-archetype-tile__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(243, 238, 219, 0.84);
+  line-height: 16px;
+  margin: 0;
+  width: 100%;
+  font-variation-settings: 'opsz' 14;
+}
+
+/* ── Stats Row ───────────────────────────────────────────────
+   Figma: gap-[24px] h-[122px]
+   Each tile: gap-[6px] h-[122px] px-[20px] py-[17px] rounded-[12px] w-[376px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-stats-row {
+  display: flex;
+  gap: 24px;
+  height: 122px;
+}
+
+.ga-stat-tile {
+  background: #3c3c3a;
+  border-radius: 12px;
+  padding: 17px 20px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.ga-stat-tile__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #798c6d;
+  letter-spacing: 1.615px;
+  line-height: normal;
+  display: block;
+}
+
+.ga-stat-tile__value {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: normal;
+  display: block;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+/* ── Guest Log ───────────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+
+.ga-guest-log {
+  background: #3c3c3a;
+  border-radius: 14px;
+  padding: 29px 33px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Filter Bar ──────────────────────────────────────────────
+   Figma: gap-[8px], buttons use Source_Sans_Pro (not Source_Code_Pro!)
+   "All" (selected): bg-[#dbd8ce] px-[12px] py-[6px] rounded-[10px]
+   Other filters: bg-[#3c3c3a] gap-[6px] px-[12px] py-[6px] rounded-[10px]
+   SEE ALL: bg-[#dbd8ce] Source_Code_Pro text-[13px] px-[12px] py-[7px] rounded-[10px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-guest-log__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ga-filter-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ga-filter-btn {
+  font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.9px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #3c3c3a;
+  color: #7a7a7a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, color 0.15s;
+  line-height: normal;
+}
+
+.ga-filter-btn:hover:not(.ga-filter-btn--active) {
+  background: #4d4d4b;
+  color: #999999;
+}
+
+.ga-filter-btn--active {
+  background: #dbd8ce;
+  color: #2a2a2a;
+}
+
+.ga-filter-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Figma: Source_Code_Pro text-[13px] text-[#2a2a2a] text-center */
+.ga-see-all-btn {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  background: #3c3c3a;
+  color: #dbd8ce;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  transition: opacity 0.15s;
+  line-height: normal;
+}
+
+.ga-see-all-btn:hover {
+  opacity: 0.8;
+}
+
+/* ── Card Carousel ───────────────────────────────────────────
+   Figma: cards at 324.8×151.2px, gap 24px
+   "See All" card: bg-[#363532] same size, rounded-[16.8px]
+   ─────────────────────────────────────────────────────────── */
+
+.ga-carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  --card-width: 325px;
+  --card-height: 152px;
+  --card-scale: 0.5625;
+}
+
+.ga-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* 324.8×151.2px window — pass card positioned absolutely at native
+   576×270 then scaled to 0.5625 from top-left. max-width override
+   prevents the 100% constraint from clipping content before scale. */
+.ga-carousel__item {
+  flex-shrink: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  overflow: hidden;
+  border-radius: 17px;
+}
+
+.ga-carousel__item .pass-card {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 576px !important;
+  max-width: none !important;
+  height: 270px !important;
+  transform: scale(var(--card-scale)) !important;
+  transform-origin: top left !important;
+  border-radius: 30px !important;
+  flex-shrink: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Figma: bg-[#363532] rounded-[16.8px] text: DM_Sans:Medium 16px #dbd8ce tracking-[0.2px] */
+.ga-carousel__see-all {
+  flex-shrink: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  background: #363532;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.ga-carousel__see-all:hover { opacity: 0.8; }
+
+.ga-carousel__empty-state {
+  width: 100%;
+  height: var(--card-height);
+  background: transparent;
+  border: 1px dashed #555553;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7a7a7a;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.ga-carousel__see-all span {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #dbd8ce;
+  letter-spacing: 0.2px;
+  text-align: center;
+  font-variation-settings: 'opsz' 14;
+}
+
+/* ── Guest Log Table ─────────────────────────────────────────
+   Figma columns: NO 100px | PASS 100px | NAME 190px | INTENT 340px
+                  ARCHETYPE 140px | SCROLL ~153px | DWELL ~153px
+   Header: Source_Code_Pro 13px #faf8f1 tracking-1.9px
+   ─────────────────────────────────────────────────────────── */
+
+.ga-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.ga-table__divider {
+  height: 1px;
+  background: rgba(219, 216, 206, 0.2);
+  margin-bottom: 14px;
+}
+
+.ga-table__header,
+.ga-table__row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Figma header row h-[29px] */
+.ga-table__header {
+  height: 29px;
+  margin-bottom: 4px;
+}
+
+.ga-table__cell {
+  padding: 0 12px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Column widths — INTENT is flex:1 so the row always fits the container.
+   All other columns hold their Figma values (836px fixed total). */
+.ga-table__cell--no       { width: 100px; }
+.ga-table__cell--pass     { width: 100px; }
+.ga-table__cell--name     { width: 190px; }
+.ga-table__cell--intent   { flex: 1; min-width: 0; }
+.ga-table__cell--archetype{ width: 140px; }
+.ga-table__cell--scroll   { width: 153px; }
+.ga-table__cell--dwell    { width: 153px; }
+
+/* Header labels: Source_Code_Pro 13px #faf8f1 tracking-1.9px */
+.ga-table__header .ga-table__cell {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #faf8f1;
+  letter-spacing: 1.9px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/* ── Table Rows ──────────────────────────────────────────────  */
+
+.ga-table__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.ga-table__row {
+  height: 66px;
+  border-top: 1px solid rgba(219, 216, 206, 0.12);
+  border-radius: 12px;
+  cursor: default;
+  user-select: none;
+}
+
+/* Only the YOU row gets a card highlight — no hover on any other row */
+.ga-table__row--you {
+  background: #dbd8ce;
+  border-top-color: transparent;
+  border-radius: 12px;
+}
+
+.ga-table__row--you .ga-table__no,
+.ga-table__row--you .ga-table__intent,
+.ga-table__row--you .ga-table__stat {
+  color: #555553;
+}
+
+.ga-table__row--you .ga-table__name {
+  color: #2a2a2a;
+}
+
+/* NO column */
+.ga-table__cell--no {
+  display: flex;
+  align-items: center;
+}
+
+.ga-table__no {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* YOU badge — lives in PASS column, replaces the color swatch.
+   Sized to match the swatch (48×26px) so the column width stays consistent. */
+.ga-you-badge {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: #faf8f1;
+  border-radius: 6px;
+  width: 48px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* PASS thumbnail */
+.ga-pass-thumb {
+  display: block;
+  width: 48px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+/* NAME — Caveat handwriting, 22px */
+.ga-table__name {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  font-weight: 400;
+  color: #faf8f1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* INTENT — Source Code Pro 13px */
+.ga-table__intent {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ARCHETYPE badge pill */
+.ga-archetype-badge {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: #faf8f1;
+  border-radius: 8px;
+  padding: 4px 10px;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* SCROLL DEPTH / DWELL TIME — matches NO column */
+.ga-table__stat {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: #dbd8ce;
+  letter-spacing: 0.5px;
+}
+
+/* Load More */
+.ga-table__footer {
+  padding-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.ga-load-more {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #dbd8ce;
+  background: #3c3c3a;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 20px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.ga-load-more:hover { opacity: 0.8; }
+
+/* ── Ledger "You" behaviors ──────────────────────────────────
+   Pulse: brief flash on the highlighted row after scroll-to.
+   Pinned separator: subtle line below a row pinned at the top.
+   ─────────────────────────────────────────────────────────── */
+
+@keyframes ga-row-pulse {
+  0%   { background: #dbd8ce; }
+  40%  { background: #c8c4ba; }
+  100% { background: #dbd8ce; }
+}
+
+.ga-table__row--you.ga-table__row--pulse {
+  animation: ga-row-pulse 0.8s ease;
+}
+
+.ga-table__row--pinned-below {
+  border-bottom: 2px solid rgba(219, 216, 206, 0.35);
+  margin-bottom: 4px;
+}
+
+/* "You" filter button — uses visitor pass color, visually separated */
+.ga-you-filter-btn {
+  font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.9px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: #faf8f1;
+  transition: opacity 0.15s;
+  line-height: normal;
+  margin-left: 12px;
+}
+
+.ga-you-filter-btn:hover { opacity: 0.85; }
+
+/* ── Expanded Passes Grid ────────────────────────────────────
+   Replaces the carousel when See All is active.
+   Items reuse .ga-carousel__item dimensions (325×152px).
+   ─────────────────────────────────────────────────────────── */
+
+.ga-passes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  --card-width: 325px;
+  --card-height: 152px;
+  --card-scale: 0.5625;
+}
+
+.ga-passes-grid__header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ga-passes-grid__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 325px);
+  gap: 24px;
+}
+
+.ga-passes-grid__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.ga-passes-grid__empty {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #7a7a7a;
+  letter-spacing: 0.5px;
+  padding: 24px 0;
+}
+
+@media (max-width: 767px) {
+  .ga-passes-grid__items { grid-template-columns: repeat(auto-fill, 260px); }
+}
+
+/* ── Skeleton loading state ──────────────────────────────────
+   Used for archetype tiles and stat strip while data loads.
+   ─────────────────────────────────────────────────────────── */
+
+@keyframes ga-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.ga-skeleton {
+  background: linear-gradient(90deg, #3c3c3a 25%, #4d4d4a 50%, #3c3c3a 75%);
+  background-size: 200% 100%;
+  animation: ga-shimmer 1.5s infinite;
+  border-radius: 8px;
+  display: block;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+/* YouPanel: switch to column before the result panel gets too narrow.
+   With the 280px sidebar + 128px padding, the result area shrinks below
+   ~400px at viewports under 1340px — causing the title to wrap to
+   single-word lines and overflow the panel's hidden boundary. */
+@media (max-width: 1340px) {
+  .ga-you-panel__body { flex-direction: column; align-items: flex-start; }
+  .ga-you-panel__card-wrap { width: 100%; height: 220px; }
+  .ga-you-panel__card-scale {
+    transform: translate(-50%, -50%) scale(0.65) rotate(-2deg);
+  }
+  .ga-you-panel__result { width: 100%; }
+  /* Column mode exposes the bottom — restore padding */
+  .ga-you-panel { padding-bottom: 29px; }
+  /* Table fixed cols (836px+) exceed content width here — contain the scroll */
+  .ga-table { overflow-x: auto; }
+}
+
+/* Archetype tiles: switch to 2×2 before each tile drops below ~180px.
+   4-col with sidebar becomes too narrow to show the full tile name. */
+@media (max-width: 1200px) {
+  .ga-archetype-tiles {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+  .ga-archetype-tile { flex: none; width: calc(50% - 8px); height: auto; min-height: 160px; }
+}
+
+@media (max-width: 1023px) {
+  .ga-main { margin-left: 0; }
+
+  .ga-content { padding: 80px 24px 80px; }
+
+  /* Typography scale */
+  .ga-title { font-size: 28px; }
+  .ga-you-panel__archetype-title { font-size: 28px; }
+  .ga-archetype-section__headline { font-size: 28px; width: auto; }
+  .ga-metric-card__value { font-size: 24px; }
+  .ga-stat-tile__value { font-size: 24px; }
+
+  /* YouPanel safety net (also covers sub-1024 viewport without sidebar) */
+  .ga-you-panel__body { flex-direction: column; align-items: flex-start; }
+  .ga-you-panel__card-wrap { width: 100%; height: 200px; }
+  .ga-you-panel__card-scale {
+    transform: translate(-50%, -50%) scale(0.65) rotate(-2deg);
+  }
+  .ga-you-panel__result { width: 100%; }
+
+  /* Archetype section */
+  .ga-archetype-section__copy { width: 100%; }
+  .ga-archetype-tiles {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+  .ga-archetype-tile { flex: none; width: calc(50% - 8px); height: auto; min-height: 160px; }
+
+  /* Stats row: release fixed height; keep 3 columns (content is wide
+     enough without the sidebar margin) */
+  .ga-stats-row { height: auto; }
+
+  /* Table scrolls horizontally at tablet */
+  .ga-table { overflow-x: auto; }
+}
+
+@media (max-width: 767px) {
+  /* Typography scale */
+  .ga-title { font-size: 22px; }
+  .ga-you-panel__archetype-title { font-size: 22px; }
+  .ga-archetype-section__headline { font-size: 22px; }
+  .ga-metric-card__value { font-size: 20px; }
+  .ga-stat-tile__value { font-size: 20px; }
+
+  /* Layout */
+  .ga-archetype-tile { width: 100%; }
+  .ga-stat-tile { width: 100%; }
+  .ga-metric-cards { flex-direction: column; }
+
+  /* Filter bar — stack controls and allow wrapping */
+  .ga-guest-log__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ga-filter-group { flex-wrap: wrap; }
+
+  /* ── Table → card layout ───────────────────────────────── */
+  .ga-table { overflow-x: visible; }
+  .ga-table__header { display: none; }
+  .ga-table__divider { display: none; }
+
+  .ga-table__row {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 14px 0;
+    border-radius: 0;
+    align-items: flex-start;
+  }
+
+  .ga-table__row--you {
+    padding: 14px 12px;
+    border-radius: 10px;
+    border-top-color: transparent;
+    margin-bottom: 4px;
+  }
+
+  .ga-table__cell { padding: 0; }
+
+  /* Row 1: number (left) + pass badge (right) */
+  .ga-table__cell--no       { width: calc(100% - 60px); order: 1; }
+  .ga-table__cell--pass     { width: 60px; order: 2; display: flex; justify-content: flex-end; align-self: center; }
+
+  /* Row 2: name */
+  .ga-table__cell--name     { flex: none; width: 100%; order: 3; padding-top: 3px; }
+
+  /* Row 3: intent */
+  .ga-table__cell--intent   { flex: none; width: 100%; order: 4; padding-top: 4px; }
+
+  /* Row 4: archetype + scroll + dwell in a line */
+  .ga-table__cell--archetype{ flex: none; width: auto; order: 5; padding-top: 8px; margin-right: 10px; }
+  .ga-table__cell--scroll   { flex: none; width: auto; order: 6; padding-top: 8px; display: flex; align-items: center; margin-right: 10px; }
+  .ga-table__cell--dwell    { flex: none; width: auto; order: 7; padding-top: 8px; display: flex; align-items: center; }
+
+  /* Type adjustments inside cards */
+  .ga-table__no     { font-size: 11px; }
+  .ga-table__name   { font-size: 20px; }
+  .ga-table__intent { font-size: 11px; letter-spacing: 0.3px; }
+}

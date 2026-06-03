@@ -1,0 +1,140 @@
+.pass-card {
+  width: 576px;
+  max-width: 100%;
+  height: 270px;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 18px 22.5px rgba(0,0,0,0.15), 0 9px 9px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.pass-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  box-shadow: inset 0 0 0 0.9px rgba(255,255,255,0.15), inset 0 0 10.8px rgba(0,0,0,0.15);
+}
+
+.pass-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 23.44%;
+  height: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.pass-card__bg--1 { opacity: 0.5; }
+.pass-card__bg--2 { opacity: 0.3; }
+
+.pass-card__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.pass-card__logo {
+  position: absolute;
+  left: 36px;
+  top: 72px;
+  width: 126px;
+  height: 126px;
+  opacity: 0.9;
+  filter: drop-shadow(0.9px 0.9px 0 rgba(255,255,255,0.25));
+}
+
+.pass-card__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── Pass card text — absolutely positioned to align with SVG line grid ──
+   SVG lines (viewBox 0 0 576 270):
+     vertical divider  x = 189   (logo | info)
+     top h-rule        y = 139.5 (above date/number)
+     date|number split x = 374.4
+     bottom h-rule     y = 184.5 (above name)
+   ─────────────────────────────────────────────────────────────────────── */
+
+.pass-card__studio {
+  position: absolute;
+  left: 211px;
+  top: 51px;
+  width: 330px;
+  font-family: 'Fraunces', serif;
+  font-size: 30.6px;
+  font-weight: 400;
+  color: #3d2112;
+  letter-spacing: 1.12px;
+  line-height: 1;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.pass-card__intent {
+  position: absolute;
+  left: 211px;
+  top: 93px;
+  width: 330px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: #3d2112;
+  opacity: 0.8;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pass-card__date {
+  position: absolute;
+  left: 214px;
+  top: 150px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+  color: #3d2112;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.pass-card__number {
+  position: absolute;
+  left: 399px;
+  top: 150px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16.2px;
+  color: #3d2112;
+  letter-spacing: 1.22px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.pass-card__name-wrap {
+  position: absolute;
+  left: 211px;
+  top: 184px;
+  width: 330px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.pass-card__name {
+  font-family: 'Caveat', cursive;
+  font-size: 46.8px;
+  color: #3d2112;
+  letter-spacing: 2.34px;
+  opacity: 0.8;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+  line-height: 1;
+  margin-left: 32px;
+  white-space: nowrap;
+}

@@ -1,0 +1,273 @@
+/* ─── Attribution ───────────────────────────────────────────────── */
+.welcome-screen__attrib-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  background: none;
+  border: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #7a7a7a;
+  transition: color 0.2s ease;
+}
+
+.welcome-screen__attrib-btn:hover {
+  color: #faf8f1;
+}
+
+.welcome-screen__attrib-tip {
+  position: absolute;
+  top: 24px;
+  right: 46px;
+  z-index: 2;
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #7a7a7a;
+  white-space: nowrap;
+}
+
+.welcome-screen__attrib-link {
+  color: #7a7a7a;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.welcome-screen__attrib-link:hover {
+  color: #faf8f1;
+}
+
+/* ─── Screen shell ──────────────────────────────────────────────── */
+.welcome-screen {
+  background: #2a2a2a;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade all UI chrome — card hides instantly, FlyingCard takes over */
+.welcome-screen--exiting .welcome-screen__title-group,
+.welcome-screen--exiting .welcome-screen__intent,
+.welcome-screen--exiting .welcome-screen__name-row,
+.welcome-screen--exiting .welcome-screen__pass-note,
+.welcome-screen--exiting .welcome-screen__enter {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.welcome-screen--exiting .pass-card {
+  opacity: 0;
+  transition: none;
+}
+
+.welcome-screen__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 647px;
+  max-width: calc(100vw - 48px);
+  padding: 60px 0;
+  transform: scale(0.87);
+  transform-origin: center center;
+}
+
+/* ─── Title group ────────────────────────────────────────────────── */
+.welcome-screen__title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  max-height: 120px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: max-height 0.5s ease, opacity 0.4s ease, transform 0.5s ease, margin 0.5s ease;
+  margin-bottom: 0;
+}
+
+.welcome-screen__title-group--hidden {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  margin-bottom: -40px;
+}
+
+.welcome-screen__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: #dbd8ce;
+  text-align: center;
+  line-height: normal;
+}
+
+.welcome-screen__title {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: normal;
+  margin: 0;
+}
+
+/* ─── Intent selection ───────────────────────────────────────────── */
+.welcome-screen__intent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.welcome-screen__subtitle {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: #dbd8ce;
+  text-align: center;
+  line-height: normal;
+  max-width: 455px;
+}
+
+.welcome-screen__subtitle strong {
+  font-weight: 600;
+}
+
+.welcome-screen__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  height: 255px;
+}
+
+/* ─── Response section ───────────────────────────────────────────── */
+.welcome-screen__response {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: visible;
+  transform: translateY(16px);
+  transition: max-height 0.6s ease, opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+  pointer-events: none;
+}
+
+.welcome-screen__response--visible {
+  max-height: 700px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Name row */
+.welcome-screen__name-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-screen__name-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: #dbd8ce;
+  white-space: nowrap;
+}
+
+.welcome-screen__name-input {
+  background: #151414;
+  border-radius: 15px;
+  height: 50px;
+  width: 300px;
+  padding: 6px 15px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: #7a7a7a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.welcome-screen__refresh {
+  background: #3c3c3a;
+  border: none;
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.welcome-screen__refresh:hover {
+  background: #4a4a48;
+}
+
+.welcome-screen__refresh img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+/* ─── Below card ─────────────────────────────────────────────────── */
+.welcome-screen__pass-note {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  color: #7a7a7a;
+  text-align: center;
+}
+
+.welcome-screen__enter {
+  background: #f3f1ea;
+  border: none;
+  border-radius: 15px;
+  height: 45px;
+  width: 140px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+  color: #2a2a2a;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.welcome-screen__enter--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.welcome-screen__enter--active:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ─── Responsive height — scale the whole inner as a unit ───────────
+   transform: scale keeps every proportion intact (fonts, gaps, card,
+   pass card). Because the flex parent is height: 100vh the scaled
+   element stays visually centred in the viewport.
+   ─────────────────────────────────────────────────────────────────── */
+@media (max-height: 830px) {
+  .welcome-screen__inner {
+    transform: scale(0.75);
+  }
+}

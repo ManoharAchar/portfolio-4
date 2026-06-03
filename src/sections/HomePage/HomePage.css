@@ -1,0 +1,59 @@
+.home-layout {
+  background: #2a2a2a;
+}
+
+/* Sidebar is position:fixed so offset content to the right */
+.home-content {
+  margin-left: 280px;
+  padding: 64px 64px 0;
+  background: #2a2a2a;
+}
+
+/* 2-column staggered grid */
+.projects-grid {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  max-width: 1408px;
+  margin: 0;
+}
+
+.projects-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  min-width: 0;
+  padding-bottom: 64px;
+}
+
+.projects-col--right {
+  padding-top: 48px;
+}
+
+/* ─── Breakpoint: sidebar collapses (< 1024px) ────────────── */
+@media (max-width: 1023px) {
+  .home-content {
+    margin-left: 0;
+    padding: 80px 40px 0;
+  }
+
+  .sidebar-toggle {
+    display: flex;
+  }
+}
+
+/* ─── Breakpoint: single-column cards (< 768px) ───────────── */
+@media (max-width: 767px) {
+  .home-content {
+    padding: 80px 20px 0;
+  }
+
+  .projects-grid {
+    flex-direction: column;
+  }
+
+  .projects-col--right {
+    padding-top: 0;
+  }
+}

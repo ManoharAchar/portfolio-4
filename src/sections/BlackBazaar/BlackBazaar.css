@@ -1,0 +1,129 @@
+/* ════════════════════════════════════════════════════════════
+   BlackBazaar — unique styles (shared cs-* styles come from
+   CooperantLearning.css, imported in BlackBazaar.jsx)
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Avatar Composition ───────────────────────────────────── */
+
+.bb-avatar {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+}
+
+.bb-avatar__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.bb-avatar__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: overlay;
+}
+
+/* ── User Group Cards ─────────────────────────────────────── */
+
+.bb-user-group-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.bb-user-group-card {
+  flex: 1 0 200px;
+  max-width: 320px;
+  background: #dbd8ce;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bb-user-group-card__accent {
+  width: 78px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.bb-user-group-card__name {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #2a2a2a;
+  margin: 0;
+  line-height: 28px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.bb-user-group-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bb-user-group-card__list li {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #2a2a2a;
+  line-height: 22px;
+  padding-left: 14px;
+  position: relative;
+}
+
+.bb-user-group-card__list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ── Final Sub-sections ───────────────────────────────────── */
+
+.bb-final-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bb-final-sub__heading {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: 28px;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+/* ── Metrics — full-width stretch ────────────────────────── */
+
+.bb-metrics .cs-metric-card {
+  max-width: none;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .bb-user-group-card {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+}

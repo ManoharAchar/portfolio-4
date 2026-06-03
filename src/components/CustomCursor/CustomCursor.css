@@ -1,0 +1,59 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: opacity 0.15s ease;
+}
+
+/* ── Arrow ── */
+/* translate(-5px, -2px) aligns the Fluent icon tip with the mouse hotspot */
+.cursor-arrow {
+  display: block;
+  transform: translate(-5px, -2px);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* ── Dot (hover on clickables) ── */
+.cursor-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 1.5px solid white;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Pill (project card hover) ── */
+.cursor-pill {
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  border: 2px solid white;
+  border-radius: 99px;
+  padding: 7px 16px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Tip (image caption hover) ── */
+.cursor-tip {
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  border: 2px solid white;
+  border-radius: 99px;
+  padding: 7px 16px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}

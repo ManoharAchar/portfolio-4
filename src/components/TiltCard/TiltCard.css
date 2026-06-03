@@ -1,0 +1,19 @@
+.tilt-card__sensor {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tilt-card {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.tilt-card__shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: 2;
+}

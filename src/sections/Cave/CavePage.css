@@ -1,0 +1,31 @@
+.cave-layout {
+  background: #2a2a2a;
+}
+
+.cave-content {
+  margin-left: 280px;
+  min-height: calc(100vh - 0px);
+  background: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cave-coming-soon {
+  background: #3c3c3a;
+  border-radius: 12px;
+  padding: 17px 20px;
+  width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cave-coming-soon__label {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  color: #dbd8ce;
+  line-height: normal;
+  white-space: nowrap;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}

@@ -1,0 +1,120 @@
+import { useState, useEffect, useRef } from 'react'
+import NavCard from '../../components/NavCard/NavCard'
+import PassCard from '../../components/PassCard/PassCard'
+import TiltCard from '../../components/TiltCard/TiltCard'
+import './Sidebar.css'
+
+import logoMark from '../../assets/icons/logo-mark.svg'
+const STATUS_DOT = 'https://www.figma.com/api/mcp/asset/afd35918-42dd-4d46-8146-bd98d70ad0ad'
+
+function useDetroitTime() {
+  const [time, setTime] = useState('')
+  useEffect(() => {
+    const tick = () => {
+      setTime(
+        new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/Detroit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+        }).format(new Date())
+      )
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
+  return time
+}
+
+function useSidebarPush(sidebarRef) {
+  useEffect(() => {
+    let rafId
+
+    const update = () => {
+      const footer = document.querySelector('.footer')
+      if (footer && sidebarRef.current) {
+        const gap = footer.getBoundingClientRect().top - window.innerHeight
+        sidebarRef.current.style.top = `${Math.min(0, gap)}px`
+
+        const maxSidebarScroll = sidebarRef.current.scrollHeight - sidebarRef.current.clientHeight
+        if (maxSidebarScroll > 0) {
+          sidebarRef.current.scrollTop = Math.min(maxSidebarScroll, window.scrollY)
+        }
+      }
+      rafId = requestAnimationFrame(update)
+    }
+
+    rafId = requestAnimationFrame(update)
+    return () => cancelAnimationFrame(rafId)
+  }, [sidebarRef])
+}
+
+const PAGE_ORDER = ['home', 'about', 'cave', 'archive']
+
+export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true }) {
+  const time = useDetroitTime()
+  const sidebarRef = useRef(null)
+  useSidebarPush(sidebarRef)
+
+  const activeIndex = PAGE_ORDER.indexOf(activePage)
+
+  return (
+    <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`} ref={sidebarRef}>
+      <div className="sidebar__top">
+        <div className="sidebar__logo-wrap">
+          <div className="sidebar__logo-rotator">
+            <div className="sidebar__logo-inner">
+              <img src={logoMark} alt="Studio mark" />
+            </div>
+          </div>
+        </div>
+
+        <div className="sidebar__identity">
+          <div className="sidebar__name-group">
+            <h1 className="sidebar__name">Manohar Achar</h1>
+            <p className="sidebar__title">PRODUCT DESIGNER</p>
+          </div>
+          <p className="sidebar__bio">
+            I am a designer who loves building software that's powerful but feels simple.
+          </p>
+          <p className="sidebar__edu">
+            <span className="sidebar__edu-label">HCDE</span>
+            {' '}
+            <span className="sidebar__edu-school">@ University of Michigan-Dearborn </span>
+            <span className="sidebar__edu-label">('26)</span>
+            <span className="sidebar__edu-school">.</span>
+          </p>
+        </div>
+
+        <NavCard
+          activeIndex={activeIndex}
+          onNavClick={(i) => onNavigate?.(PAGE_ORDER[i])}
+        />
+
+        <div className="sidebar__more">
+          <p className="sidebar__more-heading">MORE</p>
+          <div className="sidebar__more-links">
+            <a href="mailto:manohar.create@gmail.com" className="sidebar__more-link">Email</a>
+            <span className="sidebar__more-sep">, </span>
+            <a href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer" className="sidebar__more-link">LinkedIn</a>
+            <span className="sidebar__more-sep">, </span>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer" className="sidebar__more-link">Resume</a>
+          </div>
+        </div>
+      </div>
+
+      <div className="sidebar__bottom">
+        <div className="sidebar__pass-thumb">
+          {showPassCard && guest && (
+            <TiltCard>
+              <PassCard intent={guest.intent} name={guest.name} date={guest.date} />
+            </TiltCard>
+          )}
+        </div>
+        <div className="sidebar__location">
+          <img className="sidebar__status-dot" src={STATUS_DOT} alt="" />
+          <span>DETROIT, {time}</span>
+        </div>
+      </div>
+    </aside>
+  )
+}

@@ -1,0 +1,126 @@
+.footer {
+  background: var(--accent);
+  width: 100%;
+  min-height: 281px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  /* Paint on top of the sticky sidebar as it scrolls into view */
+  position: relative;
+  z-index: 10;
+}
+
+/* Quote — left ~57% */
+.footer__quote {
+  flex: 0 0 57%;
+  padding: 42px 42px 18px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer__quote p {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 0;
+  max-width: 580px;
+}
+
+.footer__quote-muted {
+  color: rgba(61, 33, 18, 0.6);
+}
+
+.footer__quote-white {
+  color: #fff;
+}
+
+/* Links — right ~43% */
+.footer__links {
+  flex: 0 0 43%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  padding: 40px 10px;
+}
+
+.footer__link-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__link {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  text-decoration: none;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 0;
+  line-height: normal;
+  transition: opacity 0.2s ease;
+}
+
+.footer__link:hover {
+  opacity: 0.7;
+}
+
+.footer__link--muted {
+  color: rgba(61, 33, 18, 0.6);
+}
+
+.footer__link--active {
+  color: #faf8f1;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1800px) {
+  .footer__quote p {
+    font-size: 24px;
+  }
+
+  .footer__link {
+    font-size: 16px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .footer__quote p {
+    font-size: 26px;
+  }
+
+  .footer__link {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .footer__quote {
+    flex: none;
+    padding: 36px 24px 16px;
+  }
+
+  .footer__quote p {
+    font-size: 22px;
+    max-width: 100%;
+  }
+
+  .footer__links {
+    flex: none;
+    padding: 16px 24px 36px;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+
+  .footer__link {
+    font-size: 15px;
+  }
+}

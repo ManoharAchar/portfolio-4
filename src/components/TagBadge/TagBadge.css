@@ -1,0 +1,12 @@
+.tag-badge {
+  background: #ece9e1;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px 3px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  color: #555553;
+  white-space: nowrap;
+  line-height: normal;
+}

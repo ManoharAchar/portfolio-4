@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 576 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Pass Card Lines" filter="url(#filter0_d_0_45)">
+<path id="Vector" opacity="0.8" d="M30.6 16.2H545.4C545.4 20.0191 546.917 23.6818 549.618 26.3823C552.318 29.0828 555.981 30.6 559.8 30.6V239.4C555.981 239.4 552.318 240.917 549.618 243.618C546.917 246.318 545.4 249.981 545.4 253.8H30.6C30.6 249.981 29.0829 246.318 26.3824 243.618C23.6818 240.917 20.0191 239.4 16.2 239.4V30.6C20.0191 30.6 23.6818 29.0828 26.3824 26.3823C29.0829 23.6818 30.6 20.0191 30.6 16.2Z" stroke="var(--stroke-0, #3D2112)" stroke-width="0.9"/>
+<path id="Vector_2" opacity="0.6" d="M189 45V225" stroke="var(--stroke-0, #3D2112)" stroke-width="0.9"/>
+<path id="Vector_3" opacity="0.6" d="M210.6 139.5H529.2" stroke="var(--stroke-0, #3D2112)" stroke-width="0.9"/>
+<path id="Vector_4" opacity="0.6" d="M374.4 139.5V184.5" stroke="var(--stroke-0, #3D2112)" stroke-width="0.9"/>
+<path id="Vector_5" opacity="0.6" d="M210.6 184.5H529.2" stroke="var(--stroke-0, #3D2112)" stroke-width="0.9"/>
+</g>
+<defs>
+<filter id="filter0_d_0_45" x="0" y="0" width="576.9" height="270.9" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="0.9" dy="0.9"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_45"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_45" result="shape"/>
+</filter>
+</defs>
+</svg>

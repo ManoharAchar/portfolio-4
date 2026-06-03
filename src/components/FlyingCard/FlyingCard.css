@@ -1,0 +1,9 @@
+.flying-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}

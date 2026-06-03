@@ -1,0 +1,516 @@
+.about-layout {
+  background: #2a2a2a;
+}
+
+.about-content {
+  margin-left: 280px;
+  padding: 64px 64px 0 61px;
+  background: #2a2a2a;
+}
+
+.about-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 992px;
+  padding-bottom: 80px;
+}
+
+/* ── Section label ───────────────────────────────────────── */
+.about-section__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #dbd8ce;
+  line-height: normal;
+  margin: 0;
+}
+
+/* ── Intro ───────────────────────────────────────────────── */
+.about-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+}
+
+.about-intro__text {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  max-width: 760px;
+}
+
+.about-intro__copy-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.about-intro__headline {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: normal;
+  margin: 0;
+  max-width: 700px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.about-intro__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #dbd8ce;
+  line-height: 26px;
+  margin: 0;
+}
+
+/* Media images */
+.about-media-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Desktop: container tops out at ~441px wide; 460px pre-rotation height
+   gives rotated result that covers the full width with minimal zoom */
+.about-media-img--rotate {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 460px;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  object-fit: cover;
+}
+
+/* Media placeholder cards */
+.about-intro__media-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.about-media-card {
+  position: relative;
+  background: #dbd8ce;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 320px;
+  min-width: 0;
+}
+
+/* flex ratios match original 260 : 440 proportions, scale together */
+.about-media-card--sm { flex: 1; }
+.about-media-card--lg { flex: 1.7; }
+
+.about-media-card__inner {
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed #7a7a7a;
+  border-radius: 10px;
+}
+
+.about-media-card__label {
+  position: absolute;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  color: #555553;
+  line-height: normal;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+/* ── Quick facts ─────────────────────────────────────────── */
+.about-quickfacts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-divider-line {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(250, 248, 241, 0.2) 0,
+    rgba(250, 248, 241, 0.2) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.about-quickfacts__row {
+  display: flex;
+  gap: 113px;
+  align-items: center;
+}
+
+.about-quickfacts__fact {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.about-quickfacts__strong {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #faf8f1;
+  line-height: normal;
+}
+
+.about-quickfacts__muted {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #dbd8ce;
+  line-height: normal;
+}
+
+/* ── Text sections (How I Got Here, How I Think, etc.) ───── */
+.about-text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  max-width: 760px;
+}
+
+.about-text-section__paras {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-text-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.about-text-section__copy {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #dbd8ce;
+  line-height: 26px;
+  margin: 0;
+}
+
+/* ── Blockquote callout ──────────────────────────────────── */
+.about-callout {
+  display: flex;
+  gap: 21px;
+  align-items: center;
+}
+
+.about-callout__bar {
+  width: 3px;
+  height: 72px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.about-callout__text {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: 28px;
+  margin: 0;
+  max-width: 660px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+/* ── Hobby gallery ───────────────────────────────────────── */
+.about-hobby-gallery {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.about-hobby-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.about-hobby-card__frame {
+  position: relative;
+  background: #dbd8ce;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  height: 280px;
+}
+
+.about-hobby-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Desktop: frame is always 280×280 square — simple rotate fills it with no zoom */
+.about-hobby-img--rotate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  object-fit: cover;
+}
+
+.about-hobby-card__inner {
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed #7a7a7a;
+  border-radius: 10px;
+}
+
+.about-hobby-card__placeholder-label {
+  position: absolute;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  color: #555553;
+  line-height: normal;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.about-hobby-card__label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #7a7a7a;
+  line-height: normal;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+/* ── Communities ─────────────────────────────────────────── */
+.about-communities {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  max-width: 860px;
+}
+
+.about-community-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.about-community-card {
+  background: #dbd8ce;
+  min-height: 440px;
+  flex: 1;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 24px;
+}
+
+.about-community-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+}
+
+.about-community-card__name-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+}
+
+.about-community-card__role {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  line-height: normal;
+  margin: 0;
+}
+
+.about-community-card__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2a2a2a;
+  line-height: normal;
+  margin: 0;
+}
+
+.about-community-card__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #555553;
+  line-height: 24px;
+  margin: 0;
+}
+
+.about-community-card__image {
+  background: #585858;
+  flex: 1;
+  min-height: 200px;
+  border-radius: 20px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-community-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Dashed section divider ──────────────────────────────── */
+.about-dashed-divider {
+  height: 1px;
+  max-width: 860px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(85, 85, 83, 0.5) 0,
+    rgba(85, 85, 83, 0.5) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* ── Things That Shaped Me ───────────────────────────────── */
+.about-chips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  max-width: 688px;
+}
+
+.about-chip-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-chip-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-chip-row:nth-child(2) {
+  gap: 16px;
+}
+
+.about-chip {
+  background: #dbd8ce;
+  height: 36px;
+  border-radius: 8px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-chip__label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2a2a2a;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .about-content {
+    margin-left: 0;
+    padding: 60px 40px 0 40px;
+  }
+
+  .sidebar-toggle {
+    display: flex;
+  }
+
+  .about-intro__headline {
+    font-size: 28px;
+  }
+
+  .about-quickfacts__row {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-content {
+    padding: 80px 20px 0 20px;
+  }
+
+  .about-intro__headline {
+    font-size: 22px;
+  }
+
+  .about-intro__body,
+  .about-text-section__copy {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .about-intro__media-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-media-card--sm,
+  .about-media-card--lg {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Mobile: intro lg card becomes full-width — need 100vw to fill after rotation */
+  .about-media-img--rotate {
+    height: 100vw;
+  }
+
+  /* Mobile: hobby frame becomes full-width × 280px — need 100vw trick */
+  .about-hobby-img--rotate {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 100vw;
+    max-width: none;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    object-fit: cover;
+  }
+
+  .about-quickfacts__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .about-hobby-gallery {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-hobby-card {
+    width: 100%;
+  }
+
+  .about-community-cards {
+    flex-direction: column;
+  }
+}

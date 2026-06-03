@@ -1,0 +1,166 @@
+/* ════════════════════════════════════════════════════════════
+   SeniorMode — unique styles (shared cs-* styles come from
+   CooperantLearning.css, imported in SeniorMode.jsx)
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Hero Title Group ─────────────────────────────────────── */
+
+.sm-hero-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Metrics Row (3-card, max 320px each) ─────────────────── */
+
+.sm-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sm-metrics-row--wide .sm-metric-card {
+  flex: 1 0 320px;
+  max-width: 488px;
+}
+
+.sm-metric-card {
+  flex: 1 0 280px;
+  max-width: 320px;
+  background: #dbd8ce;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sm-metric-card__value {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #2a2a2a;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  white-space: nowrap;
+  line-height: normal;
+}
+
+.sm-metric-card__sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #555553;
+  line-height: 22px;
+  margin: 0;
+  margin-top: 24px;
+}
+
+/* ── Constraint Row (horizontal) ──────────────────────────── */
+
+.sm-constraint-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sm-constraint-card {
+  flex: 1 0 0;
+  min-width: 140px;
+  background: #dbd8ce;
+  border-radius: 16px;
+  padding: 16px 18px;
+}
+
+.sm-constraint-card p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  color: #2a2a2a;
+  line-height: 28px;
+  margin: 0;
+}
+
+/* ── What Shipped Content ─────────────────────────────────── */
+
+.sm-shipped-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sm-shipped-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sm-shipped-bullets p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #dbd8ce;
+  line-height: 28px;
+  margin: 0;
+}
+
+/* ── Priorities Wrap ──────────────────────────────────────── */
+
+.sm-priorities-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 488px;
+}
+
+.sm-priorities-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  color: #dbd8ce;
+  margin: 0;
+  line-height: normal;
+}
+
+.sm-priority-card {
+  background: #dbd8ce;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sm-priority-card__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0;
+  line-height: normal;
+}
+
+.sm-priority-card__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #2a2a2a;
+  line-height: 26px;
+  margin: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .sm-constraint-card {
+    flex: 1 0 40%;
+  }
+
+  .sm-metric-card {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+
+  .sm-metrics-row--wide .sm-metric-card {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+
+  .sm-priorities-wrap {
+    max-width: 100%;
+  }
+}
