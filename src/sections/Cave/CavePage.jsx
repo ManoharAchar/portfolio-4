@@ -36,7 +36,7 @@ export default function CavePage({ activePage = 'cave', onNavigate, guest, showP
         </div>
       </main>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer activePage={activePage} onNavigate={onNavigate} />
     </div>
   )
 }
