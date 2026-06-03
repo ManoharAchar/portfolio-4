@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import './ScrollVideo.css'
 
-export default function ScrollVideo({ src, className = '', accentColor = '#FF6B35', ...props }) {
+export default function ScrollVideo({ src, className = '', accentColor = 'var(--accent)', ...props }) {
   const videoRef = useRef(null)
   const [progress, setProgress] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
