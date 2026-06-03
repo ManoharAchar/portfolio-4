@@ -783,3 +783,20 @@
     min-width: 100%;
   }
 }
+
+/* ── Scroll reveal ──────────────────────────────────────────
+   Activated by useReveal() adding .cs-sections--reveal.
+   Each direct child (.cs-section) starts hidden and slides up
+   when it enters the viewport. Matches the Welcome Screen
+   reveal: translateY(20px) → 0, opacity 0 → 1, 0.55s ease.
+   ─────────────────────────────────────────────────────────── */
+.cs-sections--reveal > .cs-section {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.cs-sections--reveal > .cs-section.is-revealed {
+  opacity: 1;
+  transform: none;
+}

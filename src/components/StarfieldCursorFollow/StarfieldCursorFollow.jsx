@@ -100,9 +100,7 @@ export default function StarfieldCursorFollow({
         const depth = 1 - star.z / width
         const radius = Math.max(0.4, depth * star.maxRadius)
 
-        // Gentle twinkle via sin
-        const twinkle = 0.75 + 0.25 * Math.sin(frameRef.current * 0.03 + star.twinkleOffset)
-        const opacity = depth * star.baseOpacity * twinkle
+        const opacity = depth * star.baseOpacity
 
         ctx.beginPath()
         ctx.arc(sx, sy, radius, 0, Math.PI * 2)

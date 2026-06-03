@@ -514,3 +514,15 @@
     flex-direction: column;
   }
 }
+
+/* ── Scroll reveal ──────────────────────────────────────────── */
+.about-stack--reveal > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.about-stack--reveal > *.is-revealed {
+  opacity: 1;
+  transform: none;
+}

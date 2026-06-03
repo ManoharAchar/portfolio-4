@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import Footer from '../../components/Footer/Footer'
+import { useReveal } from '../../lib/useReveal'
 import './AboutPage.css'
 
 import introPortrait  from '../../assets/about/about-intro-1.jpg'
@@ -23,6 +24,7 @@ const CHIPS_ROW_2 = ['Vivekananda', 'Spirited Away']
 
 export default function AboutPage({ activePage = 'about', onNavigate, guest, showPassCard }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const stackRef = useReveal('about-stack--reveal')
 
   return (
     <div className="about-layout">
@@ -49,7 +51,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
       </button>
 
       <main className="about-content">
-        <div className="about-stack">
+        <div className="about-stack" ref={stackRef}>
 
           {/* ── Intro ── */}
           <section className="about-intro">
@@ -69,7 +71,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
                 <img src={introPortrait} alt="" className="about-media-img" />
               </div>
               <div className="about-media-card about-media-card--lg" data-cursor="tip" data-cursor-tip="Climbing a hill is the easiest way to change perspectives.">
-                <img src={introNature} alt="" className="about-media-img about-media-img--rotate" />
+                <img src={introNature} alt="" className="about-media-img" />
               </div>
               <div className="about-media-card about-media-card--sm" data-cursor="tip" data-cursor-tip="Black granite is one hard piece of rock to work with">
                 <img src={introCandid} alt="" className="about-media-img" />

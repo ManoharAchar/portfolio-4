@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Footer from '../../components/Footer/Footer'
 import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
+import { useReveal } from '../../lib/useReveal'
 import '../CooperantLearning/CooperantLearning.css'
 import './SeniorMode.css'
 
@@ -29,6 +30,7 @@ const TOC_ITEMS = [
 
 export default function SeniorMode({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
+  const sectionsRef = useReveal()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -86,7 +88,7 @@ export default function SeniorMode({ onNavigate }) {
 
         {/* ── Main Content ── */}
         <main className="cs-main">
-          <div className="cs-sections">
+          <div className="cs-sections" ref={sectionsRef}>
 
             {/* Hero */}
             <section className="cs-section" id="hero">

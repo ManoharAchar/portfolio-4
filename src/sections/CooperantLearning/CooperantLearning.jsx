@@ -3,6 +3,7 @@ import Footer from '../../components/Footer/Footer'
 import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
 import ImageSlider from '../../components/ImageSlider/ImageSlider'
 import AppendixAccordion from '../../components/AppendixAccordion/AppendixAccordion'
+import { useReveal } from '../../lib/useReveal'
 import './CooperantLearning.css'
 
 import heroVideo from '../../assets/cooperant/Hero video.mp4'
@@ -70,6 +71,7 @@ function QuoteCallout({ quote, attribution }) {
 
 export default function CooperantLearning({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
+  const sectionsRef = useReveal()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -126,7 +128,7 @@ export default function CooperantLearning({ onNavigate }) {
 
         {/* ── Main Content ── */}
         <main className="cs-main">
-          <div className="cs-sections">
+          <div className="cs-sections" ref={sectionsRef}>
 
             {/* Hero */}
             <section className="cs-section" id="hero">
