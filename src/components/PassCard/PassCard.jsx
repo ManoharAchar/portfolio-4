@@ -54,7 +54,15 @@ const PassCard = forwardRef(function PassCard({ intent, name, date }, ref) {
         <img className="pass-card__lines" src={config.lines} alt="" aria-hidden="true" />
 
         <div className="pass-card__logo">
-          <img src={config.logo} alt="Studio logo" />
+          {Object.entries(PASS_CONFIG).map(([key, cfg]) => (
+            <img
+              key={key}
+              src={cfg.logo}
+              alt=""
+              aria-hidden="true"
+              className={`pass-card__logo-img${key === intent ? ' pass-card__logo-img--active' : ''}`}
+            />
+          ))}
         </div>
 
         <div className="pass-card__studio">Manohar's Studio</div>

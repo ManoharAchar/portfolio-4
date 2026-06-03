@@ -570,11 +570,14 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                   </div>
                 ) : (
                   <div className="ga-carousel" ref={carouselRef}>
-                    {filteredCarousel.map((p) => (
-                      <div key={p.id} className="ga-carousel__item">
-                        <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
-                      </div>
-                    ))}
+                    {filteredCarousel.map((p) => {
+                      const isYou = p.id === guest?.passId;
+                      return (
+                        <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
+                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
+                        </div>
+                      );
+                    })}
                     <div className="ga-carousel__see-all" onClick={() => setGridOpen(true)} style={{ cursor: 'pointer' }}>
                       <span>See All ›</span>
                     </div>
@@ -597,11 +600,14 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                     <p className="ga-passes-grid__empty">No passes found for this filter.</p>
                   ) : (
                     <div className="ga-passes-grid__items">
-                      {gridPasses.map((p) => (
-                        <div key={p.id} className="ga-carousel__item">
-                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
-                        </div>
-                      ))}
+                      {gridPasses.map((p) => {
+                        const isYou = p.id === guest?.passId;
+                        return (
+                          <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
+                            <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
 

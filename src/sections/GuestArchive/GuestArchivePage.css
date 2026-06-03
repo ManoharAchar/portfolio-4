@@ -477,6 +477,8 @@
   --card-width: 325px;
   --card-height: 152px;
   --card-scale: 0.5625;
+  padding: 8px;
+  margin: -8px;
 }
 
 .ga-carousel::-webkit-scrollbar {
@@ -507,6 +509,10 @@
   border-radius: 30px !important;
   flex-shrink: 0 !important;
   box-shadow: none !important;
+}
+
+.ga-carousel__item--you {
+  box-shadow: 0 0 0 3px #3c3c3a, 0 0 0 5.5px #dbd8ce;
 }
 
 /* Figma: bg-[#363532] rounded-[16.8px] text: DM_Sans:Medium 16px #dbd8ce tracking-[0.2px] */
