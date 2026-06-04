@@ -102,6 +102,12 @@
   min-width: 0;
 }
 
+.about-media-card:focus-visible,
+.about-hobby-card__frame:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 /* flex ratios match original 260 : 440 proportions, scale together */
 .about-media-card--sm { flex: 1; }
 .about-media-card--lg { flex: 1.7; }
@@ -123,6 +129,10 @@
   top: 50%;
   transform: translate(-50%, -50%);
   white-space: nowrap;
+}
+
+.about-image-tip {
+  display: none;
 }
 
 /* ── Quick facts ─────────────────────────────────────────── */
@@ -453,23 +463,61 @@
 }
 
 @media (max-width: 767px) {
+  .about-layout {
+    min-height: 100vh;
+  }
+
   .about-content {
-    padding: 80px 20px 0 20px;
+    margin-left: 0;
+    padding: 60px 0 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-stack {
+    width: min(345px, calc(100vw - 48px));
+    max-width: none;
+    gap: 32px;
+    padding-bottom: 32px;
+  }
+
+  .about-intro {
+    gap: 24px;
+  }
+
+  .about-intro__text,
+  .about-text-section,
+  .about-communities,
+  .about-chips-section {
+    max-width: none;
+    width: 100%;
+  }
+
+  .about-intro__text {
+    gap: 24px;
+  }
+
+  .about-intro__copy-stack {
+    gap: 24px;
   }
 
   .about-intro__headline {
-    font-size: 22px;
+    font-size: 34px;
+    line-height: 40px;
+    max-width: none;
   }
 
   .about-intro__body,
   .about-text-section__copy {
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 26px;
   }
 
   .about-intro__media-row {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
   }
 
   .about-media-card--sm,
@@ -478,40 +526,226 @@
     width: 100%;
   }
 
-  /* Mobile: intro lg card becomes full-width — need 100vw to fill after rotation */
-  .about-media-img--rotate {
-    height: 100vw;
+  .about-media-card--lg {
+    order: 1;
+    grid-column: 1 / -1;
+    height: 220px;
   }
 
-  /* Mobile: hobby frame becomes full-width × 280px — need 100vw trick */
-  .about-hobby-img--rotate {
-    inset: auto;
-    top: 50%;
-    left: 50%;
-    width: 280px;
-    height: 100vw;
-    max-width: none;
-    transform: translate(-50%, -50%) rotate(-90deg);
-    object-fit: cover;
+  .about-media-card--sm {
+    order: 2;
+    height: 180px;
+  }
+
+  .about-media-card,
+  .about-hobby-card__frame {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .about-image-tip {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: block;
+    padding: 8px 10px;
+    border: 1.5px solid #faf8f1;
+    border-radius: 999px;
+    background: #798c6d;
+    color: #faf8f1;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    line-height: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  .about-image-tip--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-media-img--rotate {
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  .about-quickfacts {
+    gap: 12px;
   }
 
   .about-quickfacts__row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
+  }
+
+  .about-quickfacts__strong,
+  .about-quickfacts__muted {
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .about-callout {
+    gap: 16px;
+    width: 100%;
+  }
+
+  .about-callout__text {
+    max-width: none;
+    width: calc(100% - 19px);
   }
 
   .about-hobby-gallery {
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
   }
 
   .about-hobby-card {
     width: 100%;
   }
 
+  .about-hobby-card__frame {
+    height: 220px;
+  }
+
+  .about-hobby-img--rotate {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg) scale(1.55);
+    object-fit: cover;
+  }
+
   .about-community-cards {
     flex-direction: column;
+    gap: 16px;
+  }
+
+  .about-community-card {
+    min-height: unset;
+    border-radius: 18px;
+    gap: 8px;
+    padding: 18px 20px;
+  }
+
+  .about-community-card__name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .about-community-card__desc {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .about-community-card__image {
+    height: 220px;
+    min-height: 220px;
+    border-radius: 16px;
+    flex: none;
+  }
+
+  .about-dashed-divider {
+    max-width: none;
+    width: 100%;
+    background: rgba(122, 122, 122, 0.35);
+  }
+
+  .about-chip-rows {
+    gap: 12px;
+  }
+
+  .about-chip-row,
+  .about-chip-row:nth-child(2) {
+    gap: 12px;
+    align-items: center;
+  }
+
+  .about-chip {
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .about-layout .footer {
+    flex-direction: column;
+    align-items: center;
+    min-height: unset;
+    padding: 28px 24px;
+  }
+
+  .about-layout .footer__quote,
+  .about-layout .footer__links {
+    width: min(345px, calc(100vw - 48px));
+    flex: none;
+    padding: 0;
+  }
+
+  .about-layout .footer__quote {
+    margin-bottom: 24px;
+  }
+
+  .about-layout .footer__quote p {
+    font-size: 24px;
+    line-height: 34px;
+    max-width: 270px;
+  }
+
+  .about-layout .footer__links {
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .about-layout .footer__link-col {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .about-layout .footer__link {
+    height: 40px;
+    padding: 6px 0;
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 370px) {
+  .about-stack,
+  .about-layout .footer__quote,
+  .about-layout .footer__links {
+    width: calc(100vw - 32px);
+  }
+
+  .about-intro__headline {
+    font-size: 31px;
+    line-height: 37px;
+  }
+
+  .about-intro__media-row {
+    gap: 12px;
+  }
+
+  .about-media-card--sm {
+    height: 164px;
+  }
+
+  .about-hobby-card__frame,
+  .about-community-card__image {
+    height: 200px;
+    min-height: 200px;
+  }
+
+  .about-layout .footer__quote p {
+    width: 100%;
   }
 }
 

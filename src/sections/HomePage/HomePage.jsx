@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
+import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import Footer from '../../components/Footer/Footer'
 import { PROJECTS } from '../../data/projects'
 import './HomePage.css'
 
-const leftProjects = PROJECTS.filter((p) => p.column === 'left')
-const rightProjects = PROJECTS.filter((p) => p.column === 'right')
+const PROJECT_CLICKS = {
+  cooperant:    (nav) => nav('cooperant'),
+  'black-baza': (nav) => nav('black-bazaar'),
+  'senior-mode':(nav) => nav('senior-mode'),
+}
 
 export default function HomePage({ activePage = 'home', onNavigate, guest, showPassCard }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -20,6 +24,7 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
         isOpen={sidebarOpen}
         guest={guest}
         showPassCard={showPassCard}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {/* Overlay — visible on small screens when sidebar is open */}
@@ -27,7 +32,7 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
         <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Toggle button — hidden on large screens */}
+      {/* Tablet toggle (768–1023px) — replaced by MobileTopBar on mobile */}
       <button
         className="sidebar-toggle"
         onClick={() => setSidebarOpen((o) => !o)}
@@ -38,31 +43,25 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
         <span />
       </button>
 
+      {/* Mobile top bar (≤ 767px) */}
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
+
       {/* Content offset by sidebar width */}
       <main className="home-content" id="work">
+        {/* All projects in document order so mobile stacks 01→02→03→04.
+            CSS Grid places each slot in the correct column on desktop. */}
         <div className="projects-grid">
-          <div className="projects-col projects-col--left">
-            {leftProjects.map((project) => (
+          {PROJECTS.map((project) => (
+            <div
+              key={project.id}
+              className={`project-card-slot project-card-slot--${project.column}`}
+            >
               <ProjectCard
-                key={project.id}
                 {...project}
-                onClick={
-                  project.id === 'cooperant' ? () => onNavigate('cooperant') :
-                  project.id === 'black-baza' ? () => onNavigate('black-bazaar') :
-                  undefined
-                }
+                onClick={PROJECT_CLICKS[project.id] ? () => PROJECT_CLICKS[project.id](onNavigate) : undefined}
               />
-            ))}
-          </div>
-          <div className="projects-col projects-col--right">
-            {rightProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                {...project}
-                onClick={project.id === 'senior-mode' ? () => onNavigate('senior-mode') : undefined}
-              />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </main>
 

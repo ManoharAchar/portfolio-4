@@ -3,6 +3,8 @@ import './CustomCursor.css'
 
 const CLICKABLE = 'a, button, [role="button"], label, input, select, textarea'
 
+const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: -200, y: -200 })
   const [cursorState, setCursorState] = useState('default')
@@ -10,6 +12,7 @@ export default function CustomCursor() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    if (isTouch) return
     const onMove = (e) => {
       setPos({ x: e.clientX, y: e.clientY })
       if (!visible) setVisible(true)
@@ -51,6 +54,8 @@ export default function CustomCursor() {
       document.documentElement.removeEventListener('mouseenter', onEnter)
     }
   }, [visible])
+
+  if (isTouch) return null
 
   return (
     <div

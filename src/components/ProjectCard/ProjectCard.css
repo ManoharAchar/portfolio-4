@@ -141,3 +141,52 @@
   color: #555553;
   padding: 0 10px;
 }
+
+/* ─── Mobile (≤ 767px) ──────────────────────────────────────
+   Image shrinks to 200px; metadata is always visible (no hover).
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .project-card {
+    padding: 14px 16px 18px;
+    gap: 16px;
+    border-radius: 18px;
+  }
+
+  .project-card__tags {
+    gap: 6px;
+  }
+
+  .project-card__image {
+    height: 200px;
+  }
+
+  .project-card__body {
+    gap: 12px;
+  }
+
+  .project-card__title {
+    font-size: 24px;
+  }
+
+  .project-card__description {
+    font-size: 14px;
+  }
+
+  /* Always show metadata — hover isn't a reliable affordance on touch */
+  .project-card__meta {
+    max-height: 160px;
+    padding-top: 4px;
+    margin-top: 0;
+  }
+
+  .project-card__labels span,
+  .project-card__values span {
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .project-card__table {
+    gap: 16px;
+    margin-top: 12px;
+  }
+}

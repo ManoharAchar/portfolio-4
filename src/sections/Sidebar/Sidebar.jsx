@@ -28,8 +28,20 @@ function useDetroitTime() {
 function useSidebarPush(sidebarRef) {
   useEffect(() => {
     let rafId
+    const desktopQuery = window.matchMedia('(min-width: 1024px)')
+
+    const clearOffset = () => {
+      if (sidebarRef.current) {
+        sidebarRef.current.style.top = ''
+      }
+    }
 
     const update = () => {
+      if (!desktopQuery.matches) {
+        clearOffset()
+        return
+      }
+
       const footer = document.querySelector('.footer')
       if (footer && sidebarRef.current) {
         const gap = footer.getBoundingClientRect().top - window.innerHeight
@@ -43,14 +55,28 @@ function useSidebarPush(sidebarRef) {
       rafId = requestAnimationFrame(update)
     }
 
-    rafId = requestAnimationFrame(update)
-    return () => cancelAnimationFrame(rafId)
+    const syncMode = () => {
+      cancelAnimationFrame(rafId)
+      clearOffset()
+
+      if (desktopQuery.matches) {
+        rafId = requestAnimationFrame(update)
+      }
+    }
+
+    syncMode()
+    desktopQuery.addEventListener('change', syncMode)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      desktopQuery.removeEventListener('change', syncMode)
+    }
   }, [sidebarRef])
 }
 
 const PAGE_ORDER = ['home', 'about', 'cave', 'archive']
 
-export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true }) {
+export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true, onClose }) {
   const time = useDetroitTime()
   const sidebarRef = useRef(null)
   useSidebarPush(sidebarRef)
@@ -66,6 +92,13 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
               <img src={logoMark} alt="Studio mark" />
             </div>
           </div>
+          {onClose && (
+            <button className="sidebar__close" onClick={onClose} aria-label="Close menu" type="button">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+          )}
         </div>
 
         <div className="sidebar__identity">

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
+import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import Footer from '../../components/Footer/Footer'
 import './CavePage.css'
 
@@ -14,6 +15,7 @@ export default function CavePage({ activePage = 'cave', onNavigate, guest, showP
         isOpen={sidebarOpen}
         guest={guest}
         showPassCard={showPassCard}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {sidebarOpen && (
@@ -29,6 +31,7 @@ export default function CavePage({ activePage = 'cave', onNavigate, guest, showP
         <span />
         <span />
       </button>
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
 
       <main className="cave-content">
         <div className="cave-coming-soon">

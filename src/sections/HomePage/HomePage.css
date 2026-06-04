@@ -9,25 +9,24 @@
   background: #2a2a2a;
 }
 
-/* 2-column staggered grid */
+/* 2-column staggered grid.
+   Auto-placement fills left→right in document order (01,02,03,04)
+   so mobile collapses to the correct sequence without any JS reordering. */
 .projects-grid {
-  display: flex;
-  gap: 48px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 48px;
+  align-items: start;
   max-width: 1408px;
-  margin: 0;
 }
 
-.projects-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  min-width: 0;
-  padding-bottom: 64px;
+.project-card-slot {
+  padding-bottom: 48px;
 }
 
-.projects-col--right {
+/* Stagger: offset the entire right column by pushing its first item down.
+   The 2nd grid child is always the first right-column card (senior-mode). */
+.project-card-slot:nth-child(2) {
   padding-top: 48px;
 }
 
@@ -46,14 +45,21 @@
 /* ─── Breakpoint: single-column cards (< 768px) ───────────── */
 @media (max-width: 767px) {
   .home-content {
-    padding: 80px 20px 0;
+    padding: 72px 24px 0; /* 48px topbar + 24px gap */
   }
 
+  /* Single column — auto-placement keeps document order: 01→02→03→04 */
   .projects-grid {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    column-gap: 0;
   }
 
-  .projects-col--right {
+  .project-card-slot {
+    padding-bottom: 24px;
+  }
+
+  /* Remove the desktop stagger */
+  .project-card-slot:nth-child(2) {
     padding-top: 0;
   }
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
+import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import PassCard from '../../components/PassCard/PassCard'
 import TiltCard from '../../components/TiltCard/TiltCard'
 import Footer from '../../components/Footer/Footer'
@@ -324,6 +325,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
         isOpen={sidebarOpen}
         guest={guest}
         showPassCard={showPassCard}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {sidebarOpen && (
@@ -337,6 +339,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
       >
         <span /><span /><span />
       </button>
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
 
       <main className="ga-main">
         <div className="ga-content">

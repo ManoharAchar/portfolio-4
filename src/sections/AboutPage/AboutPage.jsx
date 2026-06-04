@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
+import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
 import './AboutPage.css'
@@ -24,7 +25,36 @@ const CHIPS_ROW_2 = ['Vivekananda', 'Spirited Away']
 
 export default function AboutPage({ activePage = 'about', onNavigate, guest, showPassCard }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [activeImageTip, setActiveImageTip] = useState(null)
   const stackRef = useReveal('about-stack--reveal')
+  const getImageTipProps = (tip) => ({
+    role: 'button',
+    tabIndex: 0,
+    'aria-label': tip,
+    'aria-pressed': activeImageTip === tip,
+    'data-cursor': 'tip',
+    'data-cursor-tip': tip,
+    onPointerUp: (event) => {
+      if (event.pointerType === 'mouse') return
+      setActiveImageTip((current) => current === tip ? null : tip)
+    },
+    onFocus: () => {
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        setActiveImageTip(tip)
+      }
+    },
+    onBlur: () => {
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        setActiveImageTip(null)
+      }
+    },
+    onKeyDown: (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        setActiveImageTip((current) => current === tip ? null : tip)
+      }
+    },
+  })
 
   return (
     <div className="about-layout">
@@ -34,6 +64,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
         isOpen={sidebarOpen}
         guest={guest}
         showPassCard={showPassCard}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {sidebarOpen && (
@@ -49,6 +80,8 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
         <span />
         <span />
       </button>
+
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
 
       <main className="about-content">
         <div className="about-stack" ref={stackRef}>
@@ -67,14 +100,17 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
               </div>
             </div>
             <div className="about-intro__media-row">
-              <div className="about-media-card about-media-card--sm" data-cursor="tip" data-cursor-tip="Hey, Nice to meet you.">
+              <div className="about-media-card about-media-card--sm" {...getImageTipProps('Hey, Nice to meet you.')}>
                 <img src={introPortrait} alt="" className="about-media-img" />
+                <span className={`about-image-tip${activeImageTip === 'Hey, Nice to meet you.' ? ' about-image-tip--visible' : ''}`}>Hey, Nice to meet you.</span>
               </div>
-              <div className="about-media-card about-media-card--lg" data-cursor="tip" data-cursor-tip="Climbing a hill is the easiest way to change perspectives.">
+              <div className="about-media-card about-media-card--lg" {...getImageTipProps('Climbing a hill is the easiest way to change perspectives.')}>
                 <img src={introNature} alt="" className="about-media-img" />
+                <span className={`about-image-tip${activeImageTip === 'Climbing a hill is the easiest way to change perspectives.' ? ' about-image-tip--visible' : ''}`}>Climbing a hill is the easiest way to change perspectives.</span>
               </div>
-              <div className="about-media-card about-media-card--sm" data-cursor="tip" data-cursor-tip="Black granite is one hard piece of rock to work with">
+              <div className="about-media-card about-media-card--sm" {...getImageTipProps('Black granite is one hard piece of rock to work with')}>
                 <img src={introCandid} alt="" className="about-media-img" />
+                <span className={`about-image-tip${activeImageTip === 'Black granite is one hard piece of rock to work with' ? ' about-image-tip--visible' : ''}`}>Black granite is one hard piece of rock to work with</span>
               </div>
             </div>
           </section>
@@ -147,14 +183,14 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
               <div key={label} className="about-hobby-card">
                 <div
                   className="about-hobby-card__frame"
-                  data-cursor="tip"
-                  data-cursor-tip={tip}
+                  {...getImageTipProps(tip)}
                 >
                   <img
                     src={src}
                     alt={label}
                     className={`about-hobby-img${rotate ? ' about-hobby-img--rotate' : ''}`}
                   />
+                  <span className={`about-image-tip${activeImageTip === tip ? ' about-image-tip--visible' : ''}`}>{tip}</span>
                 </div>
                 <p className="about-hobby-card__label">{label}</p>
               </div>

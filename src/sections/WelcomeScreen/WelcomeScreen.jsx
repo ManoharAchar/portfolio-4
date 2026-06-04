@@ -126,9 +126,11 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
           </div>
 
           {/* ref on PassCard — getBoundingClientRect gives the card's visual position */}
-          <TiltCard>
-            <PassCard ref={passCardRef} intent={selected || 'designer'} name={guestName} />
-          </TiltCard>
+          <div className="welcome-screen__pass-wrap">
+            <TiltCard>
+              <PassCard ref={passCardRef} intent={selected || 'designer'} name={guestName} />
+            </TiltCard>
+          </div>
 
           <p className="welcome-screen__pass-note">YOUR PASS WILL APPEAR IN THE GUEST ARCHIVE.</p>
 

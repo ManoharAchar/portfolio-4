@@ -3,6 +3,7 @@ import TagBadge from '../TagBadge/TagBadge'
 import './ProjectCard.css'
 
 export default function ProjectCard({ number, tags, imageColor, image, video, thumbTime = 0, title, description, role, team, timeframe, onClick }) {
+  const cardRef = useRef(null)
   const videoRef = useRef(null)
 
   useEffect(() => {
@@ -12,6 +13,53 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
     if (v.readyState >= 1) seek()
     else v.addEventListener('loadedmetadata', seek, { once: true })
   }, [thumbTime])
+
+  useEffect(() => {
+    const card = cardRef.current
+    const v = videoRef.current
+    if (!card || !v || !video) return
+
+    const mobileQuery = window.matchMedia('(max-width: 767px)')
+    let observer
+
+    const pauseAtThumb = () => {
+      v.pause()
+      v.currentTime = thumbTime
+    }
+
+    const syncObserver = () => {
+      observer?.disconnect()
+
+      if (!mobileQuery.matches) {
+        pauseAtThumb()
+        return
+      }
+
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            v.play().catch(() => {})
+          } else {
+            pauseAtThumb()
+          }
+        },
+        {
+          threshold: 0.45,
+          rootMargin: '0px 0px -12% 0px',
+        }
+      )
+
+      observer.observe(card)
+    }
+
+    syncObserver()
+    mobileQuery.addEventListener('change', syncObserver)
+
+    return () => {
+      observer?.disconnect()
+      mobileQuery.removeEventListener('change', syncObserver)
+    }
+  }, [thumbTime, video])
 
   const handleEnter = () => {
     const v = videoRef.current
@@ -29,6 +77,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
 
   return (
     <div
+      ref={cardRef}
       className={`project-card${onClick ? ' project-card--clickable' : ''}`}
       data-cursor={onClick ? 'view-project' : 'coming-soon'}
       onClick={onClick}
@@ -55,7 +104,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
             muted
             playsInline
             loop
-            preload="metadata"
+            preload="auto"
             className="project-card__video"
           />
         ) : image ? (

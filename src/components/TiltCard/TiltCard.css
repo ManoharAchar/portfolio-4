@@ -1,6 +1,8 @@
 .tilt-card__sensor {
   display: inline-block;
   cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .tilt-card {

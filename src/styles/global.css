@@ -2,7 +2,13 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  cursor: none !important;
+}
+
+/* Hide the system cursor only on pointer-precise (mouse) devices */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
 }
 
 :root {
@@ -36,7 +42,7 @@ ul, ol {
   list-style: none;
 }
 
-/* ─── Shared sidebar toggle (used by all page layouts) ───── */
+/* ─── Shared sidebar toggle (tablet: 768–1023px) ─────────── */
 .sidebar-toggle {
   display: none;
   position: fixed;
@@ -60,10 +66,17 @@ ul, ol {
   border-radius: 2px;
 }
 
+/* Mobile top bar replaces the floating toggle on ≤ 767px */
+@media (max-width: 767px) {
+  .sidebar-toggle {
+    display: none !important;
+  }
+}
+
 .sidebar-overlay {
   display: block;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 4;
+  z-index: 18;
 }

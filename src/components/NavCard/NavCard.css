@@ -60,6 +60,8 @@
   color: #2a2a2a;
 }
 
-.nav-card__link:hover:not(.nav-card__link--active) {
-  background: #e8e5dc;
+@media (hover: hover) and (pointer: fine) {
+  .nav-card__link:hover:not(.nav-card__link--active) {
+    background: #e8e5dc;
+  }
 }

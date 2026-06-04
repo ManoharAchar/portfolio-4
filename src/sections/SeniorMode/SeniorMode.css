@@ -146,21 +146,134 @@
 /* ── Responsive ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  .senior-mode-page .cs-main {
+    padding: 80px 0 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .senior-mode-page .cs-sections {
+    width: min(345px, calc(100vw - 48px));
+    max-width: none;
+    gap: 56px;
+  }
+
+  .senior-mode-page .cs-mobile-drawer {
+    gap: 20px;
+    width: min(300px, calc(100vw - 20px));
+    padding: 16px 24px 24px;
+  }
+
+  .senior-mode-page .cs-mobile-drawer__context {
+    margin: 4px 0 0;
+  }
+
+  .senior-mode-page #hero .sm-hero-title-group {
+    order: 3;
+    gap: 12px;
+  }
+
+  .senior-mode-page #hero .cs-hero-info {
+    order: 4;
+  }
+
+  .senior-mode-page #hero .sm-metrics-row {
+    order: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .senior-mode-page .cs-hero-title {
+    font-size: 34px;
+    line-height: 40px;
+  }
+
+  .senior-mode-page .cs-hero-video {
+    height: 216px;
+  }
+
+  .senior-mode-page .cs-media__video {
+    height: 194px;
+  }
+
+  .senior-mode-page .cs-info-card:first-child {
+    padding: 18px 0;
+  }
+
+  .senior-mode-page .sm-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
   .sm-constraint-card {
     flex: 1 0 40%;
   }
 
   .sm-metric-card {
-    flex: 1 0 100%;
+    flex: none;
     max-width: 100%;
+    min-width: 0;
+    padding: 18px;
   }
 
   .sm-metrics-row--wide .sm-metric-card {
-    flex: 1 0 100%;
+    flex: none;
     max-width: 100%;
+  }
+
+  .senior-mode-page .sm-metrics-row--wide {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .senior-mode-page #testing .sm-metrics-row:not(.sm-metrics-row--wide) .sm-metric-card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .senior-mode-page #hero .sm-metric-card {
+    flex: none;
+    width: 100%;
+  }
+
+  .senior-mode-page .sm-metric-card__value {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .senior-mode-page .sm-metric-card__sub {
+    font-size: 14px;
+    line-height: 22px;
+    margin-top: 12px;
+  }
+
+  .senior-mode-page #hero .sm-metric-card__sub,
+  .senior-mode-page .sm-metrics-row--wide .sm-metric-card__sub {
+    margin-top: 24px;
+  }
+
+  .senior-mode-page .sm-constraint-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .sm-priorities-wrap {
     max-width: 100%;
+  }
+
+  .senior-mode-page #testing .cs-media__pan-wrap .cs-media__img {
+    height: 126px;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .senior-mode-page #artefacts .cs-media__pan-wrap .cs-media__img {
+    height: 189px;
+    object-fit: cover;
+    object-position: top center;
   }
 }

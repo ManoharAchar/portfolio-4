@@ -1,6 +1,11 @@
 import './IntentCard.css'
 
-const CHECKMARK_IMG = new URL('../../assets/pass/checkmark.png', import.meta.url).href
+const CHECKMARK_SVG = (
+  <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" width="21" height="21">
+    <circle cx="10.5" cy="10.5" r="10.5" fill="#2a2a2a"/>
+    <path d="M6 10.5l3.5 3.5 5.5-6" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+)
 
 // Inline SVGs taken directly from the Figma design frame.
 // All normalised to a 40×40 viewBox with currentColor so CSS controls tint.
@@ -52,7 +57,7 @@ export default function IntentCard({ type, selected, onClick }) {
       </div>
       <p className="intent-card__label">{label}</p>
       <div className="intent-card__check" aria-hidden={!selected}>
-        <img src={CHECKMARK_IMG} alt="" />
+        {CHECKMARK_SVG}
       </div>
     </button>
   )

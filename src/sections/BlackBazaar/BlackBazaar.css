@@ -122,8 +122,172 @@
 /* ── Responsive ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  .black-bazaar-page .cs-main {
+    padding: 80px 0 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .black-bazaar-page .cs-sections {
+    width: min(345px, calc(100vw - 48px));
+    max-width: none;
+    gap: 56px;
+  }
+
+  .black-bazaar-page .cs-mobile-drawer {
+    gap: 20px;
+    width: min(300px, calc(100vw - 20px));
+    padding: 16px 24px 24px;
+  }
+
+  .black-bazaar-page .cs-mobile-drawer__context {
+    margin: 4px 0 0;
+  }
+
+  .black-bazaar-page #hero {
+    gap: 18px;
+  }
+
+  .black-bazaar-page #hero .cs-label {
+    order: 1;
+  }
+
+  .black-bazaar-page #hero > .cs-media {
+    order: 2;
+  }
+
+  .black-bazaar-page #hero > .cs-section-heading {
+    order: 3;
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .black-bazaar-page #hero .cs-hero-info {
+    order: 4;
+    gap: 18px;
+  }
+
+  .black-bazaar-page #hero .bb-metrics {
+    order: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .black-bazaar-page #hero > .cs-media__caption {
+    order: 6;
+  }
+
+  .black-bazaar-page #hero .cs-media__video {
+    height: 174px;
+    border-radius: 7px;
+  }
+
+  .black-bazaar-page .cs-media__video {
+    height: 189px;
+    border-radius: 7px;
+  }
+
+  .black-bazaar-page .cs-media__img {
+    height: 189px;
+    border-radius: 7px;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .black-bazaar-page .cs-info-card:first-child {
+    padding: 18px 0;
+  }
+
+  .black-bazaar-page .cs-info-card:nth-child(2) {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .black-bazaar-page #hero .cs-metric-card {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    padding: 18px;
+  }
+
+  .black-bazaar-page #hero .cs-metric-card__value {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .black-bazaar-page #hero .cs-metric-card__label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .black-bazaar-page #hero .cs-metric-card__sub {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .black-bazaar-page .bb-user-group-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
   .bb-user-group-card {
-    flex: 1 0 100%;
+    flex: none;
     max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    gap: 8px;
+    border-radius: 8px;
+  }
+
+  .black-bazaar-page .bb-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .black-bazaar-page .bb-user-group-card__accent {
+    width: 44px;
+    height: 3px;
+  }
+
+  .black-bazaar-page .bb-user-group-card__name {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .black-bazaar-page .bb-user-group-card__list {
+    gap: 4px;
+  }
+
+  .black-bazaar-page .bb-user-group-card__list li {
+    font-size: 10px;
+    line-height: 15px;
+    padding-left: 9px;
+  }
+
+  .black-bazaar-page .bb-final-sub {
+    gap: 12px;
+  }
+
+  .black-bazaar-page .bb-final-sub__heading {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .black-bazaar-page #testing .cs-quote__quote {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .black-bazaar-page #validation .cs-section-body {
+    background: #dbd8ce;
+    border-radius: 20px;
+    color: #555553;
+    padding: 16px 18px;
+    width: 100%;
   }
 }

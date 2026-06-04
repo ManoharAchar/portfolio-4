@@ -261,13 +261,100 @@
   transform: translateY(-1px);
 }
 
+/* ─── Pass-card wrapper — desktop: transparent passthrough ─── */
+.welcome-screen__pass-wrap {
+  width: 100%;
+}
+
 /* ─── Responsive height — scale the whole inner as a unit ───────────
-   transform: scale keeps every proportion intact (fonts, gaps, card,
-   pass card). Because the flex parent is height: 100vh the scaled
-   element stays visually centred in the viewport.
+   Only applies on wide viewports; mobile has its own layout below.
    ─────────────────────────────────────────────────────────────────── */
-@media (max-height: 830px) {
+@media (min-width: 768px) and (max-height: 830px) {
   .welcome-screen__inner {
     transform: scale(0.75);
+  }
+}
+
+/* ─── Mobile layout (≤ 767px) ───────────────────────────────────────
+   Full reflow instead of scale — matches the 330px Figma mobile frame.
+   ─────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .welcome-screen__inner {
+    width: 100%;
+    max-width: 345px;
+    gap: 28px;
+    padding: 48px 0;
+    transform: none;
+  }
+
+  .welcome-screen__title-group {
+    max-height: 90px;
+  }
+
+  .welcome-screen__title-group--hidden {
+    margin-bottom: -28px;
+  }
+
+  .welcome-screen__eyebrow {
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+
+  .welcome-screen__title {
+    font-size: 34px;
+  }
+
+  .welcome-screen__intent {
+    gap: 28px;
+  }
+
+  .welcome-screen__subtitle {
+    font-size: 15px;
+    max-width: 330px;
+  }
+
+  .welcome-screen__grid {
+    height: 210px;
+    gap: 10px;
+  }
+
+  .welcome-screen__response {
+    gap: 16px;
+  }
+
+  .welcome-screen__name-row {
+    gap: 10px;
+  }
+
+  .welcome-screen__name-label {
+    font-size: 16px;
+  }
+
+  .welcome-screen__name-input {
+    width: 200px;
+    font-size: 16px;
+    height: 50px;
+  }
+
+  /* Scale pass card from 576×270 down to fit 345px wide */
+  .welcome-screen__pass-wrap {
+    width: 345px;
+    height: 162px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: visible;
+  }
+
+  .welcome-screen__pass-wrap .tilt-card__sensor {
+    transform: scale(0.599);
+    transform-origin: top left;
+  }
+
+  .welcome-screen__pass-note {
+    font-size: 14px;
+  }
+
+  .welcome-screen__enter {
+    font-size: 16px;
   }
 }

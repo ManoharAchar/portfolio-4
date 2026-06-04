@@ -1,0 +1,41 @@
+.mobile-topbar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    height: 48px;
+    padding: 0 24px;
+    background: #2a2a2a;
+  }
+
+  .mobile-topbar__label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 16px;
+    color: #dbd8ce;
+    line-height: normal;
+  }
+
+  .mobile-topbar__toggle {
+    background: none;
+    border: none;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dbd8ce;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-topbar__toggle:hover {
+    opacity: 0.6;
+  }
+}

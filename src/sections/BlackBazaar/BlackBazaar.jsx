@@ -142,6 +142,13 @@ const TOC_ITEMS = [
   { id: 'validation', label: 'Validation' },
 ]
 
+const MOBILE_SITE_LINKS = [
+  { label: 'My Work', page: 'home' },
+  { label: 'About Me', page: 'about' },
+  { label: 'The Cave', page: 'cave' },
+  { label: 'Guest Archive', page: 'archive' },
+]
+
 const METRICS = [
   { value: '71.6', label: 'BUYER SUS SCORE', sub: 'Grade B, above industry average of 68' },
   { value: '88%', label: 'REPEAT ORDER SUCCESS', sub: 'Fastest task, 65-second average completion' },
@@ -189,6 +196,7 @@ function QuoteCallout({ quote, attribution }) {
 
 export default function BlackBazaar({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const sectionsRef = useReveal()
 
   useEffect(() => {
@@ -214,8 +222,79 @@ export default function BlackBazaar({ onNavigate }) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const navigateToSection = (id) => {
+    setMobileMenuOpen(false)
+    scrollToSection(id)
+  }
+
   return (
-    <div className="cs-page">
+    <div className="cs-page black-bazaar-page">
+      <div className="cs-mobile-topbar">
+        <button className="cs-mobile-topbar__back" onClick={() => onNavigate?.('home')} aria-label="Back to home" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6L9 12L15 18" />
+            <path d="M10 12H21" />
+          </svg>
+        </button>
+        <button
+          className="cs-mobile-topbar__menu"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label={mobileMenuOpen ? 'Close table of contents' : 'Open table of contents'}
+          aria-expanded={mobileMenuOpen}
+          type="button"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      {mobileMenuOpen && (
+        <div className="cs-mobile-overlay" onClick={() => setMobileMenuOpen(false)} />
+      )}
+
+      <aside className={`cs-mobile-drawer${mobileMenuOpen ? ' cs-mobile-drawer--open' : ''}`} aria-hidden={!mobileMenuOpen}>
+        <button
+          className="cs-mobile-drawer__close"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-label="Close table of contents"
+          type="button"
+        >
+          ×
+        </button>
+        <p className="cs-mobile-drawer__context">CASE STUDY / BLACK BAZA</p>
+        <div className="cs-mobile-toc">
+          <p className="cs-mobile-toc__heading">TABLE OF CONTENTS</p>
+          <div className="cs-mobile-toc__links">
+            {TOC_ITEMS.map(({ id, label }, i) => (
+              <button
+                key={id}
+                className={`cs-mobile-toc__item${activeSection === id ? ' cs-mobile-toc__item--active' : ''}`}
+                onClick={() => navigateToSection(id)}
+                type="button"
+              >
+                {i + 1}. {label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="cs-mobile-site-nav" aria-label="Site navigation">
+          {MOBILE_SITE_LINKS.map(({ label, page }) => (
+            <button
+              key={page}
+              className="cs-mobile-site-nav__item"
+              onClick={() => {
+                setMobileMenuOpen(false)
+                onNavigate?.(page)
+              }}
+              type="button"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </aside>
+
       <div className="cs-body">
 
         {/* ── Sidebar ── */}
@@ -260,8 +339,8 @@ export default function BlackBazaar({ onNavigate }) {
                   <p className="cs-info-card__section-label">PROJECT SNAPSHOT</p>
                   {[
                     { label: 'ROLE', value: 'Product Designer (0-to-1)' },
-                    { label: 'TEAM', value: 'Solo designer, 1 stakeholders, 1 developer' },
-                    { label: 'TIMELINE', value: '~8 Weeks (Jun 2025 – Sep 2025)' },
+                    { label: 'TYPE', value: 'Solo designer, 1 stakeholders, 1 developer' },
+                    { label: 'DURATION', value: '~8 Weeks (Jun 2025 – Sep 2025)' },
                     { label: 'PLATFORM', value: 'iOS & Android' },
                   ].map(({ label, value }) => (
                     <div key={label} className="cs-info-row">
