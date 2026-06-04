@@ -50,11 +50,11 @@ const METRICS = [
 ]
 
 const CONSTRAINTS = [
-  '0-to-1 product — no legacy UX to inherit',
-  'Platform constraints — LearnDash + WooCommerce impose overlapping templates and states',
-  'Trust and compliance — ACE credential visibility, policy access, certificate reliability',
-  'No existing analytics — impact validated through usability testing only',
-  'Handoff durability — content publishable by the Sparks team without breaking layouts',
+  { label: '0-TO-1 PRODUCT', body: '0-to-1 product — no legacy UX to inherit' },
+  { label: 'PLATFORM CONSTRAINT', body: 'Platform constraints — LearnDash + WooCommerce impose overlapping templates and states' },
+  { label: 'TRUST AND COMPLIANCE', body: 'Trust and compliance — ACE credential visibility, policy access, certificate reliability' },
+  { label: 'NO EXISTING ANALYTICS', body: 'No existing analytics — impact validated through usability testing only' },
+  { label: 'HANDOFF DURABILITY', body: 'Handoff durability — content publishable by the Sparks team without breaking layouts' },
 ]
 
 const PRIORITIES = [
@@ -319,9 +319,10 @@ export default function CooperantLearning({ onNavigate }) {
                 </p>
               </div>
               <div className="cs-cards-stack">
-                {CONSTRAINTS.map((text) => (
-                  <div key={text} className="cs-constraint-card">
-                    <p>{text}</p>
+                {CONSTRAINTS.map(({ label, body }) => (
+                  <div key={label} className="cs-constraint-card">
+                    <p className="cs-constraint-card__label">{label}</p>
+                    <p>{body}</p>
                   </div>
                 ))}
               </div>
