@@ -34,7 +34,10 @@ function App() {
   useEffect(() => {
     const handlePopState = (e) => {
       const target = e.state?.page
-      if (target) setPage(target)
+      if (target) {
+        setPage(target)
+        window.scrollTo(0, 0)
+      }
     }
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
@@ -99,6 +102,7 @@ function App() {
     recordPageVisit(target)
     window.history.pushState({ page: target }, '')
     setPage(target)
+    window.scrollTo(0, 0)
   }
 
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
