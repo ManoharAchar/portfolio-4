@@ -42,15 +42,16 @@
 }
 
 /* ─── Screen shell ──────────────────────────────────────────────── */
+/* position: fixed; inset: 0 is the only iOS-proof way to lock a fullscreen
+   overlay — height: 100vh/dvh alone still allows document scroll on Safari */
 .welcome-screen {
   background: #2a2a2a;
-  height: 100vh;          /* fallback for very old browsers */
-  height: 100dvh;         /* dynamic viewport height — iOS 15.4+, excludes browser chrome */
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: relative;
 }
 
 /* Fade all UI chrome — card hides instantly, FlyingCard takes over */
@@ -280,11 +281,13 @@
    Full reflow instead of scale — matches the 330px Figma mobile frame.
    ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
+  /* Tighter layout so the expanded state (card selected) fits within
+     ~660px of usable viewport on iPhone 13 mini / SE with Safari chrome */
   .welcome-screen__inner {
     width: 100%;
     max-width: 345px;
-    gap: 28px;
-    padding: 48px 0;
+    gap: 20px;
+    padding: 24px 0;
     transform: none;
   }
 
@@ -293,7 +296,7 @@
   }
 
   .welcome-screen__title-group--hidden {
-    margin-bottom: -28px;
+    margin-bottom: -20px; /* matches new gap so collapse is seamless */
   }
 
   .welcome-screen__eyebrow {
@@ -306,7 +309,7 @@
   }
 
   .welcome-screen__intent {
-    gap: 28px;
+    gap: 20px;
   }
 
   .welcome-screen__subtitle {
@@ -315,12 +318,12 @@
   }
 
   .welcome-screen__grid {
-    height: 210px;
-    gap: 10px;
+    height: 185px;
+    gap: 8px;
   }
 
   .welcome-screen__response {
-    gap: 16px;
+    gap: 12px;
   }
 
   .welcome-screen__name-row {
