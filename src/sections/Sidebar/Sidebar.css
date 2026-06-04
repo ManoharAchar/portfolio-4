@@ -20,13 +20,22 @@
   padding: 28px 32px 0;
 }
 
-/* Logo — outer is sized to the rotated bounding box (148×112 in Figma, scaled 0.71x) */
+/* Logo wrap — flex row holding the frame and (on mobile) the close button */
 .sidebar__logo-wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  flex-shrink: 0;
+}
+
+/* Frame — fixed 106×80 anchor matching the Figma frame; the rotation inside
+   doesn't affect layout because the frame is what participates in flex flow */
+.sidebar__logo-frame {
+  width: 106px;
   height: 80px;
+  position: relative;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
@@ -47,13 +56,16 @@
   opacity: 0.6;
 }
 
-/* The rotator sits inside; flex-none keeps it from stretching */
+/* Rotator sits inside the frame at the exact offset so the rotated visual
+   corners land flush with the frame edges (derived from rotation geometry) */
 .sidebar__logo-rotator {
-  flex: none;
+  position: absolute;
+  left: 30px;
+  top: -8px;
   transform: rotate(-113.5deg);
 }
 
-/* Natural logo dimensions before rotation (64×134 in Figma, scaled 0.71x) */
+/* Natural logo dimensions: 46×96px */
 .sidebar__logo-inner {
   width: 46px;
   height: 96px;
@@ -269,19 +281,7 @@
   }
 
   .sidebar__logo-wrap {
-    height: 79.584px;
     align-items: center;
-  }
-
-  .sidebar__logo-rotator {
-    margin-left: 24px;
-    transform: rotate(-113.5deg);
-    transform-origin: center;
-  }
-
-  .sidebar__logo-inner {
-    width: 45.521px;
-    height: 94.895px;
   }
 
   .sidebar__identity {

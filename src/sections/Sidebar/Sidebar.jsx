@@ -87,9 +87,11 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`} ref={sidebarRef}>
       <div className="sidebar__top">
         <div className="sidebar__logo-wrap">
-          <div className="sidebar__logo-rotator">
-            <div className="sidebar__logo-inner">
-              <img src={logoMark} alt="Studio mark" />
+          <div className="sidebar__logo-frame">
+            <div className="sidebar__logo-rotator">
+              <div className="sidebar__logo-inner">
+                <img src={logoMark} alt="Studio mark" />
+              </div>
             </div>
           </div>
           {onClose && (

@@ -266,6 +266,8 @@
 /* ─── Pass-card wrapper — desktop: transparent passthrough ─── */
 .welcome-screen__pass-wrap {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* ─── Responsive height — scale the whole inner as a unit ───────────
@@ -354,7 +356,7 @@
 
   .welcome-screen__pass-wrap .tilt-card__sensor {
     transform: scale(var(--pass-scale, 0.599));
-    transform-origin: top left;
+    transform-origin: top center;
   }
 
   .welcome-screen__pass-note {
