@@ -5,7 +5,7 @@
 /* Sidebar is position:fixed so offset content to the right */
 .home-content {
   margin-left: 280px;
-  padding: 64px 64px 0;
+  padding: 64px 64px 64px;
   background: #2a2a2a;
 }
 
@@ -46,7 +46,7 @@
 /* ─── Breakpoint: single-column cards (< 768px) ───────────── */
 @media (max-width: 767px) {
   .home-content {
-    padding: 72px 24px 0; /* 48px topbar + 24px gap */
+    padding: 72px 24px 48px;
   }
 
   /* display: contents removes the col wrapper from layout so each
