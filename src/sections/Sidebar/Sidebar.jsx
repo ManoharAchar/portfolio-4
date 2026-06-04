@@ -87,13 +87,13 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`} ref={sidebarRef}>
       <div className="sidebar__top">
         <div className="sidebar__logo-wrap">
-          <div className="sidebar__logo-frame">
+          <button className="sidebar__logo-frame" onClick={() => onNavigate?.('home')} aria-label="Go to home">
             <div className="sidebar__logo-rotator">
               <div className="sidebar__logo-inner">
                 <img src={logoMark} alt="Studio mark" />
               </div>
             </div>
-          </div>
+          </button>
           {onClose && (
             <button className="sidebar__close" onClick={onClose} aria-label="Close menu" type="button">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">

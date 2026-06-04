@@ -37,6 +37,10 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 /* Close button — only shown on mobile when sidebar is a drawer */
