@@ -44,7 +44,8 @@
 /* ─── Screen shell ──────────────────────────────────────────────── */
 .welcome-screen {
   background: #2a2a2a;
-  height: 100vh;
+  height: 100vh;          /* fallback for very old browsers */
+  height: 100dvh;         /* dynamic viewport height — iOS 15.4+, excludes browser chrome */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -331,22 +332,25 @@
   }
 
   .welcome-screen__name-input {
-    width: 200px;
+    flex: 1;
+    min-width: 0;
+    max-width: 200px;
     font-size: 16px;
     height: 50px;
   }
 
-  /* Scale pass card from 576×270 down to fit 345px wide */
+  /* Pass card scales fluidly to whatever the inner container's actual width is.
+     --pass-scale and --pass-h are set via JS ResizeObserver in WelcomeScreen.jsx */
   .welcome-screen__pass-wrap {
-    width: 345px;
-    height: 162px;
+    width: 100%;
+    height: var(--pass-h, 162px);
     flex-shrink: 0;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .welcome-screen__pass-wrap .tilt-card__sensor {
-    transform: scale(0.599);
+    transform: scale(var(--pass-scale, 0.599));
     transform-origin: top left;
   }
 

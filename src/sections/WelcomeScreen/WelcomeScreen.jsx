@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import IntentCard from '../../components/IntentCard/IntentCard'
 import PassCard, { formatDate } from '../../components/PassCard/PassCard'
 import StarfieldCursorFollow from '../../components/StarfieldCursorFollow/StarfieldCursorFollow'
@@ -46,6 +46,18 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
   const [guestName, setGuestName] = useState(() => randomName(null))
   const [showAttrib, setShowAttrib] = useState(false)
   const passCardRef = useRef(null)
+  const innerRef = useRef(null)
+  const [passScale, setPassScale] = useState(0.599)
+
+  useEffect(() => {
+    const el = innerRef.current
+    if (!el) return
+    const update = () => setPassScale(Math.min(el.offsetWidth / 576, 0.599))
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   const handleCardClick = useCallback((type) => setSelected(type), [])
 
@@ -93,7 +105,7 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
         speed={0.8}
         style={{ position: 'absolute', inset: 0 }}
       />
-      <div className="welcome-screen__inner">
+      <div className="welcome-screen__inner" ref={innerRef}>
 
         <div className={`welcome-screen__title-group ${selected ? 'welcome-screen__title-group--hidden' : ''}`}>
           <p className="welcome-screen__eyebrow">WELCOME TO</p>
@@ -126,7 +138,10 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
           </div>
 
           {/* ref on PassCard — getBoundingClientRect gives the card's visual position */}
-          <div className="welcome-screen__pass-wrap">
+          <div
+            className="welcome-screen__pass-wrap"
+            style={{ '--pass-scale': passScale, '--pass-h': `${Math.round(passScale * 270)}px` }}
+          >
             <TiltCard>
               <PassCard ref={passCardRef} intent={selected || 'designer'} name={guestName} />
             </TiltCard>
