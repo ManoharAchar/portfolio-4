@@ -514,7 +514,9 @@
 }
 
 .ga-carousel__item--you {
-  box-shadow: 0 0 0 3px #3c3c3a, 0 0 0 5.5px #dbd8ce;
+  /* outline-offset gives a true transparent gap — no background color matching needed */
+  outline: 2px solid #dbd8ce;
+  outline-offset: 5px;
 }
 
 /* Figma: bg-[#363532] rounded-[16.8px] text: DM_Sans:Medium 16px #dbd8ce tracking-[0.2px] */
@@ -1271,8 +1273,8 @@
   .ga-carousel {
     gap: 24px;
     width: 305px;
-    height: 160px;
-    padding: 0;
+    height: 176px;  /* +16px to keep 160px content area with 8px top/bottom padding */
+    padding: 8px 0; /* mirrors desktop; gives outline room to render without clipping */
     margin: 0;
   }
 
