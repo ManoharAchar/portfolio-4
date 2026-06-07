@@ -319,8 +319,8 @@
 
   .sidebar__bio,
   .sidebar__edu {
-    font-size: 13px;
-    line-height: 1.22;
+    font-size: 16px;
+    line-height: normal;
   }
 
   .sidebar .nav-card {
