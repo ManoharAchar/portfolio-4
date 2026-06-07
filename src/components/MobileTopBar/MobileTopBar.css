@@ -26,39 +26,22 @@
     min-width: 0;
   }
 
-  /* 94×68px clipping frame — mirrors the sidebar logo geometry */
+  /* Pre-cropped 94×68 topbar logo — exact Figma asset, no rotation/clipping needed */
   .mobile-topbar__logo-frame {
     width: 94px;
     height: 68px;
-    position: relative;
-    overflow: hidden;
     flex-shrink: 0;
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-  }
-
-  /* Rotated mark inside the frame, scaled from the 106×80 sidebar frame */
-  .mobile-topbar__logo-rotator {
-    position: absolute;
-    left: 27px;
-    top: -7px;
-    transform: rotate(-113.5deg);
-  }
-
-  .mobile-topbar__logo-inner {
-    width: 46px;
-    height: 96px;
-    position: relative;
-  }
-
-  .mobile-topbar__logo-inner img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
     display: block;
+  }
+
+  .mobile-topbar__logo-frame img {
+    display: block;
+    width: 94px;
+    height: 68px;
   }
 
   /* ── Name + title stack ──────────────────────────────────── */

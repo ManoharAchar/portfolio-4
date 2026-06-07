@@ -1,4 +1,4 @@
-import logoMark from '../../assets/icons/logo-mark.svg'
+import logoMarkTopbar from '../../assets/icons/logo-mark-topbar.svg'
 import './MobileTopBar.css'
 
 export default function MobileTopBar({ onToggle, isOpen, onNavigate }) {
@@ -11,11 +11,7 @@ export default function MobileTopBar({ onToggle, isOpen, onNavigate }) {
           aria-label="Go to home"
           type="button"
         >
-          <div className="mobile-topbar__logo-rotator">
-            <div className="mobile-topbar__logo-inner">
-              <img src={logoMark} alt="" />
-            </div>
-          </div>
+          <img src={logoMarkTopbar} alt="" />
         </button>
         <div className="mobile-topbar__identity">
           <p className="mobile-topbar__name">Manohar Achar</p>
