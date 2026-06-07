@@ -5,7 +5,7 @@ import TiltCard from '../../components/TiltCard/TiltCard'
 import './Sidebar.css'
 
 import logoMark from '../../assets/icons/logo-mark.svg'
-const STATUS_DOT = 'https://www.figma.com/api/mcp/asset/afd35918-42dd-4d46-8146-bd98d70ad0ad'
+import statusDot from '../../assets/icons/status-dot.svg'
 
 function useDetroitTime() {
   const [time, setTime] = useState('')
@@ -146,7 +146,7 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
           )}
         </div>
         <div className="sidebar__location">
-          <img className="sidebar__status-dot" src={STATUS_DOT} alt="" />
+          <img className="sidebar__status-dot" src={statusDot} alt="" />
           <span>DETROIT, {time}</span>
         </div>
       </div>

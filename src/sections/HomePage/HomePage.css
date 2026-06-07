@@ -61,6 +61,10 @@
     gap: 24px;
   }
 
+  .project-card-slot {
+    width: 100%;
+  }
+
   .project-card-slot[data-sort="01"] { order: 1; }
   .project-card-slot[data-sort="02"] { order: 2; }
   .project-card-slot[data-sort="03"] { order: 3; }

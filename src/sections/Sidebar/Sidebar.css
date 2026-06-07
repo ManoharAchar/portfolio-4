@@ -251,7 +251,9 @@
     top: 10px !important;
     left: auto;
     right: 10px;
-    transform: translateX(100%);
+    /* translateX(100%) alone leaves a 10px sliver visible because `right: 10px`
+       offsets the closed position inward. Add 10px to clear the viewport edge. */
+    transform: translateX(calc(100% + 10px));
     border-radius: 24px;
     justify-content: flex-start;
     align-items: center;
