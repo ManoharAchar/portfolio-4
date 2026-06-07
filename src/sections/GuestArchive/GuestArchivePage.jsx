@@ -339,7 +339,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
       >
         <span /><span /><span />
       </button>
-      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} onNavigate={onNavigate} />
 
       <main className="ga-main">
         <div className="ga-content">

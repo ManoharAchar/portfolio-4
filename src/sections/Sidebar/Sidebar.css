@@ -269,13 +269,26 @@
     transform: translateX(0);
   }
 
+  /* Logo and name/title are now in the MobileTopBar — hide them in the sidebar */
+  .sidebar__logo-frame {
+    display: none;
+  }
+
+  .sidebar__name-group {
+    display: none;
+  }
+
+  /* Close button aligns to the right since the logo is gone */
+  .sidebar__logo-wrap {
+    justify-content: flex-end;
+  }
+
   .sidebar__close {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    margin-right: -6px;
     border-radius: 8px;
   }
 
@@ -284,10 +297,6 @@
     padding: 0;
     gap: 20px;
     flex: 0 0 auto;
-  }
-
-  .sidebar__logo-wrap {
-    align-items: center;
   }
 
   .sidebar__identity {

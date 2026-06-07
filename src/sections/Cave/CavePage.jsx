@@ -31,7 +31,7 @@ export default function CavePage({ activePage = 'cave', onNavigate, guest, showP
         <span />
         <span />
       </button>
-      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} onNavigate={onNavigate} />
 
       <main className="cave-content">
         <div className="cave-coming-soon">

@@ -1005,7 +1005,7 @@
   .ga-content {
     width: min(393px, 100vw);
     max-width: none;
-    padding: 60px 24px 40px;
+    padding: 80px 24px 40px;
     gap: 20px;
   }
 

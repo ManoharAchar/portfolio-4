@@ -44,7 +44,7 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
       </button>
 
       {/* Mobile top bar (≤ 767px) */}
-      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} onNavigate={onNavigate} />
 
       {/* Content offset by sidebar width */}
       <main className="home-content" id="work">

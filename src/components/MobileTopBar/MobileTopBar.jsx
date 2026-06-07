@@ -1,9 +1,27 @@
+import logoMark from '../../assets/icons/logo-mark.svg'
 import './MobileTopBar.css'
 
-export default function MobileTopBar({ onToggle, isOpen }) {
+export default function MobileTopBar({ onToggle, isOpen, onNavigate }) {
   return (
     <div className="mobile-topbar">
-      <span className="mobile-topbar__label">PRODUCT DESIGNER</span>
+      <div className="mobile-topbar__hero">
+        <button
+          className="mobile-topbar__logo-frame"
+          onClick={() => onNavigate?.('home')}
+          aria-label="Go to home"
+          type="button"
+        >
+          <div className="mobile-topbar__logo-rotator">
+            <div className="mobile-topbar__logo-inner">
+              <img src={logoMark} alt="" />
+            </div>
+          </div>
+        </button>
+        <div className="mobile-topbar__identity">
+          <p className="mobile-topbar__name">Manohar Achar</p>
+          <p className="mobile-topbar__title">PRODUCT DESIGNER</p>
+        </div>
+      </div>
       <button
         className="mobile-topbar__toggle"
         onClick={onToggle}

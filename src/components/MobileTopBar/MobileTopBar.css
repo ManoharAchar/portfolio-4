@@ -12,22 +12,88 @@
     left: 0;
     right: 0;
     z-index: 20;
-    height: 48px;
-    padding: 0 24px;
+    height: 68px;
+    padding: 0 24px 0 8px;
     background: #2a2a2a;
   }
 
-  .mobile-topbar__label {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 16px;
-    color: #dbd8ce;
-    line-height: normal;
+  /* ── Left side: logo frame + name/title ─────────────────── */
+  .mobile-topbar__hero {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    min-width: 0;
   }
 
+  /* 94×68px clipping frame — mirrors the sidebar logo geometry */
+  .mobile-topbar__logo-frame {
+    width: 94px;
+    height: 68px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Rotated mark inside the frame, scaled from the 106×80 sidebar frame */
+  .mobile-topbar__logo-rotator {
+    position: absolute;
+    left: 27px;
+    top: -7px;
+    transform: rotate(-113.5deg);
+  }
+
+  .mobile-topbar__logo-inner {
+    width: 46px;
+    height: 96px;
+    position: relative;
+  }
+
+  .mobile-topbar__logo-inner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* ── Name + title stack ──────────────────────────────────── */
+  .mobile-topbar__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .mobile-topbar__name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #faf8f1;
+    line-height: normal;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .mobile-topbar__title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    color: #dbd8ce;
+    line-height: normal;
+    margin: 0;
+  }
+
+  /* ── Hamburger toggle ────────────────────────────────────── */
   .mobile-topbar__toggle {
     background: none;
     border: none;
     padding: 4px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;

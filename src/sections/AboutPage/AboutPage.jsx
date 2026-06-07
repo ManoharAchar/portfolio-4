@@ -81,7 +81,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
         <span />
       </button>
 
-      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} />
+      <MobileTopBar onToggle={() => setSidebarOpen((o) => !o)} isOpen={sidebarOpen} onNavigate={onNavigate} />
 
       <main className="about-content">
         <div className="about-stack" ref={stackRef}>
