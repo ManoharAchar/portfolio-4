@@ -20,6 +20,19 @@ const ACCENT_COLORS = {
   exploring:  '#c4a24d',
 }
 
+const PAGE_TITLES = {
+  home:          'Manohar Achar — Product Designer',
+  about:         'About — Manohar Achar',
+  cooperant:     'Cooperant Learning — Manohar Achar',
+  'senior-mode': 'Senior Mode — Manohar Achar',
+  'black-bazaar':'Black Bazaar — Manohar Achar',
+  cave:          'The Cave — Manohar Achar',
+  archive:       'Guest Archive — Manohar Achar',
+}
+
+const pageToPath = (page) => (page === 'home' || page === 'welcome') ? '/' : `/${page}`
+const pathToPage = (path) => (!path || path === '/') ? 'home' : path.replace(/^\//, '')
+
 // How long the welcome screen content fade lasts before unmounting
 const WELCOME_FADE_MS = 380
 
@@ -33,8 +46,9 @@ function App() {
   // Sync page state with browser back/forward buttons
   useEffect(() => {
     const handlePopState = (e) => {
-      const target = e.state?.page
+      const target = e.state?.page ?? pathToPage(window.location.pathname)
       if (target) {
+        document.title = PAGE_TITLES[target] ?? PAGE_TITLES.home
         setPage(target)
         window.scrollTo(0, 0)
       }
@@ -48,7 +62,7 @@ function App() {
     const preview = new URLSearchParams(window.location.search).has('preview')
     if (preview) {
       setPage('welcome')
-      window.history.replaceState({ page: 'welcome' }, '')
+      window.history.replaceState({ page: 'welcome' }, '', '/')
       return
     }
 
@@ -59,12 +73,15 @@ function App() {
         if (accent) document.documentElement.style.setProperty('--accent', accent)
         setGuest(guestData)
         setHomeVisible(true)
-        setPage('home')
-        window.history.replaceState({ page: 'home' }, '')
+        const requested = pathToPage(window.location.pathname)
+        const target = PAGE_TITLES[requested] ? requested : 'home'
+        document.title = PAGE_TITLES[target]
+        setPage(target)
+        window.history.replaceState({ page: target }, '', pageToPath(target))
         startSession(pass.id)
       } else {
         setPage('welcome')
-        window.history.replaceState({ page: 'welcome' }, '')
+        window.history.replaceState({ page: 'welcome' }, '', '/')
       }
     })
   }, [])
@@ -92,15 +109,17 @@ function App() {
     // Unmount welcome screen after its content fade completes
     // replaceState so back button can't return to welcome
     setTimeout(() => {
+      document.title = PAGE_TITLES.home
       setPage('home')
-      window.history.replaceState({ page: 'home' }, '')
+      window.history.replaceState({ page: 'home' }, '', '/')
       setWelcomeExiting(false)
     }, WELCOME_FADE_MS)
   }
 
   const navigate = (target) => {
     recordPageVisit(target)
-    window.history.pushState({ page: target }, '')
+    document.title = PAGE_TITLES[target] ?? PAGE_TITLES.home
+    window.history.pushState({ page: target }, '', pageToPath(target))
     setPage(target)
     window.scrollTo(0, 0)
   }

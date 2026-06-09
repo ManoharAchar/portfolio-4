@@ -38,7 +38,12 @@ function randomName(exclude) {
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
-const REFRESH_ICON = 'https://www.figma.com/api/mcp/asset/5afc68ae-5d1c-408e-bc60-ea05f1fb07fa'
+const RefreshIcon = () => (
+  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+    <path d="M15.5 9A6.5 6.5 0 1 1 9 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M9 2.5 L12 5.5 L9 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+)
 const CARDS = ['designer', 'see-work', 'sent-here', 'exploring']
 
 export default function WelcomeScreen({ onEnter, exiting = false }) {
@@ -133,7 +138,7 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
             <span className="welcome-screen__name-label">NAME:</span>
             <span className="welcome-screen__name-input">{guestName}</span>
             <button className="welcome-screen__refresh" onClick={handleRefresh} type="button" aria-label="Refresh name">
-              <img src={REFRESH_ICON} alt="" />
+              <RefreshIcon />
             </button>
           </div>
 
