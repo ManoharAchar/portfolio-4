@@ -34,16 +34,12 @@ const GRID_PAGE = 27
  * Used to populate the header subtitle.
  */
 export async function fetchPassStats() {
-  const { count, data, error } = await retryOnce(() =>
-    supabase
-      .from('passes')
-      .select('created_at', { count: 'exact' })
-      .order('created_at', { ascending: false })
-      .limit(1)
+  const { data, error } = await retryOnce(() =>
+    supabase.rpc('get_pass_stats')
   )
 
   if (error) return null
-  return { total: count ?? 0, lastCreatedAt: data[0]?.created_at ?? null }
+  return { total: data?.total ?? 0, lastCreatedAt: data?.lastCreatedAt ?? null }
 }
 
 /**
