@@ -65,7 +65,7 @@ const PassCard = forwardRef(function PassCard({ intent, name, date }, ref) {
           ))}
         </div>
 
-        <div className="pass-card__studio">Manohar's Studio</div>
+        <div className="pass-card__studio">Manohar's Corner</div>
         <div className="pass-card__intent">{intent ? INTENT_LABELS[intent] : ''}</div>
         <span className="pass-card__date">{passDate}</span>
         <span className="pass-card__number">NO. 0047</span>

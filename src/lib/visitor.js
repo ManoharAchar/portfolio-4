@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase, retryOnce } from './supabase'
 
 const TOKEN_KEY = 'portfolio_pass_token'
 
@@ -48,11 +48,13 @@ export async function createPass({ intent, name }) {
   const token = crypto.randomUUID()
   const passColor = PASS_COLORS[intent] ?? '#c4a24d'
 
-  const { data, error } = await supabase
-    .from('passes')
-    .insert({ token, animal_name: name, intent, pass_color: passColor })
-    .select()
-    .single()
+  const { data, error } = await retryOnce(() =>
+    supabase
+      .from('passes')
+      .insert({ token, animal_name: name, intent, pass_color: passColor })
+      .select()
+      .single()
+  )
 
   if (error) {
     console.error('[Guest Archive] Failed to create pass:', error)

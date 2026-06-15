@@ -116,7 +116,7 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
 
         <div className={`welcome-screen__title-group ${selected ? 'welcome-screen__title-group--hidden' : ''}`}>
           <p className="welcome-screen__eyebrow">WELCOME TO</p>
-          <h1 className="welcome-screen__title">Manohar's Studio</h1>
+          <h1 className="welcome-screen__title">Manohar's Corner</h1>
         </div>
 
         <div className="welcome-screen__intent">

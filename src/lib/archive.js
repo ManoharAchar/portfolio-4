@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase, retryOnce } from './supabase'
 
 // Remove values outside Q1 - 1.5×IQR … Q3 + 1.5×IQR, then return the mean.
 // Falls back to a plain mean when fewer than 4 values exist.
@@ -11,20 +11,6 @@ function trimmedMean(values) {
   const iqr = q3 - q1
   const filtered = sorted.filter((v) => v >= q1 - 1.5 * iqr && v <= q3 + 1.5 * iqr)
   return filtered.reduce((a, b) => a + b, 0) / filtered.length
-}
-
-// Retry a Supabase query once after a short delay on transient failures.
-// Handles the cold-start window when the project wakes from Supabase auto-pause:
-// the first request errors with no code (network-level), then the DB is awake.
-// Permanent errors (PGRST/PostgreSQL codes) are returned immediately without retry.
-async function retryOnce(queryFn, delayMs = 1500) {
-  const result = await queryFn()
-  if (!result.error) return result
-  // Error codes indicate permanent failures — wrong query, RLS, function missing, etc.
-  if (result.error.code) return result
-  console.warn('[Guest Archive] Transient error, retrying in 1.5s…', result.error.message)
-  await new Promise((r) => setTimeout(r, delayMs))
-  return queryFn()
 }
 
 const GRID_PAGE = 27
@@ -137,23 +123,35 @@ export async function fetchLastSession(passId) {
 
 /**
  * Fetch 10 sessions ordered by recency for the visitor ledger table.
+ * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  * Returns { data, hasMore }.
  */
 export async function fetchLedgerRows(offset, archetypeFilter = 'all') {
-  const { data, error } = await retryOnce(() => {
-    let q = supabase
-      .from('sessions')
-      .select('id, archetype, dwell_seconds, scroll_depth, case_studies_opened, created_at, passes(id, animal_name, intent, pass_color)')
-      .order('created_at', { ascending: false })
-      .range(offset, offset + 10) // fetch 11 to detect hasMore
-    if (archetypeFilter !== 'all') q = q.eq('archetype', archetypeFilter)
-    return q
-  })
+  const { data, error } = await retryOnce(() =>
+    supabase.rpc('get_ledger_rows', { p_offset: offset, p_archetype: archetypeFilter })
+  )
 
   if (error) return { data: [], hasMore: false }
 
   const hasMore = data.length > 10
-  return { data: hasMore ? data.slice(0, 10) : data, hasMore }
+  const rows = hasMore ? data.slice(0, 10) : data
+  return {
+    data: rows.map((r) => ({
+      id:                  r.id,
+      archetype:           r.archetype,
+      dwell_seconds:       r.dwell_seconds,
+      scroll_depth:        r.scroll_depth,
+      case_studies_opened: r.case_studies_opened,
+      created_at:          r.created_at,
+      passes: {
+        id:          r.pass_id_val,
+        animal_name: r.animal_name,
+        intent:      r.intent,
+        pass_color:  r.pass_color,
+      },
+    })),
+    hasMore,
+  }
 }
 
 /**
