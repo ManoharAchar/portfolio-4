@@ -41,10 +41,11 @@ export function formatDate() {
   }).toUpperCase()
 }
 
-const PassCard = forwardRef(function PassCard({ intent, name, date }, ref) {
+const PassCard = forwardRef(function PassCard({ intent, name, date, passId }, ref) {
   const config = PASS_CONFIG[intent] ?? PASS_CONFIG.designer
   const displayName = name && name.length > 13 ? name.slice(0, 13) + '…' : (name || '')
   const passDate = date || formatDate()
+  const passNumber = passId ? `NO. ${String(passId).padStart(4, '0')}` : 'NO. ——'
 
   return (
     <div className="pass-card" ref={ref}>
@@ -68,7 +69,7 @@ const PassCard = forwardRef(function PassCard({ intent, name, date }, ref) {
         <div className="pass-card__studio">Manohar's Corner</div>
         <div className="pass-card__intent">{intent ? INTENT_LABELS[intent] : ''}</div>
         <span className="pass-card__date">{passDate}</span>
-        <span className="pass-card__number">NO. 0047</span>
+        <span className="pass-card__number">{passNumber}</span>
         <div className="pass-card__name-wrap">
           <span className="pass-card__name">{displayName}</span>
         </div>

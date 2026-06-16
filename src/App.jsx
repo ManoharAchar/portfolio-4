@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './styles/global.css'
 import CustomCursor from './components/CustomCursor/CustomCursor'
+import StarfieldCursorFollow from './components/StarfieldCursorFollow/StarfieldCursorFollow'
+import SplashScreen from './sections/SplashScreen/SplashScreen'
 import WelcomeScreen from './sections/WelcomeScreen/WelcomeScreen'
 import HomePage from './sections/HomePage/HomePage'
 import AboutPage from './sections/AboutPage/AboutPage'
@@ -36,12 +38,22 @@ const pathToPage = (path) => (!path || path === '/') ? 'home' : path.replace(/^\
 // How long the welcome screen content fade lasts before unmounting
 const WELCOME_FADE_MS = 380
 
+// Floor on how long the splash screen stays up before dematerializing —
+// covers the logo's 1.4s fade-in plus a beat where it sits fully visible,
+// so a warm Supabase response never cuts the fade-in short.
+const SPLASH_MIN_VISIBLE_MS = 2200
+
 function App() {
-  const [page, setPage] = useState(null)
+  const [page, setPage] = useState('splash')
   const [guest, setGuest] = useState(null)
   const [welcomeExiting, setWelcomeExiting] = useState(false)
   const [flyingCard, setFlyingCard] = useState(null)
   const [homeVisible, setHomeVisible] = useState(false)
+  const [pendingEntry, setPendingEntry] = useState(null)
+
+  const starfieldRef = useRef(null)
+  const splashRef = useRef(null)
+  const splashStartRef = useRef(Date.now())
 
   // Sync page state with browser back/forward buttons
   useEffect(() => {
@@ -70,21 +82,42 @@ function App() {
       if (!isNew && pass) {
         const guestData = passToGuest(pass)
         const accent = ACCENT_COLORS[pass.intent]
+        const requested = pathToPage(window.location.pathname)
+        const target = PAGE_TITLES[requested] ? requested : 'home'
+        setPendingEntry({ type: 'returning', guestData, accent, target, passId: pass.id })
+      } else {
+        setPendingEntry({ type: 'new' })
+      }
+    })
+  }, [])
+
+  // Once the visitor is resolved, let the splash screen dematerialize into
+  // the starfield (respecting a minimum visible floor) before revealing
+  // whichever page the visitor actually lands on.
+  useEffect(() => {
+    if (!pendingEntry) return
+
+    const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - (Date.now() - splashStartRef.current))
+    const timer = setTimeout(async () => {
+      await splashRef.current?.playExit()
+
+      if (pendingEntry.type === 'returning') {
+        const { guestData, accent, target, passId } = pendingEntry
         if (accent) document.documentElement.style.setProperty('--accent', accent)
         setGuest(guestData)
         setHomeVisible(true)
-        const requested = pathToPage(window.location.pathname)
-        const target = PAGE_TITLES[requested] ? requested : 'home'
         document.title = PAGE_TITLES[target]
         setPage(target)
         window.history.replaceState({ page: target }, '', pageToPath(target))
-        startSession(pass.id)
+        startSession(passId)
       } else {
         setPage('welcome')
         window.history.replaceState({ page: 'welcome' }, '', '/')
       }
-    })
-  }, [])
+    }, wait)
+
+    return () => clearTimeout(timer)
+  }, [pendingEntry])
 
   const handleEnter = async ({ cardRect, intent, name, date }) => {
     const accent = ACCENT_COLORS[intent]
@@ -129,6 +162,23 @@ function App() {
   return (
     <>
       <CustomCursor />
+
+      {/* Shared starfield — persists across splash → welcome so the
+          dematerialize transition reads as one continuous animation */}
+      {(page === 'splash' || page === 'welcome') && (
+        <StarfieldCursorFollow
+          ref={starfieldRef}
+          backgroundColor="#2a2a2a"
+          starColor="250, 248, 241"
+          numStars={600}
+          speed={0.8}
+          style={{ position: 'fixed', inset: 0, zIndex: 0 }}
+        />
+      )}
+
+      {page === 'splash' && (
+        <SplashScreen ref={splashRef} onBurst={(points) => starfieldRef.current?.spawnBurst(points)} />
+      )}
 
       {/* Welcome screen stays mounted during its exit animation */}
       {page === 'welcome' && (

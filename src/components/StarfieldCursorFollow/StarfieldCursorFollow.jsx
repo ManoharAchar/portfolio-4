@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 
 function createStar(width, height) {
   // size tier drives both visual size and speed — bigger stars move faster
@@ -16,13 +16,13 @@ function createStar(width, height) {
   }
 }
 
-export default function StarfieldCursorFollow({
+const StarfieldCursorFollow = forwardRef(function StarfieldCursorFollow({
   backgroundColor = '#000000',
   starColor = '255, 255, 255',
   numStars = 200,
   speed = 0.4,
   style = {},
-}) {
+}, ref) {
   const canvasRef = useRef(null)
   const mouseRef = useRef({ x: 0, y: 0 })
   const targetMouseRef = useRef({ x: 0, y: 0 })
@@ -121,6 +121,47 @@ export default function StarfieldCursorFollow({
     }
   }, [numStars, speed, backgroundColor, starColor])
 
+  // Spawns extra stars at given viewport-normalized points (0..1). Positions
+  // are solved backwards through the same perspective projection used in the
+  // render loop (sx = (star.x/star.z)*width + ox) so each star actually
+  // renders at its intended screen point on the very first frame, then
+  // disperses outward as z ticks down — settling into the ambient field once
+  // it cycles past z <= 0.
+  useImperativeHandle(ref, () => ({
+    spawnBurst(points) {
+      const canvas = canvasRef.current
+      if (!canvas || !canvas.width || !canvas.height) return
+      const { width, height } = canvas
+      const ox = width / 2 + mouseRef.current.x * width * 0.25
+      const oy = height / 2 + mouseRef.current.y * height * 0.25
+
+      const burst = points.map(({ x, y }) => {
+        // Biased toward the bright end so the burst reads at the same
+        // brightness/density as the static logo silhouette it's replacing.
+        const sizeTier = 0.75 + Math.random() * 0.25
+        const z = width * (0.18 + Math.random() * 0.12)
+        const px = x * width
+        const py = y * height
+        return {
+          x: ((px - ox) * z) / width,
+          y: ((py - oy) * z) / width,
+          z,
+          pz: 0,
+          sizeTier,
+          // Several times the ambient rate, so the burst visibly launches
+          // toward the viewer rather than drifting — it falls back to the
+          // normal ambient speed once it recycles past z <= 0.
+          speedMult: (0.4 + sizeTier * 2.2) * 3.5,
+          maxRadius: 0.8 + sizeTier * 4.0,
+          baseOpacity: 0.25 + sizeTier * 0.75,
+          twinkleOffset: Math.random() * Math.PI * 2,
+        }
+      })
+
+      starsRef.current = [...starsRef.current, ...burst]
+    },
+  }))
+
   return (
     <canvas
       ref={canvasRef}
@@ -133,4 +174,6 @@ export default function StarfieldCursorFollow({
       }}
     />
   )
-}
+})
+
+export default StarfieldCursorFollow

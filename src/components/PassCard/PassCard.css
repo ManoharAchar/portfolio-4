@@ -6,6 +6,7 @@
   overflow: hidden;
   box-shadow: 0 18px 22.5px rgba(0,0,0,0.15), 0 9px 9px rgba(0,0,0,0.1);
   flex-shrink: 0;
+  user-select: none;
 }
 
 .pass-card__inner {

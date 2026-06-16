@@ -141,7 +141,7 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
         <div className="sidebar__pass-thumb">
           {showPassCard && guest && (
             <TiltCard>
-              <PassCard intent={guest.intent} name={guest.name} date={guest.date} />
+              <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} />
             </TiltCard>
           )}
         </div>

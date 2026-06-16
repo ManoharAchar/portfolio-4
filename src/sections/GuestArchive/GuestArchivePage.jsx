@@ -366,7 +366,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                 <div className="ga-you-panel__card-scale">
                   {guest && (
                     <TiltCard>
-                      <PassCard intent={guest.intent} name={guest.name} date={guest.date} />
+                      <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} />
                     </TiltCard>
                   )}
                 </div>
@@ -577,7 +577,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                       const isYou = p.id === guest?.passId;
                       return (
                         <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
-                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
+                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} />
                         </div>
                       );
                     })}
@@ -607,7 +607,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                         const isYou = p.id === guest?.passId;
                         return (
                           <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
-                            <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} />
+                            <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} />
                           </div>
                         );
                       })}

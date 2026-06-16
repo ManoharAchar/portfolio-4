@@ -1,8 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import IntentCard from '../../components/IntentCard/IntentCard'
 import PassCard, { formatDate } from '../../components/PassCard/PassCard'
-import StarfieldCursorFollow from '../../components/StarfieldCursorFollow/StarfieldCursorFollow'
 import TiltCard from '../../components/TiltCard/TiltCard'
+import { fetchPassStats } from '../../lib/archive'
 import './WelcomeScreen.css'
 
 const TRAVEL_NAMES = [
@@ -48,6 +48,10 @@ const RefreshIcon = () => (
 )
 const CARDS = ['designer', 'see-work', 'sent-here', 'exploring']
 
+// How long the title sits alone before the subtitle + decision cards slide
+// in from below, automatically — no user action triggers this.
+const STAGE2_DELAY_MS = 900
+
 export default function WelcomeScreen({ onEnter, exiting = false }) {
   const [selected, setSelected] = useState(null)
   const [guestName, setGuestName] = useState(() => randomName(null))
@@ -55,6 +59,10 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
   const passCardRef = useRef(null)
   const innerRef = useRef(null)
   const [passScale, setPassScale] = useState(0.599)
+  const [entered, setEntered] = useState(false)
+  const [showIntent, setShowIntent] = useState(false)
+  const [intentVisible, setIntentVisible] = useState(false)
+  const [previewPassId, setPreviewPassId] = useState(null)
 
   useEffect(() => {
     const el = innerRef.current
@@ -64,6 +72,35 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
     const ro = new ResizeObserver(update)
     ro.observe(el)
     return () => ro.disconnect()
+  }, [])
+
+  // Fade the cards in on mount rather than having them appear instantly —
+  // this is the moment the splash screen hands off to the welcome screen.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setEntered(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
+
+  // Stage 1 → 2: the title sits alone, centered, then the subtitle + cards
+  // mount and slide up from below on their own, pushing the title up.
+  useEffect(() => {
+    if (!entered) return
+    const t = setTimeout(() => setShowIntent(true), STAGE2_DELAY_MS)
+    return () => clearTimeout(t)
+  }, [entered])
+
+  useEffect(() => {
+    if (!showIntent) return
+    const id = requestAnimationFrame(() => setIntentVisible(true))
+    return () => cancelAnimationFrame(id)
+  }, [showIntent])
+
+  // Fetch the current pass count so the preview card shows this visitor's
+  // likely number (total + 1) before they've formally entered.
+  useEffect(() => {
+    fetchPassStats().then((stats) => {
+      if (stats?.total != null) setPreviewPassId(stats.total + 1)
+    })
   }, [])
 
   const handleCardClick = useCallback((type) => setSelected(type), [])
@@ -105,68 +142,68 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
           </a>
         </div>
       )}
-      <StarfieldCursorFollow
-        backgroundColor="#2a2a2a"
-        starColor="250, 248, 241"
-        numStars={600}
-        speed={0.8}
-        style={{ position: 'absolute', inset: 0 }}
-      />
-      <div className="welcome-screen__inner" ref={innerRef}>
+      <div className="welcome-screen__vcenter">
+      <div className={`welcome-screen__inner${entered ? ' welcome-screen__inner--entered' : ''}`} ref={innerRef}>
 
         <div className={`welcome-screen__title-group ${selected ? 'welcome-screen__title-group--hidden' : ''}`}>
           <p className="welcome-screen__eyebrow">WELCOME TO</p>
           <h1 className="welcome-screen__title">Manohar's Corner</h1>
         </div>
 
-        <div className="welcome-screen__intent">
-          <p className="welcome-screen__subtitle">
-            EVERY <strong>JOURNEY</strong> BEGINS WITH <strong>INTENTION</strong>. <strong>WHAT'S YOURS?</strong>
-          </p>
-          <div className="welcome-screen__grid">
-            {CARDS.map((type) => (
-              <IntentCard
-                key={type}
-                type={type}
-                selected={selected === type}
-                onClick={() => handleCardClick(type)}
-              />
-            ))}
-          </div>
-        </div>
+        {showIntent && (
+          <>
+            <div className={`welcome-screen__intent${intentVisible ? ' welcome-screen__intent--visible' : ''}`}>
+              <p className="welcome-screen__subtitle">
+                EVERY <strong>JOURNEY</strong> BEGINS WITH <strong>INTENTION</strong>. <strong>WHAT'S YOURS?</strong>
+              </p>
+              <div className="welcome-screen__grid">
+                {CARDS.map((type) => (
+                  <IntentCard
+                    key={type}
+                    type={type}
+                    selected={selected === type}
+                    onClick={() => handleCardClick(type)}
+                  />
+                ))}
+              </div>
+            </div>
 
-        <div className={`welcome-screen__response ${selected ? 'welcome-screen__response--visible' : ''}`}>
-          <div className="welcome-screen__name-pass">
-            <div className="welcome-screen__name-row">
-              <span className="welcome-screen__name-label">NAME:</span>
-              <span className="welcome-screen__name-input">{guestName}</span>
-              <button className="welcome-screen__refresh" onClick={handleRefresh} type="button" aria-label="Refresh name">
-                <RefreshIcon />
+            <div className={`welcome-screen__response ${selected ? 'welcome-screen__response--visible' : ''}`}>
+              <div className="welcome-screen__name-pass">
+                <div className="welcome-screen__name-row">
+                  <span className="welcome-screen__name-label">NAME:</span>
+                  <span className="welcome-screen__name-input">{guestName}</span>
+                  <button className="welcome-screen__refresh" onClick={handleRefresh} type="button" aria-label="Refresh name">
+                    <RefreshIcon />
+                  </button>
+                </div>
+
+                <div
+                  className="welcome-screen__pass-wrap"
+                  style={{ '--pass-scale': passScale, '--pass-h': `${Math.round(passScale * 270)}px` }}
+                >
+                  <TiltCard>
+                    <PassCard ref={passCardRef} intent={selected || 'designer'} name={guestName} passId={previewPassId} />
+                  </TiltCard>
+                </div>
+
+                <p className="welcome-screen__pass-note">YOUR PASS WILL APPEAR IN THE GUEST ARCHIVE.</p>
+              </div>
+
+              <button
+                className={`welcome-screen__enter ${selected ? 'welcome-screen__enter--active' : ''}`}
+                onClick={handleEnter}
+                type="button"
+              >
+                ENTER →
               </button>
             </div>
-
-            <div
-              className="welcome-screen__pass-wrap"
-              style={{ '--pass-scale': passScale, '--pass-h': `${Math.round(passScale * 270)}px` }}
-            >
-              <TiltCard>
-                <PassCard ref={passCardRef} intent={selected || 'designer'} name={guestName} />
-              </TiltCard>
-            </div>
-
-            <p className="welcome-screen__pass-note">YOUR PASS WILL APPEAR IN THE GUEST ARCHIVE.</p>
-          </div>
-
-          <button
-            className={`welcome-screen__enter ${selected ? 'welcome-screen__enter--active' : ''}`}
-            onClick={handleEnter}
-            type="button"
-          >
-            ENTER →
-          </button>
-        </div>
+          </>
+        )}
 
       </div>
+      </div>
+
     </div>
   )
 }
