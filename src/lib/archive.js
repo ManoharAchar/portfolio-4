@@ -40,14 +40,11 @@ export function formatPassDate(isoString) {
 /**
  * Fetch the 10 most recent passes, each annotated with the archetype from
  * their most recent session (null when no session exists yet).
+ * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  */
 export async function fetchCarouselPasses() {
   const { data, error } = await retryOnce(() =>
-    supabase
-      .from('passes')
-      .select('id, animal_name, intent, pass_color, created_at')
-      .order('created_at', { ascending: false })
-      .limit(10)
+    supabase.rpc('get_carousel_passes')
   )
 
   if (error) {
@@ -68,32 +65,15 @@ export async function fetchCarouselPasses() {
 }
 
 /**
- * Fetch a paginated page of passes for the expanded grid.
- * For a specific archetype filter, resolves matching pass_ids from sessions first.
+ * Fetch a paginated page of passes for the expanded grid, optionally
+ * filtered to passes whose most recent session matched an archetype.
+ * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  * Returns { data: Pass[], hasMore: boolean }.
  */
 export async function fetchGridPasses(archetypeFilter, offset) {
-  let passIds = null
-
-  if (archetypeFilter !== 'all') {
-    const { data: sessionRows, error: sErr } = await supabase
-      .from('sessions')
-      .select('pass_id')
-      .eq('archetype', archetypeFilter)
-
-    if (sErr || !sessionRows?.length) return { data: [], hasMore: false }
-    passIds = [...new Set(sessionRows.map((s) => s.pass_id))]
-  }
-
-  const { data, error } = await retryOnce(() => {
-    let q = supabase
-      .from('passes')
-      .select('id, animal_name, intent, pass_color, created_at')
-      .order('created_at', { ascending: false })
-      .range(offset, offset + GRID_PAGE) // fetch GRID_PAGE+1 to detect hasMore
-    if (passIds) q = q.in('id', passIds)
-    return q
-  })
+  const { data, error } = await retryOnce(() =>
+    supabase.rpc('get_grid_passes', { p_offset: offset, p_archetype: archetypeFilter })
+  )
 
   if (error) return { data: [], hasMore: false }
 
@@ -105,20 +85,30 @@ export async function fetchGridPasses(archetypeFilter, offset) {
  * Most recent completed session for a given pass.
  * Used as hero fallback after refresh, and for ledger "You" pin when
  * the visitor's row hasn't loaded into the current page yet.
+ * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  */
 export async function fetchLastSession(passId) {
   const { data, error } = await retryOnce(() =>
-    supabase
-      .from('sessions')
-      .select('id, archetype, dwell_seconds, scroll_depth, case_studies_opened, created_at, passes(id, animal_name, intent, pass_color)')
-      .eq('pass_id', passId)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
+    supabase.rpc('get_last_session', { p_pass_id: passId })
   )
 
-  if (error) return null
-  return data
+  if (error || !data || data.length === 0) return null
+
+  const r = data[0]
+  return {
+    id:                  r.id,
+    archetype:           r.archetype,
+    dwell_seconds:       r.dwell_seconds,
+    scroll_depth:        r.scroll_depth,
+    case_studies_opened: r.case_studies_opened,
+    created_at:          r.created_at,
+    passes: {
+      id:          r.pass_id_val,
+      animal_name: r.animal_name,
+      intent:      r.intent,
+      pass_color:  r.pass_color,
+    },
+  }
 }
 
 /**

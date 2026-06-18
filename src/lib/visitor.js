@@ -43,17 +43,19 @@ export async function resolveVisitor() {
 /**
  * Create a new pass row in Supabase and store the token in localStorage.
  * Called when a new visitor clicks ENTER on the welcome screen.
+ * Uses a SECURITY DEFINER RPC because RLS's SELECT policy (token = header)
+ * would otherwise reject the RETURNING row from a plain insert().select() —
+ * the new token isn't in localStorage (and thus the request header) until
+ * after this call succeeds.
  */
 export async function createPass({ intent, name }) {
   const token = crypto.randomUUID()
   const passColor = PASS_COLORS[intent] ?? '#c4a24d'
 
   const { data, error } = await retryOnce(() =>
-    supabase
-      .from('passes')
-      .insert({ token, animal_name: name, intent, pass_color: passColor })
-      .select()
-      .single()
+    supabase.rpc('create_pass', {
+      p_token: token, p_animal_name: name, p_intent: intent, p_pass_color: passColor,
+    })
   )
 
   if (error) {
@@ -61,9 +63,10 @@ export async function createPass({ intent, name }) {
     throw error
   }
 
+  const row = Array.isArray(data) ? data[0] : data
   localStorage.setItem(TOKEN_KEY, token)
-  console.log('[Guest Archive] Created new pass:', data)
-  return data
+  console.log('[Guest Archive] Created new pass:', row)
+  return row
 }
 
 /**
