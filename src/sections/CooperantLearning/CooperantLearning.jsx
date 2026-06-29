@@ -5,7 +5,7 @@ import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
 import './CooperantLearning.css'
 
-import heroComposite from '../../assets/cooperant/v2/hero-composite.gif'
+import heroComposite from '../../assets/cooperant/v2/hero-composite.mp4'
 import problemSentiment from '../../assets/cooperant/v2/problem-sentiment.png'
 import problemSentimentMobile from '../../assets/cooperant/v2/problem-sentiment-mobile.png'
 import iconPodcast from '../../assets/cooperant/v2/icon-podcast.svg'
@@ -310,7 +310,7 @@ export default function CooperantLearning({ onNavigate }) {
                   <p className="cs-label">COOPERANT LEARNING</p>
                   <h1 className="cs-hero-title">Turning podcast listening into certified learning.</h1>
                   <div className="cs-v2-hero-visual--mobile">
-                    <img src={heroComposite} alt="Cooperant Learning product screens across desktop and mobile" />
+                    <video src={heroComposite} autoPlay loop muted playsInline />
                   </div>
                   <p className="cs-hero-body">
                     BCBAs — board-certified behavior analysts — are required to earn continuing education credits (CEUs) every certification cycle. Cooperant Learning gives them one place to listen to expert podcasts, take a short quiz, and walk away with the credits they need. I designed and built the platform from scratch.
@@ -328,7 +328,7 @@ export default function CooperantLearning({ onNavigate }) {
                   </a>
                 </div>
                 <div className="cs-v2-hero-visual">
-                  <img src={heroComposite} alt="Cooperant Learning product screens across desktop and mobile" />
+                  <video src={heroComposite} autoPlay loop muted playsInline />
                 </div>
               </div>
 

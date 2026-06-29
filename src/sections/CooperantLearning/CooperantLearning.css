@@ -814,7 +814,8 @@
   display: none;
 }
 
-.cs-v2-hero-visual img {
+.cs-v2-hero-visual img,
+.cs-v2-hero-visual video {
   width: 100%;
   height: auto;
   display: block;
@@ -2034,7 +2035,8 @@
     overflow: hidden;
   }
 
-  .cooperant-page .cs-v2-hero-visual--mobile img {
+  .cooperant-page .cs-v2-hero-visual--mobile img,
+  .cooperant-page .cs-v2-hero-visual--mobile video {
     width: 100%;
     height: auto;
     display: block;
