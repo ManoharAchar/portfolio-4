@@ -3,15 +3,8 @@ import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import Footer from '../../components/Footer/Footer'
-import { PROJECTS } from '../../data/projects'
+import { PROJECTS, getProjectPage } from '../../data/projects'
 import './HomePage.css'
-
-const PROJECT_CLICKS = {
-  cooperant:    (nav) => nav('cooperant'),
-  'black-baza': (nav) => nav('black-bazaar'),
-  'senior-mode':(nav) => nav('senior-mode'),
-  mochitta:     (nav) => nav('mochitta'),
-}
 
 export default function HomePage({ activePage = 'home', onNavigate, guest, showPassCard }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -58,7 +51,7 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
                 <div key={project.id} className="project-card-slot" data-sort={project.number}>
                   <ProjectCard
                     {...project}
-                    onClick={PROJECT_CLICKS[project.id] ? () => PROJECT_CLICKS[project.id](onNavigate) : undefined}
+                    onClick={() => onNavigate(getProjectPage(project.id))}
                   />
                 </div>
               ))}

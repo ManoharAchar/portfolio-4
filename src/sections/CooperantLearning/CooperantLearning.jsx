@@ -1,6 +1,8 @@
 import { useState, useEffect, Fragment } from 'react'
 import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
+import { getViewNext, getProjectPage } from '../../data/projects'
 import './CooperantLearning.css'
 
 import heroComposite from '../../assets/cooperant/v2/hero-composite.gif'
@@ -36,8 +38,7 @@ import iconLearnedSitemap from '../../assets/cooperant/v2/icon-learned-sitemap.p
 import iconArrowNext from '../../assets/cooperant/v2/icon-arrow-next.png'
 import invitePhoto from '../../assets/cooperant/v2/invite-photo.jpg'
 import iconCopy from '../../assets/cooperant/v2/icon-copy.svg'
-import viewNextCooperant from '../../assets/cooperant/v2/viewnext-cooperant.png'
-import viewNextAndroidElderly from '../../assets/cooperant/v2/viewnext-android-elderly.png'
+import iconMail from '../../assets/cooperant/v2/icon-mail.png'
 
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
@@ -133,11 +134,6 @@ const NEXT_STEPS = [
   'ACE badge placement above the fold',
 ]
 
-const VIEW_NEXT = [
-  { img: viewNextCooperant, title: 'Cooperant Learning', desc: 'A 0-to-1 continuing-education platform turning podcast listeners into CEU earners for behavior analysts. Scored 84.9 SUS and +65 NPS with 20 BCBAs.' },
-  { img: viewNextAndroidElderly, title: 'Android for Elderly', desc: 'A state-communication layer making silent mode legible for seniors and recoverable for caregivers. Sound-state recognition went 70% → 100% after V2.' },
-]
-
 function FlowCard({ icon, title, desc }) {
   return (
     <div className="cs-flow-card">
@@ -169,6 +165,8 @@ function StepCard({ img, title, desc, index }) {
 export default function CooperantLearning({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('overview')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+  const isMobile = useIsMobile()
   const sectionsRef = useReveal()
 
   useEffect(() => {
@@ -201,6 +199,8 @@ export default function CooperantLearning({ onNavigate }) {
 
   const copyEmail = () => {
     navigator.clipboard?.writeText('manohar.create@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 1800)
   }
 
   return (
@@ -510,9 +510,10 @@ export default function CooperantLearning({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <span>✉</span>
+                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
                       <img src={iconCopy} alt="Copy email address" />
+                      {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
                       LinkedIn <span>↗</span>
@@ -529,13 +530,13 @@ export default function CooperantLearning({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {VIEW_NEXT.map(({ img, title, desc }) => (
-                  <div key={title} className="cs-viewnext-card">
+                {getViewNext('cooperant').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                  <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <img src={img} alt={`${title} preview`} />
+                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{desc}</p>
+                    <p className="cs-viewnext-card__desc">{description}</p>
                   </div>
                 ))}
               </div>

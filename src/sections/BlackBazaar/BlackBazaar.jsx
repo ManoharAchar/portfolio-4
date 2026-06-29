@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Footer from '../../components/Footer/Footer'
 import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
 import { useReveal } from '../../lib/useReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
+import { getViewNext, getProjectPage } from '../../data/projects'
 import '../CooperantLearning/CooperantLearning.css'
 import './BlackBazaar.css'
 
@@ -15,121 +17,16 @@ import traceabilityVideo from '../../assets/black-baza/Traceability.mp4'
 import storePickupVideo from '../../assets/black-baza/Store pick up.mp4'
 import usabilityTestImage from '../../assets/black-baza/Black Baza Usability test.png'
 import hoverSvg from '../../assets/Hover.svg'
+import iconCopy from '../../assets/black-baza/icon-copy.svg'
+import iconMail from '../../assets/black-baza/icon-mail.png'
+import invitePhoto from '../../assets/black-baza/invite-photo.jpg'
 
-// ── Avatar image parts ────────────────────────────────────────
-// Buyer (Asian Women)
-const imgBody        = 'https://www.figma.com/api/mcp/asset/c3260ca0-d756-46b2-9a3b-7650d5b92a09'
-const imgChangeColor = 'https://www.figma.com/api/mcp/asset/1079ff7d-b948-4c31-a9ad-cab7cc3b02b2'
-const imgEarring     = 'https://www.figma.com/api/mcp/asset/b092035f-5d0a-4bd9-9932-1a2df7f7a165'
-const imgCC1         = 'https://www.figma.com/api/mcp/asset/d4c493b7-d012-48d8-9b32-ba69e379bcf0'
-const imgEyeEyebrow  = 'https://www.figma.com/api/mcp/asset/6f21fab1-1125-49cd-885a-39211fcd6e8a'
-const imgCC2         = 'https://www.figma.com/api/mcp/asset/453ded57-06ab-4daa-8c33-314aa897ccd1'
-const imgFace        = 'https://www.figma.com/api/mcp/asset/97f7ea1c-df63-4c86-abc9-300f6131c339'
-const imgCC3         = 'https://www.figma.com/api/mcp/asset/8d034fb8-81dd-4f3a-b695-96076ec9524f'
-const imgHair        = 'https://www.figma.com/api/mcp/asset/0a169e3d-ac8a-449f-b499-24a76e3ad0dd'
-const imgCC4         = 'https://www.figma.com/api/mcp/asset/39d342c9-16ca-4904-8e4e-8df29df89117'
-const imgMouth       = 'https://www.figma.com/api/mcp/asset/ab629a73-c89e-4039-9197-6893b78b9f0b'
-// Retailer (Artis)
-const imgAccecoris   = 'https://www.figma.com/api/mcp/asset/02a80db0-ee3a-4c7b-b4fb-18d5ac96c00f'
-const imgCC7         = 'https://www.figma.com/api/mcp/asset/69c9d0d8-abd4-4ade-a320-198a3919c1c6'
-const imgBeard       = 'https://www.figma.com/api/mcp/asset/c50aa9f8-fd69-4da0-ba9a-ac0cbab1c0ce'
-const imgCC8         = 'https://www.figma.com/api/mcp/asset/08b98a25-cc65-4e0c-bab5-3babad96e958'
-const imgEyeEyebrow1 = 'https://www.figma.com/api/mcp/asset/b5607ae3-ee11-4542-95f4-7af2007fba2a'
-const imgCC9         = 'https://www.figma.com/api/mcp/asset/5069cc29-2517-439d-a72e-e04c4865c8c0'
-const imgFace1       = 'https://www.figma.com/api/mcp/asset/ac6495ff-cb29-4f49-8050-561b875f5c39'
-const imgCC10        = 'https://www.figma.com/api/mcp/asset/e5c72c53-896d-411d-ac93-f6211bac45a4'
-const imgHair1       = 'https://www.figma.com/api/mcp/asset/252b6b63-c7a9-4194-a915-ec17c44bdb56'
-const imgCC11        = 'https://www.figma.com/api/mcp/asset/6988e69a-5c99-4fe5-bbf6-e8e2f04ccf10'
-const imgHat         = 'https://www.figma.com/api/mcp/asset/be76c3f2-9d40-419d-8449-face7b5ea842'
-const imgCC12        = 'https://www.figma.com/api/mcp/asset/fb4c4ed7-2625-47b9-b6e0-15e3c39bb328'
-const imgMouth1      = 'https://www.figma.com/api/mcp/asset/1dd7435c-b991-479a-9df0-9c66c9d5c5b8'
-const imgCC13        = 'https://www.figma.com/api/mcp/asset/4d3574b7-d2a8-42f0-a111-99cac7010ce0'
-const imgCC14        = 'https://www.figma.com/api/mcp/asset/a179fdb8-99a3-42ca-a5a8-b57a95580306'
-const imgOuter       = 'https://www.figma.com/api/mcp/asset/42766456-714c-40e9-9bf4-1d2ad8bd47c1'
-const imgTShirt      = 'https://www.figma.com/api/mcp/asset/bbf837b3-e20f-4e7f-b864-599734c90258'
-// Farmer (Indian Man)
-const imgBeard1      = 'https://www.figma.com/api/mcp/asset/cf6790b1-d63c-44ce-a2a9-3c20da8bf98a'
-const imgCC17        = 'https://www.figma.com/api/mcp/asset/22b91e53-50f6-4614-9e2c-e1522decea2e'
-const imgBody1       = 'https://www.figma.com/api/mcp/asset/37b1af81-111b-4980-b17f-452df6fde464'
-const imgCC18        = 'https://www.figma.com/api/mcp/asset/2b81eb4e-9686-40c9-b532-963f1218938c'
-const imgEyeEyebrow2 = 'https://www.figma.com/api/mcp/asset/4e6236f0-0eca-412c-8e96-0062c1a1c917'
-const imgCC19        = 'https://www.figma.com/api/mcp/asset/8cba7822-266e-4493-86b4-1a74caaf408f'
-const imgFace2       = 'https://www.figma.com/api/mcp/asset/3f33c962-8aef-48c8-9148-ab0f32a3075d'
-const imgCC20        = 'https://www.figma.com/api/mcp/asset/ee01643c-1474-4a10-a27a-0e2575277aa5'
-const imgMoustache   = 'https://www.figma.com/api/mcp/asset/14cf1c48-f854-4cff-9065-7321c93dd929'
-const imgCC21        = 'https://www.figma.com/api/mcp/asset/7c648943-c80a-407d-8211-300c49829bb3'
-const imgMouth2      = 'https://www.figma.com/api/mcp/asset/21f14ea5-db73-4e92-9227-26d981d1d8e1'
-const imgCC23        = 'https://www.figma.com/api/mcp/asset/b40d3de9-0158-43a2-8994-980103c7f53d'
-const imgNeck        = 'https://www.figma.com/api/mcp/asset/bea2de12-37ec-4be1-9af9-9f6d8ec64f73'
-const imgTurban      = 'https://www.figma.com/api/mcp/asset/b27f284f-b650-4ccc-9024-5029cc79741c'
+// ── Avatar images (flat, pre-composited) ───────────────────────
+import buyerAvatar    from '../../assets/black-baza/Buyer icon.png'
+import retailerAvatar from '../../assets/black-baza/Retailer.png'
+import farmerAvatar   from '../../assets/black-baza/Farmer.png'
 
-function AvatarLayer({ src, maskSrc, color }) {
-  return (
-    <>
-      <img alt="" className="bb-avatar__img" src={src} />
-      {color && maskSrc && (
-        <div
-          className="bb-avatar__overlay"
-          style={{
-            background: color,
-            WebkitMaskImage: `url("${maskSrc}")`,
-            maskImage: `url("${maskSrc}")`,
-          }}
-        />
-      )}
-    </>
-  )
-}
-
-function BuyerAvatar() {
-  return (
-    <div className="bb-avatar">
-      <AvatarLayer src={imgBody}      maskSrc={imgChangeColor} color="#9e7d84" />
-      <AvatarLayer src={imgEarring}   maskSrc={imgCC1}         color="#dacdcc" />
-      <AvatarLayer src={imgEyeEyebrow} maskSrc={imgCC2}        color="#ac7080" />
-      <AvatarLayer src={imgFace}      maskSrc={imgCC3}         color="#c2837b" />
-      <AvatarLayer src={imgHair}      maskSrc={imgCC4}         color="#ac7080" />
-      <AvatarLayer src={imgMouth}     maskSrc={null}           color={null}    />
-    </div>
-  )
-}
-
-function RetailerAvatar() {
-  return (
-    <div className="bb-avatar">
-      <AvatarLayer src={imgAccecoris}  maskSrc={imgCC7}  color="#c4948e" />
-      <AvatarLayer src={imgBeard}      maskSrc={imgCC8}  color="#ac7080" />
-      <AvatarLayer src={imgEyeEyebrow1} maskSrc={imgCC9} color="#ac7080" />
-      <AvatarLayer src={imgFace1}      maskSrc={imgCC10} color="#c2837b" />
-      <AvatarLayer src={imgHair1}      maskSrc={imgCC11} color="#e0ab62" />
-      <AvatarLayer src={imgHat}        maskSrc={imgCC12} color="#9e7d84" />
-      <AvatarLayer src={imgMouth1}     maskSrc={imgCC13} color="#edb66e" />
-      <div className="bb-avatar__img" style={{ position: 'absolute', inset: 0 }}>
-        <div className="bb-avatar__overlay" style={{ background: '#c4948e', WebkitMaskImage: `url("${imgCC14}")`, maskImage: `url("${imgCC14}")` }} />
-      </div>
-      <AvatarLayer src={imgOuter}  maskSrc={null} color={null} />
-      <AvatarLayer src={imgTShirt} maskSrc={null} color={null} />
-    </div>
-  )
-}
-
-function FarmerAvatar() {
-  return (
-    <div className="bb-avatar">
-      <AvatarLayer src={imgBeard1}     maskSrc={imgCC17} color="#ac7080" />
-      <AvatarLayer src={imgBody1}      maskSrc={imgCC18} color="#edb66e" />
-      <AvatarLayer src={imgEyeEyebrow2} maskSrc={imgCC19} color="#ac7080" />
-      <AvatarLayer src={imgFace2}      maskSrc={imgCC20} color="#b96c64" />
-      <AvatarLayer src={imgMoustache}  maskSrc={imgCC21} color="#ac7080" />
-      <AvatarLayer src={imgMouth2}     maskSrc={null}    color={null}    />
-      <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', background: '#e0ab62', WebkitMaskImage: `url("${imgCC23}")`, maskImage: `url("${imgCC23}")`, mixBlendMode: 'overlay' }} />
-      <AvatarLayer src={imgNeck}   maskSrc={null} color={null} />
-      <AvatarLayer src={imgTurban} maskSrc={null} color={null} />
-    </div>
-  )
-}
-
-const AVATAR_BY_NAME = { Buyer: BuyerAvatar, Retailer: RetailerAvatar, Farmer: FarmerAvatar }
+const AVATAR_BY_NAME = { Buyer: buyerAvatar, Retailer: retailerAvatar, Farmer: farmerAvatar }
 
 const TOC_ITEMS = [
   { id: 'hero', label: 'Hero' },
@@ -197,6 +94,8 @@ function QuoteCallout({ quote, attribution }) {
 export default function BlackBazaar({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+  const isMobile = useIsMobile()
   const sectionsRef = useReveal()
 
   useEffect(() => {
@@ -225,6 +124,12 @@ export default function BlackBazaar({ onNavigate }) {
   const navigateToSection = (id) => {
     setMobileMenuOpen(false)
     scrollToSection(id)
+  }
+
+  const copyEmail = () => {
+    navigator.clipboard?.writeText('manohar.create@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 1800)
   }
 
   return (
@@ -407,10 +312,11 @@ export default function BlackBazaar({ onNavigate }) {
 
               <div className="bb-user-group-row">
                 {USER_GROUPS.map(({ name, needs }) => {
-                  const Avatar = AVATAR_BY_NAME[name]
                   return (
                     <div key={name} className="bb-user-group-card">
-                      <Avatar />
+                      <div className="bb-avatar">
+                        <img alt="" className="bb-avatar__img" src={AVATAR_BY_NAME[name]} />
+                      </div>
                       <div className="bb-user-group-card__accent" />
                       <p className="bb-user-group-card__name">{name}</p>
                       <ul className="bb-user-group-card__list">
@@ -618,6 +524,51 @@ export default function BlackBazaar({ onNavigate }) {
               <p className="cs-section-body cs-section-body--sm">
                 Validation: Moderated usability testing (n=16 across 3 user groups) + 3-evaluator heuristic review. SUS scoring, task success rates, severity-rated issue log. Full test plan, data workbook, and research report available on request.
               </p>
+            </section>
+
+            {/* Invite */}
+            <section className="cs-section">
+              <div className="cs-invite">
+                <div className="cs-invite__content">
+                  <p className="cs-invite__eyebrow">STILL CURIOUS?</p>
+                  <h2 className="cs-invite__heading">
+                    I&rsquo;d love to walk you<br />through my thinking.
+                  </h2>
+                  <p className="cs-invite__body">
+                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                  </p>
+                  <div className="cs-invite__actions">
+                    <button className="cs-invite__email" type="button" onClick={copyEmail}>
+                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <span>manohar.create@gmail.com</span>
+                      <img src={iconCopy} alt="Copy email address" />
+                      {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
+                    </button>
+                    <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
+                      LinkedIn <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="cs-invite__photo">
+                  <img src={invitePhoto} alt="Manohar Achar" />
+                </div>
+              </div>
+            </section>
+
+            {/* View Next */}
+            <section className="cs-section">
+              <p className="cs-label">VIEW NEXT</p>
+              <div className="cs-viewnext-grid">
+                {getViewNext('black-baza').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                  <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
+                    <div className="cs-viewnext-card__img">
+                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                    </div>
+                    <h3 className="cs-viewnext-card__title">{title}</h3>
+                    <p className="cs-viewnext-card__desc">{description}</p>
+                  </div>
+                ))}
+              </div>
             </section>
 
           </div>

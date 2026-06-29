@@ -1287,6 +1287,7 @@
 }
 
 .cs-invite__email {
+  position: relative;
   background: var(--accent);
   border: none;
   border-radius: 10px;
@@ -1308,6 +1309,29 @@
 .cs-invite__email img {
   width: 18px;
   height: 18px;
+}
+
+.cs-invite__copied-tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2a2a2a;
+  color: #faf8f1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: cs-copied-fade 1.8s ease forwards;
+}
+
+@keyframes cs-copied-fade {
+  0% { opacity: 0; transform: translate(-50%, 4px); }
+  15% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 0); }
 }
 
 .cs-invite__linkedin {
@@ -1353,6 +1377,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: pointer;
 }
 
 .cs-viewnext-card__img {
@@ -1362,9 +1387,15 @@
   border: 1px solid #555553;
   border-radius: 20px;
   overflow: hidden;
+  transition: border-color 0.2s ease;
 }
 
-.cs-viewnext-card__img img {
+.cs-viewnext-card:hover .cs-viewnext-card__img {
+  border-color: #cbc8bf;
+}
+
+.cs-viewnext-card__img img,
+.cs-viewnext-card__img video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2267,6 +2298,10 @@
     flex-direction: column;
   }
 
+  .cs-invite__email-icon {
+    display: none;
+  }
+
   .cs-invite__content {
     padding: 24px;
     gap: 20px;
@@ -2288,17 +2323,9 @@
 
   /* ── View Next ──────────────────────────────────────────── */
 
-  .cooperant-page .cs-viewnext-grid {
+  .cs-viewnext-grid {
     flex-direction: column;
     gap: 24px;
-  }
-
-  .cooperant-page .cs-viewnext-card:first-child {
-    order: 2;
-  }
-
-  .cooperant-page .cs-viewnext-card:last-child {
-    order: 1;
   }
 
   .cs-viewnext-card__img {

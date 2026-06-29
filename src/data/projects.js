@@ -43,6 +43,7 @@ export const PROJECTS = [
     imageColor: '#829eb0',
     video: thumbBlackbaza,
     thumbTime: 2.19,
+    loopAlways: true,
     title: 'Black Baza Coffee',
     description:
       'A two-sided mobile platform linking buyers and retailers to farmers through traceability and sustainability. Buyer SUS 71.6, validated with 16 users across 3 groups.',
@@ -58,6 +59,7 @@ export const PROJECTS = [
     imageColor: '#8eb082',
     video: thumbSeniorMode,
     thumbTime: 1.16,
+    loopAlways: true,
     title: 'Senior Mode',
     description:
       'A state-communication layer making silent mode legible for seniors and recoverable for caregivers. Sound-state recognition went 70% → 100% after V2.',
@@ -67,3 +69,22 @@ export const PROJECTS = [
     column: 'right',
   },
 ]
+
+// Picks the next 2 projects after currentId, wrapping around — never the current one.
+export function getViewNext(currentId) {
+  const idx = PROJECTS.findIndex((p) => p.id === currentId)
+  if (idx === -1) return PROJECTS.slice(0, 2)
+  return [PROJECTS[(idx + 1) % PROJECTS.length], PROJECTS[(idx + 2) % PROJECTS.length]]
+}
+
+// Project id -> page id used by App.jsx's router (differs for black-baza).
+const PROJECT_PAGES = {
+  cooperant: 'cooperant',
+  mochitta: 'mochitta',
+  'black-baza': 'black-bazaar',
+  'senior-mode': 'senior-mode',
+}
+
+export function getProjectPage(id) {
+  return PROJECT_PAGES[id]
+}

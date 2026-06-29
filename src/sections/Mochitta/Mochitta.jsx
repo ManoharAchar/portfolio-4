@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
+import { getViewNext, getProjectPage } from '../../data/projects'
 import '../CooperantLearning/CooperantLearning.css'
 import './Mochitta.css'
 
@@ -27,8 +29,7 @@ import iconLearnedPen from '../../assets/mochitta/icon-learned-pen.png'
 import iconLearnedPeople from '../../assets/mochitta/icon-learned-people.png'
 import invitePhoto from '../../assets/mochitta/invite-photo.jpg'
 import iconCopy from '../../assets/mochitta/icon-copy.svg'
-import viewNextAndroidElderly from '../../assets/mochitta/viewnext-android-elderly.png'
-import viewNextCooperant from '../../assets/mochitta/viewnext-cooperant.png'
+import iconMail from '../../assets/mochitta/icon-mail.png'
 
 // The autoplay attribute alone doesn't reliably start these (they mount at
 // opacity:0 under the scroll-reveal observer), so kick play() explicitly.
@@ -170,10 +171,6 @@ const LEARNED_ITEMS = [
   { icon: iconLearnedPeople, num: '03', headline: 'Test with the same people twice.', text: 'Using the same participants and instruments across both rounds made the comparison direct. The improvement was not "different people found it easier." It was "the same people, on the same tasks, performed measurably better."' },
 ]
 
-const VIEW_NEXT = [
-  { img: viewNextAndroidElderly, title: 'Android for Elderly', desc: 'A state-communication layer making silent mode legible for seniors and recoverable for caregivers. Sound-state recognition went 70% → 100% after V2.' },
-  { img: viewNextCooperant, title: 'Cooperant Learning', desc: 'A 0-to-1 continuing-education platform turning podcast listeners into CEU earners for behavior analysts. Scored 84.9 SUS and +65 NPS with 20 BCBAs.' },
-]
 
 function BrokeRow({ title, body, metric, quote, img, reverse, index }) {
   const info = (
@@ -328,16 +325,10 @@ export default function Mochitta({ onNavigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeFlow, setActiveFlow] = useState(0)
   const [flowVideoPlaying, setFlowVideoPlaying] = useState(true)
+  const [emailCopied, setEmailCopied] = useState(false)
   const flowVideoRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches)
+  const isMobile = useIsMobile()
   const sectionsRef = useReveal()
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    const handleChange = (e) => setIsMobile(e.matches)
-    mq.addEventListener('change', handleChange)
-    return () => mq.removeEventListener('change', handleChange)
-  }, [])
 
   const selectFlow = (index) => {
     setActiveFlow(index)
@@ -388,6 +379,8 @@ export default function Mochitta({ onNavigate }) {
 
   const copyEmail = () => {
     navigator.clipboard?.writeText('manohar.create@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 1800)
   }
 
   return (
@@ -705,9 +698,10 @@ export default function Mochitta({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <span>✉</span>
+                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
                       <img src={iconCopy} alt="Copy email address" />
+                      {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
                       LinkedIn <span>↗</span>
@@ -724,13 +718,13 @@ export default function Mochitta({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {VIEW_NEXT.map(({ img, title, desc }) => (
-                  <div key={title} className="cs-viewnext-card">
+                {getViewNext('mochitta').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                  <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <img src={img} alt={`${title} preview`} />
+                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{desc}</p>
+                    <p className="cs-viewnext-card__desc">{description}</p>
                   </div>
                 ))}
               </div>

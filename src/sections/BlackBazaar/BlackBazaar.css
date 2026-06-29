@@ -3,6 +3,10 @@
    CooperantLearning.css, imported in BlackBazaar.jsx)
    ════════════════════════════════════════════════════════════ */
 
+.black-bazaar-page .cs-sections {
+  margin: 0 auto;
+}
+
 /* ── Avatar Composition ───────────────────────────────────── */
 
 .bb-avatar {

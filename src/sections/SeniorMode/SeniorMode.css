@@ -3,6 +3,10 @@
    CooperantLearning.css, imported in SeniorMode.jsx)
    ════════════════════════════════════════════════════════════ */
 
+.senior-mode-page .cs-sections {
+  margin: 0 auto;
+}
+
 /* ── Hero Title Group ─────────────────────────────────────── */
 
 .sm-hero-title-group {

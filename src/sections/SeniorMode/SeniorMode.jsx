@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Footer from '../../components/Footer/Footer'
 import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
 import { useReveal } from '../../lib/useReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
+import { getViewNext, getProjectPage } from '../../data/projects'
 import '../CooperantLearning/CooperantLearning.css'
 import './SeniorMode.css'
 
@@ -15,6 +17,9 @@ import decision3Video from '../../assets/senior-mode/Decision 3.mp4'
 import iaImage from '../../assets/senior-mode/IA.png'
 import testingDataImage from '../../assets/senior-mode/Testing data.png'
 import hoverSvg from '../../assets/Hover.svg'
+import iconCopy from '../../assets/senior-mode/icon-copy.svg'
+import iconMail from '../../assets/senior-mode/icon-mail.png'
+import invitePhoto from '../../assets/senior-mode/invite-photo.jpg'
 
 const TOC_ITEMS = [
   { id: 'hero', label: 'Hero' },
@@ -40,6 +45,8 @@ const MOBILE_SITE_LINKS = [
 export default function SeniorMode({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+  const isMobile = useIsMobile()
   const sectionsRef = useReveal()
 
   useEffect(() => {
@@ -68,6 +75,12 @@ export default function SeniorMode({ onNavigate }) {
   const navigateToSection = (id) => {
     setMobileMenuOpen(false)
     scrollToSection(id)
+  }
+
+  const copyEmail = () => {
+    navigator.clipboard?.writeText('manohar.create@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 1800)
   }
 
   return (
@@ -536,6 +549,51 @@ export default function SeniorMode({ onNavigate }) {
               <p className="cs-section-body">
                 If this shipped, the next priorities are week-over-week trend comparison and user-controlled notification frequency.
               </p>
+            </section>
+
+            {/* Invite */}
+            <section className="cs-section">
+              <div className="cs-invite">
+                <div className="cs-invite__content">
+                  <p className="cs-invite__eyebrow">STILL CURIOUS?</p>
+                  <h2 className="cs-invite__heading">
+                    I&rsquo;d love to walk you<br />through my thinking.
+                  </h2>
+                  <p className="cs-invite__body">
+                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                  </p>
+                  <div className="cs-invite__actions">
+                    <button className="cs-invite__email" type="button" onClick={copyEmail}>
+                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <span>manohar.create@gmail.com</span>
+                      <img src={iconCopy} alt="Copy email address" />
+                      {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
+                    </button>
+                    <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
+                      LinkedIn <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="cs-invite__photo">
+                  <img src={invitePhoto} alt="Manohar Achar" />
+                </div>
+              </div>
+            </section>
+
+            {/* View Next */}
+            <section className="cs-section">
+              <p className="cs-label">VIEW NEXT</p>
+              <div className="cs-viewnext-grid">
+                {getViewNext('senior-mode').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                  <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
+                    <div className="cs-viewnext-card__img">
+                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                    </div>
+                    <h3 className="cs-viewnext-card__title">{title}</h3>
+                    <p className="cs-viewnext-card__desc">{description}</p>
+                  </div>
+                ))}
+              </div>
             </section>
 
           </div>

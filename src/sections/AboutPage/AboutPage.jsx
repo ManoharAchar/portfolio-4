@@ -5,7 +5,7 @@ import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
 import './AboutPage.css'
 
-import introPortrait  from '../../assets/about/about-intro-1.jpg'
+import introPortrait  from '../../assets/about/invite-photo.jpg'
 import introNature    from '../../assets/about/about-intro-nature.gif'
 import introCandid    from '../../assets/about/about-intro-3.jpg'
 import hobbySketching from '../../assets/about/about-hobby-sketching.jpeg'
