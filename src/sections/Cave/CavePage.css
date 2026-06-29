@@ -3,7 +3,7 @@
 }
 
 .cave-content {
-  margin-left: 280px;
+  margin-left: 240px;
   min-height: calc(100vh - 0px);
   background: #2a2a2a;
   display: flex;

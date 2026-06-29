@@ -24,15 +24,15 @@
 /* ── Sidebar ──────────────────────────────────────────────── */
 
 .cs-sidebar {
-  width: 280px;
-  min-width: 280px;
+  width: 240px;
+  min-width: 240px;
   background: #3c3c3a;
   position: sticky;
   top: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 40px 32px;
+  padding: 40px 20px;
   gap: 38px;
   overflow-y: auto;
   flex-shrink: 0;
@@ -588,7 +588,7 @@
 .cs-constraint-card__label {
   font-family: 'Source Code Pro', monospace;
   font-size: 12px;
-  color: #798c6d;
+  color: var(--accent);
   line-height: normal;
   margin: 0;
   white-space: nowrap;
@@ -716,6 +716,681 @@
   width: 100%;
 }
 
+/* ════════════════════════════════════════════════════════════
+   Cooperant Learning V2 — page-specific layout + new sections
+   Scoped to .cooperant-page so the shared cs-* primitives above
+   stay untouched for Black Baza / Senior Mode.
+   ════════════════════════════════════════════════════════════ */
+
+.cs-section--gap-28 { gap: 28px; }
+
+.cooperant-page .cs-main {
+  padding: 64px 24px 140px;
+}
+
+.cooperant-page .cs-sections {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  gap: 120px;
+}
+
+/* ── Overview (Hero + Outcomes Banner) ───────────────────── */
+
+.cs-v2-overview {
+  gap: 65px;
+}
+
+.cs-v2-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+  width: 100%;
+}
+
+.cs-v2-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 440px;
+  flex-shrink: 0;
+}
+
+.cs-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cs-chip {
+  background: #3c3c3a;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cs-chip--full {
+  flex: 1 1 100%;
+}
+
+.cs-chip__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.cs-chip__value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #faf8f1;
+  margin: 0;
+}
+
+.cs-live-link {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #7a7a7a;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.cs-live-link:hover {
+  opacity: 0.7;
+}
+
+.cs-v2-hero-visual {
+  flex: 1;
+  min-width: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-v2-hero-visual--mobile {
+  display: none;
+}
+
+.cs-v2-hero-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.cs-outcomes-banner {
+  display: flex;
+  width: 100%;
+  background: #3c3c3a;
+  border-radius: 20px;
+  padding: 20px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cs-outcome-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0 4px 29px;
+  border-left: 1px solid #4d4d4b;
+  min-width: 0;
+}
+
+.cs-outcome-stat:first-child {
+  padding-left: 0;
+  padding-right: 28px;
+  border-left: none;
+}
+
+.cs-outcome-stat__value {
+  font-family: 'Fraunces', serif;
+  font-size: 38px;
+  line-height: 38px;
+  color: var(--accent);
+  margin: 0;
+  white-space: nowrap;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-outcome-stat__value--text {
+  font-size: 22px;
+  line-height: 22px;
+  white-space: normal;
+  max-width: 150px;
+}
+
+.cs-outcome-stat__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  line-height: 18px;
+  color: #b5b1a9;
+  margin: 0;
+  max-width: 150px;
+}
+
+/* ── Pain Point Flow (Problem) ───────────────────────────── */
+
+.cs-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.cs-flow-card {
+  background: #dbd8ce;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 34px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cs-flow-card__icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cs-flow-card__icon img {
+  width: 62px;
+  height: 62px;
+}
+
+.cs-flow-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.cs-flow-card__title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  color: #2a2a2a;
+  margin: 0;
+}
+
+.cs-flow-card__desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  color: #555553;
+  margin: 0;
+}
+
+.cs-flow-arrow {
+  flex-shrink: 0;
+  width: 26px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-flow-arrow img {
+  width: 12px;
+  height: 15px;
+  transform: rotate(90deg);
+}
+
+.cs-v2-chart {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cs-v2-chart--mobile {
+  display: none;
+}
+
+.cs-v2-chart img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cs-section-body--bright {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #faf8f1;
+  line-height: 26px;
+  max-width: 760px;
+  margin: 0;
+}
+
+/* ── Journey Steps (The MVP) ─────────────────────────────── */
+
+.cs-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.cs-step-card {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  border-radius: 12px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+}
+
+.cs-step-card__img {
+  width: 100%;
+  height: 231px;
+  background: #d9d9d9;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-step-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-step-card__title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #cbc8bf;
+  margin: 0 0 8px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-step-card__desc {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+/* ── What Was Built ───────────────────────────────────────── */
+
+.cs-built-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+.cs-built-card {
+  background: #3c3c3a;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 378px;
+}
+
+.cs-built-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Challenges / Decisions (composite-image cards) ──────── */
+
+.cs-challenge-grid,
+.cs-decision-grid {
+  display: flex;
+  gap: 28px;
+  width: 100%;
+}
+
+.cs-challenge-card,
+.cs-decision-card {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 341px;
+  background: #3c3c3a;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-challenge-card img,
+.cs-decision-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Impact ───────────────────────────────────────────────── */
+
+.cs-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-impact-card {
+  background: #3c3c3a;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-align: center;
+}
+
+.cs-impact-card__value {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  color: var(--accent);
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-impact-card__label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+.cs-impact-card__sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+/* ── What I Learned ───────────────────────────────────────── */
+
+.cs-learned-grid {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-learned-card {
+  flex: 1 0 0;
+  min-width: 0;
+  background: #3c3c3a;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cs-learned-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cs-learned-card__icon {
+  width: 36px;
+  height: 36px;
+  display: block;
+  background-color: var(--accent);
+  mask-mode: alpha;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.cs-learned-card__num {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #555553;
+}
+
+.cs-learned-card__headline {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #faf8f1;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-learned-card__text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+/* ── Next Steps ───────────────────────────────────────────── */
+
+.cs-next-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-next-card {
+  background: #3c3c3a;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  height: 74px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-next-card__icon {
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  display: block;
+  background-color: var(--accent);
+  mask-mode: alpha;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.cs-next-card__text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+/* ── Invite Card ──────────────────────────────────────────── */
+
+.cs-invite {
+  display: flex;
+  width: 100%;
+  background: #ebe5e0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-invite__content {
+  flex: 1;
+  min-width: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cs-invite__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.cs-invite__heading {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
+  line-height: normal;
+  color: #3c3c3a;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-invite__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  color: #736e66;
+  margin: 0;
+  max-width: 500px;
+}
+
+.cs-invite__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cs-invite__email {
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #faf8f1;
+  transition: opacity 0.15s;
+}
+
+.cs-invite__email:hover {
+  opacity: 0.85;
+}
+
+.cs-invite__email img {
+  width: 18px;
+  height: 18px;
+}
+
+.cs-invite__linkedin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3c3c3a;
+  text-decoration: none;
+}
+
+.cs-invite__linkedin span {
+  color: var(--accent);
+}
+
+.cs-invite__photo {
+  width: 280px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.cs-invite__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── View Next ────────────────────────────────────────────── */
+
+.cs-viewnext-grid {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-viewnext-card {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cs-viewnext-card__img {
+  width: 100%;
+  height: 278px;
+  background: #3c3c3a;
+  border: 1px solid #555553;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-viewnext-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-viewnext-card__title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #faf8f1;
+  margin: 0;
+  padding-left: 12px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-viewnext-card__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  opacity: 0.7;
+  margin: 0;
+  padding-left: 12px;
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 
 @media (max-width: 1023px) {
@@ -725,6 +1400,83 @@
 
   .cs-main {
     padding: 60px 40px 160px;
+  }
+
+  .cooperant-page .cs-main {
+    padding: 60px 40px 160px;
+  }
+
+  .cs-v2-hero-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .cs-v2-hero-copy {
+    width: 100%;
+  }
+
+  .cs-outcomes-banner {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .cs-outcome-stat {
+    flex: 1 1 200px;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .cs-flow {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .cs-flow-arrow {
+    display: none;
+  }
+
+  .cs-flow-card {
+    flex: 1 1 200px;
+  }
+
+  .cs-steps {
+    flex-wrap: wrap;
+  }
+
+  .cs-step-card {
+    flex: 1 1 240px;
+  }
+
+  .cs-built-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-challenge-grid,
+  .cs-decision-grid,
+  .cs-learned-grid,
+  .cs-viewnext-grid {
+    flex-wrap: wrap;
+  }
+
+  .cs-challenge-card,
+  .cs-decision-card,
+  .cs-learned-card,
+  .cs-viewnext-card {
+    flex: 1 1 280px;
+  }
+
+  .cs-impact-grid,
+  .cs-next-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-invite {
+    flex-direction: column;
+  }
+
+  .cs-invite__photo {
+    width: 100%;
+    height: 220px;
   }
 
   .cs-hero-title {
@@ -971,8 +1723,8 @@
   }
 
   .cs-section-heading {
-    font-size: 30px;
-    line-height: normal;
+    font-size: 24px;
+    line-height: 30px;
     max-width: none;
   }
 
@@ -1203,6 +1955,365 @@
     font-size: 13px;
     line-height: 18px;
   }
+
+  .cooperant-page .cs-main {
+    padding: 80px 0 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .cooperant-page .cs-sections {
+    width: min(345px, calc(100vw - 48px));
+    max-width: none;
+    gap: 72px;
+  }
+
+  /* ── Overview ───────────────────────────────────────────── */
+
+  .cooperant-page .cs-v2-overview {
+    gap: 40px;
+  }
+
+  .cooperant-page .cs-v2-hero-row {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .cooperant-page .cs-v2-hero-copy {
+    width: 100%;
+    gap: 28px;
+  }
+
+  /* Neutralize legacy order: rules from the pre-redesign hero
+     (still load-bearing for Senior Mode, which reuses these same
+     primitive classes) so the new hero follows natural DOM order. */
+  .cooperant-page .cs-hero-title,
+  .cooperant-page .cs-hero-body {
+    order: 0;
+  }
+
+  .cooperant-page .cs-v2-hero-visual {
+    display: none;
+  }
+
+  .cooperant-page .cs-v2-hero-visual--mobile {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .cooperant-page .cs-v2-hero-visual--mobile img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .cooperant-page .cs-chip-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cooperant-page .cs-chip--full,
+  .cooperant-page .cs-chip--full-mobile {
+    grid-column: 1 / -1;
+  }
+
+  .cs-chip {
+    min-height: 83px;
+  }
+
+  .cs-outcomes-banner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 20px;
+    background: #dbd8ce;
+  }
+
+  .cs-outcome-stat {
+    border-left: none;
+    padding: 14px 0;
+  }
+
+  .cs-outcome-stat:first-child,
+  .cs-outcome-stat:nth-child(3) {
+    padding-right: 12px;
+    border-right: 1px solid #cbc8bf;
+  }
+
+  .cs-outcome-stat:nth-child(2),
+  .cs-outcome-stat:nth-child(4) {
+    padding-left: 12px;
+  }
+
+  .cs-outcome-stat:first-child,
+  .cs-outcome-stat:nth-child(2) {
+    border-bottom: 1px solid #cbc8bf;
+  }
+
+  .cs-outcome-stat__label {
+    color: #7a7a7a;
+  }
+
+  /* ── Problem ────────────────────────────────────────────── */
+
+  .cs-flow {
+    flex-direction: column;
+    height: auto;
+    gap: 8px;
+  }
+
+  .cs-flow-card {
+    width: 100%;
+    min-height: 112px;
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .cs-flow-card__icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cs-flow-card__icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cs-flow-card__text {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .cs-flow-arrow {
+    display: flex;
+  }
+
+  .cs-flow-arrow img {
+    transform: rotate(180deg);
+  }
+
+  .cs-v2-chart {
+    display: none;
+  }
+
+  .cs-v2-chart--mobile {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .cs-v2-chart--mobile img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  #problem .cs-v2-chart--mobile {
+    margin-bottom: 20px;
+  }
+
+  #problem .cs-flow {
+    margin-top: 20px;
+  }
+
+  /* ── The MVP ────────────────────────────────────────────── */
+
+  .cs-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cs-steps .cs-flow-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cs-steps .cs-flow-arrow img {
+    width: 20px;
+    height: 26px;
+    transform: rotate(180deg);
+  }
+
+  .cs-step-card {
+    width: 100%;
+    flex: none;
+  }
+
+  .cs-step-card__img {
+    height: auto;
+    aspect-ratio: 3490 / 3284;
+  }
+
+  .cs-step-card__title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 19px;
+    margin: 0 0 8px;
+  }
+
+  /* ── What Was Built ─────────────────────────────────────── */
+
+  .cs-built-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cs-built-card {
+    height: 398px;
+  }
+
+  /* ── Challenges / Decisions ─────────────────────────────── */
+
+  .cs-challenge-grid,
+  .cs-decision-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cs-challenge-card,
+  .cs-decision-card {
+    height: 341px;
+    width: 100%;
+    flex: none;
+  }
+
+  /* ── Impact ─────────────────────────────────────────────── */
+
+  .cs-impact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    height: auto;
+    gap: 10px;
+  }
+
+  .cs-impact-card {
+    padding: 20px;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .cs-impact-card__value {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .cs-impact-card__label {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .cs-impact-card__sub {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  /* ── What I Learned ─────────────────────────────────────── */
+
+  .cs-learned-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cs-learned-card {
+    width: 100%;
+    flex: none;
+    padding: 24px;
+  }
+
+  .cs-learned-card__text {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  /* ── Next Steps ─────────────────────────────────────────── */
+
+  .cs-next-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cs-next-card {
+    height: auto;
+    min-height: 104px;
+    padding: 14px 12px;
+    border-radius: 8px;
+  }
+
+  .cs-next-card__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .cs-next-card__text {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  /* ── Invite Card ────────────────────────────────────────── */
+
+  .cs-invite {
+    flex-direction: column;
+  }
+
+  .cs-invite__content {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .cs-invite__heading {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  .cs-invite__photo {
+    width: 100%;
+    height: 200px;
+  }
+
+  .cs-invite__photo img {
+    object-position: center 35%;
+  }
+
+  /* ── View Next ──────────────────────────────────────────── */
+
+  .cooperant-page .cs-viewnext-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .cooperant-page .cs-viewnext-card:first-child {
+    order: 2;
+  }
+
+  .cooperant-page .cs-viewnext-card:last-child {
+    order: 1;
+  }
+
+  .cs-viewnext-card__img {
+    height: 188px;
+    border-radius: 16px;
+  }
+
+  .cs-viewnext-card__title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .cooperant-page .cs-viewnext-card__desc {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 370px) {
@@ -1215,10 +2326,6 @@
   .cs-hero-title {
     font-size: 31px;
     line-height: 37px;
-  }
-
-  .cs-section-heading {
-    font-size: 28px;
   }
 
   .cs-info-card:first-child {

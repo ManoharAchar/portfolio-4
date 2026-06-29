@@ -26,6 +26,8 @@ const TOC_ITEMS = [
   { id: 'testing', label: 'Testing' },
   { id: 'shipped', label: "What's next" },
   { id: 'artefacts', label: 'Artefacts' },
+  { id: 'learned', label: 'What I learned' },
+  { id: 'next-steps', label: 'Next steps' },
 ]
 
 const MOBILE_SITE_LINKS = [
@@ -490,6 +492,49 @@ export default function SeniorMode({ onNavigate }) {
               </div>
               <p className="cs-section-body cs-section-body--sm">
                 Prototype architecture map used to scope the senior and caregiver flows before testing.
+              </p>
+            </section>
+
+            {/* What I Learned */}
+            <section className="cs-section cs-section--gap-24" id="learned">
+              <p className="cs-label">WHAT I LEARNED</p>
+              <h2 className="cs-section-heading">
+                Three lessons that changed how I approach usability work.
+              </h2>
+              <div className="sm-learning-stack">
+                {[
+                  {
+                    title: 'Locate the failure before you fix it.',
+                    body: 'Vague friction ("users were confused") leads to vague fixes. Attaching a number to a specific screen is what made each redesign precise enough to validate.',
+                  },
+                  {
+                    title: 'Design for self-correction, not just speed.',
+                    body: 'The strongest signal from UT2 was not faster task times. It was users catching their own mistakes mid-task. That changed how I think about what good scaffolding does.',
+                  },
+                  {
+                    title: 'Test with the same people twice.',
+                    body: 'Using the same participants and instruments across both rounds made the comparison direct. The improvement was not "different people found it easier." It was "the same people, on the same tasks, performed measurably better."',
+                  },
+                ].map(({ title, body }) => (
+                  <div key={title} className="sm-learning-card">
+                    <p className="sm-learning-card__title">{title}</p>
+                    <p className="sm-learning-card__body">{body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Next Steps */}
+            <section className="cs-section cs-section--gap-24" id="next-steps">
+              <p className="cs-label">NEXT STEPS</p>
+              <h2 className="cs-section-heading">
+                Three minor findings remain, all with clear fixes.
+              </h2>
+              <p className="cs-section-body">
+                The second round surfaced three minor findings, all with clear fixes: an AI-coach button that did not name its destination, a rule step that wanted an impact preview before committing, and a Simple Tag flow that needed a quick edit before confirming.
+              </p>
+              <p className="cs-section-body">
+                If this shipped, the next priorities are week-over-week trend comparison and user-controlled notification frequency.
               </p>
             </section>
 

@@ -5,16 +5,16 @@ import './FlyingCard.css'
 const CARD_W = 576
 const CARD_H = 270
 
-// Scale to match sidebar pass-thumb (244px wide)
-const SIDEBAR_SCALE = 244 / CARD_W
+// Scale to match sidebar pass-thumb (200px wide)
+const SIDEBAR_SCALE = 200 / CARD_W
 
 // Sidebar bottom section geometry (from Sidebar.css):
-//   .sidebar__bottom: padding 0 18px 24px, gap 14px
-//   pass-thumb: 114px tall
+//   .sidebar__bottom: padding 0 20px 24px, gap 14px
+//   pass-thumb: 94px tall
 //   location row: ~18px tall
-// Total from bottom: 24 + 18 + 14 + 114 = 170px
-const sidebarThumbTop = (vh) => vh - 170
-const SIDEBAR_LEFT = 18
+// Total from bottom: 24 + 18 + 14 + 94 = 150px
+const sidebarThumbTop = (vh) => vh - 150
+const SIDEBAR_LEFT = 20
 
 export default function FlyingCard({ intent, name, date, startRect, onFlying, onDone }) {
   const [phase, setPhase] = useState('start')

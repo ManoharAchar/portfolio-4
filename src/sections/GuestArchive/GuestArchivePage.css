@@ -8,7 +8,7 @@
 }
 
 .ga-main {
-  margin-left: 280px;
+  margin-left: 240px;
   display: flex;
   flex-direction: column;
 }
@@ -862,7 +862,7 @@
 /* ── Responsive ───────────────────────────────────────────── */
 
 /* YouPanel: switch to column before the result panel gets too narrow.
-   With the 280px sidebar + 128px padding, the result area shrinks below
+   With the 240px sidebar + 128px padding, the result area shrinks below
    ~400px at viewports under 1340px — causing the title to wrap to
    single-word lines and overflow the panel's hidden boundary. */
 @media (max-width: 1340px) {

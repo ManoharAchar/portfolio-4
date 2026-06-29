@@ -4,7 +4,7 @@
 
 /* Sidebar is position:fixed so offset content to the right */
 .home-content {
-  margin-left: 280px;
+  margin-left: 240px;
   padding: 64px 64px 64px;
   background: #2a2a2a;
 }
@@ -17,6 +17,7 @@
   gap: 48px;
   align-items: flex-start;
   max-width: 1408px;
+  margin: 0 auto;
 }
 
 .projects-col {

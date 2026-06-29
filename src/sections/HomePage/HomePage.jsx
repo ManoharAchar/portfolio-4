@@ -10,6 +10,7 @@ const PROJECT_CLICKS = {
   cooperant:    (nav) => nav('cooperant'),
   'black-baza': (nav) => nav('black-bazaar'),
   'senior-mode':(nav) => nav('senior-mode'),
+  mochitta:     (nav) => nav('mochitta'),
 }
 
 export default function HomePage({ activePage = 'home', onNavigate, guest, showPassCard }) {

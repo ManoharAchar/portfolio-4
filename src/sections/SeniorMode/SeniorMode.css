@@ -143,6 +143,41 @@
   margin: 0;
 }
 
+/* ── What I Learned Cards ────────────────────────────────── */
+
+.sm-learning-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 760px;
+}
+
+.sm-learning-card {
+  background: #dbd8ce;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sm-learning-card__title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: #2a2a2a;
+  line-height: 26px;
+  margin: 0;
+}
+
+.sm-learning-card__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: #555553;
+  line-height: 26px;
+  margin: 0;
+}
+
 /* ── Responsive ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {

@@ -1,0 +1,963 @@
+/* ════════════════════════════════════════════════════════════
+   Mochitta — Case Study Page
+   Base chrome (sidebar, mobile drawer, .cs-section primitives,
+   chips, invite card, view-next) comes from CooperantLearning.css.
+   Everything here is Mochitta-specific.
+   ════════════════════════════════════════════════════════════ */
+
+.mochitta-page .cs-main {
+  padding: 64px 24px 140px;
+}
+
+.mochitta-page .cs-sections {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  gap: 72px;
+}
+
+/* ── Hero visual ──────────────────────────────────────────── */
+
+.mochitta-page .cs-v2-hero-visual video,
+.mochitta-page .cs-v2-hero-visual--mobile video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ── Hero tag pills ───────────────────────────────────────── */
+
+.cs-tag-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cs-tag-pill {
+  background: var(--accent);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  color: #faf8f1;
+  white-space: nowrap;
+}
+
+/* ── Problem & Context ────────────────────────────────────── */
+
+.cs-problem-grid {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-problem-card {
+  flex: 1 0 0;
+  min-width: 0;
+  background: #3c3c3a;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cs-problem-card__top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cs-problem-card__icon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.cs-problem-card__title {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  line-height: normal;
+  color: var(--accent);
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-problem-card__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+/* ── The Product ──────────────────────────────────────────── */
+
+.cs-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-product-card {
+  background: #f0efea;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 507px;
+}
+
+.cs-product-card img,
+.cs-product-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Core Flows ───────────────────────────────────────────── */
+
+.cs-flows-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.cs-flows-col {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cs-flows-carousel {
+  display: flex;
+  gap: 12px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 0 24px;
+  scroll-padding: 0 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.cs-flows-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cs-flows-slide {
+  flex: 0 0 calc(100% - 32px);
+  min-width: 0;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cs-flows-slide .cs-flows-card {
+  flex: 1 0 auto;
+}
+
+.cs-flows-card {
+  background: #3c3c3a;
+  border-radius: 20px;
+  padding: 17px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, padding 0.25s ease, gap 0.25s ease;
+}
+
+.cs-flows-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cs-flows-card--light {
+  background: #dbd8ce;
+  padding: 20px;
+  gap: 8px;
+}
+
+.cs-flows-card__label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.cs-flows-card__title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #faf8f1;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-flows-card--light .cs-flows-card__title {
+  color: #2a2a2a;
+}
+
+.cs-flows-card__list {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+  list-style: disc;
+  color: #dbd8ce;
+  margin: 0;
+  padding-left: 22px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+
+.cs-flows-card--light .cs-flows-card__list {
+  color: #3c3c3a;
+  max-height: 240px;
+  opacity: 1;
+}
+
+.cs-flows-media {
+  flex: 1 0 0;
+  min-width: 0;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+  mask-image: radial-gradient(circle, white, black);
+}
+
+.cs-flows-media__control {
+  position: absolute;
+  bottom: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #faf8f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.cs-flows-media__control:hover {
+  opacity: 0.85;
+}
+
+.cs-flows-media__control:active {
+  transform: scale(0.94);
+}
+
+.cs-flows-media__control--play {
+  left: 24px;
+}
+
+.cs-flows-media__control--replay {
+  right: 24px;
+}
+
+.cs-flows-media img,
+.cs-flows-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* ── What Broke ───────────────────────────────────────────── */
+
+.cs-broke-block__no {
+  display: none;
+}
+
+.cs-broke-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  height: 332px;
+}
+
+.cs-broke-info {
+  width: 350px;
+  flex-shrink: 0;
+  background: #3c3c3a;
+  border-radius: 20px;
+  padding: 17px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cs-broke-info__title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #faf8f1;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-broke-info__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  line-height: 28px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.cs-broke-info__metric {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  line-height: normal;
+  color: var(--accent);
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-broke-info__quote {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: auto 0 0;
+}
+
+.cs-broke-media {
+  flex: 1 0 0;
+  min-width: 0;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-broke-media img,
+.cs-broke-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Redesign & Impact ────────────────────────────────────── */
+
+.cs-fix-stack {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cs-fix-block__no {
+  display: none;
+}
+
+.cs-fix-block {
+  padding: 0 10px;
+}
+
+.cs-fix-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.cs-fix-text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
+
+.cs-fix-text__label {
+  display: none;
+}
+
+.cs-fix-text__title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #faf8f1;
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-fix-text__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.cs-fix-media {
+  width: 560px;
+  flex-shrink: 0;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cs-fix-media img,
+.cs-fix-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-fix-metric {
+  width: 100%;
+  background: #3c3c3a;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-fix-metric__stat {
+  width: 326px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+}
+
+.cs-fix-metric__value {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  line-height: normal;
+  color: var(--accent);
+  margin: 0;
+  white-space: nowrap;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-fix-metric__caption {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.cs-fix-metric__note {
+  flex: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.cs-fix-divider {
+  width: 100%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+}
+
+.cs-fix-divider::after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: rgba(219, 216, 206, 0.18);
+}
+
+.cs-impact-banner {
+  width: 100%;
+  background: #ebe5e0;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-impact-banner__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.cs-impact-banner__headline {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--accent);
+  margin: 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.cs-impact-banner__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #555553;
+  margin: 0;
+}
+
+.cs-impact-banner__icon {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* ── What's Next ──────────────────────────────────────────── */
+
+.cs-next-lead {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  line-height: normal;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .mochitta-page .cs-main {
+    padding: 60px 40px 160px;
+  }
+
+  .mochitta-page .cs-v2-hero-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .mochitta-page .cs-v2-hero-copy {
+    width: 100%;
+  }
+
+  .cs-problem-grid {
+    flex-wrap: wrap;
+  }
+
+  .cs-problem-card {
+    flex: 1 1 280px;
+  }
+
+  .cs-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cs-flows-row {
+    flex-direction: column;
+  }
+
+  .cs-flows-media {
+    flex: 0 0 400px;
+    height: 400px;
+  }
+
+  .cs-broke-row {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .cs-broke-info {
+    width: 100%;
+  }
+
+  .cs-broke-media {
+    flex: 0 0 280px;
+    height: 280px;
+  }
+
+  .cs-fix-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cs-fix-media {
+    width: 100%;
+    height: 300px;
+  }
+
+  .cs-fix-metric {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cs-fix-metric__stat {
+    width: 100%;
+    padding: 0;
+  }
+
+  .cs-fix-stack {
+    gap: 28px;
+  }
+
+  .cs-fix-block {
+    padding: 0;
+  }
+
+  .cs-fix-divider {
+    height: 1px;
+    display: block;
+    background: rgba(219, 216, 206, 0.18);
+  }
+
+  .cs-fix-divider::after {
+    content: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .mochitta-page .cs-main {
+    padding: 80px 0 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mochitta-page .cs-sections {
+    width: min(345px, calc(100vw - 48px));
+    max-width: none;
+    gap: 72px;
+  }
+
+  /* ── Overview ───────────────────────────────────────────── */
+
+  .mochitta-page .cs-v2-hero-copy {
+    gap: 22px;
+  }
+
+  .mochitta-page .cs-v2-hero-visual {
+    display: none;
+  }
+
+  .mochitta-page .cs-v2-hero-visual--mobile {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .mochitta-page .cs-v2-hero-visual--mobile img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Neutralize legacy order: rules from the pre-redesign hero
+     (still load-bearing for Senior Mode, which reuses these same
+     primitive classes), then re-sequence body before tags to
+     match the mobile reading order. */
+  .mochitta-page .cs-hero-title {
+    order: 0;
+  }
+
+  .mochitta-page .cs-hero-body {
+    order: 1;
+  }
+
+  .mochitta-page .cs-tag-pill-row {
+    order: 2;
+    gap: 0 8px;
+  }
+
+  .mochitta-page .cs-chip-row {
+    order: 3;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mochitta-page .cs-chip--full,
+  .mochitta-page .cs-chip--full-mobile {
+    grid-column: 1 / -1;
+  }
+
+  /* ── Problem & Context ──────────────────────────────────── */
+
+  .cs-problem-grid {
+    gap: 12px;
+  }
+
+  .cs-problem-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .cs-problem-card__top {
+    gap: 14px;
+  }
+
+  .cs-problem-card__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cs-problem-card__body {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  /* ── The Product ────────────────────────────────────────── */
+
+  .cs-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cs-product-card {
+    height: 346px;
+    border-radius: 16px;
+  }
+
+  /* ── Core Flows ─────────────────────────────────────────── */
+
+  .cs-flows-col {
+    gap: 10px;
+  }
+
+  .cs-flows-card {
+    padding: 16px 18px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+
+  .cs-flows-card--light {
+    background: #3c3c3a;
+    padding: 18px;
+    gap: 8px;
+    border-radius: 16px;
+  }
+
+  .cs-flows-card--light .cs-flows-card__title {
+    color: #faf8f1;
+  }
+
+  .cs-flows-card--light .cs-flows-card__list {
+    color: #dbd8ce;
+  }
+
+  .cs-flows-card__label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .cs-flows-card__title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .cs-flows-card--light .cs-flows-card__title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .cs-flows-media {
+    flex: 0 0 419px;
+    height: 419px;
+  }
+
+  /* ── What Broke ─────────────────────────────────────────── */
+
+  .cs-broke-block__no {
+    display: block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    line-height: 16px;
+    color: #dbd8ce;
+    margin: 0 0 24px;
+  }
+
+  .cs-broke-row {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+  }
+
+  .cs-broke-media {
+    order: 0;
+    flex: 0 0 170px;
+    width: 100%;
+    height: 170px;
+    border-radius: 16px;
+  }
+
+  .cs-broke-info {
+    order: 1;
+    width: 100%;
+    border-radius: 16px;
+    padding: 18px;
+    gap: 10px;
+  }
+
+  .cs-broke-info__title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .cs-broke-info__body {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .cs-broke-info__metric {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .cs-broke-info__quote {
+    font-size: 12px;
+    line-height: 17px;
+    margin-top: -6px;
+  }
+
+  /* ── Redesign & Impact ──────────────────────────────────── */
+
+  .cs-fix-block__no {
+    display: block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    line-height: 16px;
+    color: #dbd8ce;
+    margin: 0 0 24px;
+  }
+
+  .cs-fix-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "media media" "before after";
+    gap: 10px;
+  }
+
+  .cs-fix-media {
+    grid-area: media;
+    width: 100%;
+    height: 246px;
+    border-radius: 16px;
+  }
+
+  .cs-fix-text {
+    background: #3c3c3a;
+    border-radius: 12px;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .cs-fix-text--before {
+    grid-area: before;
+  }
+
+  .cs-fix-text--after {
+    grid-area: after;
+  }
+
+  .cs-fix-text__label {
+    display: block;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .cs-fix-text__title {
+    font-size: 18px;
+    line-height: 23px;
+  }
+
+  .cs-fix-text__body {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  .cs-fix-metric {
+    padding: 16px 18px;
+    gap: 16px;
+  }
+
+  .cs-fix-metric__value {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  .cs-fix-metric__stat {
+    gap: 12px;
+  }
+
+  .cs-fix-metric__caption,
+  .cs-fix-metric__note {
+    font-size: 12px;
+    line-height: 17px;
+  }
+
+  .cs-impact-banner {
+    background: #dbd8ce;
+    border-radius: 16px;
+    padding: 16px 18px;
+    gap: 12px;
+  }
+
+  .cs-impact-banner__text {
+    gap: 6px;
+    padding: 0;
+  }
+
+  .cs-impact-banner__headline {
+    font-size: 22px;
+    line-height: 28px;
+    color: #2a2a2a;
+  }
+
+  .cs-impact-banner__body {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .cs-impact-banner__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+  }
+
+  /* ── What I Learned ─────────────────────────────────────── */
+
+  .mochitta-page .cs-learned-card {
+    gap: 16px;
+    border-radius: 16px;
+  }
+
+  .cs-learned-card__headline {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  /* ── View Next ──────────────────────────────────────────── */
+
+  .mochitta-page .cs-viewnext-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+}

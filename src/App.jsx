@@ -9,6 +9,7 @@ import AboutPage from './sections/AboutPage/AboutPage'
 import CooperantLearning from './sections/CooperantLearning/CooperantLearning'
 import SeniorMode from './sections/SeniorMode/SeniorMode'
 import BlackBazaar from './sections/BlackBazaar/BlackBazaar'
+import Mochitta from './sections/Mochitta/Mochitta'
 import GuestArchivePage from './sections/GuestArchive/GuestArchivePage'
 import CavePage from './sections/Cave/CavePage'
 import FlyingCard from './components/FlyingCard/FlyingCard'
@@ -28,6 +29,7 @@ const PAGE_TITLES = {
   cooperant:     'Cooperant Learning — Manohar Achar',
   'senior-mode': 'Senior Mode — Manohar Achar',
   'black-bazaar':'Black Bazaar — Manohar Achar',
+  mochitta:      'Mochitta — Manohar Achar',
   cave:          'The Cave — Manohar Achar',
   archive:       'Guest Archive — Manohar Achar',
 }
@@ -204,6 +206,7 @@ function App() {
       {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
       {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
       {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
+      {page === 'mochitta'    && <Mochitta {...sharedProps} />}
       {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
       {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
 

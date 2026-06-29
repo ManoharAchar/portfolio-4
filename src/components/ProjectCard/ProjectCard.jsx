@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import TagBadge from '../TagBadge/TagBadge'
 import './ProjectCard.css'
 
-export default function ProjectCard({ number, tags, imageColor, image, video, thumbTime = 0, title, description, role, team, timeframe, onClick }) {
+export default function ProjectCard({ number, tags, imageColor, image, video, thumbTime = 0, loopAlways = false, title, description, role, team, timeframe, onClick }) {
   const cardRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -30,7 +30,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
     const syncObserver = () => {
       observer?.disconnect()
 
-      if (!mobileQuery.matches) {
+      if (!loopAlways && !mobileQuery.matches) {
         pauseAtThumb()
         return
       }
@@ -59,9 +59,10 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
       observer?.disconnect()
       mobileQuery.removeEventListener('change', syncObserver)
     }
-  }, [thumbTime, video])
+  }, [thumbTime, video, loopAlways])
 
   const handleEnter = () => {
+    if (loopAlways) return
     const v = videoRef.current
     if (!v) return
     v.currentTime = thumbTime
@@ -69,6 +70,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
   }
 
   const handleLeave = () => {
+    if (loopAlways) return
     const v = videoRef.current
     if (!v) return
     v.pause()

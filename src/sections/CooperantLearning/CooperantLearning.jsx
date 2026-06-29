@@ -1,37 +1,54 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import Footer from '../../components/Footer/Footer'
-import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
-import ImageSlider from '../../components/ImageSlider/ImageSlider'
-import AppendixAccordion from '../../components/AppendixAccordion/AppendixAccordion'
 import { useReveal } from '../../lib/useReveal'
 import './CooperantLearning.css'
 
-import heroVideo from '../../assets/cooperant/Hero video.mp4'
-import podcastVideo from '../../assets/cooperant/Podcast page.mp4'
-import episodeVideo from '../../assets/cooperant/Episode page.mp4'
-import dashboardVideo from '../../assets/cooperant/Dashboard page.mp4'
-import usabilityVideo from '../../assets/cooperant/Usability.mp4'
-import decision1Video from '../../assets/cooperant/Decision 1.mp4'
-import decision2Video from '../../assets/cooperant/Decision 2.mp4'
-import decision3Video from '../../assets/cooperant/Decision 3.mp4'
-import designSystemVideo from '../../assets/cooperant/Design Sysyem.mp4'
-import v1ShippedVideo from '../../assets/cooperant/V1 shipped.mp4'
-import validationVideo from '../../assets/cooperant/Iteration and validation.mp4'
-import lowFiImage from '../../assets/cooperant/Low fidelity Wire frames.png'
-import highFiImage from '../../assets/cooperant/High fidelity Wire frames.png'
-import dragSvg from '../../assets/Drag.svg'
+import heroComposite from '../../assets/cooperant/v2/hero-composite.gif'
+import problemSentiment from '../../assets/cooperant/v2/problem-sentiment.png'
+import problemSentimentMobile from '../../assets/cooperant/v2/problem-sentiment-mobile.png'
+import iconPodcast from '../../assets/cooperant/v2/icon-podcast.svg'
+import iconQuiz from '../../assets/cooperant/v2/icon-quiz.svg'
+import iconPayment from '../../assets/cooperant/v2/icon-payment.svg'
+import iconCertificate from '../../assets/cooperant/v2/icon-certificate.svg'
+import iconTracking from '../../assets/cooperant/v2/icon-tracking.svg'
+import arrowFlow from '../../assets/cooperant/v2/arrow-flow.svg'
+import step1 from '../../assets/cooperant/v2/step-1.png'
+import step2 from '../../assets/cooperant/v2/step-2.png'
+import step3 from '../../assets/cooperant/v2/step-3.png'
+import step4 from '../../assets/cooperant/v2/step-4.png'
+import mvpSentiment from '../../assets/cooperant/v2/mvp-sentiment.png'
+import mvpSentimentMobile from '../../assets/cooperant/v2/mvp-sentiment-mobile.png'
+import built1 from '../../assets/cooperant/v2/built-1.png'
+import built2 from '../../assets/cooperant/v2/built-2.png'
+import built3 from '../../assets/cooperant/v2/built-3.png'
+import built4 from '../../assets/cooperant/v2/built-4.png'
+import built5 from '../../assets/cooperant/v2/built-5.png'
+import built6 from '../../assets/cooperant/v2/built-6.png'
+import challenge1 from '../../assets/cooperant/v2/challenge-1.png'
+import challenge2 from '../../assets/cooperant/v2/challenge-2.png'
+import challenge3 from '../../assets/cooperant/v2/challenge-3.png'
+import decision1 from '../../assets/cooperant/v2/decision-1.png'
+import decision2 from '../../assets/cooperant/v2/decision-2.png'
+import decision3 from '../../assets/cooperant/v2/decision-3.png'
+import iconLearnedEye from '../../assets/cooperant/v2/icon-learned-eye.png'
+import iconLearnedBarChart from '../../assets/cooperant/v2/icon-learned-barchart.png'
+import iconLearnedSitemap from '../../assets/cooperant/v2/icon-learned-sitemap.png'
+import iconArrowNext from '../../assets/cooperant/v2/icon-arrow-next.png'
+import invitePhoto from '../../assets/cooperant/v2/invite-photo.jpg'
+import iconCopy from '../../assets/cooperant/v2/icon-copy.svg'
+import viewNextCooperant from '../../assets/cooperant/v2/viewnext-cooperant.png'
+import viewNextAndroidElderly from '../../assets/cooperant/v2/viewnext-android-elderly.png'
 
 const TOC_ITEMS = [
-  { id: 'hero', label: 'Hero' },
-  { id: 'outcome', label: 'Outcome' },
+  { id: 'overview', label: 'Overview' },
   { id: 'problem', label: 'Problem' },
-  { id: 'approach', label: 'Approach' },
+  { id: 'mvp', label: 'The MVP' },
+  { id: 'built', label: 'What Was Built' },
+  { id: 'challenges', label: 'Challenges' },
   { id: 'decisions', label: 'Decisions' },
-  { id: 'branding', label: 'Branding' },
-  { id: 'shipped', label: 'Shipped' },
-  { id: 'validation', label: 'Validation' },
-  { id: 'closing', label: 'Closing' },
-  { id: 'appendix', label: 'Appendix' },
+  { id: 'impact', label: 'Impact' },
+  { id: 'learned', label: 'What I Learnt' },
+  { id: 'next', label: 'Next Steps' },
 ]
 
 const MOBILE_SITE_LINKS = [
@@ -41,43 +58,116 @@ const MOBILE_SITE_LINKS = [
   { label: 'Guest Archive', page: 'archive' },
 ]
 
-const METRICS = [
-  { value: '84.9', label: 'SUS SCORE', sub: 'Excellent (avg: 68)' },
-  { value: '+65', label: 'NPS', sub: '14 promoters' },
-  { value: '4.65/5', label: 'TRUST RATING', sub: 'None below 4' },
-  { value: '86%', label: 'TASK COMPLETION', sub: '8 core journeys' },
-  { value: '4.25/5', label: 'CEU CLARITY', sub: '85% understood' },
+const META_CHIPS = [
+  { label: 'STATUS', value: 'Live' },
+  { label: 'MY ROLE', value: 'Lead Product Designer' },
+  { label: 'TEAM', value: '2 Stakeholders, 1 Dev' },
+  { label: 'TIMELINE', value: 'Sep 2025 - Jan 2026' },
+  { label: 'PLATFORM', value: 'Web App', full: 'mobile' },
 ]
 
-const CONSTRAINTS = [
-  { label: '0-TO-1 PRODUCT', body: '0-to-1 product — no legacy UX to inherit' },
-  { label: 'PLATFORM CONSTRAINT', body: 'Platform constraints — LearnDash + WooCommerce impose overlapping templates and states' },
-  { label: 'TRUST AND COMPLIANCE', body: 'Trust and compliance — ACE credential visibility, policy access, certificate reliability' },
-  { label: 'NO EXISTING ANALYTICS', body: 'No existing analytics — impact validated through usability testing only' },
-  { label: 'HANDOFF DURABILITY', body: 'Handoff durability — content publishable by the Sparks team without breaking layouts' },
+const OUTCOME_STATS = [
+  { value: '35%', label: 'REPEAT PURCHASE RATE' },
+  { value: '+250%', label: 'ORGANIC SEARCH GROWTH' },
+  { value: '18', label: 'CEU EPISODES LIVE' },
+  { value: 'Team publishes independently', label: 'CONTENT INDEPENDENCE', isText: true },
 ]
 
-const PRIORITIES = [
-  { label: 'PRIORITY 1', body: 'Clarify the dual CTA. 25% hesitated at the most critical conversion moment. Differentiated microcopy would directly improve the 80% purchase completion rate.' },
-  { label: 'PRIORITY 2', body: 'Add wayfinding labels to Dashboard. A one-liner ("Your learning progress and certificates") would push 75% first-click accuracy above 85%.' },
-  { label: 'PRIORITY 3', body: 'Instrument analytics. Funnel tracking from listing view through certificate download turns this usability snapshot into ongoing measurement.' },
+const PAIN_POINTS = [
+  { icon: iconPodcast, title: 'Podcast Distribution', desc: 'Episodes live on multiple podcast platforms.' },
+  { icon: iconQuiz, title: 'External Quizzes', desc: 'Listeners find quizzes on separate sites.' },
+  { icon: iconPayment, title: 'Manual Payments', desc: 'Transactions handled outside the experience.' },
+  { icon: iconCertificate, title: 'Certificates', desc: 'Certificates emailed manually or inconsistently.' },
+  { icon: iconTracking, title: 'Tracking', desc: 'No unified dashboard to see progress.' },
 ]
 
+const JOURNEY_STEPS = [
+  { img: step1, title: 'Discover Episode', desc: 'Browse and find episodes on the listing page.' },
+  { img: step2, title: 'Explore Episode', desc: 'Learn more about the episode: audio, content, learning objectives, and CEU details.' },
+  { img: step3, title: 'Purchase and Access', desc: 'Purchase the CEU quiz and unlock course materials.' },
+  { img: step4, title: 'Learn and Track', desc: 'Complete the quiz, earn your certificate, and track progress.' },
+]
 
-function QuoteCallout({ quote, attribution }) {
+const BUILT_SURFACES = [
+  { src: built1, alt: 'Home and Entry: Listen, Learn, Earn CEUs landing page' },
+  { src: built2, alt: 'Episode Listing and Discovery: search and filter episodes with CEUs' },
+  { src: built3, alt: 'Episode Page: episode details, learning objectives, and CEU info' },
+  { src: built4, alt: 'Course Page: four conditional states for detail-oriented learners' },
+  { src: built5, alt: 'Purchase Flow and Login Gate: sign up or log in only at high purchase intent' },
+  { src: built6, alt: 'Quiz, Certificate, and Dashboard: complete quiz, earn certificate, track progress' },
+]
+
+const CHALLENGE_IMAGES = [
+  { src: challenge1, alt: 'Information density before and after: episode card redesign' },
+  { src: challenge2, alt: 'Login timing debate: stakeholder view versus user view' },
+  { src: challenge3, alt: 'Funnel impact: drop-off rates from browse to purchase' },
+]
+
+const DECISION_IMAGES = [
+  { src: decision1, alt: 'Decision 1: defer login until purchase intent, 80% purchase flow completion' },
+  { src: decision2, alt: 'Decision 2: one URL with four conditional states' },
+  { src: decision3, alt: 'Decision 3: separate Learning Dashboard from My Account' },
+]
+
+const IMPACT_METRICS = [
+  { value: '84.9', label: 'SUS SCORE', sub: 'Excellent' },
+  { value: '+65', label: 'NPS', sub: 'Strong' },
+  { value: '4.65/5', label: 'TRUST IN PLATFORM', sub: 'High' },
+  { value: '86%', label: 'TASK COMPLETION', sub: 'Success Rate' },
+  { value: '20', label: 'RESEARCH SESSIONS', sub: 'Moderated BCBA' },
+  { value: 'Minor', label: 'ALL ISSUES', sub: 'Severity' },
+]
+
+const LEARNED_ITEMS = [
+  { icon: iconLearnedEye, num: '01', text: 'Users trained in a domain scan differently than general consumers.' },
+  { icon: iconLearnedBarChart, num: '02', text: 'Stakeholder pushback is only useful if you can respond with data, not opinion.' },
+  { icon: iconLearnedSitemap, num: '03', text: 'Two plugin systems on one platform is an information architecture problem, not a styling problem.' },
+]
+
+const NEXT_STEPS = [
+  'Personalized CEU recommendations',
+  'A/B test subscription vs. per-episode pricing',
+  'CEU bundles and subscriptions',
+  'Mobile app and offline access',
+  'Microcopy revision on dual CTA',
+  'ACE badge placement above the fold',
+]
+
+const VIEW_NEXT = [
+  { img: viewNextCooperant, title: 'Cooperant Learning', desc: 'A 0-to-1 continuing-education platform turning podcast listeners into CEU earners for behavior analysts. Scored 84.9 SUS and +65 NPS with 20 BCBAs.' },
+  { img: viewNextAndroidElderly, title: 'Android for Elderly', desc: 'A state-communication layer making silent mode legible for seniors and recoverable for caregivers. Sound-state recognition went 70% → 100% after V2.' },
+]
+
+function FlowCard({ icon, title, desc }) {
   return (
-    <div className="cs-quote">
-      <div className="cs-quote__bar" />
-      <div className="cs-quote__text">
-        <p className="cs-quote__quote">"{quote}"</p>
-        <p className="cs-quote__attr">— {attribution}</p>
+    <div className="cs-flow-card">
+      <div className="cs-flow-card__icon">
+        <img src={icon} alt="" />
+      </div>
+      <div className="cs-flow-card__text">
+        <p className="cs-flow-card__title">{title}</p>
+        <p className="cs-flow-card__desc">{desc}</p>
+      </div>
+    </div>
+  )
+}
+
+function StepCard({ img, title, desc, index }) {
+  return (
+    <div className="cs-step-card">
+      <div className="cs-step-card__img">
+        <img src={img} alt={`${title} screen`} />
+      </div>
+      <div>
+        <p className="cs-step-card__title">{index + 1}. {title}</p>
+        <p className="cs-step-card__desc">{desc}</p>
       </div>
     </div>
   )
 }
 
 export default function CooperantLearning({ onNavigate }) {
-  const [activeSection, setActiveSection] = useState('hero')
+  const [activeSection, setActiveSection] = useState('overview')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const sectionsRef = useReveal()
 
@@ -109,8 +199,12 @@ export default function CooperantLearning({ onNavigate }) {
     scrollToSection(id)
   }
 
+  const copyEmail = () => {
+    navigator.clipboard?.writeText('manohar.create@gmail.com')
+  }
+
   return (
-    <div className="cs-page">
+    <div className="cs-page cooperant-page">
       <div className="cs-mobile-topbar">
         <button className="cs-mobile-topbar__back" onClick={() => onNavigate?.('home')} aria-label="Back to home" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -209,315 +303,242 @@ export default function CooperantLearning({ onNavigate }) {
         <main className="cs-main">
           <div className="cs-sections" ref={sectionsRef}>
 
-            {/* Hero */}
-            <section className="cs-section" id="hero">
-              <p className="cs-label">CASE STUDY / COOPERANT LEARNING</p>
-              <h1 className="cs-hero-title">
-                Turning podcast listeners into CEU earners: a 0-to-1 learning and commerce platform designed and built for behavior analysts
-              </h1>
-              <p className="cs-hero-body">
-                Cooperant Learning is an evidence-based continuing education platform where behavior professionals discover CEU content, purchase quickly, complete quizzes, and download certificates, with progress tracked in a purpose-built learning dashboard.
-              </p>
-
-              <div className="cs-hero-info">
-                <div className="cs-info-card">
-                  <p className="cs-info-card__section-label">PROJECT SNAPSHOT</p>
-                  {[
-                    { label: 'ROLE', value: 'Product Designer (0-to-1) + Implementation' },
-                    { label: 'TEAM', value: 'Solo designer, 2 stakeholders' },
-                    { label: 'TIMELINE', value: '~4 months (Sep 2025 – Jan 2026)' },
-                    { label: 'PLATFORM', value: 'WordPress + LearnDash + WooCommerce + custom components' },
-                  ].map(({ label, value }) => (
-                    <div key={label} className="cs-info-row">
-                      <span className="cs-info-row__label">{label}</span>
-                      <span className="cs-info-row__value">{value}</span>
-                    </div>
-                  ))}
+            {/* Overview */}
+            <section className="cs-section cs-v2-overview" id="overview">
+              <div className="cs-v2-hero-row">
+                <div className="cs-v2-hero-copy">
+                  <p className="cs-label">COOPERANT LEARNING</p>
+                  <h1 className="cs-hero-title">Turning podcast listening into certified learning.</h1>
+                  <div className="cs-v2-hero-visual--mobile">
+                    <img src={heroComposite} alt="Cooperant Learning product screens across desktop and mobile" />
+                  </div>
+                  <p className="cs-hero-body">
+                    BCBAs — board-certified behavior analysts — are required to earn continuing education credits (CEUs) every certification cycle. Cooperant Learning gives them one place to listen to expert podcasts, take a short quiz, and walk away with the credits they need. I designed and built the platform from scratch.
+                  </p>
+                  <div className="cs-chip-row">
+                    {META_CHIPS.map(({ label, value, full }) => (
+                      <div key={label} className={`cs-chip${full === 'always' ? ' cs-chip--full' : full === 'mobile' ? ' cs-chip--full-mobile' : ''}`}>
+                        <p className="cs-chip__label">{label}</p>
+                        <p className="cs-chip__value">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <a className="cs-live-link" href="https://cooperantlearning.com" target="_blank" rel="noreferrer">
+                    View the live site ↗
+                  </a>
                 </div>
-
-                <div className="cs-info-card">
-                  <p className="cs-info-card__section-label">CONTRIBUTION</p>
-                  <div className="cs-info-row">
-                    <span className="cs-info-row__label">OWNED</span>
-                    <span className="cs-info-row__value cs-info-row__value--muted">UX strategy, IA, interaction design, UI, design system, WordPress implementation, QA, handoff documentation</span>
-                  </div>
-                  <div className="cs-info-row">
-                    <span className="cs-info-row__label">COLLABORATED</span>
-                    <span className="cs-info-row__value cs-info-row__value--muted">Content strategy and publishing workflow with Sparks team</span>
-                  </div>
-                  <div className="cs-info-row">
-                    <span className="cs-info-row__label">INFLUENCED</span>
-                    <span className="cs-info-row__value cs-info-row__value--muted">Business model (CEU pricing, course bundling)</span>
-                  </div>
-                  <div className="cs-status-pill">
-                    <span className="cs-status-pill__dot" />
-                    <span>Shipped and Live — cooperantlearning.com</span>
-                  </div>
+                <div className="cs-v2-hero-visual">
+                  <img src={heroComposite} alt="Cooperant Learning product screens across desktop and mobile" />
                 </div>
               </div>
 
-              <div className="cs-hero-media">
-                <ScrollVideo src={heroVideo} className="cs-hero-video" />
-              </div>
-
-              <div className="cs-gallery">
-                {[
-                  { src: podcastVideo, caption: 'Podcast page.' },
-                  { src: episodeVideo, caption: 'Individual episode page.' },
-                  { src: dashboardVideo, caption: 'Dashboard page.' },
-                ].map(({ src, caption }) => (
-                  <div key={caption} className="cs-gallery-card">
-                    <div className="cs-gallery-card__img-wrap">
-                      <ScrollVideo src={src} className="cs-gallery-video" />
-                    </div>
-                    <p className="cs-gallery-card__caption">{caption}</p>
+              <div className="cs-outcomes-banner">
+                {OUTCOME_STATS.map(({ value, label, isText }) => (
+                  <div key={label} className="cs-outcome-stat">
+                    <p className={`cs-outcome-stat__value${isText ? ' cs-outcome-stat__value--text' : ''}`}>{value}</p>
+                    <p className="cs-outcome-stat__label">{label}</p>
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* Outcome */}
-            <section className="cs-section" id="outcome">
-              <p className="cs-label">OUTCOME</p>
-              <h2 className="cs-section-heading">
-                A 20-user usability test scored 84.9 on the System Usability Scale and validated all three core design decisions
-              </h2>
-              <p className="cs-section-body">
-                This was a 0-to-1 product with no legacy analytics. I ran a moderated usability study with 20 practicing BCBAs to validate the design with real behavioral data instead of assumptions.
-              </p>
-              <div className="cs-metrics">
-                {METRICS.map(({ value, label, sub }) => (
-                  <div key={label} className="cs-metric-card">
-                    <p className="cs-metric-card__value">{value}</p>
-                    <p className="cs-metric-card__label">{label}</p>
-                    <p className="cs-metric-card__sub">{sub}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="cs-media">
-                <ScrollVideo src={usabilityVideo} className="cs-media__video" />
-                <p className="cs-media__caption">Usability study results from 20 moderated sessions with practicing BCBAs.</p>
-              </div>
-              <QuoteCallout
-                quote="It looks modern and trustworthy, which helps right away for a CEU platform."
-                attribution="P10, BCBA, 6 years experience"
-              />
             </section>
 
             {/* Problem */}
-            <section className="cs-section cs-section--gap-24" id="problem">
+            <section className="cs-section cs-section--gap-28" id="problem">
               <p className="cs-label">PROBLEM</p>
               <h2 className="cs-section-heading">
-                Sparks had high-quality content but no product to turn listening into earning
+                A behavioral health company with expert content but no product to sell it through.
               </h2>
-              <div className="cs-body-stack">
-                <p className="cs-section-body">
-                  Sparks Behavioral Services had been producing educational podcasts for behavior analysts, but the experience around that content was scattered.
-                </p>
-                <p className="cs-section-body">
-                  The platform needed to build trust fast (CEUs require credibility before purchase), reduce friction in the pay-to-quiz-to-certificate journey (every extra step is a drop-off risk), and support multiple audiences without creating a maze (BCBAs, RBTs, clinic admins, and parents all use the platform differently). This was not a redesign. It was a new product.
-                </p>
+              <p className="cs-section-body">
+                A BCBA finishes a podcast episode on their commute. To earn the CEU, they opens a separate site, finds the matching quiz, pays through a third-party checkout, and waits for a certificate by email. There is no dashboard, no progress tracking, and no way to know how many credits they still needs this cycle. They do this dozens of times a year.
+              </p>
+
+              <div className="cs-flow">
+                {PAIN_POINTS.map((p, i) => (
+                  <Fragment key={p.title}>
+                    <FlowCard {...p} />
+                    {i < PAIN_POINTS.length - 1 && (
+                      <div className="cs-flow-arrow"><img src={arrowFlow} alt="" /></div>
+                    )}
+                  </Fragment>
+                ))}
               </div>
-              <div className="cs-cards-stack">
-                {CONSTRAINTS.map(({ label, body }) => (
-                  <div key={label} className="cs-constraint-card">
-                    <p className="cs-constraint-card__label">{label}</p>
-                    <p>{body}</p>
+
+              <div className="cs-v2-chart">
+                <img src={problemSentiment} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
+              </div>
+              <div className="cs-v2-chart--mobile">
+                <img src={problemSentimentMobile} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
+              </div>
+
+              <p className="cs-section-body">
+                For BCBAs, earning a CEU meant five disconnected steps. For Sparks, every step was lost revenue.
+              </p>
+            </section>
+
+            {/* The MVP */}
+            <section className="cs-section cs-section--gap-28" id="mvp">
+              <p className="cs-label">THE MVP</p>
+              <h2 className="cs-section-heading">The learner journey in four steps.</h2>
+
+              <div className="cs-steps">
+                {JOURNEY_STEPS.map((s, i) => (
+                  <Fragment key={s.title}>
+                    <StepCard {...s} index={i} />
+                    {i < JOURNEY_STEPS.length - 1 && (
+                      <div className="cs-flow-arrow"><img src={arrowFlow} alt="" /></div>
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+
+              <div className="cs-v2-chart">
+                <img src={mvpSentiment} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
+              </div>
+              <div className="cs-v2-chart--mobile">
+                <img src={mvpSentimentMobile} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
+              </div>
+            </section>
+
+            {/* What Was Built */}
+            <section className="cs-section cs-section--gap-28" id="built">
+              <p className="cs-label">WHAT WAS BUILT</p>
+              <h2 className="cs-section-heading">Six core surfaces. One cohesive experience.</h2>
+              <div className="cs-built-grid">
+                {BUILT_SURFACES.map(({ src, alt }) => (
+                  <div key={alt} className="cs-built-card">
+                    <img src={src} alt={alt} />
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Approach */}
-            <section className="cs-section cs-section--gap-24" id="approach">
-              <p className="cs-label">APPROACH</p>
+            {/* Challenges */}
+            <section className="cs-section cs-section--gap-28" id="challenges">
+              <p className="cs-label">CHALLENGES</p>
               <h2 className="cs-section-heading">
-                I benchmarked, wireframed, systemized, built, tested, and documented the handoff in four months
+                Users needed more information density. Stakeholders debated login timing.
               </h2>
-              <p className="cs-section-body">
-                Five phases: benchmark CEU competitors and define journeys, lock IA and state logic in low-fidelity wireframes, build the design system, implement in WordPress with AI pair-programming, and document the handoff for independent publishing.
-              </p>
-              <div className="cs-media cs-media--slider">
-                <div className="cs-media__slider-wrap">
-                  <ImageSlider leftImage={lowFiImage} rightImage={highFiImage} />
-                </div>
-                <img src={dragSvg} alt="" className="cs-media__drag-hint" />
-                <p className="cs-media__caption">
-                  Early wireframe (left) established page responsibilities and state logic. Final implementation (right) refined hierarchy and applied the design system.
-                </p>
-              </div>
-            </section>
-
-            {/* Key Decisions Intro */}
-            <section className="cs-section cs-section--gap-20" id="decisions">
-              <p className="cs-label">KEY DECISIONS</p>
-              <h2 className="cs-section-heading">
-                Three design decisions shaped the platform, and usability testing validated all of them cleanly
-              </h2>
-            </section>
-
-            {/* Decision 1 */}
-            <section className="cs-section cs-section--gap-22">
-              <p className="cs-decision-label">DECISION 1</p>
-              <h3 className="cs-decision-heading">
-                I used one canonical course URL with state-based UI instead of splitting pages per user state
-              </h3>
-              <p className="cs-decision-body">
-                Sharing is simpler when one link works for everyone. The UI adapts its CTAs based on user state while the URL stays constant. Fewer templates means less breakage as content scales.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={decision1Video} className="cs-media__video" />
-                <p className="cs-media__caption">One URL, four states. The page adapts its CTAs based on where the user is in their journey.</p>
-              </div>
-              <div className="cs-notes">
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">TRADEOFF</p>
-                  <p className="cs-note-card__body">State logic must be explicit and tested. I defined clear transitions and tested every CTA path end-to-end.</p>
-                </div>
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">RESULT</p>
-                  <p className="cs-note-card__body">90% understood the page on first exposure. No "where am I" confusion.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Decision 2 */}
-            <section className="cs-section cs-section--gap-22">
-              <p className="cs-decision-label">DECISION 2</p>
-              <h3 className="cs-decision-heading">
-                I gated login and registration only at the moment of intent, not at discovery
-              </h3>
-              <p className="cs-decision-body">
-                Users browse freely: explore episodes, read show notes, listen to content. Login triggers only when they try to purchase or enroll.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={decision2Video} className="cs-media__video" />
-                <p className="cs-media__caption">The login gate appears only when the user signals purchase intent. Everything before it is open.</p>
-              </div>
-              <div className="cs-notes">
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">TRADEOFF</p>
-                  <p className="cs-note-card__body">Requires return-to-context handling after login. Users must land back where they started.</p>
-                </div>
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">RESULT</p>
-                  <p className="cs-note-card__body">100% encountered the gate with zero friction reports. 20% wanted brief reassurance text confirming they would return to their content.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Decision 3 */}
-            <section className="cs-section cs-section--gap-22">
-              <p className="cs-decision-label">DECISION 3</p>
-              <h3 className="cs-decision-heading">
-                I separated the Learning Dashboard from My Account because learning and commerce are different mental models
-              </h3>
-              <p className="cs-decision-body">
-                LearnDash and WooCommerce both generate account surfaces. Combining them creates confusion. Dashboard holds progress and certificates. My Account holds orders and settings.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={decision3Video} className="cs-media__video" />
-                <p className="cs-media__caption">Learning Dashboard and My Account serve different mental models. Cross-links connect them without merging them.</p>
-              </div>
-              <div className="cs-notes">
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">TRADEOFF</p>
-                  <p className="cs-note-card__body">Users need a bridge between spaces. I added clear cross-links and consistent navigation.</p>
-                </div>
-                <div className="cs-note-card">
-                  <p className="cs-note-card__label">RESULT</p>
-                  <p className="cs-note-card__body">75% navigated directly to Dashboard for certificates. The 25% who checked My Account first self-corrected without assistance.</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Branding */}
-            <section className="cs-section cs-section--gap-24" id="branding">
-              <p className="cs-label">BRANDING</p>
-              <h2 className="cs-section-heading">Branding</h2>
-              <p className="cs-section-body">
-                I built the design system before building pages, so the platform stays coherent as content scales. Shared components reduce drift, speed implementation, and make new content safe to publish.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={designSystemVideo} className="cs-media__video" />
-              </div>
-              <p className="cs-section-body cs-section-body--sm">
-                The system covers colors, typography, and button styles — built early to prevent visual drift as the content library grows. Every page draws from the same token set, so new episodes and courses ship with consistent hierarchy and no ad-hoc overrides.
-              </p>
-            </section>
-
-            {/* Shipped */}
-            <section className="cs-section cs-section--gap-24" id="shipped">
-              <p className="cs-label">SHIPPED</p>
-              <h2 className="cs-section-heading">
-                V1 shipped the full journey from first visit through certificate download
-              </h2>
-              <p className="cs-section-body">
-                Six surface areas: discovery and trust, listings and search, episode-to-CEU flow, state-based course pages, learning dashboard and account, and end-to-end reliability.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={v1ShippedVideo} className="cs-media__video" />
-                <p className="cs-media__caption">V1 shipped the full journey: homepage through certificate download.</p>
-              </div>
-            </section>
-
-            {/* Validation */}
-            <section className="cs-section cs-section--gap-24" id="validation">
-              <p className="cs-label">VALIDATION</p>
-              <h2 className="cs-section-heading">
-                Testing validated all three decisions and surfaced iteration themes, all at minor severity
-              </h2>
-              <p className="cs-section-body">
-                I validated the riskiest decisions through 20 moderated sessions covering 8 core user journeys. No catastrophic or major issues emerged.
-              </p>
-              <div className="cs-media">
-                <ScrollVideo src={validationVideo} className="cs-media__video" />
-                <p className="cs-media__caption">Task completion rates across 8 user journeys. All above 75%. Task 7 (Dashboard/Certificate) surfaced the clearest improvement opportunity.</p>
-              </div>
-
-              <div className="cs-priorities">
-                <p className="cs-priorities__heading">WHAT I WOULD DO NEXT</p>
-                {PRIORITIES.map(({ label, body }, i) => (
-                  <div key={label} className="cs-priority-item">
-                    <span className="cs-priority-pill">{label}</span>
-                    <p className="cs-priority-body">{body}</p>
-                    {i < PRIORITIES.length - 1 && <div className="cs-priority-divider" />}
+              <div className="cs-challenge-grid">
+                {CHALLENGE_IMAGES.map(({ src, alt }) => (
+                  <div key={alt} className="cs-challenge-card">
+                    <img src={src} alt={alt} />
                   </div>
                 ))}
               </div>
-
-              <QuoteCallout
-                quote="I would trust this enough to look for a CEU I need. The one thing I would change is making the two purchase buttons more obviously different."
-                attribution="P03, BCBA, 2 years experience"
-              />
+              <p className="cs-section-body--bright">We validated with users and data.</p>
             </section>
 
-            {/* Closing */}
-            <section className="cs-section cs-section--gap-24" id="closing">
-              <p className="cs-label">CLOSING</p>
-              <QuoteCallout
-                quote="The documentation made it possible for us to publish new episodes without needing to call anyone. That was the whole point."
-                attribution="Dr. Steven Sparks, Founder, Sparks Behavioral Services"
-              />
+            {/* Decisions and Validation */}
+            <section className="cs-section cs-section--gap-28" id="decisions">
+              <p className="cs-label">DECISIONS AND VALIDATION</p>
               <h2 className="cs-section-heading">
-                This project proved I can take a product from zero to shipped and validated, across strategy, design, code, and research
+                Three key decisions. Validated by research, data, and usability testing.
               </h2>
-              <p className="cs-section-body">
-                Cooperant Learning is full-stack product design: UX strategy through system design through UI through real implementation on a platform where trust, clarity, and flow directly impact whether users can earn credit and prove it professionally.
-              </p>
-              <p className="cs-section-body cs-section-body--sm">
-                The result: a platform scoring in the Excellent band on SUS (84.9), earning NPS +65 from target users, and surfacing clear, minor-severity improvements rather than fundamental design failures.
-              </p>
+              <div className="cs-decision-grid">
+                {DECISION_IMAGES.map(({ src, alt }) => (
+                  <div key={alt} className="cs-decision-card">
+                    <img src={src} alt={alt} />
+                  </div>
+                ))}
+              </div>
             </section>
 
-            {/* Appendix */}
-            <section className="cs-section cs-section--gap-24" id="appendix">
-              <p className="cs-label">APPENDIX</p>
-              <h2 className="cs-section-heading">Appendix</h2>
-              <p className="cs-section-body">
-                Supporting artifacts from the design and research process. Each section links to the full deliverable.
-              </p>
-              <AppendixAccordion />
+            {/* Impact */}
+            <section className="cs-section cs-section--gap-28" id="impact">
+              <p className="cs-label">IMPACT</p>
+              <h2 className="cs-section-heading">Live platform. Real learners. Measurable results.</h2>
+              <div className="cs-impact-grid">
+                {IMPACT_METRICS.map(({ value, label, sub }) => (
+                  <div key={label} className="cs-impact-card">
+                    <p className="cs-impact-card__value">{value}</p>
+                    <p className="cs-impact-card__label">{label}</p>
+                    <p className="cs-impact-card__sub">{sub}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* What I Learned */}
+            <section className="cs-section cs-section--gap-28" id="learned">
+              <p className="cs-label">WHAT I LEARNED</p>
+              <h2 className="cs-section-heading">Three things this project changed about how I design.</h2>
+              <div className="cs-learned-grid">
+                {LEARNED_ITEMS.map(({ icon, num, text }) => (
+                  <div key={num} className="cs-learned-card">
+                    <div className="cs-learned-card__top">
+                      <span
+                        aria-hidden="true"
+                        className="cs-learned-card__icon"
+                        style={{ maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` }}
+                      />
+                      <span className="cs-learned-card__num">{num}</span>
+                    </div>
+                    <p className="cs-learned-card__text">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Next Steps */}
+            <section className="cs-section cs-section--gap-28" id="next">
+              <p className="cs-label">NEXT STEPS</p>
+              <h2 className="cs-section-heading">Continuously improving the learning experience.</h2>
+              <div className="cs-next-grid">
+                {NEXT_STEPS.map((text) => (
+                  <div key={text} className="cs-next-card">
+                    <span
+                      aria-hidden="true"
+                      className="cs-next-card__icon"
+                      style={{ maskImage: `url(${iconArrowNext})`, WebkitMaskImage: `url(${iconArrowNext})` }}
+                    />
+                    <p className="cs-next-card__text">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Invite */}
+            <section className="cs-section">
+              <div className="cs-invite">
+                <div className="cs-invite__content">
+                  <p className="cs-invite__eyebrow">STILL CURIOUS?</p>
+                  <h2 className="cs-invite__heading">
+                    I&rsquo;d love to walk you<br />through my thinking.
+                  </h2>
+                  <p className="cs-invite__body">
+                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                  </p>
+                  <div className="cs-invite__actions">
+                    <button className="cs-invite__email" type="button" onClick={copyEmail}>
+                      <span>✉</span>
+                      <span>manohar.create@gmail.com</span>
+                      <img src={iconCopy} alt="Copy email address" />
+                    </button>
+                    <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
+                      LinkedIn <span>↗</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="cs-invite__photo">
+                  <img src={invitePhoto} alt="Manohar Achar" />
+                </div>
+              </div>
+            </section>
+
+            {/* View Next */}
+            <section className="cs-section">
+              <p className="cs-label">VIEW NEXT</p>
+              <div className="cs-viewnext-grid">
+                {VIEW_NEXT.map(({ img, title, desc }) => (
+                  <div key={title} className="cs-viewnext-card">
+                    <div className="cs-viewnext-card__img">
+                      <img src={img} alt={`${title} preview`} />
+                    </div>
+                    <h3 className="cs-viewnext-card__title">{title}</h3>
+                    <p className="cs-viewnext-card__desc">{desc}</p>
+                  </div>
+                ))}
+              </div>
             </section>
 
           </div>
