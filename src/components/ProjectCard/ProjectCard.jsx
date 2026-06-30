@@ -110,7 +110,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
             className="project-card__video"
           />
         ) : image ? (
-          <img src={image} alt={title} />
+          <img src={image} alt={title} loading="lazy" />
         ) : null}
       </div>
 

@@ -6,7 +6,7 @@ import './SplashScreen.css'
 const BURST_POINT_COUNT = 160
 // How long the dispersed dots keep flying toward the viewer in the shared
 // starfield before the next screen is allowed to appear.
-const FLIGHT_MS = 700
+const FLIGHT_MS = 450
 
 const SplashScreen = forwardRef(function SplashScreen({ onBurst }, ref) {
   const frameRef = useRef(null)

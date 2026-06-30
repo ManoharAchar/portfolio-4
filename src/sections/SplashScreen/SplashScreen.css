@@ -20,7 +20,7 @@
   overflow: hidden;
   opacity: 0;
   transform: scale(0.92);
-  animation: splash-fade-in 1.4s ease forwards;
+  animation: splash-fade-in 0.8s ease forwards;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 

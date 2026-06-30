@@ -37,16 +37,54 @@ const PAGE_TITLES = {
 const pageToPath = (page) => (page === 'home' || page === 'welcome') ? '/' : `/${page}`
 const pathToPage = (path) => (!path || path === '/') ? 'home' : path.replace(/^\//, '')
 
+const SPLASH_BYPASS_REFERRERS = [
+  'linkedin.com',
+  'greenhouse.io',
+  'workday.com',
+  'teams.cdn.office.net',
+  'com.linkedin.android',
+]
+
+const PASS_TOKEN_KEY = 'portfolio_pass_token'
+
+function hasStoredPassToken() {
+  try {
+    return Boolean(localStorage.getItem(PASS_TOKEN_KEY))
+  } catch {
+    return false
+  }
+}
+
+function shouldBypassSplash() {
+  if (hasStoredPassToken()) return false
+  if (!document.referrer) return false
+
+  try {
+    const referrer = new URL(document.referrer)
+    const host = referrer.hostname.toLowerCase()
+    return SPLASH_BYPASS_REFERRERS.some((domain) => (
+      host === domain || host.endsWith(`.${domain}`)
+    ))
+  } catch {
+    return false
+  }
+}
+
+function isPreviewMode() {
+  return new URLSearchParams(window.location.search).has('preview')
+}
+
 // How long the welcome screen content fade lasts before unmounting
 const WELCOME_FADE_MS = 380
 
 // Floor on how long the splash screen stays up before dematerializing —
-// covers the logo's 1.4s fade-in plus a beat where it sits fully visible,
-// so a warm Supabase response never cuts the fade-in short.
-const SPLASH_MIN_VISIBLE_MS = 2200
+// Keeps the splash as a quick front beat before the same welcome/pass flow.
+const SPLASH_MIN_VISIBLE_MS = 1000
 
 function App() {
-  const [page, setPage] = useState('splash')
+  const [previewMode] = useState(isPreviewMode)
+  const [skipSplash] = useState(shouldBypassSplash)
+  const [page, setPage] = useState(() => (isPreviewMode() || shouldBypassSplash()) ? 'welcome' : 'splash')
   const [guest, setGuest] = useState(null)
   const [welcomeExiting, setWelcomeExiting] = useState(false)
   const [flyingCard, setFlyingCard] = useState(null)
@@ -73,10 +111,8 @@ function App() {
 
   // On mount: resolve returning visitor and skip welcome screen if recognised
   useEffect(() => {
-    const preview = new URLSearchParams(window.location.search).has('preview')
-    if (preview) {
-      setPage('welcome')
-      window.history.replaceState({ page: 'welcome' }, '', '/')
+    if (previewMode) {
+      window.history.replaceState({ page: 'welcome' }, '', `${window.location.pathname}${window.location.search}`)
       return
     }
 
@@ -91,7 +127,7 @@ function App() {
         setPendingEntry({ type: 'new' })
       }
     })
-  }, [])
+  }, [previewMode])
 
   // Once the visitor is resolved, let the splash screen dematerialize into
   // the starfield (respecting a minimum visible floor) before revealing
@@ -99,10 +135,7 @@ function App() {
   useEffect(() => {
     if (!pendingEntry) return
 
-    const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - (Date.now() - splashStartRef.current))
-    const timer = setTimeout(async () => {
-      await splashRef.current?.playExit()
-
+    const revealEntry = () => {
       if (pendingEntry.type === 'returning') {
         const { guestData, accent, target, passId } = pendingEntry
         if (accent) document.documentElement.style.setProperty('--accent', accent)
@@ -116,37 +149,49 @@ function App() {
         setPage('welcome')
         window.history.replaceState({ page: 'welcome' }, '', '/')
       }
+    }
+
+    if (skipSplash) {
+      revealEntry()
+      return
+    }
+
+    const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - (Date.now() - splashStartRef.current))
+    const timer = setTimeout(() => {
+      Promise.resolve(splashRef.current?.playExit()).then(revealEntry)
     }, wait)
 
     return () => clearTimeout(timer)
-  }, [pendingEntry])
+  }, [pendingEntry, skipSplash])
 
-  const handleEnter = async ({ cardRect, intent, name, date }) => {
+  const handleEnter = ({ cardRect, intent, name, date }) => {
     const accent = ACCENT_COLORS[intent]
     if (accent) document.documentElement.style.setProperty('--accent', accent)
 
-    // Persist to Supabase; fall back gracefully if it fails
-    let passId = null
-    try {
-      const pass = await createPass({ intent, name })
-      passId = pass.id
-    } catch {
-      // Non-blocking — visitor still enters the portfolio
-    }
-
-    const guestData = { intent, name, date, passId }
+    const guestData = { intent, name, date, passId: null }
     setGuest(guestData)
     setFlyingCard({ rect: cardRect, intent, name, date })
     setWelcomeExiting(true)
 
-    if (passId) startSession(passId)
+    if (!previewMode) {
+      createPass({ intent, name })
+        .then((pass) => {
+          setGuest((current) => current ? { ...current, passId: pass.id } : current)
+          startSession(pass.id)
+        })
+        .catch(() => {
+          // Non-blocking — visitor still enters the portfolio.
+        })
+    }
+
+    const homePath = previewMode ? `${window.location.pathname}${window.location.search}` : '/'
 
     // Unmount welcome screen after its content fade completes
     // replaceState so back button can't return to welcome
     setTimeout(() => {
       document.title = PAGE_TITLES.home
       setPage('home')
-      window.history.replaceState({ page: 'home' }, '', '/')
+      window.history.replaceState({ page: 'home' }, '', homePath)
       setWelcomeExiting(false)
     }, WELCOME_FADE_MS)
   }

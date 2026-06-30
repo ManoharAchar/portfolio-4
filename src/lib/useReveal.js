@@ -10,6 +10,10 @@ export function useReveal(markerClass = 'cs-sections--reveal') {
     container.classList.add(markerClass)
     const items = Array.from(container.children)
 
+    // Hero (first section) is immediately visible — reveal it instantly
+    // so autoplay fires while the element is opaque, not while it's hidden.
+    if (items.length > 0) items[0].classList.add('is-revealed')
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -22,7 +26,7 @@ export function useReveal(markerClass = 'cs-sections--reveal') {
       { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
     )
 
-    items.forEach((item) => observer.observe(item))
+    items.slice(1).forEach((item) => observer.observe(item))
     return () => observer.disconnect()
   }, [])
 

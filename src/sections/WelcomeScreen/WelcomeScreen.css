@@ -82,9 +82,11 @@
 /* Fade all UI chrome — card hides instantly, FlyingCard takes over */
 .welcome-screen--exiting .welcome-screen__title-group,
 .welcome-screen--exiting .welcome-screen__intent,
-.welcome-screen--exiting .welcome-screen__name-row,
+.welcome-screen--exiting .welcome-screen__pass-headline,
+.welcome-screen--exiting .welcome-screen__pass-wrap,
 .welcome-screen--exiting .welcome-screen__pass-note,
-.welcome-screen--exiting .welcome-screen__enter {
+.welcome-screen--exiting .welcome-screen__attrib-btn,
+.welcome-screen--exiting .welcome-screen__attrib-tip {
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -134,7 +136,7 @@
 .welcome-screen__title-group--hidden {
   max-height: 0;
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-28px);
   margin-bottom: -64px;
 }
 
@@ -155,10 +157,10 @@
   margin: 0;
 }
 
-/* ─── Intent selection ───────────────────────────────────────────── */
+/* ─── Pass reveal ───────────────────────────────────────────────── */
 /* Mounted only once stage 2 begins (see WelcomeScreen.jsx) — starts in this
    collapsed/offset state so the immediate next frame can transition it in,
-   sliding up from below as the title makes room above it. */
+   sliding up from below as the title fades away above it. */
 .welcome-screen__intent {
   display: flex;
   flex-direction: column;
@@ -167,7 +169,7 @@
   width: 100%;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
+  overflow: visible;
   transform: translateY(28px);
   /* Cancel the flex gap that would otherwise snap __inner's height the
      instant intent mounts (before max-height has had a chance to grow).
@@ -180,152 +182,34 @@
 }
 
 .welcome-screen__intent--visible {
-  max-height: 480px;
+  max-height: 410px;
   margin-top: 0;
   opacity: 1;
   transform: translateY(0);
 }
 
-.welcome-screen__subtitle {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 20px;
+.welcome-screen__pass-headline {
+  font-family: 'Fraunces', serif;
+  font-size: 35px;
   font-weight: 400;
   color: #dbd8ce;
   text-align: center;
-  line-height: normal;
-  max-width: 455px;
-}
-
-.welcome-screen__subtitle strong {
-  font-weight: 600;
-}
-
-.welcome-screen__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 20px;
-  width: 100%;
-  height: 255px;
-}
-
-/* ─── Response section ───────────────────────────────────────────── */
-.welcome-screen__response {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 64px;
-  width: 100%;
-  max-height: 0;
-  opacity: 0;
-  overflow: visible;
-  transform: translateY(16px);
-  transition: max-height 0.6s ease, opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
-  pointer-events: none;
-}
-
-.welcome-screen__name-pass {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-}
-
-.welcome-screen__response--visible {
-  max-height: 700px;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* Name row */
-.welcome-screen__name-row {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.welcome-screen__name-label {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 20px;
-  color: #dbd8ce;
-  white-space: nowrap;
-}
-
-.welcome-screen__name-input {
-  background: #151414;
-  border-radius: 15px;
-  height: 50px;
-  width: 300px;
-  padding: 6px 15px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 20px;
-  color: #7a7a7a;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  user-select: none;
-}
-
-.welcome-screen__refresh {
-  background: #3c3c3a;
-  color: #dbd8ce;
-  border: none;
-  border-radius: 15px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.2s ease;
-}
-
-.welcome-screen__refresh:hover {
-  background: #4a4a48;
-}
-
-.welcome-screen__refresh img {
-  width: 25px;
-  height: 25px;
-  object-fit: contain;
+  line-height: 1;
+  margin: 0;
 }
 
 /* ─── Below card ─────────────────────────────────────────────────── */
 .welcome-screen__pass-note {
   font-family: 'Source Code Pro', monospace;
   font-size: 20px;
-  color: #7a7a7a;
+  color: #cbc8bf;
   text-align: center;
+  line-height: 1;
+  margin: 0;
 }
 
-.welcome-screen__enter {
-  background: #f3f1ea;
-  border: none;
-  border-radius: 15px;
-  height: 45px;
-  width: 140px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 16px;
-  color: #2a2a2a;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.welcome-screen__enter--active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.welcome-screen__enter--active:hover {
-  background: #ffffff;
-  transform: translateY(-1px);
+.welcome-screen__pass-note strong {
+  font-weight: 700;
 }
 
 /* ─── Pass-card wrapper — desktop: transparent passthrough ─── */
@@ -333,6 +217,30 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  pointer-events: auto;
+}
+
+.welcome-screen__pass-float {
+  display: inline-flex;
+  animation: welcome-pass-breathe 2.8s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes welcome-pass-breathe {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-7px) scale(1.006);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-screen__pass-float {
+    animation: none;
+  }
 }
 
 /* ─── Responsive height — scale the whole inner as a unit ───────────
@@ -363,7 +271,7 @@
   }
 
   .welcome-screen__title-group--hidden {
-    margin-bottom: -20px; /* matches new gap so collapse is seamless */
+    margin-bottom: -20px; /* matches mobile gap so collapse is seamless */
   }
 
   .welcome-screen__eyebrow {
@@ -376,41 +284,15 @@
   }
 
   .welcome-screen__intent {
-    gap: 20px;
-  }
-
-  .welcome-screen__subtitle {
-    font-size: 15px;
-    max-width: 330px;
-  }
-
-  .welcome-screen__grid {
-    height: 185px;
-    gap: 8px;
-  }
-
-  .welcome-screen__response {
     gap: 24px;
   }
 
-  .welcome-screen__name-pass {
-    gap: 12px;
+  .welcome-screen__intent--visible {
+    max-height: 300px;
   }
 
-  .welcome-screen__name-row {
-    gap: 10px;
-  }
-
-  .welcome-screen__name-label {
-    font-size: 16px;
-  }
-
-  .welcome-screen__name-input {
-    flex: 1;
-    min-width: 0;
-    max-width: 200px;
-    font-size: 16px;
-    height: 50px;
+  .welcome-screen__pass-headline {
+    font-size: 30px;
   }
 
   /* Pass card scales fluidly to whatever the inner container's actual width is.
@@ -430,9 +312,7 @@
 
   .welcome-screen__pass-note {
     font-size: 14px;
-  }
-
-  .welcome-screen__enter {
-    font-size: 16px;
+    line-height: 1.35;
+    max-width: 310px;
   }
 }
