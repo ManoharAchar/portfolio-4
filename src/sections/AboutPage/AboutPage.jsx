@@ -5,14 +5,14 @@ import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
 import './AboutPage.css'
 
-import introPortrait  from '../../assets/about/invite-photo.jpg'
+import introPortrait  from '../../assets/about/invite-photo.webp'
 import introNature    from '../../assets/about/about-intro-nature.gif'
-import introCandid    from '../../assets/about/about-intro-3.jpg'
-import hobbySketching from '../../assets/about/about-hobby-sketching.jpeg'
+import introCandid    from '../../assets/about/about-intro-3.webp'
+import hobbySketching from '../../assets/about/about-hobby-sketching.webp'
 import hobbyCycling   from '../../assets/about/about-hobby-cycling.gif'
 import hobbyMaking    from '../../assets/about/about-hobby-making.gif'
-import designClubImg  from '../../assets/about/about-community-design-club.jpg'
-import aigaImg        from '../../assets/about/about-community-aiga.jpg'
+import designClubImg  from '../../assets/about/about-community-design-club.webp'
+import aigaImg        from '../../assets/about/about-community-aiga.webp'
 
 const HOBBY_CARDS = [
   { label: 'Perspective sketching', src: hobbySketching, tip: 'A very cosy Black Baza Coffee Office' },

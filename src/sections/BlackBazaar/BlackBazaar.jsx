@@ -15,16 +15,16 @@ import bbDecision3Video from '../../assets/black-baza/Decision 3.mp4'
 import buyerCoreFlowVideo from '../../assets/black-baza/Buyer core flow.mp4'
 import traceabilityVideo from '../../assets/black-baza/Traceability.mp4'
 import storePickupVideo from '../../assets/black-baza/Store pick up.mp4'
-import usabilityTestImage from '../../assets/black-baza/Black Baza Usability test.png'
+import usabilityTestImage from '../../assets/black-baza/Black Baza Usability test.webp'
 import hoverSvg from '../../assets/Hover.svg'
 import iconCopy from '../../assets/black-baza/icon-copy.svg'
-import iconMail from '../../assets/black-baza/icon-mail.png'
-import invitePhoto from '../../assets/black-baza/invite-photo.jpg'
+import iconMail from '../../assets/black-baza/icon-mail.webp'
+import invitePhoto from '../../assets/black-baza/invite-photo.webp'
 
 // ── Avatar images (flat, pre-composited) ───────────────────────
-import buyerAvatar    from '../../assets/black-baza/Buyer icon.png'
-import retailerAvatar from '../../assets/black-baza/Retailer.png'
-import farmerAvatar   from '../../assets/black-baza/Farmer.png'
+import buyerAvatar    from '../../assets/black-baza/Buyer icon.webp'
+import retailerAvatar from '../../assets/black-baza/Retailer.webp'
+import farmerAvatar   from '../../assets/black-baza/Farmer.webp'
 
 const AVATAR_BY_NAME = { Buyer: buyerAvatar, Retailer: retailerAvatar, Farmer: farmerAvatar }
 

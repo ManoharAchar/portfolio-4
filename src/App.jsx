@@ -1,20 +1,21 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import './styles/global.css'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import StarfieldCursorFollow from './components/StarfieldCursorFollow/StarfieldCursorFollow'
 import SplashScreen from './sections/SplashScreen/SplashScreen'
 import WelcomeScreen from './sections/WelcomeScreen/WelcomeScreen'
 import HomePage from './sections/HomePage/HomePage'
-import AboutPage from './sections/AboutPage/AboutPage'
-import CooperantLearning from './sections/CooperantLearning/CooperantLearning'
-import SeniorMode from './sections/SeniorMode/SeniorMode'
-import BlackBazaar from './sections/BlackBazaar/BlackBazaar'
-import Mochitta from './sections/Mochitta/Mochitta'
-import GuestArchivePage from './sections/GuestArchive/GuestArchivePage'
-import CavePage from './sections/Cave/CavePage'
+const AboutPage         = lazy(() => import('./sections/AboutPage/AboutPage'))
+const CooperantLearning = lazy(() => import('./sections/CooperantLearning/CooperantLearning'))
+const SeniorMode        = lazy(() => import('./sections/SeniorMode/SeniorMode'))
+const BlackBazaar       = lazy(() => import('./sections/BlackBazaar/BlackBazaar'))
+const Mochitta          = lazy(() => import('./sections/Mochitta/Mochitta'))
+const GuestArchivePage  = lazy(() => import('./sections/GuestArchive/GuestArchivePage'))
+const CavePage          = lazy(() => import('./sections/Cave/CavePage'))
 import FlyingCard from './components/FlyingCard/FlyingCard'
 import { resolveVisitor, createPass, passToGuest } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
+import { PROJECTS } from './data/projects'
 
 const ACCENT_COLORS = {
   designer: '#798c6d',
@@ -57,6 +58,7 @@ function hasStoredPassToken() {
 
 function shouldBypassSplash() {
   if (hasStoredPassToken()) return false
+  if (new URLSearchParams(window.location.search).has('r')) return true
   if (!document.referrer) return false
 
   try {
@@ -90,6 +92,19 @@ function App() {
   const [flyingCard, setFlyingCard] = useState(null)
   const [homeVisible, setHomeVisible] = useState(false)
   const [pendingEntry, setPendingEntry] = useState(null)
+
+  // Preload thumbnail videos while splash/welcome is playing so they're ready
+  // the moment the home page mounts.
+  useEffect(() => {
+    PROJECTS.forEach(({ video }) => {
+      const link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'video'
+      link.type = 'video/mp4'
+      link.href = video
+      document.head.appendChild(link)
+    })
+  }, [])
 
   const starfieldRef = useRef(null)
   const splashRef = useRef(null)
@@ -247,13 +262,15 @@ function App() {
         </div>
       )}
 
-      {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
-      {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
-      {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
-      {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
-      {page === 'mochitta'    && <Mochitta {...sharedProps} />}
-      {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
-      {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
+      <Suspense>
+        {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
+        {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
+        {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
+        {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
+        {page === 'mochitta'    && <Mochitta {...sharedProps} />}
+        {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
+        {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
+      </Suspense>
 
       {/* Flying card overlay — fixed position, persists across page transition */}
       {flyingCard && (

@@ -11,26 +11,26 @@ export const INTENT_LABELS = {
 export const PASS_CONFIG = {
   designer: {
     bg: '#798c6d',
-    logo: new URL('../../assets/pass/logo-designer.png', import.meta.url).href,
-    bgLayer: new URL('../../assets/pass/bg-layer.png', import.meta.url).href,
+    logo: new URL('../../assets/pass/logo-designer.webp', import.meta.url).href,
+    bgLayer: new URL('../../assets/pass/bg-layer.webp', import.meta.url).href,
     lines: new URL('../../assets/pass/card-lines.svg', import.meta.url).href,
   },
   'see-work': {
     bg: '#64818c',
-    logo: new URL('../../assets/pass/logo-see-work.png', import.meta.url).href,
-    bgLayer: new URL('../../assets/pass/bg-layer.png', import.meta.url).href,
+    logo: new URL('../../assets/pass/logo-see-work.webp', import.meta.url).href,
+    bgLayer: new URL('../../assets/pass/bg-layer.webp', import.meta.url).href,
     lines: new URL('../../assets/pass/card-lines.svg', import.meta.url).href,
   },
   'sent-here': {
     bg: '#c87a5a',
-    logo: new URL('../../assets/pass/logo-sent-here.png', import.meta.url).href,
-    bgLayer: new URL('../../assets/pass/bg-layer-sent-here.png', import.meta.url).href,
+    logo: new URL('../../assets/pass/logo-sent-here.webp', import.meta.url).href,
+    bgLayer: new URL('../../assets/pass/bg-layer-sent-here.webp', import.meta.url).href,
     lines: new URL('../../assets/pass/card-lines-sent-here.svg', import.meta.url).href,
   },
   exploring: {
     bg: '#c4a24d',
-    logo: new URL('../../assets/pass/logo-exploring.png', import.meta.url).href,
-    bgLayer: new URL('../../assets/pass/bg-layer.png', import.meta.url).href,
+    logo: new URL('../../assets/pass/logo-exploring.webp', import.meta.url).href,
+    bgLayer: new URL('../../assets/pass/bg-layer.webp', import.meta.url).href,
     lines: new URL('../../assets/pass/card-lines.svg', import.meta.url).href,
   },
 }
@@ -43,7 +43,7 @@ export function formatDate() {
 
 const PassCard = forwardRef(function PassCard({ intent, name, date, passId }, ref) {
   const config = PASS_CONFIG[intent] ?? PASS_CONFIG.designer
-  const displayName = name && name.length > 13 ? name.slice(0, 13) + '…' : (name || '')
+  const displayName = name && name.length > 16 ? name.slice(0, 16) + '…' : (name || '')
   const passDate = date || formatDate()
   const passNumber = passId ? `NO. ${String(passId).padStart(4, '0')}` : 'NO. ——'
 

@@ -182,7 +182,7 @@
 }
 
 .welcome-screen__intent--visible {
-  max-height: 410px;
+  max-height: 450px;
   margin-top: 0;
   opacity: 1;
   transform: translateY(0);

@@ -48,7 +48,7 @@ function randomWeightedIntent() {
 }
 
 const STAGE2_DELAY_MS = 900
-const AUTO_ENTER_MS = 2000
+const AUTO_ENTER_MS = 2100
 
 export default function WelcomeScreen({ onEnter, exiting = false }) {
   const [intent] = useState(randomWeightedIntent)

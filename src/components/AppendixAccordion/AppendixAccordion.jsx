@@ -2,10 +2,10 @@ import { useState } from 'react'
 import './AppendixAccordion.css'
 
 import handoffPdf from '../../assets/cooperant/Cooperant Learning Hand off documentation sample.pdf'
-import taskByTaskImg from '../../assets/cooperant/Task-by Task.png'
-import qaChecklistImg from '../../assets/cooperant/QA Check list.png'
-import rawDataImg from '../../assets/cooperant/Raw data.png'
-import measurementPlanImg from '../../assets/cooperant/Measurement plan.png'
+import taskByTaskImg from '../../assets/cooperant/Task-by Task.webp'
+import qaChecklistImg from '../../assets/cooperant/QA Check list.webp'
+import rawDataImg from '../../assets/cooperant/Raw data.webp'
+import measurementPlanImg from '../../assets/cooperant/Measurement plan.webp'
 
 const ITEMS = [
   {

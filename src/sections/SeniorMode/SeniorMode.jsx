@@ -14,12 +14,12 @@ import fullFlowVideo from '../../assets/senior-mode/Final UI Full flow.mp4'
 import decision1Video from '../../assets/senior-mode/Decision 1.mp4'
 import decision2Video from '../../assets/senior-mode/Decision 2.mp4'
 import decision3Video from '../../assets/senior-mode/Decision 3.mp4'
-import iaImage from '../../assets/senior-mode/IA.png'
-import testingDataImage from '../../assets/senior-mode/Testing data.png'
+import iaImage from '../../assets/senior-mode/IA.webp'
+import testingDataImage from '../../assets/senior-mode/Testing data.webp'
 import hoverSvg from '../../assets/Hover.svg'
 import iconCopy from '../../assets/senior-mode/icon-copy.svg'
-import iconMail from '../../assets/senior-mode/icon-mail.png'
-import invitePhoto from '../../assets/senior-mode/invite-photo.jpg'
+import iconMail from '../../assets/senior-mode/icon-mail.webp'
+import invitePhoto from '../../assets/senior-mode/invite-photo.webp'
 
 const TOC_ITEMS = [
   { id: 'hero', label: 'Hero' },

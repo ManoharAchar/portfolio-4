@@ -23,13 +23,13 @@ import brokeGoalCategory from '../../assets/mochitta/Goal category linking - Wha
 import fix1 from '../../assets/mochitta/Fix 1.mp4'
 import fix2 from '../../assets/mochitta/Fix 2.mp4'
 import fix3 from '../../assets/mochitta/Fix 3.mp4'
-import iconGrowingPlant from '../../assets/mochitta/icon-growing-plant.png'
-import iconLearnedEye from '../../assets/mochitta/icon-learned-eye.png'
-import iconLearnedPen from '../../assets/mochitta/icon-learned-pen.png'
-import iconLearnedPeople from '../../assets/mochitta/icon-learned-people.png'
-import invitePhoto from '../../assets/mochitta/invite-photo.jpg'
+import iconGrowingPlant from '../../assets/mochitta/icon-growing-plant.webp'
+import iconLearnedEye from '../../assets/mochitta/icon-learned-eye.webp'
+import iconLearnedPen from '../../assets/mochitta/icon-learned-pen.webp'
+import iconLearnedPeople from '../../assets/mochitta/icon-learned-people.webp'
+import invitePhoto from '../../assets/mochitta/invite-photo.webp'
 import iconCopy from '../../assets/mochitta/icon-copy.svg'
-import iconMail from '../../assets/mochitta/icon-mail.png'
+import iconMail from '../../assets/mochitta/icon-mail.webp'
 
 // The autoplay attribute alone doesn't reliably start these (they mount at
 // opacity:0 under the scroll-reveal observer), so kick play() explicitly.
