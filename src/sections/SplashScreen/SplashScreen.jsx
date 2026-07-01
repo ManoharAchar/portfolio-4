@@ -6,19 +6,22 @@ import './SplashScreen.css'
 const BURST_POINT_COUNT = 160
 // How long the dispersed dots keep flying toward the viewer in the shared
 // starfield before the next screen is allowed to appear.
-const FLIGHT_MS = 450
+const FLIGHT_MS = 900
 
 const SplashScreen = forwardRef(function SplashScreen({ onBurst }, ref) {
   const frameRef = useRef(null)
   const [dematerializing, setDematerializing] = useState(false)
 
   useImperativeHandle(ref, () => ({
-    async playExit() {
+    async playExit({ onBurstFired } = {}) {
       const frame = frameRef.current
       if (!frame) return
 
-      const points = await sampleLogoPoints(BURST_POINT_COUNT)
+      // Capture rect synchronously before the first await — after sampleLogoPoints
+      // resolves, React may have already unmounted this component and
+      // getBoundingClientRect() on a detached node returns all zeros.
       const rect = frame.getBoundingClientRect()
+      const points = await sampleLogoPoints(BURST_POINT_COUNT)
       const normalizedPoints = points.map((p) => ({
         x: (rect.left + p.x * rect.width) / window.innerWidth,
         y: (rect.top + p.y * rect.height) / window.innerHeight,
@@ -29,6 +32,8 @@ const SplashScreen = forwardRef(function SplashScreen({ onBurst }, ref) {
       // frame, so there's no freeze between "logo" and "in motion".
       onBurst?.(normalizedPoints)
       setDematerializing(true)
+      // Signal caller that burst has fired — safe to switch pages now.
+      onBurstFired?.()
 
       await new Promise((resolve) => setTimeout(resolve, FLIGHT_MS))
     },

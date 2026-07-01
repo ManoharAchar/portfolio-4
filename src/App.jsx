@@ -186,14 +186,17 @@ function App() {
         startSession(passId)
         // Keep starfield alive so particles keep flying after splash unmounts
         setKeepStarfield(true)
-        // Fire the burst — don't await, let particles fly independently
-        splashRef.current?.playExit()
-        // Mount home hidden immediately so it's ready in the DOM
-        setPage(target)
-        // Fade home in midway through the particle flight
-        timers.push(setTimeout(() => setHomeVisible(true), 150))
-        // Drop the starfield once particles have finished and home is visible
-        timers.push(setTimeout(() => setKeepStarfield(false), 800))
+        // Drop the starfield once particles have finished flying off screen
+        timers.push(setTimeout(() => setKeepStarfield(false), 2200))
+        // Fire the burst. Only switch to home once the burst has actually fired —
+        // setPage() unmounts SplashScreen, so we must wait until after the burst
+        // fires to avoid getBoundingClientRect() returning zeros on a detached node.
+        splashRef.current?.playExit({
+          onBurstFired: () => {
+            setPage(target)
+            timers.push(setTimeout(() => setHomeVisible(true), 150))
+          },
+        })
       } else {
         Promise.resolve(splashRef.current?.playExit()).then(revealEntry)
       }
@@ -275,13 +278,18 @@ function App() {
         </div>
       )}
 
-      {/* Home page — opacity 0 until card lands in sidebar */}
+      {/* Home page — opacity 0 until card lands in sidebar.
+          position+zIndex keep this above the starfield canvas (z-index:0)
+          at all times — without it, opacity:1 drops the stacking context
+          and the canvas repaints on top. */}
       {page === 'home' && (
         <div
           style={{
             opacity: homeVisible ? 1 : 0,
             transition: homeVisible ? 'opacity 0.8s ease' : 'none',
             pointerEvents: homeVisible ? 'auto' : 'none',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <HomePage activePage="home" {...sharedProps} />
