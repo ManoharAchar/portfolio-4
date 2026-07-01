@@ -92,6 +92,7 @@ function App() {
   const [flyingCard, setFlyingCard] = useState(null)
   const [homeVisible, setHomeVisible] = useState(false)
   const [pendingEntry, setPendingEntry] = useState(null)
+  const [keepStarfield, setKeepStarfield] = useState(false)
 
   // Preload thumbnail videos while splash/welcome is playing so they're ready
   // the moment the home page mounts.
@@ -152,6 +153,8 @@ function App() {
 
     const revealEntry = () => {
       if (pendingEntry.type === 'returning') {
+        // skipSplash path only — the non-skip path handles returning visitors
+        // directly in the timer below with an overlapping fade transition.
         const { guestData, accent, target, passId } = pendingEntry
         if (accent) document.documentElement.style.setProperty('--accent', accent)
         setGuest(guestData)
@@ -172,11 +175,34 @@ function App() {
     }
 
     const wait = Math.max(0, SPLASH_MIN_VISIBLE_MS - (Date.now() - splashStartRef.current))
+    const timers = []
     const timer = setTimeout(() => {
-      Promise.resolve(splashRef.current?.playExit()).then(revealEntry)
+      if (pendingEntry.type === 'returning') {
+        const { guestData, accent, target, passId } = pendingEntry
+        if (accent) document.documentElement.style.setProperty('--accent', accent)
+        setGuest(guestData)
+        document.title = PAGE_TITLES[target]
+        window.history.replaceState({ page: target }, '', pageToPath(target))
+        startSession(passId)
+        // Keep starfield alive so particles keep flying after splash unmounts
+        setKeepStarfield(true)
+        // Fire the burst — don't await, let particles fly independently
+        splashRef.current?.playExit()
+        // Mount home hidden immediately so it's ready in the DOM
+        setPage(target)
+        // Fade home in midway through the particle flight
+        timers.push(setTimeout(() => setHomeVisible(true), 150))
+        // Drop the starfield once particles have finished and home is visible
+        timers.push(setTimeout(() => setKeepStarfield(false), 800))
+      } else {
+        Promise.resolve(splashRef.current?.playExit()).then(revealEntry)
+      }
     }, wait)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      timers.forEach(clearTimeout)
+    }
   }, [pendingEntry, skipSplash])
 
   const handleEnter = ({ cardRect, intent, name, date }) => {
@@ -225,9 +251,9 @@ function App() {
     <>
       <CustomCursor />
 
-      {/* Shared starfield — persists across splash → welcome so the
-          dematerialize transition reads as one continuous animation */}
-      {(page === 'splash' || page === 'welcome') && (
+      {/* Shared starfield — persists across splash → welcome, and stays alive
+          during the returning-visitor particle flight into the home page */}
+      {(page === 'splash' || page === 'welcome' || keepStarfield) && (
         <StarfieldCursorFollow
           ref={starfieldRef}
           backgroundColor="#2a2a2a"
@@ -254,7 +280,7 @@ function App() {
         <div
           style={{
             opacity: homeVisible ? 1 : 0,
-            transition: homeVisible ? 'opacity 0.5s ease' : 'none',
+            transition: homeVisible ? 'opacity 0.8s ease' : 'none',
             pointerEvents: homeVisible ? 'auto' : 'none',
           }}
         >
