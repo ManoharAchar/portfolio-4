@@ -16,6 +16,7 @@ import FlyingCard from './components/FlyingCard/FlyingCard'
 import { resolveVisitor, createPass, passToGuest } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
+import posthog from 'posthog-js'
 
 const ACCENT_COLORS = {
   designer: '#798c6d',
@@ -246,6 +247,7 @@ function App() {
     window.history.pushState({ page: target }, '', pageToPath(target))
     setPage(target)
     window.scrollTo(0, 0)
+    posthog.capture('$pageview')
   }
 
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
