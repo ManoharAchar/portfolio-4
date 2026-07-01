@@ -5,6 +5,7 @@ import StarfieldCursorFollow from './components/StarfieldCursorFollow/StarfieldC
 import SplashScreen from './sections/SplashScreen/SplashScreen'
 import WelcomeScreen from './sections/WelcomeScreen/WelcomeScreen'
 import HomePage from './sections/HomePage/HomePage'
+import ChunkErrorBoundary from './components/ChunkErrorBoundary/ChunkErrorBoundary'
 const AboutPage         = lazy(() => import('./sections/AboutPage/AboutPage'))
 const CooperantLearning = lazy(() => import('./sections/CooperantLearning/CooperantLearning'))
 const SeniorMode        = lazy(() => import('./sections/SeniorMode/SeniorMode'))
@@ -298,15 +299,17 @@ function App() {
         </div>
       )}
 
-      <Suspense>
-        {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
-        {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
-        {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
-        {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
-        {page === 'mochitta'    && <Mochitta {...sharedProps} />}
-        {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
-        {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
-      </Suspense>
+      <ChunkErrorBoundary>
+        <Suspense>
+          {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
+          {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
+          {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
+          {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
+          {page === 'mochitta'    && <Mochitta {...sharedProps} />}
+          {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
+          {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
+        </Suspense>
+      </ChunkErrorBoundary>
 
       {/* Flying card overlay — fixed position, persists across page transition */}
       {flyingCard && (
