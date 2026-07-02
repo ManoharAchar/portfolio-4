@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './CustomCursor.css'
 
 const CLICKABLE = 'a, button, [role="button"], label, input, select, textarea'
@@ -6,7 +6,11 @@ const CLICKABLE = 'a, button, [role="button"], label, input, select, textarea'
 const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
 
 export default function CustomCursor() {
-  const [pos, setPos] = useState({ x: -200, y: -200 })
+  // Position is written straight to the DOM node — a React render per
+  // mousemove (60–120Hz) is wasted work for a pure transform update.
+  // State is kept only for the discrete changes (shape, visibility).
+  const cursorRef = useRef(null)
+  const visibleRef = useRef(false)
   const [cursorState, setCursorState] = useState('default')
   const [tipText, setTipText] = useState('')
   const [visible, setVisible] = useState(false)
@@ -14,8 +18,13 @@ export default function CustomCursor() {
   useEffect(() => {
     if (isTouch) return
     const onMove = (e) => {
-      setPos({ x: e.clientX, y: e.clientY })
-      if (!visible) setVisible(true)
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
+      }
+      if (!visibleRef.current) {
+        visibleRef.current = true
+        setVisible(true)
+      }
     }
 
     const onOver = (e) => {
@@ -39,10 +48,16 @@ export default function CustomCursor() {
       }
     }
 
-    const onLeave = () => setVisible(false)
-    const onEnter = () => setVisible(true)
+    const onLeave = () => {
+      visibleRef.current = false
+      setVisible(false)
+    }
+    const onEnter = () => {
+      visibleRef.current = true
+      setVisible(true)
+    }
 
-    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mousemove', onMove, { passive: true })
     document.addEventListener('mouseover', onOver)
     document.documentElement.addEventListener('mouseleave', onLeave)
     document.documentElement.addEventListener('mouseenter', onEnter)
@@ -53,15 +68,16 @@ export default function CustomCursor() {
       document.documentElement.removeEventListener('mouseleave', onLeave)
       document.documentElement.removeEventListener('mouseenter', onEnter)
     }
-  }, [visible])
+  }, [])
 
   if (isTouch) return null
 
   return (
     <div
+      ref={cursorRef}
       className="custom-cursor"
       style={{
-        transform: `translate(${pos.x}px, ${pos.y}px)`,
+        transform: 'translate(-200px, -200px)',
         opacity: visible ? 1 : 0,
       }}
     >

@@ -7,27 +7,27 @@ import './Sidebar.css'
 import logoMark from '../../assets/icons/logo-mark.svg'
 import statusDot from '../../assets/icons/status-dot.svg'
 
-function useDetroitTime() {
-  const [time, setTime] = useState('')
+// Module-scope formatter — constructing Intl.DateTimeFormat is expensive,
+// formatting with it is cheap.
+const DETROIT_TIME_FMT = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/Detroit',
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+})
+
+// Leaf component so the per-second tick re-renders only this span,
+// not the whole sidebar tree (PassCard, TiltCard, NavCard…).
+function DetroitClock() {
+  const [time, setTime] = useState(() => DETROIT_TIME_FMT.format(new Date()))
   useEffect(() => {
-    const tick = () => {
-      setTime(
-        new Intl.DateTimeFormat('en-US', {
-          timeZone: 'America/Detroit',
-          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
-        }).format(new Date())
-      )
-    }
-    tick()
-    const id = setInterval(tick, 1000)
+    const id = setInterval(() => setTime(DETROIT_TIME_FMT.format(new Date())), 1000)
     return () => clearInterval(id)
   }, [])
-  return time
+  return <span>DETROIT, {time}</span>
 }
 
 function useSidebarPush(sidebarRef) {
   useEffect(() => {
-    let rafId
+    let rafId = null
     const desktopQuery = window.matchMedia('(min-width: 1024px)')
 
     const clearOffset = () => {
@@ -37,39 +37,52 @@ function useSidebarPush(sidebarRef) {
     }
 
     const update = () => {
-      if (!desktopQuery.matches) {
-        clearOffset()
-        return
-      }
+      rafId = null
+      if (!desktopQuery.matches) return
 
       const footer = document.querySelector('.footer')
-      if (footer && sidebarRef.current) {
+      const sidebar = sidebarRef.current
+      if (footer && sidebar) {
         const gap = footer.getBoundingClientRect().top - window.innerHeight
-        sidebarRef.current.style.top = `${Math.min(0, gap)}px`
+        sidebar.style.top = `${Math.min(0, gap)}px`
 
-        const maxSidebarScroll = sidebarRef.current.scrollHeight - sidebarRef.current.clientHeight
+        const maxSidebarScroll = sidebar.scrollHeight - sidebar.clientHeight
         if (maxSidebarScroll > 0) {
-          sidebarRef.current.scrollTop = Math.min(maxSidebarScroll, window.scrollY)
+          sidebar.scrollTop = Math.min(maxSidebarScroll, window.scrollY)
         }
       }
-      rafId = requestAnimationFrame(update)
+    }
+
+    // Coalesce all triggers into at most one layout pass per frame,
+    // and do nothing at all while the page is idle.
+    const schedule = () => {
+      if (rafId == null) rafId = requestAnimationFrame(update)
     }
 
     const syncMode = () => {
-      cancelAnimationFrame(rafId)
-      clearOffset()
-
-      if (desktopQuery.matches) {
-        rafId = requestAnimationFrame(update)
+      if (rafId != null) {
+        cancelAnimationFrame(rafId)
+        rafId = null
       }
+      clearOffset()
+      if (desktopQuery.matches) schedule()
     }
 
     syncMode()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
     desktopQuery.addEventListener('change', syncMode)
+    // Catches footer movement from content loading in (images/videos)
+    // without scroll or resize firing.
+    const resizeObserver = new ResizeObserver(schedule)
+    resizeObserver.observe(document.documentElement)
 
     return () => {
-      cancelAnimationFrame(rafId)
+      if (rafId != null) cancelAnimationFrame(rafId)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
       desktopQuery.removeEventListener('change', syncMode)
+      resizeObserver.disconnect()
     }
   }, [sidebarRef])
 }
@@ -77,7 +90,6 @@ function useSidebarPush(sidebarRef) {
 const PAGE_ORDER = ['home', 'about', 'cave', 'archive']
 
 export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true, onClose }) {
-  const time = useDetroitTime()
   const sidebarRef = useRef(null)
   useSidebarPush(sidebarRef)
 
@@ -147,7 +159,7 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
         </div>
         <div className="sidebar__location">
           <img className="sidebar__status-dot" src={statusDot} alt="" />
-          <span>DETROIT, {time}</span>
+          <DetroitClock />
         </div>
       </div>
     </aside>

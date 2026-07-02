@@ -7,19 +7,33 @@ export default function ImageSlider({ leftImage, rightImage, alt = 'Before and a
   const [handleHovered, setHandleHovered] = useState(false)
   const containerRef = useRef(null)
 
-  const getPercent = (clientX) => {
-    if (!containerRef.current) return position
-    const rect = containerRef.current.getBoundingClientRect()
-    return Math.max(0, Math.min(((clientX - rect.left) / rect.width) * 100, 100))
-  }
-
   const handlePointerDown = (e) => {
+    if (!containerRef.current) return
     e.preventDefault()
     setIsDragging(true)
-    setPosition(getPercent(e.clientX))
 
-    const onMove = (ev) => setPosition(getPercent(ev.clientX))
+    // Capture the rect once — reading it on every pointermove forces a
+    // layout pass mid-drag. It can't change while the pointer is down.
+    const rect = containerRef.current.getBoundingClientRect()
+    const percentAt = (clientX) =>
+      Math.max(0, Math.min(((clientX - rect.left) / rect.width) * 100, 100))
+
+    setPosition(percentAt(e.clientX))
+
+    // Coalesce pointermove (up to 120Hz+) into one state update per frame
+    let rafId = null
+    let lastX = e.clientX
+    const onMove = (ev) => {
+      lastX = ev.clientX
+      if (rafId == null) {
+        rafId = requestAnimationFrame(() => {
+          rafId = null
+          setPosition(percentAt(lastX))
+        })
+      }
+    }
     const onUp = () => {
+      if (rafId != null) cancelAnimationFrame(rafId)
       setIsDragging(false)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)

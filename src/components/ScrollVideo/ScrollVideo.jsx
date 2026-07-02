@@ -44,16 +44,31 @@ export default function ScrollVideo({ src, className = '', accentColor = 'var(--
     video.pause()
     setIsDragging(true)
 
+    // Rect captured once per drag — it can't change while scrubbing, and
+    // reading it per pointermove forces layout between currentTime seeks.
+    const rect = video.parentElement.getBoundingClientRect()
     const update = (clientX) => {
-      const rect = video.parentElement.getBoundingClientRect()
       const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
       video.currentTime = ratio * video.duration
       setProgress(ratio * 100)
     }
 
     update(e.clientX)
-    const onMove = (e2) => update(e2.clientX)
+    // Coalesce to one seek per frame — seeking per pointer event floods the
+    // decoder with more seeks than it can display.
+    let rafId = null
+    let lastX = e.clientX
+    const onMove = (e2) => {
+      lastX = e2.clientX
+      if (rafId == null) {
+        rafId = requestAnimationFrame(() => {
+          rafId = null
+          update(lastX)
+        })
+      }
+    }
     const onUp = () => {
+      if (rafId != null) cancelAnimationFrame(rafId)
       setIsDragging(false)
       video.play().catch(() => {})
       window.removeEventListener('pointermove', onMove)
