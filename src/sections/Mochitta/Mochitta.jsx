@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
 import { useIsMobile } from '../../lib/useIsMobile'
@@ -327,6 +327,16 @@ export default function Mochitta({ onNavigate }) {
   const [flowVideoPlaying, setFlowVideoPlaying] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
   const flowVideoRef = useRef(null)
+  // Stable identity is required: an inline ref callback re-attaches on every
+  // render, and re-observing the video would auto-play it after a user pause.
+  const flowVideoInViewRef = useCallback((el) => {
+    flowVideoRef.current = el
+    const cleanup = playInView(el)
+    return () => {
+      flowVideoRef.current = null
+      cleanup?.()
+    }
+  }, [])
   const isMobile = useIsMobile()
   const sectionsRef = useReveal()
 
@@ -582,14 +592,7 @@ export default function Mochitta({ onNavigate }) {
                   <div className="cs-flows-media">
                     <video
                       key={activeFlow}
-                      ref={(el) => {
-                        flowVideoRef.current = el
-                        const cleanup = playInView(el)
-                        return () => {
-                          flowVideoRef.current = null
-                          cleanup?.()
-                        }
-                      }}
+                      ref={flowVideoInViewRef}
                       src={FLOW_CARDS[activeFlow].video}
                       loop
                       muted

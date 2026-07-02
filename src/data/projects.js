@@ -2,6 +2,12 @@ import thumbCooperant from '../assets/thumbnails/1 - Cooperant learning Thumbnai
 import thumbSeniorMode from '../assets/thumbnails/2 - Senior Mode Thumbnail.mp4'
 import thumbBlackbaza from '../assets/thumbnails/3 - Blackbaza Thumbnail.mp4'
 import thumbMochitta from '../assets/thumbnails/4 - Mochitta Thumbnail.mp4'
+// Poster frames (extracted at each video's thumbTime) — shown when the
+// browser refuses to decode video, e.g. iOS Low Power Mode.
+import posterCooperant from '../assets/thumbnails/poster-cooperant.jpg'
+import posterSeniorMode from '../assets/thumbnails/poster-senior-mode.jpg'
+import posterBlackbaza from '../assets/thumbnails/poster-black-baza.jpg'
+import posterMochitta from '../assets/thumbnails/poster-mochitta.jpg'
 
 export const PROJECTS = [
   {
@@ -10,6 +16,7 @@ export const PROJECTS = [
     tags: ['CLIENT WORK', 'SHIPPED'],
     imageColor: '#b0b082',
     video: thumbCooperant,
+    poster: posterCooperant,
     thumbTime: 1.21,
     loopAlways: true,
     title: 'Cooperant Learning',
@@ -26,6 +33,7 @@ export const PROJECTS = [
     tags: ['CAPSTONE', 'TESTED'],
     imageColor: '#8882b0',
     video: thumbMochitta,
+    poster: posterMochitta,
     thumbTime: 1.25,
     loopAlways: true,
     title: 'Mochitta',
@@ -42,6 +50,7 @@ export const PROJECTS = [
     tags: ['CLIENT WORK', 'IN PRODUCTION'],
     imageColor: '#829eb0',
     video: thumbBlackbaza,
+    poster: posterBlackbaza,
     thumbTime: 2.19,
     loopAlways: true,
     title: 'Black Baza Coffee',
@@ -58,6 +67,7 @@ export const PROJECTS = [
     tags: ['CONCEPT', 'TESTED'],
     imageColor: '#8eb082',
     video: thumbSeniorMode,
+    poster: posterSeniorMode,
     thumbTime: 1.16,
     loopAlways: true,
     title: 'Senior Mode',

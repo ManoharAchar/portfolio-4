@@ -106,6 +106,17 @@ function App() {
   const [homeVisible, setHomeVisible] = useState(false)
   const [pendingEntry, setPendingEntry] = useState(null)
   const [keepStarfield, setKeepStarfield] = useState(false)
+  const [entryFadeDone, setEntryFadeDone] = useState(false)
+
+  // Once the 0.8s entry fade completes, drop opacity/transition from the page
+  // wrappers entirely. Safari mispositions position:fixed descendants (the
+  // mobile top bar) inside ancestors with animated opacity — the bar detaches
+  // from the viewport and parks mid-screen.
+  useEffect(() => {
+    if (!homeVisible) return
+    const t = setTimeout(() => setEntryFadeDone(true), 900)
+    return () => clearTimeout(t)
+  }, [homeVisible])
 
   // Preload thumbnail videos while splash/welcome is playing so they're ready
   // the moment the home page mounts. fetchPriority=low keeps them from
@@ -289,6 +300,19 @@ function App() {
 
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
 
+  // position+zIndex keep pages above the starfield canvas (z-index:0) at all
+  // times. The opacity fade only exists during entry; afterwards the style
+  // reduces to just the stacking keys (see entryFadeDone above).
+  const pageWrapStyle = entryFadeDone
+    ? { position: 'relative', zIndex: 1 }
+    : {
+        opacity: homeVisible ? 1 : 0,
+        transition: homeVisible ? 'opacity 0.8s ease' : 'none',
+        pointerEvents: homeVisible ? 'auto' : 'none',
+        position: 'relative',
+        zIndex: 1,
+      }
+
   return (
     <>
       <CustomCursor />
@@ -317,20 +341,9 @@ function App() {
         </div>
       )}
 
-      {/* Home page — opacity 0 until card lands in sidebar.
-          position+zIndex keep this above the starfield canvas (z-index:0)
-          at all times — without it, opacity:1 drops the stacking context
-          and the canvas repaints on top. */}
+      {/* Home page — opacity 0 until card lands in sidebar */}
       {page === 'home' && (
-        <div
-          style={{
-            opacity: homeVisible ? 1 : 0,
-            transition: homeVisible ? 'opacity 0.8s ease' : 'none',
-            pointerEvents: homeVisible ? 'auto' : 'none',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
+        <div style={pageWrapStyle}>
           <HomePage activePage="home" {...sharedProps} />
         </div>
       )}
@@ -338,15 +351,7 @@ function App() {
       {/* Same fade + stacking treatment as the home page: without the
           position+zIndex wrapper the starfield canvas (z-index:0) paints on
           top of deep-linked pages during the returning-visitor entry. */}
-      <div
-        style={{
-          opacity: homeVisible ? 1 : 0,
-          transition: homeVisible ? 'opacity 0.8s ease' : 'none',
-          pointerEvents: homeVisible ? 'auto' : 'none',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
+      <div style={pageWrapStyle}>
         <ChunkErrorBoundary>
           <Suspense>
             {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}

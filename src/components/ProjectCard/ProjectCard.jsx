@@ -1,8 +1,9 @@
 import { useRef, useEffect } from 'react'
 import TagBadge from '../TagBadge/TagBadge'
+import { tryPlay, cancelPlay } from '../../lib/playInView'
 import './ProjectCard.css'
 
-export default function ProjectCard({ number, tags, imageColor, image, video, thumbTime = 0, loopAlways = false, title, description, role, team, timeframe, onClick }) {
+export default function ProjectCard({ number, tags, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, description, role, team, timeframe, onClick }) {
   const cardRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -23,7 +24,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
     let observer
 
     const pauseAtThumb = () => {
-      v.pause()
+      cancelPlay(v)
       v.currentTime = thumbTime
     }
 
@@ -38,7 +39,9 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            v.play().catch(() => {})
+            // tryPlay retries on the next tap if playback was blocked
+            // (iOS Low Power Mode rejects non-gesture play()).
+            tryPlay(v)
           } else {
             pauseAtThumb()
           }
@@ -57,6 +60,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
 
     return () => {
       observer?.disconnect()
+      cancelPlay(v)
       mobileQuery.removeEventListener('change', syncObserver)
     }
   }, [thumbTime, video, loopAlways])
@@ -103,6 +107,7 @@ export default function ProjectCard({ number, tags, imageColor, image, video, th
           <video
             ref={videoRef}
             src={video}
+            poster={poster}
             muted
             playsInline
             loop
