@@ -4,6 +4,7 @@ import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
 import { useReveal } from '../../lib/useReveal'
 import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
+import { playInView } from '../../lib/playInView'
 import '../CooperantLearning/CooperantLearning.css'
 import './BlackBazaar.css'
 
@@ -315,7 +316,7 @@ export default function BlackBazaar({ onNavigate }) {
                   return (
                     <div key={name} className="bb-user-group-card">
                       <div className="bb-avatar">
-                        <img alt="" className="bb-avatar__img" src={AVATAR_BY_NAME[name]} />
+                        <img alt="" loading="lazy" decoding="async" className="bb-avatar__img" src={AVATAR_BY_NAME[name]} />
                       </div>
                       <div className="bb-user-group-card__accent" />
                       <p className="bb-user-group-card__name">{name}</p>
@@ -494,8 +495,8 @@ export default function BlackBazaar({ onNavigate }) {
               </p>
               <div className="cs-media">
                 <div className="cs-media__pan-wrap">
-                  <img src={usabilityTestImage} alt="Black Baza usability testing" className="cs-media__img" />
-                  <img src={hoverSvg} alt="" className="cs-media__hover-hint" />
+                  <img loading="lazy" decoding="async" src={usabilityTestImage} alt="Black Baza usability testing" className="cs-media__img" />
+                  <img loading="lazy" decoding="async" src={hoverSvg} alt="" className="cs-media__hover-hint" />
                 </div>
                 <p className="cs-media__caption">
                   SUS scores by group. Buyer experience is above average. Retailer experience is the priority for the next iteration.
@@ -539,9 +540,9 @@ export default function BlackBazaar({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <img loading="lazy" decoding="async" src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
-                      <img src={iconCopy} alt="Copy email address" />
+                      <img loading="lazy" decoding="async" src={iconCopy} alt="Copy email address" />
                       {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
@@ -550,7 +551,7 @@ export default function BlackBazaar({ onNavigate }) {
                   </div>
                 </div>
                 <div className="cs-invite__photo">
-                  <img src={invitePhoto} alt="Manohar Achar" />
+                  <img loading="lazy" decoding="async" src={invitePhoto} alt="Manohar Achar" />
                 </div>
               </div>
             </section>
@@ -562,7 +563,7 @@ export default function BlackBazaar({ onNavigate }) {
                 {getViewNext('black-baza').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                      <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
                     <p className="cs-viewnext-card__desc">{description}</p>

@@ -31,9 +31,7 @@ import invitePhoto from '../../assets/mochitta/invite-photo.webp'
 import iconCopy from '../../assets/mochitta/icon-copy.svg'
 import iconMail from '../../assets/mochitta/icon-mail.webp'
 
-// The autoplay attribute alone doesn't reliably start these (they mount at
-// opacity:0 under the scroll-reveal observer), so kick play() explicitly.
-const playOnMount = (el) => { if (el) el.play().catch(() => {}) }
+import { playInView } from '../../lib/playInView'
 
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
@@ -183,7 +181,7 @@ function BrokeRow({ title, body, metric, quote, img, reverse, index }) {
   )
   const media = (
     <div className="cs-broke-media">
-      <video src={img} autoPlay loop muted playsInline ref={playOnMount} aria-label={`${title} screen`} />
+      <video src={img} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} screen`} />
     </div>
   )
   return (
@@ -207,7 +205,7 @@ function FixRow({ before, after, img, metricValue, metricCaption, note, index })
           <p className="cs-fix-text__body">{before.body}</p>
         </div>
         <div className="cs-fix-media">
-          <video src={img} autoPlay loop muted playsInline ref={playOnMount} aria-label={`${before.title} versus ${after.title}`} />
+          <video src={img} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${before.title} versus ${after.title}`} />
         </div>
         <div className="cs-fix-text cs-fix-text--after">
           <p className="cs-fix-text__label">AFTER</p>
@@ -245,7 +243,8 @@ const ReplayIcon = () => (
 )
 
 function FlowCarouselSlide({ label, title, items, video }) {
-  const [playing, setPlaying] = useState(true)
+  // Starts paused — the carousel observer below plays the visible slide.
+  const [playing, setPlaying] = useState(false)
   const videoRef = useRef(null)
   const slideRef = useRef(null)
 
@@ -292,10 +291,10 @@ function FlowCarouselSlide({ label, title, items, video }) {
         <video
           ref={videoRef}
           src={video}
-          autoPlay
           loop
           muted
           playsInline
+          preload="metadata"
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
         />
@@ -324,7 +323,8 @@ export default function Mochitta({ onNavigate }) {
   const [activeSection, setActiveSection] = useState('overview')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeFlow, setActiveFlow] = useState(0)
-  const [flowVideoPlaying, setFlowVideoPlaying] = useState(true)
+  // Starts paused — the shared playInView observer starts it when visible.
+  const [flowVideoPlaying, setFlowVideoPlaying] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
   const flowVideoRef = useRef(null)
   const isMobile = useIsMobile()
@@ -490,7 +490,7 @@ export default function Mochitta({ onNavigate }) {
                   <p className="cs-label">MOCHITTA</p>
                   <h1 className="cs-hero-title">Young adults had no way to see how emotions shaped their spending. So we built one.</h1>
                   <div className="cs-v2-hero-visual--mobile">
-                    <video src={heroComposite} autoPlay loop muted playsInline ref={playOnMount} aria-label="Mochitta app screens: emotion tagging and weekly financial pulse" />
+                    <video src={heroComposite} loop muted playsInline preload="metadata" ref={playInView} aria-label="Mochitta app screens: emotion tagging and weekly financial pulse" />
                   </div>
                   <div className="cs-tag-pill-row">
                     {TAG_PILLS.map((label) => (
@@ -510,7 +510,7 @@ export default function Mochitta({ onNavigate }) {
                   </div>
                 </div>
                 <div className="cs-v2-hero-visual">
-                  <video src={heroComposite} autoPlay loop muted playsInline ref={playOnMount} aria-label="Mochitta app screens: emotion tagging and weekly financial pulse" />
+                  <video src={heroComposite} loop muted playsInline preload="metadata" ref={playInView} aria-label="Mochitta app screens: emotion tagging and weekly financial pulse" />
                 </div>
               </div>
             </section>
@@ -523,7 +523,7 @@ export default function Mochitta({ onNavigate }) {
                 {PROBLEM_CARDS.map(({ icon, title, body }) => (
                   <div key={title} className="cs-problem-card">
                     <div className="cs-problem-card__top">
-                      <img src={icon} alt="" className="cs-problem-card__icon" />
+                      <img loading="lazy" decoding="async" src={icon} alt="" className="cs-problem-card__icon" />
                       <p className="cs-problem-card__title">{title}</p>
                     </div>
                     <p className="cs-problem-card__body">{body}</p>
@@ -540,7 +540,7 @@ export default function Mochitta({ onNavigate }) {
               <div className="cs-product-grid">
                 {PRODUCT_CARDS.map(({ img, title, desc }) => (
                   <div key={title} className="cs-product-card">
-                    <video src={img} autoPlay loop muted playsInline ref={playOnMount} aria-label={`${title}: ${desc}`} />
+                    <video src={img} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title}: ${desc}`} />
                   </div>
                 ))}
               </div>
@@ -582,12 +582,19 @@ export default function Mochitta({ onNavigate }) {
                   <div className="cs-flows-media">
                     <video
                       key={activeFlow}
-                      ref={flowVideoRef}
+                      ref={(el) => {
+                        flowVideoRef.current = el
+                        const cleanup = playInView(el)
+                        return () => {
+                          flowVideoRef.current = null
+                          cleanup?.()
+                        }
+                      }}
                       src={FLOW_CARDS[activeFlow].video}
-                      autoPlay
                       loop
                       muted
                       playsInline
+                      preload="metadata"
                       onPlay={() => setFlowVideoPlaying(true)}
                       onPause={() => setFlowVideoPlaying(false)}
                     />
@@ -649,7 +656,7 @@ export default function Mochitta({ onNavigate }) {
                     The fixes worked because they were precise. Each one targeted a located cause, not a general complaint, and two of them gave users the scaffolding to catch their own errors. That is the kind of design I want to keep doing.
                   </p>
                 </div>
-                <img src={iconGrowingPlant} alt="" className="cs-impact-banner__icon" />
+                <img loading="lazy" decoding="async" src={iconGrowingPlant} alt="" className="cs-impact-banner__icon" />
               </div>
             </section>
 
@@ -698,9 +705,9 @@ export default function Mochitta({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <img loading="lazy" decoding="async" src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
-                      <img src={iconCopy} alt="Copy email address" />
+                      <img loading="lazy" decoding="async" src={iconCopy} alt="Copy email address" />
                       {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
@@ -709,7 +716,7 @@ export default function Mochitta({ onNavigate }) {
                   </div>
                 </div>
                 <div className="cs-invite__photo">
-                  <img src={invitePhoto} alt="Manohar Achar" />
+                  <img loading="lazy" decoding="async" src={invitePhoto} alt="Manohar Achar" />
                 </div>
               </div>
             </section>
@@ -721,7 +728,7 @@ export default function Mochitta({ onNavigate }) {
                 {getViewNext('mochitta').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                      <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
                     <p className="cs-viewnext-card__desc">{description}</p>

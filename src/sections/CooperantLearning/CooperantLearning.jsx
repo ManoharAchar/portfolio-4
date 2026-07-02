@@ -3,6 +3,7 @@ import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
 import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
+import { playInView } from '../../lib/playInView'
 import './CooperantLearning.css'
 
 import heroComposite from '../../assets/cooperant/v2/hero-composite.mp4'
@@ -138,7 +139,7 @@ function FlowCard({ icon, title, desc }) {
   return (
     <div className="cs-flow-card">
       <div className="cs-flow-card__icon">
-        <img src={icon} alt="" />
+        <img loading="lazy" decoding="async" src={icon} alt="" />
       </div>
       <div className="cs-flow-card__text">
         <p className="cs-flow-card__title">{title}</p>
@@ -152,7 +153,7 @@ function StepCard({ img, title, desc, index }) {
   return (
     <div className="cs-step-card">
       <div className="cs-step-card__img">
-        <img src={img} alt={`${title} screen`} />
+        <img loading="lazy" decoding="async" src={img} alt={`${title} screen`} />
       </div>
       <div>
         <p className="cs-step-card__title">{index + 1}. {title}</p>
@@ -310,7 +311,7 @@ export default function CooperantLearning({ onNavigate }) {
                   <p className="cs-label">COOPERANT LEARNING</p>
                   <h1 className="cs-hero-title">Turning podcast listening into certified learning.</h1>
                   <div className="cs-v2-hero-visual--mobile">
-                    <video src={heroComposite} autoPlay loop muted playsInline />
+                    <video src={heroComposite} loop muted playsInline preload="metadata" ref={playInView} />
                   </div>
                   <p className="cs-hero-body">
                     BCBAs — board-certified behavior analysts — are required to earn continuing education credits (CEUs) every certification cycle. Cooperant Learning gives them one place to listen to expert podcasts, take a short quiz, and walk away with the credits they need. I designed and built the platform from scratch.
@@ -328,7 +329,7 @@ export default function CooperantLearning({ onNavigate }) {
                   </a>
                 </div>
                 <div className="cs-v2-hero-visual">
-                  <video src={heroComposite} autoPlay loop muted playsInline />
+                  <video src={heroComposite} loop muted playsInline preload="metadata" ref={playInView} />
                 </div>
               </div>
 
@@ -357,17 +358,17 @@ export default function CooperantLearning({ onNavigate }) {
                   <Fragment key={p.title}>
                     <FlowCard {...p} />
                     {i < PAIN_POINTS.length - 1 && (
-                      <div className="cs-flow-arrow"><img src={arrowFlow} alt="" /></div>
+                      <div className="cs-flow-arrow"><img loading="lazy" decoding="async" src={arrowFlow} alt="" /></div>
                     )}
                   </Fragment>
                 ))}
               </div>
 
               <div className="cs-v2-chart">
-                <img src={problemSentiment} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
+                <img loading="lazy" decoding="async" src={problemSentiment} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
               </div>
               <div className="cs-v2-chart--mobile">
-                <img src={problemSentimentMobile} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
+                <img loading="lazy" decoding="async" src={problemSentimentMobile} alt="Experience without Cooperant Learning: sentiment trends from enjoying the content down to not knowing how many credits are left" />
               </div>
 
               <p className="cs-section-body">
@@ -385,17 +386,17 @@ export default function CooperantLearning({ onNavigate }) {
                   <Fragment key={s.title}>
                     <StepCard {...s} index={i} />
                     {i < JOURNEY_STEPS.length - 1 && (
-                      <div className="cs-flow-arrow"><img src={arrowFlow} alt="" /></div>
+                      <div className="cs-flow-arrow"><img loading="lazy" decoding="async" src={arrowFlow} alt="" /></div>
                     )}
                   </Fragment>
                 ))}
               </div>
 
               <div className="cs-v2-chart">
-                <img src={mvpSentiment} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
+                <img loading="lazy" decoding="async" src={mvpSentiment} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
               </div>
               <div className="cs-v2-chart--mobile">
-                <img src={mvpSentimentMobile} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
+                <img loading="lazy" decoding="async" src={mvpSentimentMobile} alt="The Cooperant Learning experience: sentiment trends positive from browsing to having all credits in one dashboard" />
               </div>
             </section>
 
@@ -406,7 +407,7 @@ export default function CooperantLearning({ onNavigate }) {
               <div className="cs-built-grid">
                 {BUILT_SURFACES.map(({ src, alt }) => (
                   <div key={alt} className="cs-built-card">
-                    <img src={src} alt={alt} />
+                    <img loading="lazy" decoding="async" src={src} alt={alt} />
                   </div>
                 ))}
               </div>
@@ -421,7 +422,7 @@ export default function CooperantLearning({ onNavigate }) {
               <div className="cs-challenge-grid">
                 {CHALLENGE_IMAGES.map(({ src, alt }) => (
                   <div key={alt} className="cs-challenge-card">
-                    <img src={src} alt={alt} />
+                    <img loading="lazy" decoding="async" src={src} alt={alt} />
                   </div>
                 ))}
               </div>
@@ -437,7 +438,7 @@ export default function CooperantLearning({ onNavigate }) {
               <div className="cs-decision-grid">
                 {DECISION_IMAGES.map(({ src, alt }) => (
                   <div key={alt} className="cs-decision-card">
-                    <img src={src} alt={alt} />
+                    <img loading="lazy" decoding="async" src={src} alt={alt} />
                   </div>
                 ))}
               </div>
@@ -510,9 +511,9 @@ export default function CooperantLearning({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <img loading="lazy" decoding="async" src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
-                      <img src={iconCopy} alt="Copy email address" />
+                      <img loading="lazy" decoding="async" src={iconCopy} alt="Copy email address" />
                       {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
@@ -521,7 +522,7 @@ export default function CooperantLearning({ onNavigate }) {
                   </div>
                 </div>
                 <div className="cs-invite__photo">
-                  <img src={invitePhoto} alt="Manohar Achar" />
+                  <img loading="lazy" decoding="async" src={invitePhoto} alt="Manohar Achar" />
                 </div>
               </div>
             </section>
@@ -533,7 +534,7 @@ export default function CooperantLearning({ onNavigate }) {
                 {getViewNext('cooperant').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                      <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
                     <p className="cs-viewnext-card__desc">{description}</p>

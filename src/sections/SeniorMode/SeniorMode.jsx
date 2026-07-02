@@ -4,6 +4,7 @@ import ScrollVideo from '../../components/ScrollVideo/ScrollVideo'
 import { useReveal } from '../../lib/useReveal'
 import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
+import { playInView } from '../../lib/playInView'
 import '../CooperantLearning/CooperantLearning.css'
 import './SeniorMode.css'
 
@@ -430,8 +431,8 @@ export default function SeniorMode({ onNavigate }) {
               </div>
               <div className="cs-media">
                 <div className="cs-media__pan-wrap">
-                  <img src={testingDataImage} alt="Testing data from both rounds" className="cs-media__img" />
-                  <img src={hoverSvg} alt="" className="cs-media__hover-hint" />
+                  <img loading="lazy" decoding="async" src={testingDataImage} alt="Testing data from both rounds" className="cs-media__img" />
+                  <img loading="lazy" decoding="async" src={hoverSvg} alt="" className="cs-media__hover-hint" />
                 </div>
                 <p className="cs-media__caption">
                   Round 1 task-level results. The outlier was silent-phone recovery, which became the focus of V2.
@@ -499,8 +500,8 @@ export default function SeniorMode({ onNavigate }) {
               </p>
               <div className="cs-media">
                 <div className="cs-media__pan-wrap">
-                  <img src={iaImage} alt="Prototype architecture map used to scope senior and caregiver flows" className="cs-media__img" />
-                  <img src={hoverSvg} alt="" className="cs-media__hover-hint" />
+                  <img loading="lazy" decoding="async" src={iaImage} alt="Prototype architecture map used to scope senior and caregiver flows" className="cs-media__img" />
+                  <img loading="lazy" decoding="async" src={hoverSvg} alt="" className="cs-media__hover-hint" />
                 </div>
               </div>
               <p className="cs-section-body cs-section-body--sm">
@@ -564,9 +565,9 @@ export default function SeniorMode({ onNavigate }) {
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
-                      <img src={iconMail} alt="" className="cs-invite__email-icon" />
+                      <img loading="lazy" decoding="async" src={iconMail} alt="" className="cs-invite__email-icon" />
                       <span>manohar.create@gmail.com</span>
-                      <img src={iconCopy} alt="Copy email address" />
+                      <img loading="lazy" decoding="async" src={iconCopy} alt="Copy email address" />
                       {emailCopied && <span className="cs-invite__copied-tip" role="status">Copied!</span>}
                     </button>
                     <a className="cs-invite__linkedin" href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer">
@@ -575,7 +576,7 @@ export default function SeniorMode({ onNavigate }) {
                   </div>
                 </div>
                 <div className="cs-invite__photo">
-                  <img src={invitePhoto} alt="Manohar Achar" />
+                  <img loading="lazy" decoding="async" src={invitePhoto} alt="Manohar Achar" />
                 </div>
               </div>
             </section>
@@ -587,7 +588,7 @@ export default function SeniorMode({ onNavigate }) {
                 {getViewNext('senior-mode').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
-                      <video src={video} autoPlay loop muted playsInline aria-label={`${title} preview`} />
+                      <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
                     <p className="cs-viewnext-card__desc">{description}</p>
