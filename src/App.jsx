@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense, startTransition } from 'react'
 import './styles/global.css'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import StarfieldCursorFollow from './components/StarfieldCursorFollow/StarfieldCursorFollow'
@@ -6,18 +6,29 @@ import SplashScreen from './sections/SplashScreen/SplashScreen'
 import WelcomeScreen from './sections/WelcomeScreen/WelcomeScreen'
 import HomePage from './sections/HomePage/HomePage'
 import ChunkErrorBoundary from './components/ChunkErrorBoundary/ChunkErrorBoundary'
-const AboutPage         = lazy(() => import('./sections/AboutPage/AboutPage'))
-const CooperantLearning = lazy(() => import('./sections/CooperantLearning/CooperantLearning'))
-const SeniorMode        = lazy(() => import('./sections/SeniorMode/SeniorMode'))
-const BlackBazaar       = lazy(() => import('./sections/BlackBazaar/BlackBazaar'))
-const Mochitta          = lazy(() => import('./sections/Mochitta/Mochitta'))
-const GuestArchivePage  = lazy(() => import('./sections/GuestArchive/GuestArchivePage'))
-const CavePage          = lazy(() => import('./sections/Cave/CavePage'))
+// Loaders shared by lazy() and the prefetch logic below — dynamic imports
+// dedupe, so warming a chunk here makes the lazy mount instant.
+const PAGE_LOADERS = {
+  about:          () => import('./sections/AboutPage/AboutPage'),
+  cooperant:      () => import('./sections/CooperantLearning/CooperantLearning'),
+  'senior-mode':  () => import('./sections/SeniorMode/SeniorMode'),
+  'black-bazaar': () => import('./sections/BlackBazaar/BlackBazaar'),
+  mochitta:       () => import('./sections/Mochitta/Mochitta'),
+  archive:        () => import('./sections/GuestArchive/GuestArchivePage'),
+  cave:           () => import('./sections/Cave/CavePage'),
+}
+const AboutPage         = lazy(PAGE_LOADERS.about)
+const CooperantLearning = lazy(PAGE_LOADERS.cooperant)
+const SeniorMode        = lazy(PAGE_LOADERS['senior-mode'])
+const BlackBazaar       = lazy(PAGE_LOADERS['black-bazaar'])
+const Mochitta          = lazy(PAGE_LOADERS.mochitta)
+const GuestArchivePage  = lazy(PAGE_LOADERS.archive)
+const CavePage          = lazy(PAGE_LOADERS.cave)
 import FlyingCard from './components/FlyingCard/FlyingCard'
 import { resolveVisitor, createPass, passToGuest } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
-import posthog from 'posthog-js'
+import { capture } from './lib/analytics'
 
 const ACCENT_COLORS = {
   designer: '#798c6d',
@@ -97,21 +108,36 @@ function App() {
   const [keepStarfield, setKeepStarfield] = useState(false)
 
   // Preload thumbnail videos while splash/welcome is playing so they're ready
-  // the moment the home page mounts.
+  // the moment the home page mounts. fetchPriority=low keeps them from
+  // competing with fonts/JS/API calls still on the critical path.
   useEffect(() => {
-    PROJECTS.forEach(({ video }) => {
+    const links = PROJECTS.map(({ video }) => {
       const link = document.createElement('link')
       link.rel = 'preload'
       link.as = 'video'
       link.type = 'video/mp4'
       link.href = video
+      link.fetchPriority = 'low'
       document.head.appendChild(link)
+      return link
     })
+    return () => links.forEach((link) => link.remove())
   }, [])
 
   const starfieldRef = useRef(null)
   const splashRef = useRef(null)
   const splashStartRef = useRef(Date.now())
+  const prefetchedRef = useRef(false)
+
+  // Once the visitor has entered, prefetch the remaining page chunks in the
+  // background so in-app navigation never waits on the network.
+  useEffect(() => {
+    if (page === 'splash' || page === 'welcome' || prefetchedRef.current) return
+    prefetchedRef.current = true
+    const prefetch = () => Object.values(PAGE_LOADERS).forEach((load) => load())
+    if ('requestIdleCallback' in window) requestIdleCallback(prefetch, { timeout: 3000 })
+    else setTimeout(prefetch, 2000)
+  }, [page])
 
   // Sync page state with browser back/forward buttons
   useEffect(() => {
@@ -119,7 +145,10 @@ function App() {
       const target = e.state?.page ?? pathToPage(window.location.pathname)
       if (target) {
         document.title = PAGE_TITLES[target] ?? PAGE_TITLES.home
-        setPage(target)
+        // Keep the current page visible while the target chunk loads
+        startTransition(() => {
+          setPage(target)
+        })
         window.scrollTo(0, 0)
       }
     }
@@ -140,6 +169,9 @@ function App() {
         const accent = ACCENT_COLORS[pass.intent]
         const requested = pathToPage(window.location.pathname)
         const target = PAGE_TITLES[requested] ? requested : 'home'
+        // Deep link to a lazy page: warm its chunk now, while the splash is
+        // still playing, so the page mounts instantly after the burst.
+        PAGE_LOADERS[target]?.()
         setPendingEntry({ type: 'returning', guestData, accent, target, passId: pass.id })
       } else {
         setPendingEntry({ type: 'new' })
@@ -246,9 +278,13 @@ function App() {
     recordPageVisit(target)
     document.title = PAGE_TITLES[target] ?? PAGE_TITLES.home
     window.history.pushState({ page: target }, '', pageToPath(target))
-    setPage(target)
+    // startTransition keeps the current page on screen while the target
+    // page's lazy chunk loads, instead of suspending to a blank frame.
+    startTransition(() => {
+      setPage(target)
+    })
     window.scrollTo(0, 0)
-    posthog.capture('$pageview')
+    capture('$pageview')
   }
 
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
@@ -299,17 +335,30 @@ function App() {
         </div>
       )}
 
-      <ChunkErrorBoundary>
-        <Suspense>
-          {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
-          {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
-          {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
-          {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
-          {page === 'mochitta'    && <Mochitta {...sharedProps} />}
-          {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
-          {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
-        </Suspense>
-      </ChunkErrorBoundary>
+      {/* Same fade + stacking treatment as the home page: without the
+          position+zIndex wrapper the starfield canvas (z-index:0) paints on
+          top of deep-linked pages during the returning-visitor entry. */}
+      <div
+        style={{
+          opacity: homeVisible ? 1 : 0,
+          transition: homeVisible ? 'opacity 0.8s ease' : 'none',
+          pointerEvents: homeVisible ? 'auto' : 'none',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <ChunkErrorBoundary>
+          <Suspense>
+            {page === 'about'       && <AboutPage activePage="about" {...sharedProps} />}
+            {page === 'cooperant'   && <CooperantLearning {...sharedProps} />}
+            {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
+            {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
+            {page === 'mochitta'    && <Mochitta {...sharedProps} />}
+            {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
+            {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
+          </Suspense>
+        </ChunkErrorBoundary>
+      </div>
 
       {/* Flying card overlay — fixed position, persists across page transition */}
       {flyingCard && (
