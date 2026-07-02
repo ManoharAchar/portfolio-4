@@ -3,21 +3,22 @@ import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import Footer from '../../components/Footer/Footer'
 import { useReveal } from '../../lib/useReveal'
+import { playInView } from '../../lib/playInView'
 import './AboutPage.css'
 
 import introPortrait  from '../../assets/about/invite-photo.webp'
-import introNature    from '../../assets/about/about-intro-nature.gif'
+import introNature    from '../../assets/about/about-intro-nature.mp4'
 import introCandid    from '../../assets/about/about-intro-3.webp'
 import hobbySketching from '../../assets/about/about-hobby-sketching.webp'
-import hobbyCycling   from '../../assets/about/about-hobby-cycling.gif'
-import hobbyMaking    from '../../assets/about/about-hobby-making.gif'
+import hobbyCycling   from '../../assets/about/about-hobby-cycling.mp4'
+import hobbyMaking    from '../../assets/about/about-hobby-making.mp4'
 import designClubImg  from '../../assets/about/about-community-design-club.webp'
 import aigaImg        from '../../assets/about/about-community-aiga.webp'
 
 const HOBBY_CARDS = [
   { label: 'Perspective sketching', src: hobbySketching, tip: 'A very cosy Black Baza Coffee Office' },
-  { label: 'Western Ghats',         src: hobbyCycling,   rotate: true, tip: 'Electrolytes are gold while cycling 4 days straight.' },
-  { label: 'Making things',         src: hobbyMaking,    tip: 'True freedom is working with clay. Ctrl Z anytime!' },
+  { label: 'Western Ghats',         src: hobbyCycling,   video: true, rotate: true, tip: 'Electrolytes are gold while cycling 4 days straight.' },
+  { label: 'Making things',         src: hobbyMaking,    video: true, tip: 'True freedom is working with clay. Ctrl Z anytime!' },
 ]
 
 const CHIPS_ROW_1 = ['Inner Engineering', 'Bhagavad Gita', 'Design of Everyday Things', 'One Piece']
@@ -105,7 +106,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
                 <span className={`about-image-tip${activeImageTip === 'Hey, Nice to meet you.' ? ' about-image-tip--visible' : ''}`}>Hey, Nice to meet you.</span>
               </div>
               <div className="about-media-card about-media-card--lg" {...getImageTipProps('Climbing a hill is the easiest way to change perspectives.')}>
-                <img src={introNature} alt="" className="about-media-img" />
+                <video src={introNature} className="about-media-img" autoPlay loop muted playsInline ref={playInView} aria-hidden="true" />
                 <span className={`about-image-tip${activeImageTip === 'Climbing a hill is the easiest way to change perspectives.' ? ' about-image-tip--visible' : ''}`}>Climbing a hill is the easiest way to change perspectives.</span>
               </div>
               <div className="about-media-card about-media-card--sm" {...getImageTipProps('Black granite is one hard piece of rock to work with')}>
@@ -179,17 +180,29 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
 
           {/* ── Hobby gallery ── */}
           <div className="about-hobby-gallery">
-            {HOBBY_CARDS.map(({ label, src, rotate, tip }) => (
+            {HOBBY_CARDS.map(({ label, src, video, rotate, tip }) => (
               <div key={label} className="about-hobby-card">
                 <div
                   className="about-hobby-card__frame"
                   {...getImageTipProps(tip)}
                 >
-                  <img
-                    src={src}
-                    alt={label}
-                    className={`about-hobby-img${rotate ? ' about-hobby-img--rotate' : ''}`}
-                  />
+                  {video ? (
+                    <video
+                      src={src}
+                      className={`about-hobby-img${rotate ? ' about-hobby-img--rotate' : ''}`}
+                      loop muted playsInline preload="metadata"
+                      ref={playInView}
+                      aria-label={label}
+                    />
+                  ) : (
+                    <img
+                      src={src}
+                      alt={label}
+                      loading="lazy"
+                      decoding="async"
+                      className={`about-hobby-img${rotate ? ' about-hobby-img--rotate' : ''}`}
+                    />
+                  )}
                   <span className={`about-image-tip${activeImageTip === tip ? ' about-image-tip--visible' : ''}`}>{tip}</span>
                 </div>
                 <p className="about-hobby-card__label">{label}</p>
@@ -212,7 +225,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
                   </div>
                 </div>
                 <div className="about-community-card__image">
-                  <img src={designClubImg} alt="Design Club" className="about-community-img" />
+                  <img src={designClubImg} alt="Design Club" loading="lazy" decoding="async" className="about-community-img" />
                 </div>
               </div>
               <div className="about-community-card">
@@ -226,7 +239,7 @@ export default function AboutPage({ activePage = 'about', onNavigate, guest, sho
                   </div>
                 </div>
                 <div className="about-community-card__image">
-                  <img src={aigaImg} alt="AIGA Detroit" className="about-community-img" />
+                  <img src={aigaImg} alt="AIGA Detroit" loading="lazy" decoding="async" className="about-community-img" />
                 </div>
               </div>
             </div>
