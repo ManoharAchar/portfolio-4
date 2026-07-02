@@ -1,4 +1,5 @@
-import { supabase, retryOnce } from './supabase'
+// Supabase client loads lazily so it stays out of the critical entry chunk.
+const getDb = () => import('./supabase')
 
 const TOKEN_KEY = 'portfolio_pass_token'
 
@@ -24,6 +25,7 @@ export async function resolveVisitor() {
   const token = localStorage.getItem(TOKEN_KEY)
 
   if (token) {
+    const { supabase } = await getDb()
     const { data, error } = await supabase
       .from('passes')
       .select('*')
@@ -52,6 +54,7 @@ export async function createPass({ intent, name }) {
   const token = crypto.randomUUID()
   const passColor = PASS_COLORS[intent] ?? '#c4a24d'
 
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('create_pass', {
       p_token: token, p_animal_name: name, p_intent: intent, p_pass_color: passColor,

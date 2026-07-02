@@ -1,20 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import posthog from 'posthog-js'
 import App from './App.jsx'
-
-posthog.init('phc_wV2NMgi2Yzjw9uWSuFQoBZvBGhr85j6dV3WcZ6xbmjoE', {
-  api_host: 'https://us.i.posthog.com',
-  // Disable automatic pageview capture — this is a SPA using pushState/replaceState,
-  // so we fire $pageview manually on each navigation to avoid session fragmentation.
-  capture_pageview: false,
-  // localStorage keeps the session ID stable across entry flows that call
-  // replaceState multiple times (splash → welcome → home).
-  persistence: 'localStorage',
-})
+import { initAnalytics } from './lib/analytics'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
   </StrictMode>,
 )
+
+// Load PostHog off the critical path, after first paint. Events fired before
+// it loads are queued by lib/analytics and flushed on init.
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initAnalytics, { timeout: 2000 })
+} else {
+  setTimeout(initAnalytics, 1500)
+}

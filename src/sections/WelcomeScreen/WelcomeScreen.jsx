@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import posthog from 'posthog-js'
+import { capture } from '../../lib/analytics'
 import PassCard, { formatDate } from '../../components/PassCard/PassCard'
 import TiltCard from '../../components/TiltCard/TiltCard'
 import { fetchPassStats } from '../../lib/archive'
@@ -75,7 +75,7 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
   }, [])
 
   useEffect(() => {
-    posthog.capture('pass_screen_viewed')
+    capture('pass_screen_viewed')
   }, [])
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export default function WelcomeScreen({ onEnter, exiting = false }) {
     if (!showIntent) return
     const t = setTimeout(() => {
       const cardRect = passCardRef.current?.getBoundingClientRect()
-      posthog.capture('pass_screen_entered', { intent })
+      capture('pass_screen_entered', { intent })
       onEnter?.({ intent, name: guestName, date: passDate, cardRect })
     }, AUTO_ENTER_MS)
     return () => clearTimeout(t)

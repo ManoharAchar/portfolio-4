@@ -1,4 +1,6 @@
-import { supabase, retryOnce } from './supabase'
+// Supabase client loads lazily so WelcomeScreen (entry chunk) can import this
+// module without pulling @supabase/supabase-js into the critical bundle.
+const getDb = () => import('./supabase')
 
 // Remove values outside Q1 - 1.5×IQR … Q3 + 1.5×IQR, then return the mean.
 // Falls back to a plain mean when fewer than 4 values exist.
@@ -20,6 +22,7 @@ const GRID_PAGE = 27
  * Used to populate the header subtitle.
  */
 export async function fetchPassStats() {
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('get_pass_stats')
   )
@@ -43,6 +46,7 @@ export function formatPassDate(isoString) {
  * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  */
 export async function fetchCarouselPasses() {
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('get_carousel_passes')
   )
@@ -71,6 +75,7 @@ export async function fetchCarouselPasses() {
  * Returns { data: Pass[], hasMore: boolean }.
  */
 export async function fetchGridPasses(archetypeFilter, offset) {
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('get_grid_passes', { p_offset: offset, p_archetype: archetypeFilter })
   )
@@ -88,6 +93,7 @@ export async function fetchGridPasses(archetypeFilter, offset) {
  * Uses a SECURITY DEFINER RPC to read passes data despite RLS on the passes table.
  */
 export async function fetchLastSession(passId) {
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('get_last_session', { p_pass_id: passId })
   )
@@ -117,6 +123,7 @@ export async function fetchLastSession(passId) {
  * Returns { data, hasMore }.
  */
 export async function fetchLedgerRows(offset, archetypeFilter = 'all') {
+  const { supabase, retryOnce } = await getDb()
   const { data, error } = await retryOnce(() =>
     supabase.rpc('get_ledger_rows', { p_offset: offset, p_archetype: archetypeFilter })
   )
@@ -151,6 +158,8 @@ export async function fetchLedgerRows(offset, archetypeFilter = 'all') {
  * when the function hasn't been created yet.
  */
 export async function fetchAggregateData() {
+  const { supabase, retryOnce } = await getDb()
+
   // ── 1. Try server-side RPC ────────────────────────────────────────────────
   const rpc = await retryOnce(() => supabase.rpc('get_archive_aggregate'))
 
