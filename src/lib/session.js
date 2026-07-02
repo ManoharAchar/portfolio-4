@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_KEY, supabase } from './supabase'
+import { SUPABASE_URL, SUPABASE_KEY } from './supabaseConfig'
 
 const CASE_STUDY_PAGES = new Set(['cooperant', 'senior-mode', 'black-bazaar'])
 
@@ -37,6 +37,9 @@ function detachActivityListeners() {
 let existingSession = null
 // Case studies already counted in the DB row, loaded from localStorage
 let previouslyOpenedStudies = new Set()
+// Lifetime values sent by the most recent writeSession — used to re-baseline
+// when the tab becomes visible again so post-return activity keeps counting.
+let lastWritten = null
 
 function sampleScrollDepth() {
   if (!SCROLL_DEPTH_PAGES.has(currentPage)) return
@@ -79,6 +82,8 @@ function writeSession() {
     const lifetimeStudies = existingSession.case_studies_opened + newStudies.length
     const archetype       = computeArchetype(lifetimeDwell, lifetimeScroll, lifetimeStudies)
 
+    lastWritten = { dwell_seconds: lifetimeDwell, scroll_depth: lifetimeScroll, case_studies_opened: lifetimeStudies }
+
     // Cache accumulated values locally — survives a refresh race where the DB
     // fetch in startSession hasn't resolved before the next writeSession fires
     try {
@@ -106,6 +111,8 @@ function writeSession() {
     }).catch(() => {})
   } else {
     const archetype = computeArchetype(dwellSeconds, maxScrollDepth, openedCaseStudies.size)
+
+    lastWritten = { dwell_seconds: dwellSeconds, scroll_depth: maxScrollDepth, case_studies_opened: openedCaseStudies.size }
 
     try {
       localStorage.setItem(`portfolio_session_baseline_${passId}`, JSON.stringify({
@@ -135,7 +142,20 @@ function writeSession() {
 }
 
 function handleVisibilityChange() {
-  if (document.visibilityState === 'hidden') writeSession()
+  if (document.visibilityState === 'hidden') {
+    writeSession()
+  } else if (document.visibilityState === 'visible' && beaconSent && lastWritten) {
+    // Tab came back after a write — re-arm the beacon and restart accumulation
+    // from the values just persisted, so activity after returning to the tab
+    // isn't dropped. (Previously the first tab-hide ended tracking for good.)
+    existingSession = lastWritten
+    previouslyOpenedStudies = new Set([...previouslyOpenedStudies, ...openedCaseStudies])
+    openedCaseStudies = new Set()
+    startTime = Date.now()
+    lastActiveTime = Date.now()
+    maxScrollDepth = 0
+    beaconSent = false
+  }
 }
 
 /**
@@ -155,6 +175,7 @@ export async function startSession(id) {
   openedCaseStudies = new Set()
   beaconSent = false
   existingSession = null
+  lastWritten = null
 
   // Load previously counted case studies from localStorage
   try {
@@ -165,6 +186,7 @@ export async function startSession(id) {
   // Pre-fetch existing row — enables lifetime accumulation on writeSession.
   // Use order+limit instead of maybeSingle so duplicate rows (from a prior refresh
   // race) don't cause an error that wipes existingSession.
+  const { supabase } = await import('./supabase')
   const { data } = await supabase
     .from('sessions')
     .select('dwell_seconds, scroll_depth, case_studies_opened')
