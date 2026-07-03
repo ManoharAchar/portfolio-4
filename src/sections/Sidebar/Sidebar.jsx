@@ -36,15 +36,31 @@ function useSidebarPush(sidebarRef) {
       }
     }
 
+    // True when the pending frame was triggered only by a document-height
+    // change (ResizeObserver), not by a scroll/resize event.
+    let contentResizeOnly = false
+
     const update = () => {
       rafId = null
+      const pushUpOnly = contentResizeOnly
+      contentResizeOnly = false
       if (!desktopQuery.matches) return
 
       const footer = document.querySelector('.footer')
       const sidebar = sidebarRef.current
       if (footer && sidebar) {
         const gap = footer.getBoundingClientRect().top - window.innerHeight
-        sidebar.style.top = `${Math.min(0, gap)}px`
+        const nextTop = Math.min(0, gap)
+        const currentTop = parseFloat(sidebar.style.top) || 0
+        // Document-height changes (e.g. the project-card hover reveal
+        // animating open/closed) may only push the sidebar further up,
+        // never slide it back down — otherwise hovering a card near the
+        // footer drags the whole sidebar (and the pass-card thumb) along
+        // with the 0.4s height animation. Scroll and resize events still
+        // relax the offset back toward 0.
+        if (!pushUpOnly || nextTop < currentTop) {
+          sidebar.style.top = `${nextTop}px`
+        }
 
         const maxSidebarScroll = sidebar.scrollHeight - sidebar.clientHeight
         if (maxSidebarScroll > 0) {
@@ -56,7 +72,15 @@ function useSidebarPush(sidebarRef) {
     // Coalesce all triggers into at most one layout pass per frame,
     // and do nothing at all while the page is idle.
     const schedule = () => {
+      contentResizeOnly = false
       if (rafId == null) rafId = requestAnimationFrame(update)
+    }
+
+    const scheduleContentResize = () => {
+      if (rafId == null) {
+        contentResizeOnly = true
+        rafId = requestAnimationFrame(update)
+      }
     }
 
     const syncMode = () => {
@@ -74,7 +98,7 @@ function useSidebarPush(sidebarRef) {
     desktopQuery.addEventListener('change', syncMode)
     // Catches footer movement from content loading in (images/videos)
     // without scroll or resize firing.
-    const resizeObserver = new ResizeObserver(schedule)
+    const resizeObserver = new ResizeObserver(scheduleContentResize)
     resizeObserver.observe(document.documentElement)
 
     return () => {

@@ -791,16 +791,28 @@
   margin: 0;
 }
 
-.cs-live-link {
+/* Live-site CTA — pill matching the .cs-chip visual language (12px radius),
+   but inverted to cream so shipped work reads as the hero's primary action.
+   Shared: Mochitta imports this stylesheet too. */
+.cs-live-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
   font-family: 'Source Code Pro', monospace;
   font-size: 13px;
-  color: #7a7a7a;
+  letter-spacing: 0.04em;
+  color: #1f1f1e;
+  background: #faf8f1;
+  border-radius: 12px;
+  padding: 12px 18px;
   text-decoration: none;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, transform 0.15s;
 }
 
-.cs-live-link:hover {
-  opacity: 0.7;
+.cs-live-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
 .cs-v2-hero-visual {

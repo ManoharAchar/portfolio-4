@@ -324,8 +324,8 @@ export default function CooperantLearning({ onNavigate }) {
                       </div>
                     ))}
                   </div>
-                  <a className="cs-live-link" href="https://cooperantlearning.com" target="_blank" rel="noreferrer">
-                    View the live site ↗
+                  <a className="cs-live-cta" href="https://cooperantlearning.com" target="_blank" rel="noreferrer">
+                    VIEW THE LIVE SITE ↗
                   </a>
                 </div>
                 <div className="cs-v2-hero-visual">

@@ -27,12 +27,15 @@
   max-width: 580px;
 }
 
+/* Ink colors: dark #120b06 family — light text can never reach WCAG AA on
+   the exploring accent (#c4a24d caps pure white at 2.4:1), so both quote
+   voices use dark ink and differ by opacity (large-text 3:1 threshold). */
 .footer__quote-muted {
-  color: rgba(61, 33, 18, 0.6);
+  color: rgba(18, 11, 6, 0.8);
 }
 
 .footer__quote-white {
-  color: #fff;
+  color: #120b06;
 }
 
 /* Links — right ~43% */
@@ -60,19 +63,23 @@
   align-items: center;
   padding: 10px 10px 10px 0;
   line-height: normal;
-  transition: opacity 0.2s ease;
 }
 
+/* Hover/active feedback via underline, not opacity — dimming the ink
+   drops it below AA contrast on every accent color. */
 .footer__link:hover {
-  opacity: 0.7;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .footer__link--muted {
-  color: rgba(61, 33, 18, 0.6);
+  color: #120b06;
 }
 
 .footer__link--active {
-  color: #faf8f1;
+  color: #120b06;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ─── Responsive ──────────────────────────────────────────── */
@@ -109,7 +116,9 @@
   }
 
   .footer__quote p {
-    font-size: 22px;
+    /* 24px = 18pt keeps the quote in WCAG large-text territory (3:1),
+       matching the muted ink's contrast margin on all accent colors */
+    font-size: 24px;
     max-width: 100%;
   }
 

@@ -1,10 +1,15 @@
 import { SUPABASE_URL, SUPABASE_KEY } from './supabaseConfig'
+import { PROJECTS, getProjectPage } from '../data/projects'
 
-const CASE_STUDY_PAGES = new Set(['cooperant', 'senior-mode', 'black-bazaar'])
+// One router page id per case study, derived from PROJECTS so this set can
+// never drift when projects change. (It had drifted: 'mochitta' was missing,
+// capping caseStudiesOpened at 3 of the portfolio's 4 case studies.)
+const CASE_STUDY_PAGES = new Set(PROJECTS.map((p) => getProjectPage(p.id)))
 
 // Pages where scroll depth is meaningful content engagement.
 // Home and archive are navigation surfaces, not content — excluded.
-const SCROLL_DEPTH_PAGES = new Set(['about', 'cooperant', 'senior-mode', 'black-bazaar', 'cave'])
+// Manual list (not derived) because it includes non-project pages.
+const SCROLL_DEPTH_PAGES = new Set(['about', 'cooperant', 'senior-mode', 'black-bazaar', 'mochitta', 'cave'])
 
 // Mutable session state — lives for the lifetime of the tab
 let passId = null

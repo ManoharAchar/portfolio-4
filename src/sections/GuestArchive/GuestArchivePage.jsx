@@ -5,6 +5,7 @@ import PassCard from '../../components/PassCard/PassCard'
 import TiltCard from '../../components/TiltCard/TiltCard'
 import Footer from '../../components/Footer/Footer'
 import { getSessionMetrics, computeArchetype } from '../../lib/session'
+import { PROJECTS } from '../../data/projects'
 import { fetchAggregateData, fetchCarouselPasses, fetchGridPasses, fetchLastSession, fetchLedgerRows, fetchPassStats, formatPassDate } from '../../lib/archive'
 import './GuestArchivePage.css'
 
@@ -419,7 +420,9 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                       </div>
                       <div className="ga-metric-card">
                         <span className="ga-metric-card__label">CASE STUDIES</span>
-                        <span className="ga-metric-card__value">{heroMetrics.caseStudiesOpened}</span>
+                        {/* "N of M" so the visitor's opened-count can't be
+                            misread as the portfolio's total body of work */}
+                        <span className="ga-metric-card__value">{heroMetrics.caseStudiesOpened} of {PROJECTS.length}</span>
                       </div>
                     </div>
                   </>
