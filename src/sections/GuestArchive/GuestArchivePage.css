@@ -20,6 +20,10 @@
   flex-direction: column;
   gap: 24px;
   max-width: 1240px;
+  /* width:100% is load-bearing: as a flex item with auto margins,
+     .ga-content otherwise sizes to max-content (locked at 1240px) and
+     clips instead of shrinking with the viewport. */
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -232,7 +236,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 475px;
+  width: 100%;
+  max-width: 475px;
 }
 
 /* Figma: Source_Code_Pro text-[13px] text-[#dbd8ce] tracking-[1px] */
@@ -264,7 +269,7 @@
   font-weight: 400;
   color: #faf8f1;
   line-height: 42px;
-  width: 350px;
+  max-width: 350px;
   margin: 0;
   font-variation-settings: 'SOFT' 0, 'WONK' 1;
 }
@@ -274,14 +279,15 @@
 .ga-archetype-tiles {
   display: flex;
   gap: 24px;
-  height: 208px;
+  min-height: 208px;
 }
 
-/* Figma: each tile h-full p-[20px] rounded-[14px] w-[262px] items-center justify-center */
+/* Figma: each tile h-full p-[20px] rounded-[14px] w-[262px] items-center justify-center
+   (align-items stretch keeps tiles equal height; min-height lets text grow
+   instead of clipping when tiles narrow between breakpoints) */
 .ga-archetype-tile {
   flex: 1;
   min-width: 0;
-  height: 100%;
   border-radius: 14px;
   padding: 20px;
   display: flex;
@@ -343,7 +349,7 @@
 .ga-stats-row {
   display: flex;
   gap: 24px;
-  height: 122px;
+  min-height: 122px;
 }
 
 .ga-stat-tile {
@@ -571,6 +577,9 @@
 .ga-table {
   display: flex;
   flex-direction: column;
+  /* Safety net at any width — overlay scrollbars are invisible on macOS,
+     so columns below also compress (flex-basis) before this kicks in. */
+  overflow-x: auto;
 }
 
 .ga-table__divider {
@@ -598,15 +607,16 @@
   overflow: hidden;
 }
 
-/* Column widths — INTENT is flex:1 so the row always fits the container.
-   All other columns hold their Figma values (836px fixed total). */
+/* Column widths — Figma values as flex bases. INTENT is the first to give
+   space (basis 0); the wide columns compress toward their min-widths next,
+   so the row shrinks fluidly instead of clipping at mid-desktop widths. */
 .ga-table__cell--no       { width: 100px; }
 .ga-table__cell--pass     { width: 100px; }
-.ga-table__cell--name     { width: 190px; }
-.ga-table__cell--intent   { flex: 1; min-width: 0; }
-.ga-table__cell--archetype{ width: 140px; }
-.ga-table__cell--scroll   { width: 153px; }
-.ga-table__cell--dwell    { width: 153px; }
+.ga-table__cell--name     { flex: 0 1 190px; min-width: 120px; }
+.ga-table__cell--intent   { flex: 1 1 0; min-width: 90px; }
+.ga-table__cell--archetype{ flex: 0 1 140px; min-width: 110px; }
+.ga-table__cell--scroll   { flex: 0 1 153px; min-width: 112px; }
+.ga-table__cell--dwell    { flex: 0 1 153px; min-width: 112px; }
 
 /* Header labels: Source_Code_Pro 13px #faf8f1 tracking-1.9px */
 .ga-table__header .ga-table__cell {
@@ -821,7 +831,8 @@
 
 .ga-passes-grid__items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 325px);
+  /* minmax floor lets a lone track compress instead of overflowing */
+  grid-template-columns: repeat(auto-fill, minmax(0, 325px));
   gap: 24px;
 }
 
@@ -853,6 +864,8 @@
 }
 
 .ga-skeleton {
+  /* Loading placeholders carry inline px widths — never exceed the parent */
+  max-width: 100%;
   background: linear-gradient(90deg, #3c3c3a 25%, #4d4d4a 50%, #3c3c3a 75%);
   background-size: 200% 100%;
   animation: ga-shimmer 1.5s infinite;
