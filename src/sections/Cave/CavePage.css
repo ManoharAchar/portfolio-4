@@ -95,6 +95,9 @@
   align-items: flex-start;
   gap: 8px;
   padding: 0 14px;
+  /* Fill the card so the CTA chip can pin to the bottom edge,
+     keeping both cards in a row bottom-aligned */
+  flex: 1;
 }
 
 .cave-card__title {
@@ -121,6 +124,8 @@
 .cave-card__cta {
   display: inline-flex;
   align-items: center;
+  /* Bottom-pinned: resolves to 0 when the card is content-sized (mobile) */
+  margin-top: auto;
   background: #5c5c5c;
   border-radius: 4px;
   padding: 4px 8px;
