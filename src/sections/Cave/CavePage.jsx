@@ -18,6 +18,14 @@ import rockautoPoster from '../../assets/cave/poster-rockauto.jpg'
 // Only Fridge Management ships a CTA (bit.ly so clicks are countable).
 const EXPERIMENTS = [
   {
+    id: 'seek',
+    title: 'Seek',
+    description:
+      "A panic attack feels less lonely when someone who's been there picks up. Seekers and empathizers connect anonymously, voice or chat, for the few minutes that matter most.",
+    video: seekVideo,
+    poster: seekPoster,
+  },
+  {
     id: 'fridge',
     title: 'Fridge Management',
     description:
@@ -25,14 +33,6 @@ const EXPERIMENTS = [
     video: fridgeVideo,
     poster: fridgePoster,
     cta: { label: 'Sign up & use the Webapp ↗', href: 'https://bit.ly/3Rk0xAy' },
-  },
-  {
-    id: 'seek',
-    title: 'Seek',
-    description:
-      "A panic attack feels less lonely when someone who's been there picks up. Seekers and empathizers connect anonymously, voice or chat, for the few minutes that matter most.",
-    video: seekVideo,
-    poster: seekPoster,
   },
   {
     id: 'vr-nutrition',
