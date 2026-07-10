@@ -14,6 +14,7 @@ const PAGE_LOADERS = {
   'senior-mode':  () => import('./sections/SeniorMode/SeniorMode'),
   'black-bazaar': () => import('./sections/BlackBazaar/BlackBazaar'),
   mochitta:       () => import('./sections/Mochitta/Mochitta'),
+  'industrial-hmi': () => import('./sections/IndustrialHMI/IndustrialHMI'),
   archive:        () => import('./sections/GuestArchive/GuestArchivePage'),
   cave:           () => import('./sections/Cave/CavePage'),
 }
@@ -22,6 +23,7 @@ const CooperantLearning = lazy(PAGE_LOADERS.cooperant)
 const SeniorMode        = lazy(PAGE_LOADERS['senior-mode'])
 const BlackBazaar       = lazy(PAGE_LOADERS['black-bazaar'])
 const Mochitta          = lazy(PAGE_LOADERS.mochitta)
+const IndustrialHMI     = lazy(PAGE_LOADERS['industrial-hmi'])
 const GuestArchivePage  = lazy(PAGE_LOADERS.archive)
 const CavePage          = lazy(PAGE_LOADERS.cave)
 import FlyingCard from './components/FlyingCard/FlyingCard'
@@ -44,6 +46,7 @@ const PAGE_TITLES = {
   'senior-mode': 'Senior Mode — Manohar Achar',
   'black-bazaar':'Black Bazaar — Manohar Achar',
   mochitta:      'Mochitta — Manohar Achar',
+  'industrial-hmi': 'Industrial HMI — Manohar Achar',
   cave:          'The Cave — Manohar Achar',
   archive:       'Guest Archive — Manohar Achar',
 }
@@ -359,6 +362,7 @@ function App() {
             {page === 'senior-mode' && <SeniorMode {...sharedProps} />}
             {page === 'black-bazaar'&& <BlackBazaar {...sharedProps} />}
             {page === 'mochitta'    && <Mochitta {...sharedProps} />}
+            {page === 'industrial-hmi' && <IndustrialHMI {...sharedProps} />}
             {page === 'cave'        && <CavePage activePage="cave" {...sharedProps} />}
             {page === 'archive'     && <GuestArchivePage activePage="archive" {...sharedProps} />}
           </Suspense>

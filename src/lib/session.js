@@ -9,7 +9,7 @@ const CASE_STUDY_PAGES = new Set(PROJECTS.map((p) => getProjectPage(p.id)))
 // Pages where scroll depth is meaningful content engagement.
 // Home and archive are navigation surfaces, not content — excluded.
 // Manual list (not derived) because it includes non-project pages.
-const SCROLL_DEPTH_PAGES = new Set(['about', 'cooperant', 'senior-mode', 'black-bazaar', 'mochitta', 'cave'])
+const SCROLL_DEPTH_PAGES = new Set(['about', 'cooperant', 'senior-mode', 'black-bazaar', 'mochitta', 'industrial-hmi', 'cave'])
 
 // Mutable session state — lives for the lifetime of the tab
 let passId = null
