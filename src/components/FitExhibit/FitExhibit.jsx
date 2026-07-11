@@ -70,6 +70,7 @@ export default function FitExhibit({ exhibit, animateStrip = false, className = 
     >
       <div
         ref={innerRef}
+        {...(exhibit.scope ? { 'data-flx': exhibit.scope } : {})}
         style={{
           position: 'absolute',
           top: 0,

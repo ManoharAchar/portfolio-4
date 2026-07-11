@@ -1,0 +1,1173 @@
+/* ════════════════════════════════════════════════════════════
+   Fleet Coordination (SaaS) — Case Study Page
+   Page chrome only (warm portfolio system). The steel/Signal
+   product exhibits arrive sealed from exhibits.js + exhibits.css
+   and are never restyled. Shares the cs-* skeleton from
+   CooperantLearning.css.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Page layout ──────────────────────────────────────────── */
+
+.flx-page .cs-main {
+  padding: 64px 64px 180px;
+}
+
+.flx-page .cs-sections {
+  width: 100%;
+  max-width: 1000px; /* handoff main column */
+  margin: 0 auto;
+  gap: 92px; /* between-section rhythm, desktop */
+}
+
+/* Sections manage their own internal margins (dc.html values) */
+.cs-section.flx-section {
+  gap: 0;
+  scroll-margin-top: 32px;
+}
+
+.flx-section a {
+  color: var(--accent);
+}
+
+.flx-section a:hover {
+  color: #faf8f1;
+}
+
+/* ── Shared type ──────────────────────────────────────────── */
+
+.flx-eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #dbd8ce;
+  margin: 0 0 14px;
+}
+
+.flx-eyebrow--accent {
+  color: var(--accent);
+}
+
+.flx-eyebrow--dim {
+  color: #8f8d85;
+}
+
+.flx-h1 {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: #faf8f1;
+  max-width: 20ch;
+  margin: 0 0 24px;
+  text-wrap: pretty;
+}
+
+.flx-h2 {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 48, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #faf8f1;
+  max-width: 24ch;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+
+.flx-h2--wide {
+  max-width: 26ch;
+}
+
+.flx-hero-lead {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 18px;
+  line-height: 30px;
+  color: #dbd8ce;
+  max-width: 70ch;
+  margin: 0 0 28px;
+  text-wrap: pretty;
+}
+
+.flx-problem-lead {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 18px;
+  line-height: 30px;
+  color: #dbd8ce;
+  max-width: 74ch;
+  margin: 0 0 32px;
+  text-wrap: pretty;
+}
+
+.flx-intro {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 17px;
+  line-height: 28px;
+  color: #dbd8ce;
+  max-width: 74ch;
+  margin: 0 0 8px;
+  text-wrap: pretty;
+}
+
+.flx-tour-intro {
+  margin-bottom: 34px;
+}
+
+.flx-system-lead {
+  margin-bottom: 30px;
+}
+
+/* Mono exhibit caption with accent dot */
+.flx-mono-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  color: #8f8d85;
+  margin: 14px 0 0;
+}
+
+.flx-mono-caption__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+/* Small figure caption — DM Sans with a cream lead-in */
+.flx-fig-caption {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+.flx-fig-caption b {
+  color: #faf8f1;
+  font-weight: 500;
+}
+
+/* ── Exhibit + video frames ───────────────────────────────── */
+
+/* The exhibits carry their own card chrome (border, radius,
+   shadow) at product scale; the wrapper adds the page-level
+   drop shadow the handoff shows, hugging the content shape. */
+.flx-exhibit-shadow {
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
+}
+
+.flx-panel {
+  background: #3c3c3a;
+  border: 1px solid rgba(219, 216, 206, 0.14);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.flx-panel--hero {
+  margin: 40px 0 0;
+}
+
+.flx-video-frame {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(219, 216, 206, 0.14);
+  box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.55);
+  background: #0e1418;
+}
+
+.flx-video-frame--r16 {
+  border-radius: 16px;
+}
+
+.flx-flow-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  object-fit: cover;
+}
+
+/* Fixed display widths from the handoff exhibit map */
+.flx-w320 { width: 320px; max-width: 100%; }
+.flx-w440 { width: 440px; max-width: 100%; }
+.flx-w480 { width: 480px; max-width: 100%; }
+.flx-w540 { width: 540px; max-width: 100%; }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+
+.flx-breadcrumb {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 22px;
+}
+
+.flx-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 0 26px;
+}
+
+.flx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #faf8f1;
+  color: #1c1c1b;
+  border-radius: 12px;
+  padding: 9px 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.flx-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1e8e5a; /* live-status green, not the page accent */
+  flex: none;
+}
+
+.flx-proof {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cbc8bf;
+}
+
+.flx-proof b {
+  color: #faf8f1;
+  font-weight: 600;
+}
+
+.flx-chip-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flx-chip {
+  background: #3c3c3a;
+  border: 1px solid rgba(219, 216, 206, 0.14);
+  border-radius: 12px;
+  padding: 11px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flx-chip__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f8d85;
+}
+
+.flx-chip__value {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #faf8f1;
+}
+
+/* ── Impact strip ─────────────────────────────────────────── */
+
+.flx-impact {
+  margin: 56px 0 0;
+  scroll-margin-top: 32px;
+}
+
+.flx-impact__eyebrow {
+  margin-bottom: 6px;
+}
+
+.flx-impact__lead {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 18px;
+  line-height: 28px;
+  color: #dbd8ce;
+  max-width: 60ch;
+  margin: 0 0 24px;
+}
+
+.flx-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(219, 216, 206, 0.14);
+  border: 1px solid rgba(219, 216, 206, 0.14);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.flx-impact-tile {
+  background: #3c3c3a;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flx-impact-tile__value {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 72, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.flx-impact-tile__unit {
+  font-size: 28px;
+}
+
+.flx-impact-tile__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #faf8f1;
+  margin: 14px 0 8px;
+}
+
+.flx-impact-tile__note {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 13px;
+  line-height: 19px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+/* ── Contribution strip ───────────────────────────────────── */
+
+.flx-contribution {
+  margin: 48px 0 0;
+  background: #33322f;
+  border: 1px solid rgba(219, 216, 206, 0.12);
+  border-radius: 16px;
+  padding: 30px 34px;
+}
+
+.flx-contribution__eyebrow {
+  margin-bottom: 22px;
+}
+
+.flx-contribution__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.flx-contribution__label {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+  color: #faf8f1;
+  margin: 0 0 8px;
+}
+
+.flx-contribution__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 22px;
+  color: #cbc8bf;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.flx-contribution__honest {
+  margin: 22px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(219, 216, 206, 0.15);
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 13px;
+  line-height: 20px;
+  color: #8f8d85;
+}
+
+.flx-contribution__honest b {
+  color: #cbc8bf;
+  font-weight: 500;
+}
+
+/* ── Problem ──────────────────────────────────────────────── */
+
+.flx-problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.flx-problem-card {
+  background: #3c3c3a;
+  border: 1px solid rgba(219, 216, 206, 0.12);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.flx-problem-card__num {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 32, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+
+.flx-problem-card__title {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #faf8f1;
+  margin: 0 0 8px;
+}
+
+.flx-problem-card__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 22px;
+  color: #cbc8bf;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.flx-constraints {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 26px 0 0;
+}
+
+.flx-constraint {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11.5px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #cbc8bf;
+  background: rgba(219, 216, 206, 0.06);
+  border: 1px solid rgba(219, 216, 206, 0.16);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+/* ── Product tour ─────────────────────────────────────────── */
+
+.flx-tour-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.flx-tour-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.flx-tour-arrow {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--accent);
+  flex: none;
+  padding-bottom: 26px; /* optically centers on the image, not the caption */
+}
+
+.flx-crop {
+  width: 300px;
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flx-motion {
+  margin: 36px 0 0;
+  background: #33322f;
+  border: 1px solid rgba(219, 216, 206, 0.1);
+  border-radius: 18px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flx-motion__copy {
+  flex: 1;
+  min-width: 220px;
+}
+
+.flx-motion__eyebrow {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.flx-motion__title {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  color: #faf8f1;
+  margin: 0 0 8px;
+}
+
+.flx-motion__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 22px;
+  color: #cbc8bf;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Control-Room Dark moment */
+.flx-dark {
+  margin: 36px 0 0;
+  background: #141414;
+  border: 1px solid rgba(219, 216, 206, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+}
+
+.flx-dark__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #7fb4cc; /* product-adjacent tone, deliberate on the dark stage */
+  margin: 0 0 10px;
+}
+
+.flx-dark__caption {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 36, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.3;
+  color: #faf8f1;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+
+.flx-dark__stage {
+  width: 100%;
+  max-width: 920px;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.8));
+}
+
+/* ── What was hard — decision cards ───────────────────────── */
+
+.flx-decision {
+  margin: 56px 0 0;
+  padding: 40px 0 0;
+  border-top: 1px solid rgba(219, 216, 206, 0.18);
+}
+
+.flx-decision__head {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.flx-decision__num {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--accent);
+  flex: none;
+}
+
+.flx-decision__spine {
+  display: inline-block;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.flx-decision__statement {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 40, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.25;
+  color: #faf8f1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Content under the big number indents to align with the statement */
+.flx-ind {
+  padding-left: 60px;
+}
+
+.flx-decision__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px 40px;
+  margin-top: 20px;
+}
+
+.flx-decision__rationale {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 16px;
+  line-height: 25px;
+  color: #dbd8ce;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.flx-tradeoff {
+  border-left: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  padding-left: 16px;
+}
+
+.flx-tradeoff__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 7px;
+}
+
+.flx-tradeoff__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 14px;
+  line-height: 21px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+/* Before → after pair */
+.flx-ba {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.flx-ba__fig {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flx-ba__caption {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f8d85;
+  margin: 0;
+}
+
+.flx-ba__caption--accent {
+  color: var(--accent);
+}
+
+.flx-ba__arrow {
+  align-self: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--accent);
+  padding: 0 2px;
+  flex: none;
+}
+
+/* Receipts (motion pair, audit view) */
+.flx-receipts {
+  margin-top: 28px;
+}
+
+.flx-receipts__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f8d85;
+  margin: 0 0 14px;
+}
+
+.flx-receipts__row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.flx-receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 0 1 auto;
+}
+
+/* Metric-delta bar */
+.flx-delta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 28px 0 0 60px;
+  background: #33322f;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px 22px;
+}
+
+.flx-delta__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  flex: none;
+}
+
+.flx-delta__sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(219, 216, 206, 0.2);
+  flex: none;
+}
+
+.flx-delta__value {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #faf8f1;
+  margin: 0;
+}
+
+.flx-delta__value b {
+  font-weight: 600;
+}
+
+.flx-delta__value span {
+  color: #cbc8bf;
+}
+
+/* ── Design system + shipped ──────────────────────────────── */
+
+.flx-dsboard {
+  width: 100%;
+}
+
+.flx-ds-receipts {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  align-items: flex-start;
+}
+
+.flx-h2--shipped {
+  margin: 56px 0 18px;
+}
+
+.flx-ship-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.flx-ship-card {
+  background: #3c3c3a;
+  border: 1px solid rgba(219, 216, 206, 0.12);
+  border-radius: 14px;
+  padding: 24px 26px;
+}
+
+.flx-ship-card__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8f8d85;
+  margin: 0 0 10px;
+}
+
+.flx-ship-card__label--accent {
+  color: var(--accent);
+}
+
+.flx-ship-card__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 15px;
+  line-height: 24px;
+  color: #dbd8ce;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.flx-validation {
+  margin-top: 20px;
+  background: #33322f;
+  border: 1px solid rgba(219, 216, 206, 0.14);
+  border-radius: 14px;
+  padding: 20px 26px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Gold label chip — light text fails WCAG on gold, so dark ink */
+.flx-validation__chip {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10.5px;
+  line-height: 1.4;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #120b06;
+  background: #c4a24d;
+  border-radius: 6px;
+  padding: 5px 9px;
+  flex: none;
+  margin-top: 2px;
+}
+
+.flx-validation__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 15px;
+  line-height: 24px;
+  color: #dbd8ce;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── Closing ──────────────────────────────────────────────── */
+
+.flx-closing-eyebrow {
+  margin-bottom: 20px;
+}
+
+.flx-closing {
+  border-left: 3px solid var(--accent);
+  padding-left: 28px;
+}
+
+.flx-closing__h2 {
+  margin-bottom: 22px;
+}
+
+.flx-pullquote {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'opsz' 32, 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 34px;
+  color: #faf8f1;
+  max-width: 44ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .flx-page .cs-main {
+    padding: 60px 40px 160px;
+  }
+
+  .flx-page .cs-sections {
+    gap: 72px;
+  }
+
+  .flx-h1 {
+    font-size: 28px;
+    max-width: none;
+  }
+
+  .flx-h2 {
+    font-size: 24px;
+  }
+
+  .flx-decision__statement {
+    font-size: 22px;
+  }
+
+  .flx-impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flx-contribution__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .flx-problem-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Crops shrink fluidly; FitExhibit re-measures on resize */
+  .flx-tour-row {
+    justify-content: flex-start;
+  }
+
+  .flx-tour-step {
+    flex: 1 1 0;
+  }
+
+  .flx-crop {
+    flex: 1 1 0;
+  }
+
+  /* Drop the number indent — the column is too narrow for it */
+  .flx-ind {
+    padding-left: 0;
+  }
+
+  .flx-delta {
+    margin-left: 0;
+  }
+
+  .flx-decision__grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .flx-page .cs-main {
+    padding: 80px 0 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .flx-page .cs-sections {
+    width: calc(100vw - 48px); /* 24px page padding */
+    max-width: none;
+    gap: 64px;
+  }
+
+  .cs-section.flx-section,
+  .flx-impact {
+    scroll-margin-top: 80px; /* clears the mobile topbar */
+  }
+
+  .flx-h1 {
+    font-size: 26px;
+  }
+
+  .flx-h2 {
+    font-size: 23px;
+  }
+
+  .flx-pill-row {
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .flx-chip-row {
+    gap: 8px;
+  }
+
+  .flx-panel {
+    padding: 20px;
+  }
+
+  .flx-panel--hero {
+    margin-top: 32px;
+  }
+
+  .flx-impact {
+    margin-top: 48px;
+  }
+
+  .flx-impact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flx-impact-tile {
+    padding: 24px 22px;
+  }
+
+  .flx-impact-tile__value {
+    font-size: 44px;
+  }
+
+  .flx-contribution {
+    margin-top: 40px;
+    padding: 24px 22px;
+  }
+
+  /* Tour crops stack vertically, arrows rotate to point down */
+  .flx-tour-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  .flx-tour-step {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    flex: 0 0 auto;
+  }
+
+  .flx-tour-arrow {
+    transform: rotate(90deg);
+    padding-bottom: 0;
+    align-self: center;
+  }
+
+  .flx-crop {
+    width: 100%;
+  }
+
+  .flx-motion {
+    padding: 22px 20px;
+    gap: 20px;
+  }
+
+  .flx-dark {
+    padding: 24px 20px;
+    gap: 18px;
+  }
+
+  .flx-dark__caption {
+    font-size: 19px;
+  }
+
+  .flx-decision {
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+
+  .flx-decision__head {
+    gap: 14px;
+  }
+
+  .flx-decision__num {
+    font-size: 32px;
+  }
+
+  .flx-decision__statement {
+    font-size: 21px;
+  }
+
+  /* Before → after stacks; the arrow rotates between them */
+  .flx-ba {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .flx-ba__arrow {
+    transform: rotate(90deg);
+    align-self: center;
+    padding: 4px 0;
+  }
+
+  .flx-w320,
+  .flx-w440,
+  .flx-w480,
+  .flx-w540 {
+    width: 100%;
+  }
+
+  .flx-delta {
+    gap: 10px;
+    padding: 14px 18px;
+  }
+
+  .flx-delta__sep {
+    display: none;
+  }
+
+  .flx-delta__value {
+    font-size: 16px;
+  }
+
+  .flx-ship-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .flx-validation {
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 20px;
+  }
+
+  .flx-closing {
+    padding-left: 20px;
+  }
+
+  .flx-pullquote {
+    font-size: 19px;
+    line-height: 30px;
+  }
+}

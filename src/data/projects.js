@@ -3,6 +3,7 @@ import thumbSeniorMode from '../assets/thumbnails/2 - Senior Mode Thumbnail.mp4'
 import thumbBlackbaza from '../assets/thumbnails/3 - Blackbaza Thumbnail.mp4'
 import thumbMochitta from '../assets/thumbnails/4 - Mochitta Thumbnail.mp4'
 import thumbIndustrialHmi from '../assets/thumbnails/5 - Industrial HMI Thumbnail.mp4'
+import thumbFleet from '../assets/thumbnails/0 - Fleet SaaS Thumbnail.mp4'
 // Poster frames (extracted at each video's thumbTime) — shown when the
 // browser refuses to decode video, e.g. iOS Low Power Mode.
 import posterCooperant from '../assets/thumbnails/poster-cooperant.jpg'
@@ -10,11 +11,29 @@ import posterSeniorMode from '../assets/thumbnails/poster-senior-mode.jpg'
 import posterBlackbaza from '../assets/thumbnails/poster-black-baza.jpg'
 import posterMochitta from '../assets/thumbnails/poster-mochitta.jpg'
 import posterIndustrialHmi from '../assets/thumbnails/poster-industrial-hmi.jpg'
+import posterFleet from '../assets/thumbnails/poster-fleet.jpg'
 
 export const PROJECTS = [
   {
-    id: 'industrial-hmi',
+    id: 'fleet',
     number: '01',
+    tags: ['PROFESSIONAL WORK', 'SHIPPED'],
+    imageColor: '#64818c',
+    video: thumbFleet,
+    poster: posterFleet,
+    thumbTime: 0,
+    loopAlways: true,
+    title: 'Fleet Coordination Platform',
+    description:
+      "An enterprise SaaS platform that runs a plant's worth of air compressors as one coordinated system — plant status readable in under a minute, adopted across ~40 facilities.",
+    role: 'Product Design, SaaS',
+    team: 'with Platform & Controls Engineering',
+    timeframe: '2023 – 2024',
+    column: 'left',
+  },
+  {
+    id: 'industrial-hmi',
+    number: '02',
     tags: ['PROFESSIONAL WORK', 'IN PRODUCTION'],
     imageColor: '#82909f',
     video: thumbIndustrialHmi,
@@ -27,11 +46,11 @@ export const PROJECTS = [
     role: 'HMI / Interaction Design',
     team: 'with Controls & Platform Engineering',
     timeframe: 'In production · 4+ yrs',
-    column: 'left',
+    column: 'right',
   },
   {
     id: 'cooperant',
-    number: '02',
+    number: '03',
     tags: ['CLIENT WORK', 'SHIPPED'],
     imageColor: '#b0b082',
     video: thumbCooperant,
@@ -44,11 +63,11 @@ export const PROJECTS = [
     role: 'Product Design, Implementation',
     team: 'with Sparks Founders',
     timeframe: 'Sep 2025 – Jan 2026',
-    column: 'right',
+    column: 'left',
   },
   {
     id: 'mochitta',
-    number: '03',
+    number: '04',
     tags: ['CAPSTONE', 'TESTED'],
     imageColor: '#8882b0',
     video: thumbMochitta,
@@ -61,11 +80,11 @@ export const PROJECTS = [
     role: 'Product Design & Strategy',
     team: 'with UI Designer & Dev',
     timeframe: '2025–2026',
-    column: 'left',
+    column: 'right',
   },
   {
     id: 'black-baza',
-    number: '04',
+    number: '05',
     tags: ['CLIENT WORK', 'IN PRODUCTION'],
     imageColor: '#829eb0',
     video: thumbBlackbaza,
@@ -78,11 +97,11 @@ export const PROJECTS = [
     role: 'UX, UI, Research',
     team: 'with Black Baza Founders & Devs',
     timeframe: '8 weeks, 2025',
-    column: 'right',
+    column: 'left',
   },
   {
     id: 'senior-mode',
-    number: '05',
+    number: '06',
     tags: ['CONCEPT', 'TESTED'],
     imageColor: '#8eb082',
     video: thumbSeniorMode,
@@ -95,7 +114,7 @@ export const PROJECTS = [
     role: 'End-to-End Design',
     team: 'Solo',
     timeframe: '6 weeks, 2026',
-    column: 'left',
+    column: 'right',
   },
 ]
 
@@ -108,6 +127,7 @@ export function getViewNext(currentId) {
 
 // Project id -> page id used by App.jsx's router (differs for black-baza).
 const PROJECT_PAGES = {
+  fleet: 'fleet',
   'industrial-hmi': 'industrial-hmi',
   cooperant: 'cooperant',
   mochitta: 'mochitta',
