@@ -463,7 +463,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     </div>
                   </figure>
                   <span className="flx-ba__arrow" aria-hidden="true">→</span>
-                  <figure className="flx-ba__fig flx-w540">
+                  <figure className="flx-ba__fig flx-w602">
                     <figcaption className="flx-ba__caption flx-ba__caption--accent">After · one fleet view</figcaption>
                     <div className="flx-exhibit-shadow">
                       <FitExhibit exhibit={FLEET_EXHIBITS.fleetLight} />
@@ -501,7 +501,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     </div>
                   </figure>
                   <span className="flx-ba__arrow" aria-hidden="true">→</span>
-                  <figure className="flx-ba__fig flx-w540">
+                  <figure className="flx-ba__fig flx-w602">
                     <figcaption className="flx-ba__caption flx-ba__caption--accent">After · why this machine leads</figcaption>
                     <div className="flx-exhibit-shadow">
                       <FitExhibit exhibit={FLEET_EXHIBITS.coordination} />
@@ -511,13 +511,13 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                 <div className="flx-receipts flx-ind">
                   <p className="flx-receipts__label">Legibility in motion</p>
                   <div className="flx-receipts__row">
-                    <figure className="flx-receipt flx-w440">
+                    <figure className="flx-receipt flx-w480">
                       <div className="flx-video-frame">
                         <FlowVideo src={flow2Video} poster={flow2Poster} />
                       </div>
                       <figcaption className="flx-fig-caption"><b>Lead handoff</b>: pressure holds through the rotation</figcaption>
                     </figure>
-                    <figure className="flx-receipt flx-w440">
+                    <figure className="flx-receipt flx-w480">
                       <div className="flx-video-frame">
                         <FlowVideo src={flow3Video} poster={flow3Poster} />
                       </div>
@@ -553,7 +553,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     </div>
                   </figure>
                   <span className="flx-ba__arrow" aria-hidden="true">→</span>
-                  <figure className="flx-ba__fig flx-w540">
+                  <figure className="flx-ba__fig flx-w602">
                     <figcaption className="flx-ba__caption flx-ba__caption--accent">After · enable → confirm → audit</figcaption>
                     <div className="flx-video-frame">
                       <FlowVideo src={flow4Video} poster={flow4Poster} />
