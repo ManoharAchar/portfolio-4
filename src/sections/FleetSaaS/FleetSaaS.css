@@ -676,7 +676,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* keep before → after on one row; they scale to fit */
   margin-top: 32px;
 }
 
@@ -684,6 +684,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 0; /* allow the exhibit to shrink instead of forcing a wrap */
 }
 
 .flx-ba__caption {
@@ -729,7 +730,7 @@
 .flx-receipts__row {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* keep the paired receipts side by side; they scale to fit */
 }
 
 .flx-receipt {
@@ -737,6 +738,7 @@
   flex-direction: column;
   gap: 10px;
   flex: 0 1 auto;
+  min-width: 0;
 }
 
 /* Metric-delta bar */
@@ -1083,6 +1085,12 @@
   .flx-ba {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+  }
+
+  /* Paired receipts stack on mobile instead of splitting the row */
+  .flx-receipts__row {
+    flex-direction: column;
     gap: 14px;
   }
 
