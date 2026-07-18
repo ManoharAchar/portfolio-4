@@ -176,6 +176,7 @@
 .flx-w440 { width: 440px; max-width: 100%; }
 .flx-w480 { width: 480px; max-width: 100%; }
 .flx-w540 { width: 540px; max-width: 100%; }
+.flx-w980 { width: 980px; max-width: 100%; }
 
 /* ── Hero — split hero (shared cs-v2-hero-row) ────────────────
    Eyebrow, title, lead, and chips reuse cs-* primitives to match
@@ -1093,7 +1094,8 @@
   .flx-w320,
   .flx-w440,
   .flx-w480,
-  .flx-w540 {
+  .flx-w540,
+  .flx-w980 {
     width: 100%;
   }
 

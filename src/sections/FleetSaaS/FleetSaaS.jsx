@@ -562,7 +562,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                 </div>
                 <div className="flx-receipts flx-ind">
                   <p className="flx-receipts__label">Every action, on the record</p>
-                  <figure className="flx-receipt flx-w540">
+                  <figure className="flx-receipt flx-w980">
                     <div className="flx-exhibit-shadow">
                       <FitExhibit exhibit={FLEET_EXHIBITS.audit} />
                     </div>
