@@ -1,41 +1,46 @@
+/* ════════════════════════════════════════════════════════════
+   ProjectCard — a #3c3c3a panel on the #2a2a2a canvas, sized to
+   match The Cave cards (18px title, 8/8/24 padding, radius 20)
+   so the home grid reads at the same sleek scale.
+
+   Structure: contained media, then title, an uppercase metadata
+   line, description, and a #5c5c5c chip pinned to the bottom so
+   paired cards in a row stay bottom-aligned.
+
+   The cards are clickable, so — unlike The Cave cards — they get
+   a gray outline ON HOVER only (transparent at rest, no visible
+   stroke), matching the "View Next" cards on the case studies.
+   ════════════════════════════════════════════════════════════ */
+
 .project-card {
-  background: #dbd8ce;
-  border-radius: 20px;
-  box-shadow: 0 0 6.3px 1px #2a2a2a;
-  padding: 10px 19px 18px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 100%;
-  overflow: hidden;
+  height: 100%;
+  min-width: 0;
+  background: #3c3c3a;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  padding: 8px 8px 24px;
+  transition: border-color 0.2s ease;
 }
 
-/* Header row: number + tags */
-.project-card__header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: -8px;
+.project-card--clickable {
+  cursor: pointer;
 }
 
-.project-card__number {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 13px;
-  color: #555553;
-  line-height: normal;
+.project-card--clickable:hover {
+  border-color: #cbc8bf;
 }
 
-.project-card__tags {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-/* Image */
+/* Media — contained inside the panel, radius 20 */
 .project-card__image {
-  height: 350px;
-  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 664 / 346;
+  border-radius: 20px;
   overflow: hidden;
+  background: #2a2a2a;
   flex-shrink: 0;
 }
 
@@ -48,145 +53,73 @@
   pointer-events: none;
 }
 
-/* Body */
+/* Body — fills the card so the chip can pin to the bottom edge */
 .project-card__body {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 14px;
 }
 
 .project-card__title {
   font-family: 'Fraunces', serif;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 400;
-  color: #2a2a2a;
-  line-height: normal;
+  color: #faf8f1;
+  line-height: 28px;
+  margin: 0;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+.project-card__meta {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #a29e94;
+  line-height: 1.4;
   margin: 0;
 }
 
 .project-card__description {
   font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
-  color: #555553;
-  line-height: normal;
-  margin: 0;
+  font-size: 15px;
+  color: #dbd8ce;
+  line-height: 1.5;
+  margin: 2px 0 0;
 }
 
-/* Metadata */
-.project-card__meta {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0;
-  max-height: 0;
-  overflow: hidden;
-  margin-top: -20px;
-  transition:
-    max-height 0.4s ease,
-    padding-top 0.4s ease,
-    margin-top 0.4s ease;
-}
-
-.project-card--clickable {
-  cursor: pointer;
-}
-
-.project-card:hover .project-card__meta {
-  max-height: 160px;
-  padding-top: 4px;
-  margin-top: 0;
-}
-
-.project-card__divider {
-  height: 1px;
-  background: repeating-linear-gradient(
-    to right,
-    rgba(85, 85, 83, 0.3) 0,
-    rgba(85, 85, 83, 0.3) 4px,
-    transparent 4px,
-    transparent 8px
-  );
-}
-
-.project-card__table {
-  display: flex;
-  gap: 32px;
-  align-items: flex-start;
-  margin-top: 16px;
-}
-
-.project-card__labels,
-.project-card__values {
-  display: flex;
-  flex-direction: column;
-}
-
-.project-card__labels span,
-.project-card__values span {
-  height: 32px;
-  display: flex;
+.project-card__chip {
+  display: inline-flex;
   align-items: center;
-  font-size: 16px;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.project-card__labels span {
+  margin-top: auto;
+  background: #5c5c5c;
+  border-radius: 4px;
+  padding: 4px 8px;
   font-family: 'Source Code Pro', monospace;
-  color: #555553;
-  padding-right: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #faf8f1;
+  white-space: nowrap;
+  line-height: normal;
 }
 
-.project-card__values span {
-  font-family: 'DM Sans', sans-serif;
-  color: #555553;
-  padding: 0 10px;
-}
-
-/* ─── Mobile (≤ 767px) ──────────────────────────────────────
-   Image shrinks to 200px; metadata is always visible (no hover).
-   ─────────────────────────────────────────────────────────── */
+/* ─── Mobile (≤ 767px) ────────────────────────────────────── */
 @media (max-width: 767px) {
   .project-card {
-    padding: 14px 16px 18px;
     gap: 16px;
-    border-radius: 18px;
-  }
-
-  .project-card__tags {
-    gap: 6px;
-  }
-
-  .project-card__image {
-    height: 200px;
-  }
-
-  .project-card__body {
-    gap: 12px;
   }
 
   .project-card__title {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .project-card__description {
     font-size: 14px;
   }
 
-  /* Always show metadata — hover isn't a reliable affordance on touch */
-  .project-card__meta {
-    max-height: 160px;
-    padding-top: 4px;
-    margin-top: 0;
-  }
-
-  .project-card__labels span,
-  .project-card__values span {
-    height: 28px;
-    font-size: 13px;
-  }
-
-  .project-card__table {
-    gap: 16px;
-    margin-top: 12px;
+  .project-card__chip {
+    white-space: normal;
   }
 }

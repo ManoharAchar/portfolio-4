@@ -45,7 +45,7 @@ const PassCard = forwardRef(function PassCard({ intent, name, date, passId }, re
   const config = PASS_CONFIG[intent] ?? PASS_CONFIG.designer
   const displayName = name && name.length > 16 ? name.slice(0, 16) + '…' : (name || '')
   const passDate = date || formatDate()
-  const passNumber = passId ? `NO. ${String(passId).padStart(4, '0')}` : 'NO. ——'
+  const passNumber = passId ? `NO. ${String(passId).padStart(4, '0')}` : 'NO. ----'
 
   return (
     <div className="pass-card" ref={ref}>

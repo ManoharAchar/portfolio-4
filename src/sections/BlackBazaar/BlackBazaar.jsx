@@ -86,7 +86,7 @@ function QuoteCallout({ quote, attribution }) {
       <div className="cs-quote__bar" />
       <div className="cs-quote__text">
         <p className="cs-quote__quote">"{quote}"</p>
-        <p className="cs-quote__attr">— {attribution}</p>
+        <p className="cs-quote__attr">{attribution}</p>
       </div>
     </div>
   )
@@ -237,15 +237,15 @@ export default function BlackBazaar({ onNavigate }) {
             <section className="cs-section" id="hero">
               <p className="cs-label">CASE STUDY / BLACK BAZA</p>
               <h1 className="cs-section-heading">
-                I designed a three-sided mobile platform for an activist coffee brand, connecting buyers to farmers through traceability, community, and sustainability. In production.
+                I designed a commerce and traceability platform for buyers and retailers at an activist coffee brand, connecting each purchase to its source and informed by farmer partners. In production, with retailer workflows still being iterated.
               </h1>
 
               <div className="cs-hero-info">
                 <div className="cs-info-card">
                   <p className="cs-info-card__section-label">PROJECT SNAPSHOT</p>
                   {[
-                    { label: 'ROLE', value: 'Product Designer (0-to-1)' },
-                    { label: 'TYPE', value: 'Solo designer, 1 stakeholders, 1 developer' },
+                    { label: 'ROLE', value: 'Product Designer, 0-to-1' },
+                    { label: 'TYPE', value: 'Solo designer, 1 stakeholder, 1 developer' },
                     { label: 'DURATION', value: '~8 Weeks (Jun 2025 – Sep 2025)' },
                     { label: 'PLATFORM', value: 'iOS & Android' },
                   ].map(({ label, value }) => (
@@ -307,7 +307,7 @@ export default function BlackBazaar({ onNavigate }) {
                   Black Baza Coffee is an activist company in Karnataka, India, pairing specialty coffee sales with biodiversity conservation and fair farmer livelihoods. Their existing website could sell coffee but could not build community, surface origin stories, or support retail partners digitally.
                 </p>
                 <p className="cs-section-body">
-                  No major competitor in the specialty coffee space offered traceability or community features. The opportunity was to design a single platform serving buyers, retailers, and farmer partners with fundamentally different needs.
+                  No major competitor in the specialty coffee space offered traceability or community features. The opportunity was to design a single platform for buyers and retailers that could represent farmer partners accurately, each with fundamentally different needs.
                 </p>
               </div>
 
@@ -339,7 +339,7 @@ export default function BlackBazaar({ onNavigate }) {
             <section className="cs-section cs-section--gap-24" id="approach">
               <p className="cs-label">APPROACH</p>
               <h2 className="cs-section-heading">
-                I designed a two-sided platform with shared content and role-specific tools
+                I designed a buyer and retailer platform with shared content and role-specific tools
               </h2>
               <p className="cs-section-body">
                 The app onboards users as Buyer or Retailer, then tailors the experience while keeping traceability and community accessible across roles. AI-assisted research synthesis helped cluster interview findings from 8 customers, accelerating the transition from raw data to the information architecture below.
@@ -347,7 +347,7 @@ export default function BlackBazaar({ onNavigate }) {
               <div className="cs-media">
                 <ScrollVideo src={twoUserGroupVideo} className="cs-media__video" />
                 <p className="cs-media__caption">
-                  Information architecture: shared content layers bridge two primary user groups, consulted farmer partners with role-specific entry points.
+                  Information architecture: shared content layers bridge the two primary user groups, buyers and retailers, each with role-specific entry points, and farmer partners consulted throughout.
                 </p>
               </div>
             </section>
@@ -536,7 +536,7 @@ export default function BlackBazaar({ onNavigate }) {
                     I&rsquo;d love to walk you<br />through my thinking.
                   </h2>
                   <p className="cs-invite__body">
-                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                    Whether it&rsquo;s about this project, my process, or a role on your team, I&rsquo;m always up for a good conversation about design.
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
@@ -560,13 +560,13 @@ export default function BlackBazaar({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {getViewNext('black-baza').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                {getViewNext('black-baza').slice(0, isMobile ? 1 : 2).map(({ id, video, title, compact }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
                       <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{description}</p>
+                    <p className="cs-viewnext-card__desc">{compact}</p>
                   </div>
                 ))}
               </div>

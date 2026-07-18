@@ -8,15 +8,17 @@
 
 /* ── Page layout ──────────────────────────────────────────── */
 
+/* Content-column frame — matches the portfolio standard (Cooperant/Mochitta):
+   24px side padding, 1040px column centered. */
 .flx-page .cs-main {
-  padding: 64px 64px 180px;
+  padding: 64px 24px 140px;
 }
 
 .flx-page .cs-sections {
   width: 100%;
-  max-width: 1000px; /* handoff main column */
+  max-width: 1040px;
   margin: 0 auto;
-  gap: 92px; /* between-section rhythm, desktop */
+  gap: 120px; /* between-section rhythm — matches the Figma frame */
 }
 
 /* Sections manage their own internal margins (dc.html values) */
@@ -53,19 +55,6 @@
   color: #8f8d85;
 }
 
-.flx-h1 {
-  font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 1;
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-  color: #faf8f1;
-  max-width: 20ch;
-  margin: 0 0 24px;
-  text-wrap: pretty;
-}
-
 .flx-h2 {
   font-family: 'Fraunces', serif;
   font-variation-settings: 'opsz' 48, 'SOFT' 0, 'WONK' 1;
@@ -73,24 +62,13 @@
   font-size: 30px;
   line-height: 1.2;
   color: #faf8f1;
-  max-width: 24ch;
+  max-width: none;
   margin: 0 0 18px;
   text-wrap: balance;
 }
 
 .flx-h2--wide {
-  max-width: 26ch;
-}
-
-.flx-hero-lead {
-  font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
-  font-size: 18px;
-  line-height: 30px;
-  color: #dbd8ce;
-  max-width: 70ch;
-  margin: 0 0 28px;
-  text-wrap: pretty;
+  max-width: none;
 }
 
 .flx-problem-lead {
@@ -107,10 +85,10 @@
 .flx-intro {
   font-family: 'DM Sans', sans-serif;
   font-variation-settings: 'opsz' 14;
-  font-size: 17px;
-  line-height: 28px;
+  font-size: 16px;
+  line-height: 26px;
   color: #dbd8ce;
-  max-width: 74ch;
+  max-width: 861px;
   margin: 0 0 8px;
   text-wrap: pretty;
 }
@@ -170,20 +148,14 @@
 
 .flx-panel {
   background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.14);
   border-radius: 20px;
   padding: 28px;
-}
-
-.flx-panel--hero {
-  margin: 40px 0 0;
 }
 
 .flx-video-frame {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(219, 216, 206, 0.14);
   box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.55);
   background: #0e1418;
 }
@@ -205,24 +177,43 @@
 .flx-w480 { width: 480px; max-width: 100%; }
 .flx-w540 { width: 540px; max-width: 100%; }
 
-/* ── Hero ─────────────────────────────────────────────────── */
+/* ── Hero — split hero (shared cs-v2-hero-row) ────────────────
+   Eyebrow, title, lead, and chips reuse cs-* primitives to match
+   Cooperant/Mochitta. The pill + proof line and the product
+   dashboard frame stay page-specific. */
 
-.flx-breadcrumb {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 13px;
-  line-height: 1.2;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 22px;
+/* Fleet hero title runs at the Figma frame's 30/36, tighter than the
+   shared 35px cs-hero-title used by Cooperant/Mochitta. */
+.flx-page .cs-hero-title {
+  font-size: 30px;
+  line-height: 36px;
 }
 
+.flx-hero-visual {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.flx-hero-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  background: #262626; /* matches the Figma hero frame fill */
+}
+
+.flx-hero-video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Spacing inside the copy column is governed by cs-v2-hero-copy's gap */
 .flx-pill-row {
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin: 0 0 26px;
 }
 
 .flx-pill {
@@ -261,58 +252,28 @@
   font-weight: 600;
 }
 
-.flx-chip-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.flx-chip {
-  background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.14);
-  border-radius: 12px;
-  padding: 11px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.flx-chip__label {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 11px;
-  line-height: 1;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #8f8d85;
-}
-
-.flx-chip__value {
-  font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
-  font-size: 14px;
-  line-height: 1.2;
-  color: #faf8f1;
-}
-
 /* ── Impact strip ─────────────────────────────────────────── */
 
 .flx-impact {
   margin: 56px 0 0;
   scroll-margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .flx-impact__eyebrow {
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 
 .flx-impact__lead {
   font-family: 'DM Sans', sans-serif;
   font-variation-settings: 'opsz' 14;
-  font-size: 18px;
-  line-height: 28px;
+  font-size: 16px;
+  line-height: 26px;
   color: #dbd8ce;
-  max-width: 60ch;
-  margin: 0 0 24px;
+  max-width: 74ch;
+  margin: 0;
 }
 
 .flx-impact-grid {
@@ -320,7 +281,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background: rgba(219, 216, 206, 0.14);
-  border: 1px solid rgba(219, 216, 206, 0.14);
   border-radius: 16px;
   overflow: hidden;
 }
@@ -369,14 +329,13 @@
 
 .flx-contribution {
   margin: 48px 0 0;
-  background: #33322f;
-  border: 1px solid rgba(219, 216, 206, 0.12);
-  border-radius: 16px;
-  padding: 30px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .flx-contribution__eyebrow {
-  margin-bottom: 22px;
+  margin-bottom: 0;
 }
 
 .flx-contribution__grid {
@@ -398,22 +357,21 @@
 .flx-contribution__body {
   font-family: 'DM Sans', sans-serif;
   font-variation-settings: 'opsz' 14;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 26px;
   color: #cbc8bf;
   margin: 0;
   text-wrap: pretty;
 }
 
 .flx-contribution__honest {
-  margin: 22px 0 0;
-  padding: 18px 0 0;
-  border-top: 1px solid rgba(219, 216, 206, 0.15);
+  margin: 0;
   font-family: 'DM Sans', sans-serif;
   font-variation-settings: 'opsz' 14;
+  font-weight: 500;
   font-size: 13px;
   line-height: 20px;
-  color: #8f8d85;
+  color: #cbc8bf;
 }
 
 .flx-contribution__honest b {
@@ -426,12 +384,12 @@
 .flx-problem-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 .flx-problem-card {
-  background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.12);
+  background: #dbd8ce;
   border-radius: 14px;
   padding: 24px;
 }
@@ -452,7 +410,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 1.3;
-  color: #faf8f1;
+  color: #2a2a2a;
   margin: 0 0 8px;
 }
 
@@ -461,16 +419,16 @@
   font-variation-settings: 'opsz' 14;
   font-size: 14px;
   line-height: 22px;
-  color: #cbc8bf;
+  color: #555553;
   margin: 0;
   text-wrap: pretty;
 }
 
 .flx-constraints {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin: 26px 0 0;
+  margin: 28px 0 0;
 }
 
 .flx-constraint {
@@ -481,7 +439,6 @@
   text-transform: uppercase;
   color: #cbc8bf;
   background: rgba(219, 216, 206, 0.06);
-  border: 1px solid rgba(219, 216, 206, 0.16);
   border-radius: 999px;
   padding: 8px 14px;
 }
@@ -525,7 +482,6 @@
 .flx-motion {
   margin: 36px 0 0;
   background: #33322f;
-  border: 1px solid rgba(219, 216, 206, 0.1);
   border-radius: 18px;
   padding: 28px 32px;
   display: flex;
@@ -569,7 +525,6 @@
 .flx-dark {
   margin: 36px 0 0;
   background: #141414;
-  border: 1px solid rgba(219, 216, 206, 0.1);
   border-radius: 24px;
   padding: 40px;
   display: flex;
@@ -829,6 +784,11 @@
   align-items: flex-start;
 }
 
+/* Figma resized the energy figure to the full content width */
+.flx-ds-energy {
+  width: 100%;
+}
+
 .flx-h2--shipped {
   margin: 56px 0 18px;
 }
@@ -841,7 +801,6 @@
 
 .flx-ship-card {
   background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.12);
   border-radius: 14px;
   padding: 24px 26px;
 }
@@ -873,7 +832,6 @@
 .flx-validation {
   margin-top: 20px;
   background: #33322f;
-  border: 1px solid rgba(219, 216, 206, 0.14);
   border-radius: 14px;
   padding: 20px 26px;
   display: flex;
@@ -912,23 +870,19 @@
   margin-bottom: 20px;
 }
 
-.flx-closing {
-  border-left: 3px solid var(--accent);
-  padding-left: 28px;
-}
-
 .flx-closing__h2 {
   margin-bottom: 22px;
 }
 
+/* Figma flattened the closing: a plain body paragraph, no accent bar */
 .flx-pullquote {
-  font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 32, 'SOFT' 0, 'WONK' 1;
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
   font-weight: 400;
-  font-size: 22px;
-  line-height: 34px;
-  color: #faf8f1;
-  max-width: 44ch;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  max-width: 620px;
   margin: 0;
   text-wrap: pretty;
 }
@@ -942,11 +896,6 @@
 
   .flx-page .cs-sections {
     gap: 72px;
-  }
-
-  .flx-h1 {
-    font-size: 28px;
-    max-width: none;
   }
 
   .flx-h2 {
@@ -1012,13 +961,17 @@
     gap: 64px;
   }
 
+  /* Neutralize the shared legacy hero order (from Senior Mode's old
+     hero) so the split hero keeps natural DOM order — title, then lead,
+     then chips — instead of them dropping below the chips. */
+  .flx-page .cs-hero-title,
+  .flx-page .cs-hero-body {
+    order: 0;
+  }
+
   .cs-section.flx-section,
   .flx-impact {
     scroll-margin-top: 80px; /* clears the mobile topbar */
-  }
-
-  .flx-h1 {
-    font-size: 26px;
   }
 
   .flx-h2 {
@@ -1027,19 +980,10 @@
 
   .flx-pill-row {
     gap: 12px;
-    margin-bottom: 22px;
-  }
-
-  .flx-chip-row {
-    gap: 8px;
   }
 
   .flx-panel {
     padding: 20px;
-  }
-
-  .flx-panel--hero {
-    margin-top: 32px;
   }
 
   .flx-impact {

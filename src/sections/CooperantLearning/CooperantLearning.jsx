@@ -61,10 +61,11 @@ const MOBILE_SITE_LINKS = [
 ]
 
 const META_CHIPS = [
-  { label: 'STATUS', value: 'Live' },
-  { label: 'MY ROLE', value: 'Lead Product Designer' },
-  { label: 'TEAM', value: '2 Stakeholders, 1 Dev' },
-  { label: 'TIMELINE', value: 'Sep 2025 - Jan 2026' },
+  { label: 'STATUS', value: 'Shipped' },
+  { label: 'MY ROLE', value: 'Product Designer, 0-to-1' },
+  { label: 'SCOPE', value: 'Sole designer, end-to-end' },
+  { label: 'TEAM', value: 'Founders + Developer' },
+  { label: 'TIMELINE', value: 'Sep 2025 to Jan 2026' },
   { label: 'PLATFORM', value: 'Web App', full: 'mobile' },
 ]
 
@@ -314,7 +315,7 @@ export default function CooperantLearning({ onNavigate }) {
                     <video src={heroComposite} loop muted playsInline preload="metadata" ref={playInView} />
                   </div>
                   <p className="cs-hero-body">
-                    BCBAs — board-certified behavior analysts — are required to earn continuing education credits (CEUs) every certification cycle. Cooperant Learning gives them one place to listen to expert podcasts, take a short quiz, and walk away with the credits they need. I designed and built the platform from scratch.
+                    BCBAs (board-certified behavior analysts) are required to earn continuing education credits (CEUs) every certification cycle. Cooperant Learning gives them one place to listen to expert podcasts, take a short quiz, and walk away with the credits they need. I designed and built the platform from scratch.
                   </p>
                   <div className="cs-chip-row">
                     {META_CHIPS.map(({ label, value, full }) => (
@@ -350,7 +351,7 @@ export default function CooperantLearning({ onNavigate }) {
                 A behavioral health company with expert content but no product to sell it through.
               </h2>
               <p className="cs-section-body">
-                A BCBA finishes a podcast episode on their commute. To earn the CEU, they opens a separate site, finds the matching quiz, pays through a third-party checkout, and waits for a certificate by email. There is no dashboard, no progress tracking, and no way to know how many credits they still needs this cycle. They do this dozens of times a year.
+                A BCBA finishes a podcast episode on their commute. To earn the CEU, they open a separate site, find the matching quiz, pay through a third-party checkout, and wait for a certificate by email. There is no dashboard, no progress tracking, and no way to know how many credits they still need this cycle. They do this dozens of times a year.
               </p>
 
               <div className="cs-flow">
@@ -507,7 +508,7 @@ export default function CooperantLearning({ onNavigate }) {
                     I&rsquo;d love to walk you<br />through my thinking.
                   </h2>
                   <p className="cs-invite__body">
-                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                    Whether it&rsquo;s about this project, my process, or a role on your team, I&rsquo;m always up for a good conversation about design.
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
@@ -531,13 +532,13 @@ export default function CooperantLearning({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {getViewNext('cooperant').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                {getViewNext('cooperant').slice(0, isMobile ? 1 : 2).map(({ id, video, title, compact }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
                       <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{description}</p>
+                    <p className="cs-viewnext-card__desc">{compact}</p>
                   </div>
                 ))}
               </div>

@@ -18,15 +18,24 @@
 
 /* ── Page layout ──────────────────────────────────────────── */
 
+/* Content-column frame — matches the portfolio standard (Cooperant/Mochitta):
+   24px side padding, 1040px column centered. */
 .hmi-page .cs-main {
-  padding: 64px 64px 180px;
+  padding: 64px 24px 140px;
 }
 
 .hmi-page .cs-sections {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1040px;
   margin: 0 auto;
-  gap: 84px; /* section vertical rhythm, 80–88px desktop */
+  gap: 120px; /* section vertical rhythm — matches the Figma frame */
+}
+
+/* HMI hero title runs at the Figma frame's 30/36, tighter than the
+   shared 35px cs-hero-title used by Cooperant/Mochitta. */
+.hmi-page .cs-hero-title {
+  font-size: 30px;
+  line-height: 36px;
 }
 
 /* Content sections manage their own internal margins (dc.html values) */
@@ -49,7 +58,7 @@
   font-size: 13px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #cbc8bf;
+  color: #dbd8ce;
   margin: 0;
 }
 
@@ -72,7 +81,7 @@
 }
 
 .hmi-section-heading--wide {
-  max-width: 820px;
+  max-width: none;
 }
 
 .hmi-body {
@@ -88,8 +97,8 @@
 .hmi-lead {
   font-family: 'DM Sans', sans-serif;
   font-variation-settings: 'opsz' 14;
-  font-size: 18px;
-  line-height: 1.66;
+  font-size: 16px;
+  line-height: 1.625;
   color: #dbd8ce;
   margin: 0;
   text-wrap: pretty;
@@ -120,15 +129,9 @@
 
 .hmi-panel {
   background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
   border-radius: 20px;
   padding: 32px;
   margin: 36px 0 0;
-}
-
-.hmi-panel--hero {
-  padding: 40px;
-  margin: 48px 0 0;
 }
 
 .hmi-panel--tight {
@@ -161,79 +164,50 @@
   margin: 8px 0 0;
 }
 
-/* ── 0 · Above the fold ───────────────────────────────────── */
+/* ── 0 · Above the fold — split hero (shared cs-v2-hero-row) ──
+   Copy column, title, and chips reuse the shared cs-* primitives so
+   the hero matches Cooperant/Mochitta exactly. Only the right-hand
+   exhibit frame and the confidentiality caption are page-specific. */
 
-.hmi-breadcrumb {
+.hmi-hero-visual {
+  flex: 1;
+  min-width: 0;
   display: flex;
-  align-items: center;
-  gap: 11px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.hmi-breadcrumb__root { color: #cbc8bf; }
-.hmi-breadcrumb__sep { color: #5c5c5c; }
-.hmi-breadcrumb__page { color: #dbd8ce; }
-
-.hmi-accent-rule {
-  width: 44px;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
-  margin: 24px 0 0;
+.hmi-hero-frame {
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.hmi-hero-title {
-  font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
-  font-weight: 400;
-  font-size: 35px;
-  line-height: 1.32;
-  letter-spacing: -0.01em;
-  color: #faf8f1;
-  max-width: 900px;
-  margin: 22px 0 0;
-  text-wrap: pretty;
-}
-
-.hmi-meta-row {
+/* Cream status pill under the hero chips — matches the Figma frame's
+   "In production" pill (mirrors the Fleet hero pill). */
+.hmi-pill-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 30px 0 0;
 }
 
-.hmi-chip {
+.hmi-pill {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 14px;
-  background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
-  border-radius: 8px;
-}
-
-.hmi-chip__label {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #cbc8bf;
-}
-
-.hmi-chip__value {
-  font-family: 'Source Code Pro', monospace;
+  gap: 8px;
+  background: #faf8f1;
+  color: #1c1c1b;
+  border-radius: 12px;
+  padding: 9px 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-weight: 500;
   font-size: 13px;
-  color: #faf8f1;
+  line-height: 1;
 }
 
-.hmi-chip__dot {
+.hmi-pill__dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--accent);
+  background: #1e8e5a; /* live-status green, not the page accent */
   flex: none;
 }
 
@@ -241,13 +215,12 @@
   margin: 64px 0 0;
 }
 
+/* Figma flattened the contribution: no top divider */
 .hmi-contribution__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   margin-top: 24px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(219, 216, 206, 0.2);
 }
 
 .hmi-contribution__label {
@@ -269,13 +242,30 @@
 }
 
 .hmi-problem-heading {
-  max-width: 360px;
+  max-width: none;
 }
 
 .hmi-problem-copy {
   display: flex;
   flex-direction: column;
   gap: 22px;
+}
+
+/* Supporting image below the problem text — #3c3c3a panel (r20, 20px pad)
+   with the photo inset at r15, matching the Figma frame. */
+.hmi-problem-figure {
+  margin-top: 36px;
+  background: #3c3c3a;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.hmi-problem-figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1000 / 412;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 /* ── 2/3/Receipts · card grids ────────────────────────────── */
@@ -288,17 +278,27 @@
 }
 
 .hmi-cards-grid--constraints {
+  grid-template-columns: repeat(2, 1fr);
   margin-top: 28px;
 }
 
+.hmi-constraint-card .hmi-small {
+  font-size: 14px;
+  color: #cbc8bf;
+}
+
 .hmi-stat-card {
-  background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
+  background: #dbd8ce;
   border-radius: 14px;
   padding: 28px 26px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+/* Light card → dark body text */
+.hmi-stat-card .hmi-small {
+  color: #555553;
 }
 
 .hmi-stat-card__numrow {
@@ -329,13 +329,12 @@
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #cbc8bf;
+  color: #2a2a2a;
   margin: 0;
 }
 
 .hmi-constraint-card {
   background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
   border-radius: 14px;
   padding: 22px 24px 24px;
   display: flex;
@@ -354,7 +353,7 @@
   font-family: 'Fraunces', serif;
   font-variation-settings: 'opsz' 40, 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.2;
   color: #faf8f1;
   margin: 0;
@@ -362,12 +361,9 @@
 
 /* ── 4 · Approach ─────────────────────────────────────────── */
 
-.hmi-approach-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-top: 30px;
-  max-width: 1000px;
+.hmi-approach-lead {
+  margin-top: 20px;
+  max-width: 1040px;
 }
 
 /* ── 5 · Key decisions ────────────────────────────────────── */
@@ -431,54 +427,6 @@
   max-width: 900px;
 }
 
-/* ── 6b · Reach ───────────────────────────────────────────── */
-
-.hmi-reach-panel {
-  background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
-  border-radius: 20px;
-  padding: 52px 40px;
-  margin: 30px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 26px 30px;
-}
-
-.hmi-reach-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  min-width: 118px;
-}
-
-.hmi-reach-node__num {
-  font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
-  font-weight: 400;
-  font-size: 66px;
-  line-height: 0.85;
-  color: #faf8f1;
-}
-
-.hmi-reach-node__label {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #cbc8bf;
-}
-
-.hmi-reach-x {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: 30px;
-  color: var(--accent);
-  line-height: 1;
-}
-
 /* ── 7 · What shipped + Validation ────────────────────────── */
 
 .hmi-shipped-body {
@@ -500,8 +448,13 @@
 .hmi-quote .cs-quote__quote {
   font-size: 23px;
   line-height: 1.4;
-  color: #dbd8ce;
+  color: #faf8f1;
   max-width: none;
+}
+
+/* Second eyebrow ("What's next") sits below the validation quote */
+.hmi-quote__eyebrow--next {
+  margin-top: 24px;
 }
 
 .hmi-quote__lead {
@@ -512,7 +465,6 @@
 
 .hmi-receipt-card {
   background: #3c3c3a;
-  border: 1px solid rgba(219, 216, 206, 0.2);
   border-radius: 14px;
   padding: 22px 22px 24px;
   display: flex;
@@ -586,10 +538,6 @@
     gap: 72px;
   }
 
-  .hmi-hero-title {
-    font-size: 28px;
-  }
-
   .hmi-section-heading {
     font-size: 24px;
   }
@@ -652,29 +600,16 @@
     gap: 64px;
   }
 
-  .hmi-breadcrumb {
-    flex-wrap: wrap;
-    gap: 8px;
-    row-gap: 6px;
-  }
-
-  .hmi-hero-title {
-    font-size: 28px;
-  }
-
-  .hmi-meta-row {
-    gap: 8px;
-    margin-top: 24px;
+  /* Neutralize the shared legacy hero order (from Senior Mode's old
+     hero) so the split hero keeps natural DOM order — title first,
+     then chips — instead of the title dropping below the chips. */
+  .hmi-page .cs-hero-title {
+    order: 0;
   }
 
   .hmi-panel {
     padding: 20px;
     margin-top: 28px;
-  }
-
-  .hmi-panel--hero {
-    padding: 24px;
-    margin-top: 36px;
   }
 
   .hmi-panel--tight {

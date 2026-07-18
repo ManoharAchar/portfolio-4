@@ -199,8 +199,8 @@ export default function SeniorMode({ onNavigate }) {
                 <div className="cs-info-card">
                   <p className="cs-info-card__section-label">PROJECT SNAPSHOT</p>
                   {[
-                    { label: 'TYPE', value: 'Concept prototype' },
-                    { label: 'ROLE', value: 'End-to-end' },
+                    { label: 'TYPE', value: 'Tested prototype' },
+                    { label: 'ROLE', value: 'Product Designer, End-to-End' },
                     { label: 'DURATION', value: '6 weeks' },
                     { label: 'PLATFORM', value: 'Android + caregiver app' },
                     { label: 'TESTING', value: '10 seniors | 8 caregivers | 4-person micro-test' },
@@ -475,9 +475,10 @@ export default function SeniorMode({ onNavigate }) {
                 <div className="sm-priorities-wrap">
                   <p className="sm-priorities-label">WHAT I WOULD DO NEXT</p>
                   {[
-                    { label: 'PRIORITY 1', body: 'Increase segmented-control state contrast and add explicit current-state text' },
-                    { label: 'PRIORITY 2', body: 'Prototype permission boundaries for higher-risk caregiver actions' },
-                    { label: 'PRIORITY 3', body: 'Validate offline recovery states in broader field conditions' },
+                    { label: 'PRIORITY 1', body: 'Increase segmented-control contrast and add explicit current-state text' },
+                    { label: 'PRIORITY 2', body: 'Define permission boundaries for higher-risk caregiver actions' },
+                    { label: 'PRIORITY 3', body: 'Validate offline recovery states and broader field conditions' },
+                    { label: 'PRIORITY 4', body: 'Test with a wider range of device familiarity and accessibility needs' },
                   ].map(({ label, body }) => (
                     <div key={label} className="sm-priority-card">
                       <p className="sm-priority-card__label">{label}</p>
@@ -513,21 +514,21 @@ export default function SeniorMode({ onNavigate }) {
             <section className="cs-section cs-section--gap-24" id="learned">
               <p className="cs-label">WHAT I LEARNED</p>
               <h2 className="cs-section-heading">
-                Three lessons that changed how I approach usability work.
+                Three lessons from making silent mode legible.
               </h2>
               <div className="sm-learning-stack">
                 {[
                   {
-                    title: 'Locate the failure before you fix it.',
-                    body: 'Vague friction ("users were confused") leads to vague fixes. Attaching a number to a specific screen is what made each redesign precise enough to validate.',
+                    title: 'Critical state needs redundant communication',
+                    body: 'A subtle icon was not enough. Seniors needed plain-language confirmation such as "Phone will ring" placed where they would see it before hunting through settings.',
                   },
                   {
-                    title: 'Design for self-correction, not just speed.',
-                    body: 'The strongest signal from UT2 was not faster task times. It was users catching their own mistakes mid-task. That changed how I think about what good scaffolding does.',
+                    title: 'Recovery is a two-person experience',
+                    body: 'The problem was not only whether seniors could identify silent mode. The product also had to support how caregivers actually help, including remote recovery, confirmation, reversibility, and visibility into what changed.',
                   },
                   {
-                    title: 'Test with the same people twice.',
-                    body: 'Using the same participants and instruments across both rounds made the comparison direct. The improvement was not "different people found it easier." It was "the same people, on the same tasks, performed measurably better."',
+                    title: 'Faster recovery increases the need for trust boundaries',
+                    body: 'Instant caregiver actions reduced friction, but also increased caregiver power. Permissions, audit trails, confirmation, and reversibility are part of the interaction design, not secondary settings.',
                   },
                 ].map(({ title, body }) => (
                   <div key={title} className="sm-learning-card">
@@ -536,20 +537,6 @@ export default function SeniorMode({ onNavigate }) {
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* Next Steps */}
-            <section className="cs-section cs-section--gap-24" id="next-steps">
-              <p className="cs-label">NEXT STEPS</p>
-              <h2 className="cs-section-heading">
-                Three minor findings remain, all with clear fixes.
-              </h2>
-              <p className="cs-section-body">
-                The second round surfaced three minor findings, all with clear fixes: an AI-coach button that did not name its destination, a rule step that wanted an impact preview before committing, and a Simple Tag flow that needed a quick edit before confirming.
-              </p>
-              <p className="cs-section-body">
-                If this shipped, the next priorities are week-over-week trend comparison and user-controlled notification frequency.
-              </p>
             </section>
 
             {/* Invite */}
@@ -561,7 +548,7 @@ export default function SeniorMode({ onNavigate }) {
                     I&rsquo;d love to walk you<br />through my thinking.
                   </h2>
                   <p className="cs-invite__body">
-                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                    Whether it&rsquo;s about this project, my process, or a role on your team, I&rsquo;m always up for a good conversation about design.
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
@@ -585,13 +572,13 @@ export default function SeniorMode({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {getViewNext('senior-mode').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                {getViewNext('senior-mode').slice(0, isMobile ? 1 : 2).map(({ id, video, title, compact }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
                       <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{description}</p>
+                    <p className="cs-viewnext-card__desc">{compact}</p>
                   </div>
                 ))}
               </div>

@@ -42,16 +42,16 @@ const ACCENT_COLORS = {
 }
 
 const PAGE_TITLES = {
-  home:          'Manohar Achar — Product Designer',
-  about:         'About — Manohar Achar',
-  cooperant:     'Cooperant Learning — Manohar Achar',
-  'senior-mode': 'Senior Mode — Manohar Achar',
-  'black-bazaar':'Black Bazaar — Manohar Achar',
-  mochitta:      'Mochitta — Manohar Achar',
-  fleet:         'Fleet Coordination — Manohar Achar',
-  'industrial-hmi': 'Industrial HMI — Manohar Achar',
-  cave:          'The Cave — Manohar Achar',
-  archive:       'Guest Archive — Manohar Achar',
+  home:          'Manohar Achar · Product Designer',
+  about:         'About · Manohar Achar',
+  cooperant:     'Cooperant Learning · Manohar Achar',
+  'senior-mode': 'Senior Mode · Manohar Achar',
+  'black-bazaar':'Black Bazaar · Manohar Achar',
+  mochitta:      'Mochitta · Manohar Achar',
+  fleet:         'Fleet Coordination · Manohar Achar',
+  'industrial-hmi': 'Industrial HMI · Manohar Achar',
+  cave:          'The Cave · Manohar Achar',
+  archive:       'Guest Archive · Manohar Achar',
 }
 
 const pageToPath = (page) => (page === 'home' || page === 'welcome') ? '/' : `/${page}`

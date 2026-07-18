@@ -1,9 +1,8 @@
 import { useRef, useEffect } from 'react'
-import TagBadge from '../TagBadge/TagBadge'
 import { tryPlay, cancelPlay } from '../../lib/playInView'
 import './ProjectCard.css'
 
-export default function ProjectCard({ number, tags, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, description, role, team, timeframe, onClick }) {
+export default function ProjectCard({ domain, maturity, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, metadata, description, onClick }) {
   const cardRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -90,15 +89,6 @@ export default function ProjectCard({ number, tags, imageColor, image, video, po
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <div className="project-card__header-row">
-        <span className="project-card__number">NO. {number}</span>
-        <div className="project-card__tags">
-          {tags.map((tag) => (
-            <TagBadge key={tag} label={tag} />
-          ))}
-        </div>
-      </div>
-
       <div
         className="project-card__image"
         style={{ background: !image && !video ? imageColor : undefined }}
@@ -121,23 +111,11 @@ export default function ProjectCard({ number, tags, imageColor, image, video, po
 
       <div className="project-card__body">
         <h2 className="project-card__title">{title}</h2>
+        {metadata && <p className="project-card__meta">{metadata}</p>}
         <p className="project-card__description">{description}</p>
-      </div>
-
-      <div className="project-card__meta">
-        <div className="project-card__divider" />
-        <div className="project-card__table">
-          <div className="project-card__labels">
-            <span>ROLE</span>
-            <span>TEAM</span>
-            <span>TIMEFRAME</span>
-          </div>
-          <div className="project-card__values">
-            <span>{role}</span>
-            <span>{team}</span>
-            <span>{timeframe}</span>
-          </div>
-        </div>
+        {domain && maturity && (
+          <span className="project-card__chip">{`${domain} · ${maturity}`.toUpperCase()}</span>
+        )}
       </div>
     </div>
   )

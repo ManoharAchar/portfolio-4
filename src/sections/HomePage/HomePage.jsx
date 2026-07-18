@@ -45,17 +45,12 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
         {/* All projects in document order so mobile stacks 01→02→03→04.
             CSS Grid places each slot in the correct column on desktop. */}
         <div className="projects-grid">
-          {['left', 'right'].map((side) => (
-            <div key={side} className={`projects-col projects-col--${side}`}>
-              {PROJECTS.filter((p) => p.column === side).map((project) => (
-                <div key={project.id} className="project-card-slot" data-sort={project.number}>
-                  <ProjectCard
-                    {...project}
-                    onClick={() => onNavigate(getProjectPage(project.id))}
-                  />
-                </div>
-              ))}
-            </div>
+          {PROJECTS.map((project) => (
+            <ProjectCard
+              key={project.id}
+              {...project}
+              onClick={() => onNavigate(getProjectPage(project.id))}
+            />
           ))}
         </div>
       </main>

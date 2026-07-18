@@ -26,6 +26,12 @@ import flow2Poster from '../../assets/fleet/poster-flow2-handoff.jpg'
 import flow3Poster from '../../assets/fleet/poster-flow3-commsloss.jpg'
 import flow4Poster from '../../assets/fleet/poster-flow4-guarded.jpg'
 
+// Hero videos — desktop + mobile cuts, loop-always muted autoplay.
+import heroFleet from '../../assets/fleet/hero-fleet.mp4'
+import heroFleetMobile from '../../assets/fleet/hero-fleet-mobile.mp4'
+import heroFleetPoster from '../../assets/fleet/poster-hero-fleet.jpg'
+import heroFleetMobilePoster from '../../assets/fleet/poster-hero-fleet-mobile.jpg'
+
 // Product-identity fonts (Space Grotesk + IBM Plex) are only used inside the
 // fleet exhibits, so they're loaded at page level (once, never removed).
 const PRODUCT_FONTS_ID = 'flx-product-fonts'
@@ -57,24 +63,24 @@ const META_CHIPS = [
 ]
 
 const IMPACT_TILES = [
-  { value: '~85', unit: '%', label: 'Adoption', note: 'time in coordinated mode — managers left the automation on' },
+  { value: '~85', unit: '%', label: 'Adoption', note: 'time in coordinated mode: managers left the automation on' },
   { value: '~13', unit: '%', label: 'Energy', note: 'less energy on the pilot line' },
-  { value: '~99.4', unit: '%', label: 'Uptime', note: 'availability — pressure held through 6 failure events' },
+  { value: '~99.4', unit: '%', label: 'Uptime', note: 'availability: pressure held through 6 failure events' },
   { value: '~40', label: 'Scale', note: 'facilities after the pilot · ~150 assets · ~200 users' },
 ]
 
 const CONTRIBUTION = [
   {
     label: 'Owned',
-    body: 'The facility-manager–facing fleet layer — the fleet dashboard and status model, the coordination legibility (why-this-lead, live handoff, comms-loss behavior), the reframing of sequencing setpoints into plain-language manager decisions, the guarded remote-control model, and the three-channel design system across the fleet screens.',
+    body: 'The facility-manager–facing fleet layer: the dashboard and status model, the coordination legibility, the guarded remote-control model, and the three-channel design system across the fleet screens.',
   },
   {
     label: 'Collaborated',
-    body: 'With controls and software engineers on sequencing behavior, feasibility, and the remote-monitoring platform; with field / pilot stakeholders on validation.',
+    body: 'With controls and software engineers on sequencing behavior and feasibility; with field and pilot stakeholders on validation.',
   },
   {
     label: 'Influenced',
-    body: 'Platform-level direction — the legibility-first approach shaped how the broader controller experience surfaced system condition.',
+    body: 'Platform-level direction: the legibility-first approach shaped how the broader controller experience surfaced system condition.',
   },
 ]
 
@@ -92,7 +98,7 @@ const PROBLEM_CARDS = [
   {
     num: '03',
     title: 'So they ran it by hand.',
-    body: "They didn't trust what they couldn't see, reverted to manual control — and lost the savings.",
+    body: "They didn't trust what they couldn't see, reverted to manual control, and lost the savings.",
   },
 ]
 
@@ -100,14 +106,25 @@ const CONSTRAINTS = [
   'Existing single-machine platform',
   'Live industrial machines',
   'Automation the user had to trust',
-  'Confidential control system — recreated',
+  'Confidential control system, recreated',
 ]
 
 const TOUR_CROPS = [
-  { key: 'fleetLight', lead: 'Fleet', rest: ' — the whole plant at a glance' },
-  { key: 'assetDetail', lead: 'Drill into one machine', rest: ' — depth preserved' },
-  { key: 'coordination', lead: 'Coordination', rest: ' — the invisible, made legible' },
+  { key: 'fleetLight', lead: 'Fleet', rest: ': the whole plant at a glance' },
+  { key: 'assetDetail', lead: 'Drill into one machine', rest: ': depth preserved' },
+  { key: 'coordination', lead: 'Coordination', rest: ': the invisible, made legible' },
 ]
+
+// Loop-always hero video: force muted + play() on mount. Belt-and-braces
+// against the React autoplay quirk (muted set as a property, not an
+// attribute, so the browser's autoplay gate can still block it).
+function playAlways(el) {
+  if (!el) return
+  el.muted = true
+  const tryPlay = () => el.play?.().catch(() => {})
+  tryPlay()
+  el.addEventListener('canplay', tryPlay, { once: true })
+}
 
 function FlowVideo({ src, poster }) {
   return (
@@ -278,37 +295,49 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
 
             {/* 0 — Hero / Overview (impact + contribution nest here, as designed) */}
             <section className="cs-section flx-section" id="overview">
-              <p className="flx-breadcrumb">Case study · Fleet coordination platform</p>
-              <h1 className="flx-h1">
-                Facility managers couldn't see why their compressors coordinated themselves — so they switched it off and ran them by hand. I designed the fleet layer that made the automation legible enough to trust.
-              </h1>
-              <p className="flx-hero-lead">
-                A web platform that lets a facility manager run a whole plant's worth of compressors as one coordinated system — holding air pressure, balancing wear, and cutting energy — from a single screen.
-              </p>
-
-              <div className="flx-pill-row">
-                <span className="flx-pill"><span className="flx-pill__dot" />Shipped &amp; live</span>
-                <span className="flx-proof">Scaled across <b>~40 facilities, ~150 assets, ~200 users</b> after the pilot.</span>
-              </div>
-
-              <div className="flx-chip-row">
-                {META_CHIPS.map(({ label, value }) => (
-                  <div key={label} className="flx-chip">
-                    <span className="flx-chip__label">{label}</span>
-                    <span className="flx-chip__value">{value}</span>
+              {/* Split hero — shared cs-v2-hero-row: copy left (fixed 440px),
+                  product dashboard right. Same primitive Cooperant/Mochitta use. */}
+              <div className="cs-v2-hero-row">
+                <div className="cs-v2-hero-copy">
+                  <p className="cs-label">FLEET COORDINATION PLATFORM</p>
+                  <h1 className="cs-hero-title">
+                    Facility managers couldn't see why their compressors coordinated themselves, so they switched it off and ran them by hand.
+                  </h1>
+                  <p className="cs-hero-body">
+                    I designed the fleet layer that made the automation legible enough to trust. A web platform that lets a facility manager run a whole plant's worth of compressors as one coordinated system (holding air pressure, balancing wear, and cutting energy) from a single screen.
+                  </p>
+                  <div className="cs-chip-row">
+                    {META_CHIPS.map(({ label, value }) => (
+                      <div key={label} className="cs-chip">
+                        <p className="cs-chip__label">{label}</p>
+                        <p className="cs-chip__value">{value}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div className="flx-pill-row">
+                    <span className="flx-pill"><span className="flx-pill__dot" />Shipped &amp; live</span>
+                  </div>
+                </div>
+                <div className="flx-hero-visual">
+                  <div className="flx-hero-frame">
+                    <video
+                      ref={playAlways}
+                      className="flx-hero-video"
+                      src={isMobile ? heroFleetMobile : heroFleet}
+                      poster={isMobile ? heroFleetMobilePoster : heroFleetPoster}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div className="flx-panel flx-panel--hero">
-                <FitExhibit exhibit={FLEET_EXHIBITS.fleetLight} />
-              </div>
-              <p className="flx-mono-caption"><span className="flx-mono-caption__dot" />Fleet dashboard · the whole plant at a glance — the product's Instrument Light UI</p>
 
               {/* Impact strip */}
               <div className="flx-impact" id="impact">
-                <p className="flx-eyebrow flx-eyebrow--accent flx-impact__eyebrow">The impact</p>
-                <p className="flx-impact__lead">Legible automation drove adoption; adoption unlocked the energy and uptime benefits.</p>
+                <p className="flx-eyebrow flx-impact__eyebrow">The impact</p>
                 <div className="flx-impact-grid">
                   {IMPACT_TILES.map(({ value, unit, label, note }) => (
                     <div key={label} className="flx-impact-tile">
@@ -318,11 +347,12 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     </div>
                   ))}
                 </div>
+                <p className="flx-impact__lead">Legible automation drove adoption; adoption unlocked the energy and uptime benefits.</p>
               </div>
 
               {/* Contribution strip */}
               <div className="flx-contribution">
-                <p className="flx-eyebrow flx-eyebrow--accent flx-contribution__eyebrow">What I contributed</p>
+                <p className="flx-eyebrow flx-contribution__eyebrow">What I contributed</p>
                 <div className="flx-contribution__grid">
                   {CONTRIBUTION.map(({ label, body }) => (
                     <div key={label}>
@@ -331,17 +361,14 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     </div>
                   ))}
                 </div>
-                <p className="flx-contribution__honest"><b>Honestly:</b> a multidisciplinary controls + software program — I owned the design of the fleet / coordination experience, not the control logic or the whole platform.</p>
+                <p className="flx-contribution__honest"><b>Honestly:</b> a multidisciplinary controls + software program. I owned the design of the fleet / coordination experience, not the control logic or the whole platform.</p>
               </div>
             </section>
 
             {/* 1 — The problem */}
             <section className="cs-section flx-section" id="problem">
-              <p className="flx-eyebrow flx-eyebrow--dim">The problem</p>
+              <p className="flx-eyebrow">The problem</p>
               <h2 className="flx-h2">The plant ran on coordination no one could see or trust.</h2>
-              <p className="flx-problem-lead">
-                A plant's compressors could coordinate automatically to hold pressure and cut energy — but managers couldn't see what the automation was doing or why, so they didn't trust it, ran the machines manually, and lost the savings.
-              </p>
               <div className="flx-problem-grid">
                 {PROBLEM_CARDS.map(({ num, title, body }) => (
                   <div key={num} className="flx-problem-card">
@@ -360,10 +387,10 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
 
             {/* 2 — Product tour */}
             <section className="cs-section flx-section" id="tour">
-              <p className="flx-eyebrow flx-eyebrow--dim">Product tour · the mental model</p>
+              <p className="flx-eyebrow">Product tour · the mental model</p>
               <h2 className="flx-h2">One screen for a whole plant's worth of compressors.</h2>
               <p className="flx-intro flx-tour-intro">
-                The manager doesn't think in machines — they think in whether the plant has air, at what cost. The product is built at that altitude, with any single machine one click away.
+                The manager doesn't think in machines: they think in whether the plant has air, at what cost. The product is built at that altitude, with any single machine one click away.
               </p>
 
               <div className="flx-tour-row">
@@ -384,7 +411,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                 <div className="flx-motion__copy">
                   <p className="flx-eyebrow flx-eyebrow--accent flx-motion__eyebrow">In motion</p>
                   <p className="flx-motion__title">Fleet → asset, the altitude change.</p>
-                  <p className="flx-motion__body">One click drops from the whole plant into a single machine — same pressure, same lead role, now with per-machine depth. The overview and the detail are one continuous move.</p>
+                  <p className="flx-motion__body">One click drops from the whole plant into a single machine: same pressure, same lead role, now with per-machine depth. The overview and the detail are one continuous move.</p>
                 </div>
                 <div className="flx-video-frame flx-video-frame--r16 flx-w480">
                   <FlowVideo src={flow1Video} poster={flow1Poster} />
@@ -405,10 +432,10 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
 
             {/* 3 — What was hard */}
             <section className="cs-section flx-section" id="decisions">
-              <p className="flx-eyebrow flx-eyebrow--dim">What was hard</p>
-              <h2 className="flx-h2">The states that mattered most were the hardest to see.</h2>
+              <p className="flx-eyebrow">What was hard</p>
+              <h2 className="flx-h2">The automation ran the plant; the manager still answered for it.</h2>
               <p className="flx-intro">
-                The coordination that held pressure and cut cost ran itself and hid its reasoning — yet the manager was accountable when it failed. Three decisions made it legible, trustworthy, and safe to leave running.
+                The coordination that held pressure and cut cost ran itself and hid its reasoning, yet the manager was accountable when it failed. Three decisions made it legible, trustworthy, and safe to leave running.
               </p>
 
               {/* Decision A */}
@@ -418,7 +445,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                   <h3 className="flx-decision__statement">Rolled the whole fleet into one status view.</h3>
                 </div>
                 <div className="flx-decision__grid flx-ind">
-                  <p className="flx-decision__rationale">Managers thought in "does my plant have air, at what cost" — opening each machine separately buried that answer. One roll-up view answers it before anything else.</p>
+                  <p className="flx-decision__rationale">Managers thought in "does my plant have air, at what cost". Opening each machine separately buried that answer. One roll-up view answers it before anything else.</p>
                   <div className="flx-tradeoff">
                     <p className="flx-tradeoff__label">Tradeoff</p>
                     <p className="flx-tradeoff__body">Gave up per-machine density on the overview, recovered on drill-down.</p>
@@ -456,7 +483,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                   </div>
                 </div>
                 <div className="flx-decision__grid flx-ind">
-                  <p className="flx-decision__rationale">Managers distrust automation they can't see. The fix wasn't more automation — it was making the coordination's reasoning visible: why this machine leads, why it just handed off, what happens if comms drop.</p>
+                  <p className="flx-decision__rationale">Managers distrust automation they can't see. The fix wasn't more automation. It was making the coordination's reasoning visible: why this machine leads, why it just handed off, what happens if comms drop.</p>
                   <div className="flx-tradeoff">
                     <p className="flx-tradeoff__label">Tradeoff</p>
                     <p className="flx-tradeoff__body">Added interface to explain decisions the system could have hidden.</p>
@@ -484,13 +511,13 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                       <div className="flx-video-frame">
                         <FlowVideo src={flow2Video} poster={flow2Poster} />
                       </div>
-                      <figcaption className="flx-fig-caption"><b>Lead handoff</b> — pressure holds through the rotation</figcaption>
+                      <figcaption className="flx-fig-caption"><b>Lead handoff</b>: pressure holds through the rotation</figcaption>
                     </figure>
                     <figure className="flx-receipt flx-w440">
                       <div className="flx-video-frame">
                         <FlowVideo src={flow3Video} poster={flow3Poster} />
                       </div>
-                      <figcaption className="flx-fig-caption"><b>Comms-loss</b> — the plant stays up, shown plainly</figcaption>
+                      <figcaption className="flx-fig-caption"><b>Comms-loss</b>: the plant stays up, shown plainly</figcaption>
                     </figure>
                   </div>
                 </div>
@@ -508,10 +535,10 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                   <h3 className="flx-decision__statement">Made remote control impossible to fire accidentally.</h3>
                 </div>
                 <div className="flx-decision__grid flx-ind">
-                  <p className="flx-decision__rationale">The platform could start and stop real spinning machines from a browser — power that useful is also dangerous, so it had to be un-fireable by accident or the wrong person.</p>
+                  <p className="flx-decision__rationale">The platform could start and stop real spinning machines from a browser. Power that useful is also dangerous, so it had to be un-fireable by accident or the wrong person.</p>
                   <div className="flx-tradeoff">
                     <p className="flx-tradeoff__label">Tradeoff</p>
-                    <p className="flx-tradeoff__body">More friction on every remote action — enable, confirm, audit.</p>
+                    <p className="flx-tradeoff__body">More friction on every remote action: enable, confirm, audit.</p>
                   </div>
                 </div>
                 <div className="flx-ba flx-ind">
@@ -535,7 +562,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     <div className="flx-exhibit-shadow">
                       <FitExhibit exhibit={FLEET_EXHIBITS.audit} />
                     </div>
-                    <figcaption className="flx-fig-caption"><b>Audit view</b> — who did what, to which machine, when</figcaption>
+                    <figcaption className="flx-fig-caption"><b>Audit view</b>: who did what, to which machine, when</figcaption>
                   </figure>
                 </div>
                 <div className="flx-delta">
@@ -548,29 +575,23 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
 
             {/* 4 — Design system + what shipped */}
             <section className="cs-section flx-section" id="system">
-              <p className="flx-eyebrow flx-eyebrow--dim">Design system + what shipped</p>
+              <p className="flx-eyebrow">Design system + what shipped</p>
               <h2 className="flx-h2 flx-h2--wide">One visual language where color only ever means something.</h2>
               <p className="flx-intro flx-system-lead">
-                A quiet steel base carries structure; a single Signal channel carries coordination; a safety channel carries alarm. Three chromatic channels that never overlap — so a machine can read "running" and "lead" at once without the colors fighting.
+                A quiet steel base carries structure; a single Signal channel carries coordination; a safety channel carries alarm. Three chromatic channels that never overlap, so a machine can read "running" and "lead" at once without the colors fighting.
               </p>
 
               <div className="flx-dsboard flx-exhibit-shadow">
                 <FitExhibit exhibit={FLEET_EXHIBITS.dsBoard} />
               </div>
-              <p className="flx-mono-caption"><span className="flx-mono-caption__dot" />The three-channel color system — the same tokens repaint the whole product light or dark.</p>
+              <p className="flx-mono-caption"><span className="flx-mono-caption__dot" />The three-channel color system: the same tokens repaint the whole product light or dark.</p>
 
               <div className="flx-ds-receipts">
-                <figure className="flx-receipt flx-w480">
+                <figure className="flx-receipt flx-ds-energy">
                   <div className="flx-exhibit-shadow">
                     <FitExhibit exhibit={FLEET_EXHIBITS.energy} />
                   </div>
-                  <figcaption className="flx-fig-caption"><b>Energy by state</b> — where the plant's largest electrical load goes</figcaption>
-                </figure>
-                <figure className="flx-receipt flx-w480">
-                  <div className="flx-exhibit-shadow">
-                    <FitExhibit exhibit={FLEET_EXHIBITS.diagramExplainer} />
-                  </div>
-                  <figcaption className="flx-fig-caption"><b>Sequencing explainer</b> — the mental model behind lead / lag</figcaption>
+                  <figcaption className="flx-fig-caption"><b>Energy by state</b>: where the plant's largest electrical load goes</figcaption>
                 </figure>
               </div>
 
@@ -578,25 +599,25 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
               <div className="flx-ship-grid">
                 <div className="flx-ship-card">
                   <p className="flx-ship-card__label">What shipped</p>
-                  <p className="flx-ship-card__body">The fleet layer went live and rolled out past the pilot — across ~40 facilities, ~150 assets, ~200 users.</p>
+                  <p className="flx-ship-card__body">The fleet layer went live and rolled out past the pilot, across ~40 facilities, ~150 assets, ~200 users.</p>
                 </div>
                 <div className="flx-ship-card">
                   <p className="flx-ship-card__label flx-ship-card__label--accent">What's next</p>
-                  <p className="flx-ship-card__body">Predictive-maintenance surfacing and cross-plant benchmarking — extending the same legibility to what hasn't happened yet.</p>
+                  <p className="flx-ship-card__body">Predictive-maintenance surfacing and cross-plant benchmarking, extending the same legibility to what hasn't happened yet.</p>
                 </div>
               </div>
               <div className="flx-validation">
                 <span className="flx-validation__chip">Pilot test · field data</span>
-                <p className="flx-validation__body">Validated on the pilot line — coordinated-mode adoption, energy, and downtime were measured across four machines before the rollout.</p>
+                <p className="flx-validation__body">Validated on the pilot line: coordinated-mode adoption, energy, and downtime were measured across four machines before the rollout.</p>
               </div>
             </section>
 
             {/* 5 — Closing */}
             <section className="cs-section flx-section" id="closing">
-              <p className="flx-eyebrow flx-eyebrow--dim flx-closing-eyebrow">What I learned</p>
+              <p className="flx-eyebrow flx-closing-eyebrow">What I learned</p>
               <div className="flx-closing">
                 <h2 className="flx-h2 flx-closing__h2">What building trust into automation taught me.</h2>
-                <p className="flx-pullquote">The hardest part of this wasn't the dashboard — it was making an automated system legible enough that the person accountable for it would trust it and leave it on. That's the design problem behind every product where a human has to supervise automation, and it's the one I'm built to solve.</p>
+                <p className="flx-pullquote">The hardest part of this wasn't the dashboard: it was making an automated system legible enough that the person accountable for it would trust it and leave it on. That's the design problem behind every product where a human has to supervise automation, and it's the one I'm built to solve.</p>
               </div>
             </section>
 
@@ -609,7 +630,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                     I&rsquo;d love to walk you<br />through my thinking.
                   </h2>
                   <p className="cs-invite__body">
-                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                    Whether it&rsquo;s about this project, my process, or a role on your team, I&rsquo;m always up for a good conversation about design.
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
@@ -633,13 +654,13 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {getViewNext('fleet').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                {getViewNext('fleet').slice(0, isMobile ? 1 : 2).map(({ id, video, title, compact }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
                       <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{description}</p>
+                    <p className="cs-viewnext-card__desc">{compact}</p>
                   </div>
                 ))}
               </div>

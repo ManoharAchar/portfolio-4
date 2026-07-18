@@ -190,9 +190,9 @@ export const EXHIBITS = {
     `,
   },
   beforeAfter: {
-    naturalWidth: 1728,
-    naturalHeight: 600,
-    maxScale: 0.66,
+    naturalWidth: 1158,
+    naturalHeight: 415,
+    maxScale: 1,
     html: `        <div style="position:absolute;top:0;left:0;transform:scale(.66);transform-origin:top left;display:flex;gap:40px;align-items:flex-start">
 
           <!-- BEFORE -->
@@ -385,9 +385,9 @@ export const EXHIBITS = {
       `,
   },
   filterTrio: {
-    naturalWidth: 1658,
-    naturalHeight: 340,
-    maxScale: 0.72,
+    naturalWidth: 1214,
+    naturalHeight: 262,
+    maxScale: 1,
     html: `        <div style="position:absolute;top:0;left:0;transform:scale(.72);transform-origin:top left;display:flex;align-items:center;gap:0">
 
           <!-- P1 -->
@@ -420,9 +420,9 @@ export const EXHIBITS = {
                   </div>
                 </div>
                 <div style="height:58px;flex:none;display:flex;align-items:center;gap:8px;padding:0 12px;background:#141922;border-top:1px solid #2A313D">
-                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
-                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
-                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
+                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
                 </div>
               </div>
             </div>
@@ -461,9 +461,9 @@ export const EXHIBITS = {
                   <p style="margin:0;font-family:'IBM Plex Sans';font-size:10.5px;line-height:1.45;color:#6D7887">Arrows step · extra tap on <span style="color:#57B0EC;font-weight:600">OK</span> commits.</p>
                 </div>
                 <div style="height:58px;flex:none;display:flex;align-items:center;gap:8px;padding:0 12px;background:#141922;border-top:1px solid #2A313D">
-                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
-                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
-                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
+                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
                 </div>
               </div>
             </div>
@@ -496,9 +496,9 @@ export const EXHIBITS = {
                   </div>
                 </div>
                 <div style="height:58px;flex:none;display:flex;align-items:center;gap:8px;padding:0 12px;background:#141922;border-top:1px solid #2A313D">
-                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
-                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
-                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#F3F6FA;border:1px solid #3A4352;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">CANCEL</span>
+                  <span style="height:48px;flex:1;background:transparent;color:#57B0EC;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">RESET</span>
+                  <span style="height:48px;flex:1.4;background:#2E9BE6;color:#08121b;border:none;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans';font-weight:600;font-size:13px;letter-spacing:.04em">APPLY</span>
                 </div>
               </div>
             </div>
@@ -508,9 +508,9 @@ export const EXHIBITS = {
       `,
   },
   threeSize: {
-    naturalWidth: 2772,
-    naturalHeight: 880,
-    maxScale: 0.44,
+    naturalWidth: 1239,
+    naturalHeight: 405,
+    maxScale: 1,
     html: `        <div style="position:absolute;top:0;left:0;transform:scale(.44);transform-origin:top left;display:flex;align-items:flex-end;gap:48px">
 
           <!-- 4.3in -->
@@ -636,9 +636,9 @@ export const EXHIBITS = {
       `,
   },
   alarmPair: {
-    naturalWidth: 1728,
-    naturalHeight: 600,
-    maxScale: 0.66,
+    naturalWidth: 1158,
+    naturalHeight: 415,
+    maxScale: 1,
     html: `        <div style="position:absolute;top:0;left:0;transform:scale(.66);transform-origin:top left;display:flex;gap:40px;align-items:flex-start">
 
           <!-- RUNNING -->

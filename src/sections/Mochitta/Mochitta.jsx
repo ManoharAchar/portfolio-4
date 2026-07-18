@@ -51,11 +51,12 @@ const MOBILE_SITE_LINKS = [
   { label: 'Guest Archive', page: 'archive' },
 ]
 
-const TAG_PILLS = ['CAPSTONE', 'PROTOTYPE', '2 USABILITY ROUNDS']
+const TAG_PILLS = ['CONSUMER FINTECH', 'TESTED', '2 USABILITY ROUNDS']
 
 const META_CHIPS = [
-  { label: 'MY ROLE', value: 'Product Designer (UX Research + Interaction Design)', full: 'always' },
-  { label: 'TEAM', value: '2 Product designers, 1 Dev' },
+  { label: 'MY ROLE', value: 'Product Designer, Research + Interaction', full: 'always' },
+  { label: 'TYPE', value: 'Graduate Capstone' },
+  { label: 'TEAM', value: '2 Designers + 1 Developer' },
   { label: 'TIMELINE', value: '6 Months' },
   { label: 'PLATFORM', value: 'iOS', full: 'mobile' },
 ]
@@ -704,7 +705,7 @@ export default function Mochitta({ onNavigate }) {
                     I&rsquo;d love to walk you<br />through my thinking.
                   </h2>
                   <p className="cs-invite__body">
-                    Whether it&rsquo;s about this project, my process, or a role on your team — I&rsquo;m always up for a good conversation about design.
+                    Whether it&rsquo;s about this project, my process, or a role on your team, I&rsquo;m always up for a good conversation about design.
                   </p>
                   <div className="cs-invite__actions">
                     <button className="cs-invite__email" type="button" onClick={copyEmail}>
@@ -728,13 +729,13 @@ export default function Mochitta({ onNavigate }) {
             <section className="cs-section">
               <p className="cs-label">VIEW NEXT</p>
               <div className="cs-viewnext-grid">
-                {getViewNext('mochitta').slice(0, isMobile ? 1 : 2).map(({ id, video, title, description }) => (
+                {getViewNext('mochitta').slice(0, isMobile ? 1 : 2).map(({ id, video, title, compact }) => (
                   <div key={id} className="cs-viewnext-card" onClick={() => onNavigate(getProjectPage(id))} data-cursor="view-project">
                     <div className="cs-viewnext-card__img">
                       <video src={video} loop muted playsInline preload="metadata" ref={playInView} aria-label={`${title} preview`} />
                     </div>
                     <h3 className="cs-viewnext-card__title">{title}</h3>
-                    <p className="cs-viewnext-card__desc">{description}</p>
+                    <p className="cs-viewnext-card__desc">{compact}</p>
                   </div>
                 ))}
               </div>

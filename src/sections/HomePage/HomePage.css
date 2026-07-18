@@ -9,27 +9,17 @@
   background: #2a2a2a;
 }
 
-/* Two independent flex columns eliminate CSS Grid row-height syncing.
-   A tall right-column card never pushes down the next left-column card
-   because each column stacks its own cards independently. */
+/* Two-column grid, cards placed row by row in document order
+   (01|02 / 03|04 / 05|06). align-items: stretch keeps the two
+   cards in each row the same height; the chip bottom-pins inside
+   each card so they stay aligned. */
 .projects-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 48px;
-  align-items: flex-start;
+  align-items: stretch;
   max-width: 1408px;
   margin: 0 auto;
-}
-
-.projects-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-}
-
-/* Stagger: drop the right column down to create the visual offset */
-.projects-col--right {
-  padding-top: 48px;
 }
 
 /* ─── Breakpoint: sidebar collapses (< 1024px) ────────────── */
@@ -50,24 +40,9 @@
     padding: 92px 24px 48px;
   }
 
-  /* display: contents removes the col wrapper from layout so each
-     project-card-slot becomes a direct flex child of .projects-grid.
-     order: N then restores the correct 01→02→03→04 reading sequence. */
-  .projects-col {
-    display: contents;
-  }
-
+  /* One column; source order already reads 01→06. */
   .projects-grid {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 24px;
   }
-
-  .project-card-slot {
-    width: 100%;
-  }
-
-  .project-card-slot[data-sort="01"] { order: 1; }
-  .project-card-slot[data-sort="02"] { order: 2; }
-  .project-card-slot[data-sort="03"] { order: 3; }
-  .project-card-slot[data-sort="04"] { order: 4; }
 }
