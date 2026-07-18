@@ -396,7 +396,11 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
               <div className="flx-tour-row">
                 {TOUR_CROPS.map(({ key, lead, rest }, i) => (
                   <div key={key} className="flx-tour-step">
-                    {i > 0 && <span className="flx-tour-arrow" aria-hidden="true">→</span>}
+                    {i > 0 && (
+                      <svg className="flx-tour-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M4 12H20M14 6l6 6l-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
                     <figure className="flx-crop">
                       <div className="flx-exhibit-shadow">
                         <FitExhibit exhibit={FLEET_EXHIBITS[key]} />
@@ -413,7 +417,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                   <p className="flx-motion__title">Fleet → asset, the altitude change.</p>
                   <p className="flx-motion__body">One click drops from the whole plant into a single machine: same pressure, same lead role, now with per-machine depth. The overview and the detail are one continuous move.</p>
                 </div>
-                <div className="flx-video-frame flx-video-frame--r16 flx-w480">
+                <div className="flx-video-frame flx-motion__media">
                   <FlowVideo src={flow1Video} poster={flow1Poster} />
                 </div>
               </div>

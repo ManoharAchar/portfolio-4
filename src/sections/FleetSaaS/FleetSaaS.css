@@ -94,7 +94,7 @@
 }
 
 .flx-tour-intro {
-  margin-bottom: 34px;
+  margin-bottom: 28px;
 }
 
 .flx-system-lead {
@@ -460,18 +460,17 @@
   min-width: 0;
 }
 
+/* Thin line-arrow (line-md:arrow-up rotated to point right), #cbc8bf */
 .flx-tour-arrow {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1;
-  color: var(--accent);
+  width: 24px;
+  height: 24px;
+  color: #cbc8bf;
   flex: none;
-  padding-bottom: 26px; /* optically centers on the image, not the caption */
+  margin-bottom: 26px; /* optically centers on the image, not the caption */
 }
 
 .flx-crop {
-  width: 300px;
+  width: 307px;
   max-width: 100%;
   min-width: 0;
   display: flex;
@@ -479,20 +478,36 @@
   gap: 10px;
 }
 
+/* Figma tour captions read fully in cream medium, not a bold-lead split */
+.flx-crop .flx-fig-caption {
+  color: #faf8f1;
+  font-weight: 500;
+}
+
 .flx-motion {
-  margin: 36px 0 0;
+  margin: 28px 0 0;
   background: #33322f;
   border-radius: 18px;
   padding: 28px 32px;
   display: flex;
   gap: 32px;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .flx-motion__copy {
   flex: 1;
   min-width: 220px;
+  max-width: 289px;
+}
+
+/* In-motion media matches the Figma frame: 655 wide, 10px radius */
+.flx-motion__media {
+  width: 655px;
+  max-width: 100%;
+  border-radius: 10px;
+  flex: none;
 }
 
 .flx-motion__eyebrow {
@@ -523,7 +538,7 @@
 
 /* Control-Room Dark moment */
 .flx-dark {
-  margin: 36px 0 0;
+  margin: 28px 0 0;
   background: #141414;
   border-radius: 24px;
   padding: 40px;
@@ -1023,7 +1038,7 @@
 
   .flx-tour-arrow {
     transform: rotate(90deg);
-    padding-bottom: 0;
+    margin-bottom: 0;
     align-self: center;
   }
 
