@@ -555,7 +555,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
                   <span className="flx-ba__arrow" aria-hidden="true">→</span>
                   <figure className="flx-ba__fig flx-w602">
                     <figcaption className="flx-ba__caption flx-ba__caption--accent">After · enable → confirm → audit</figcaption>
-                    <div className="flx-video-frame">
+                    <div className="flx-video-frame flx-video-frame--r10">
                       <FlowVideo src={flow4Video} poster={flow4Poster} />
                     </div>
                   </figure>

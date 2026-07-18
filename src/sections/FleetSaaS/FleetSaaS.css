@@ -146,6 +146,12 @@
   filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
 }
 
+/* Figma clips every FitExhibit to a 10px radius (the dark stage is the one
+   exception — it stays sharp, and isn't wrapped in flx-exhibit-shadow). */
+.flx-exhibit-shadow .hmi-exhibit {
+  border-radius: 10px;
+}
+
 .flx-panel {
   background: #3c3c3a;
   border-radius: 20px;
@@ -162,6 +168,10 @@
 
 .flx-video-frame--r16 {
   border-radius: 16px;
+}
+
+.flx-video-frame--r10 {
+  border-radius: 10px;
 }
 
 .flx-flow-video {
@@ -199,7 +209,7 @@
 }
 
 .flx-hero-frame {
-  border-radius: 20px;
+  border-radius: 0; /* Figma hero frame is square (radius 0), like the dark stage */
   overflow: hidden;
   background: #262626; /* matches the Figma hero frame fill */
 }
