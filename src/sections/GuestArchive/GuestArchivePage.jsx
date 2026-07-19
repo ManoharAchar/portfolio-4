@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import PassCard from '../../components/PassCard/PassCard'
+import { usePassEditor } from '../../lib/passEditor'
 import TiltCard from '../../components/TiltCard/TiltCard'
 import Footer from '../../components/Footer/Footer'
 import { getSessionMetrics, computeArchetype } from '../../lib/session'
@@ -93,6 +94,7 @@ function formatRelativeTime(isoString) {
 }
 
 export default function GuestArchivePage({ activePage = 'archive', onNavigate, guest, showPassCard }) {
+  const { openPassEditor } = usePassEditor()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filter, setFilter] = useState('all')
   const [liveMetrics, setLiveMetrics] = useState(() => getSessionMetrics())
@@ -363,11 +365,17 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
           <section className="ga-you-panel">
             <div className="ga-you-panel__label">{passNumber} · FIRST VISIT · YOURS TO KEEP</div>
             <div className="ga-you-panel__body">
-              <div className="ga-you-panel__card-wrap">
+              <div
+                className="ga-you-panel__card-wrap"
+                data-cursor={guest ? 'customize-pass' : undefined}
+                role={guest ? 'button' : undefined}
+                aria-label={guest ? 'Customize your guest pass' : undefined}
+                onClick={guest ? openPassEditor : undefined}
+              >
                 <div className="ga-you-panel__card-scale">
                   {guest && (
                     <TiltCard>
-                      <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} />
+                      <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} accent={guest.accent} />
                     </TiltCard>
                   )}
                 </div>
@@ -580,7 +588,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                       const isYou = p.id === guest?.passId;
                       return (
                         <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
-                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} />
+                          <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} accent={p.pass_color} />
                         </div>
                       );
                     })}
@@ -610,7 +618,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                         const isYou = p.id === guest?.passId;
                         return (
                           <div key={p.id} className={`ga-carousel__item${isYou ? ' ga-carousel__item--you' : ''}`}>
-                            <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} />
+                            <PassCard intent={p.intent} name={p.animal_name} date={formatPassDate(p.created_at)} passId={p.id} accent={p.pass_color} />
                           </div>
                         );
                       })}

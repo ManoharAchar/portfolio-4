@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import NavCard from '../../components/NavCard/NavCard'
 import PassCard from '../../components/PassCard/PassCard'
+import { usePassEditor } from '../../lib/passEditor'
 import TiltCard from '../../components/TiltCard/TiltCard'
 import './Sidebar.css'
 
@@ -114,6 +115,7 @@ function useSidebarPush(sidebarRef) {
 const PAGE_ORDER = ['home', 'about', 'cave', 'archive']
 
 export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true, onClose }) {
+  const { openPassEditor, thumbPop } = usePassEditor()
   const sidebarRef = useRef(null)
   useSidebarPush(sidebarRef)
 
@@ -174,10 +176,16 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
       </div>
 
       <div className="sidebar__bottom">
-        <div className="sidebar__pass-thumb">
+        <div
+          className={`sidebar__pass-thumb${thumbPop ? ' sidebar__pass-thumb--pop' : ''}`}
+          data-cursor={showPassCard && guest ? 'customize-pass' : undefined}
+          role={showPassCard && guest ? 'button' : undefined}
+          aria-label={showPassCard && guest ? 'Customize your guest pass' : undefined}
+          onClick={showPassCard && guest ? openPassEditor : undefined}
+        >
           {showPassCard && guest && (
             <TiltCard>
-              <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} />
+              <PassCard intent={guest.intent} name={guest.name} date={guest.date} passId={guest.passId} accent={guest.accent} />
             </TiltCard>
           )}
         </div>

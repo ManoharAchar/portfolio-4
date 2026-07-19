@@ -195,6 +195,11 @@
   flex-shrink: 0;
 }
 
+/* Overshoot pop after saving a customized pass. */
+.sidebar__pass-thumb--pop {
+  animation: pfThumbPop 0.6s var(--ease-spring);
+}
+
 .sidebar__pass-thumb .tilt-card__sensor {
   position: absolute;
   top: 0;

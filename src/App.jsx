@@ -30,7 +30,9 @@ const IndustrialHMI     = lazy(PAGE_LOADERS['industrial-hmi'])
 const GuestArchivePage  = lazy(PAGE_LOADERS.archive)
 const CavePage          = lazy(PAGE_LOADERS.cave)
 import FlyingCard from './components/FlyingCard/FlyingCard'
-import { resolveVisitor, createPass, passToGuest } from './lib/visitor'
+import PassEditorModal from './components/PassEditorModal/PassEditorModal'
+import { PassEditorContext } from './lib/passEditor'
+import { resolveVisitor, createPass, passToGuest, updatePass } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
 import { capture } from './lib/analytics'
@@ -108,6 +110,8 @@ function App() {
   const [skipSplash] = useState(shouldBypassSplash)
   const [page, setPage] = useState(() => (isPreviewMode() || shouldBypassSplash()) ? 'welcome' : 'splash')
   const [guest, setGuest] = useState(null)
+  const [editorOpen, setEditorOpen] = useState(false)
+  const [thumbPop, setThumbPop] = useState(false)
   const [welcomeExiting, setWelcomeExiting] = useState(false)
   const [flyingCard, setFlyingCard] = useState(null)
   const [homeVisible, setHomeVisible] = useState(false)
@@ -184,7 +188,8 @@ function App() {
     resolveVisitor().then(({ pass, isNew }) => {
       if (!isNew && pass) {
         const guestData = passToGuest(pass)
-        const accent = ACCENT_COLORS[pass.intent]
+        // Accent follows the saved pass color (decoupled from intent).
+        const accent = guestData.accent ?? ACCENT_COLORS[pass.intent]
         const requested = pathToPage(window.location.pathname)
         const target = PAGE_TITLES[requested] ? requested : 'home'
         // Deep link to a lazy page: warm its chunk now, while the splash is
@@ -305,6 +310,31 @@ function App() {
     capture('$pageview')
   }
 
+  const openPassEditor = () => setEditorOpen(true)
+
+  // Commit a customized pass: update site-wide accent + guest, persist to
+  // localStorage, best-effort write-through to Supabase, and pop the thumb.
+  const savePass = (draft) => {
+    const changed = !guest || guest.accent !== draft.accent
+    const nextGuest = { ...(guest || {}), name: draft.name, intent: draft.intent, accent: draft.accent }
+    document.documentElement.style.setProperty('--accent', draft.accent)
+    try {
+      localStorage.setItem('pf3_guest', JSON.stringify({
+        name: nextGuest.name, intent: nextGuest.intent, accent: nextGuest.accent,
+      }))
+    } catch { /* private mode */ }
+    setGuest(nextGuest)
+    setEditorOpen(false)
+    if (!previewMode) {
+      updatePass({ name: draft.name, intent: draft.intent, pass_color: draft.accent })
+    }
+    setThumbPop(true)
+    setTimeout(() => setThumbPop(false), 800)
+    if (changed) {
+      // Accent burst (Feature 5) fires ~140ms after commit — wired there.
+    }
+  }
+
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
 
   // position+zIndex keep pages above the starfield canvas (z-index:0) at all
@@ -321,7 +351,7 @@ function App() {
       }
 
   return (
-    <>
+    <PassEditorContext.Provider value={{ openPassEditor, thumbPop }}>
       <CustomCursor />
 
       {/* Shared starfield — persists across splash → welcome, and stays alive
@@ -385,7 +415,15 @@ function App() {
           onDone={() => setFlyingCard(null)}
         />
       )}
-    </>
+
+      {editorOpen && (
+        <PassEditorModal
+          guest={guest}
+          onClose={() => setEditorOpen(false)}
+          onSave={savePass}
+        />
+      )}
+    </PassEditorContext.Provider>
   )
 }
 

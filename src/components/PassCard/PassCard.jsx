@@ -41,15 +41,18 @@ export function formatDate() {
   }).toUpperCase()
 }
 
-const PassCard = forwardRef(function PassCard({ intent, name, date, passId }, ref) {
+const PassCard = forwardRef(function PassCard({ intent, name, date, passId, accent }, ref) {
   const config = PASS_CONFIG[intent] ?? PASS_CONFIG.designer
+  // Pass color is decoupled from intent: an explicit accent wins, else the
+  // intent's default bg. Logo / layers / lines still follow the intent.
+  const bg = accent || config.bg
   const displayName = name && name.length > 16 ? name.slice(0, 16) + '…' : (name || '')
   const passDate = date || formatDate()
   const passNumber = passId ? `NO. ${String(passId).padStart(4, '0')}` : 'NO. ----'
 
   return (
     <div className="pass-card" ref={ref}>
-      <div className="pass-card__inner" style={{ background: config.bg }}>
+      <div className="pass-card__inner" style={{ background: bg }}>
         <img className="pass-card__bg pass-card__bg--1" src={config.bgLayer} alt="" aria-hidden="true" />
         <img className="pass-card__bg pass-card__bg--2" src={config.bgLayer} alt="" aria-hidden="true" />
         <img className="pass-card__lines" src={config.lines} alt="" aria-hidden="true" />

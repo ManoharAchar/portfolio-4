@@ -38,6 +38,9 @@ export default function CustomCursor() {
       } else if (el.closest('[data-cursor="passcode"]')) {
         setCursorState('passcode')
         setTipText('')
+      } else if (el.closest('[data-cursor="customize-pass"]')) {
+        setCursorState('customize-pass')
+        setTipText('')
       } else if (el.closest('[data-cursor="tip"]')) {
         const tipEl = el.closest('[data-cursor="tip"]')
         setCursorState('tip')
@@ -107,13 +110,15 @@ export default function CustomCursor() {
         <div className="cursor-dot" />
       )}
 
-      {(cursorState === 'view-project' || cursorState === 'coming-soon' || cursorState === 'passcode') && (
+      {(cursorState === 'view-project' || cursorState === 'coming-soon' || cursorState === 'passcode' || cursorState === 'customize-pass') && (
         <div className="cursor-pill">
           {cursorState === 'view-project'
             ? 'VIEW PROJECT'
             : cursorState === 'passcode'
               ? 'ENTER PASSCODE'
-              : 'COMING SOON'}
+              : cursorState === 'customize-pass'
+                ? 'CUSTOMIZE PASS'
+                : 'COMING SOON'}
         </div>
       )}
 

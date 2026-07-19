@@ -68,6 +68,20 @@
   100% { transform: scale(1) rotate(0); box-shadow: 0 0 0 0 transparent; }
 }
 
+/* Pass-editor stamp press, relative to the preview's base --pf-scale. */
+@keyframes pfStamp {
+  0% { transform: scale(var(--pf-scale)) rotate(0); }
+  35% { transform: scale(calc(var(--pf-scale) * 0.95)) rotate(-1deg); }
+  70% { transform: scale(calc(var(--pf-scale) * 1.03)) rotate(0.5deg); }
+  100% { transform: scale(var(--pf-scale)) rotate(0); }
+}
+
+/* Sidebar pass-thumb overshoot pop after a save. */
+@keyframes pfThumbPop {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+}
+
 html, body, #root {
   min-height: 100vh;
   overscroll-behavior: none;

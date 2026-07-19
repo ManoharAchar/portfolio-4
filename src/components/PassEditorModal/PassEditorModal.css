@@ -1,0 +1,206 @@
+/* Pass editor — content inside the shared .pf-modal shell. */
+
+.pf-editor {
+  width: 620px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pf-editor__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pf-editor__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+}
+
+.pf-editor__close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #cbc8bf;
+  transition: color 0.2s ease;
+}
+
+.pf-editor__close:hover {
+  color: #faf8f1;
+}
+
+/* Live preview: the PassCard scaled from its top-left corner. */
+.pf-editor__preview {
+  width: 472px;
+  height: 222px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.pf-editor__preview-scale {
+  --pf-scale: 0.82;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(var(--pf-scale));
+  transform-origin: top left;
+}
+
+.pf-editor__preview-scale--stamp {
+  animation: pfStamp 0.6s var(--ease-out-soft);
+}
+
+.pf-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pf-editor__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+}
+
+.pf-editor__input {
+  background: #2a2a2a;
+  border: 1px solid rgba(219, 216, 206, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #faf8f1;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.pf-editor__input:focus {
+  border-color: var(--accent);
+}
+
+.pf-editor__intents {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pf-editor__intent {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: #2a2a2a;
+  color: #dbd8ce;
+  border: 1px solid rgba(219, 216, 206, 0.15);
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+
+.pf-editor__intent:hover {
+  color: #faf8f1;
+}
+
+.pf-editor__intent:active {
+  transform: scale(0.97);
+}
+
+.pf-editor__intent--on {
+  color: #faf8f1;
+}
+
+.pf-editor__swatches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pf-editor__swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.pf-editor__swatch:hover {
+  transform: scale(1.12);
+}
+
+.pf-editor__swatch:active {
+  transform: scale(0.88);
+}
+
+.pf-editor__swatch--on {
+  box-shadow: 0 0 0 2px #3c3c3a, 0 0 0 4px #faf8f1;
+}
+
+.pf-editor__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  margin-top: 4px;
+}
+
+.pf-editor__cancel {
+  background: none;
+  border: none;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #cbc8bf;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.pf-editor__cancel:hover {
+  color: #faf8f1;
+}
+
+.pf-editor__save {
+  background: #faf8f1;
+  color: #120b06;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.pf-editor__save:hover {
+  background: #e9e6dc;
+}
+
+.pf-editor__save:active {
+  transform: scale(0.96);
+}
+
+/* ── Mobile: bottom sheet, preview scaled to 342px width ──── */
+@media (max-width: 767px) {
+  .pf-editor {
+    width: 100%;
+  }
+
+  .pf-editor__preview {
+    width: 342px;
+    height: 160px;
+  }
+
+  .pf-editor__preview-scale {
+    --pf-scale: 0.594;
+  }
+
+  .pf-editor__swatch {
+    width: 36px;
+    height: 36px;
+  }
+}

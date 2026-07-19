@@ -81,5 +81,35 @@ export function passToGuest(pass) {
     name:   pass.animal_name,
     date:   formatStoredDate(pass.created_at),
     passId: pass.id,
+    // Pass color is decoupled from intent; the saved pass_color wins.
+    accent: pass.pass_color ?? PASS_COLORS[pass.intent] ?? '#798c6d',
+  }
+}
+
+/**
+ * Best-effort update of the current visitor's pass appearance (name, intent,
+ * color) when they customize it in the pass editor. Uses the token already in
+ * localStorage. If RLS has no UPDATE policy for a token match this fails
+ * gracefully — the local + localStorage experience still applies.
+ */
+export async function updatePass({ name, intent, pass_color }) {
+  const token = localStorage.getItem(TOKEN_KEY)
+  if (!token) return null
+  try {
+    const { supabase } = await getDb()
+    const { data, error } = await supabase
+      .from('passes')
+      .update({ animal_name: name, intent, pass_color })
+      .eq('token', token)
+      .select()
+      .maybeSingle()
+    if (error) {
+      console.warn('[pass] appearance update failed:', error.message)
+      return null
+    }
+    return data
+  } catch (e) {
+    console.warn('[pass] appearance update error:', e)
+    return null
   }
 }
