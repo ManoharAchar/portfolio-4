@@ -32,6 +32,12 @@
   50% { opacity: 0.45; transform: scale(0.75); }
 }
 
+/* Home grid reorder (filter chips) animates each named card into place. */
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--ease-out-soft);
+}
+
 html, body, #root {
   min-height: 100vh;
   overscroll-behavior: none;

@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import { tryPlay, cancelPlay } from '../../lib/playInView'
 import './ProjectCard.css'
 
-export default function ProjectCard({ domain, maturity, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, metadata, description, onClick }) {
+export default function ProjectCard({ domain, maturity, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, metadata, description, onClick, dimmed = false, viewName }) {
   const cardRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -83,8 +83,9 @@ export default function ProjectCard({ domain, maturity, imageColor, image, video
   return (
     <div
       ref={cardRef}
-      className={`project-card${onClick ? ' project-card--clickable' : ''}`}
+      className={`project-card${onClick ? ' project-card--clickable' : ''}${dimmed ? ' project-card--dimmed' : ''}`}
       data-cursor={onClick ? 'view-project' : 'coming-soon'}
+      style={viewName ? { viewTransitionName: viewName } : undefined}
       onClick={onClick}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}

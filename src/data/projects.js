@@ -21,6 +21,7 @@ import posterFleet from '../assets/thumbnails/poster-fleet.jpg'
 export const PROJECTS = [
   {
     id: 'fleet',
+    tags: ['saas', 'web'],
     number: '01',
     domain: 'Enterprise SaaS',
     maturity: 'Shipped',
@@ -39,6 +40,7 @@ export const PROJECTS = [
   },
   {
     id: 'cooperant',
+    tags: ['web', 'zero'],
     number: '02',
     domain: 'Learning Platform',
     maturity: 'Shipped',
@@ -57,6 +59,7 @@ export const PROJECTS = [
   },
   {
     id: 'industrial-hmi',
+    tags: ['hmi'],
     number: '03',
     domain: 'Industrial HMI',
     maturity: 'In Production',
@@ -75,6 +78,7 @@ export const PROJECTS = [
   },
   {
     id: 'mochitta',
+    tags: ['mobile', 'fintech', 'zero'],
     number: '04',
     domain: 'Consumer Fintech',
     maturity: 'Tested',
@@ -93,6 +97,7 @@ export const PROJECTS = [
   },
   {
     id: 'black-baza',
+    tags: ['web', 'zero'],
     number: '05',
     domain: 'Commerce + Traceability',
     maturity: 'In Production',
@@ -111,6 +116,7 @@ export const PROJECTS = [
   },
   {
     id: 'senior-mode',
+    tags: ['mobile', 'access'],
     number: '06',
     domain: 'Accessibility',
     maturity: 'Tested',

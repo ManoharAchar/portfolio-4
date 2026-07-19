@@ -22,6 +22,43 @@
   margin: 0 auto;
 }
 
+/* ── Filter chips (between banner and grid) ───────────────── */
+.home-chips {
+  max-width: 1408px;
+  margin: 0 auto 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.home-chip {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #3c3c3a;
+  color: #cbc8bf;
+  border: 1px solid transparent;
+  cursor: inherit;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.15s ease;
+}
+
+.home-chip:hover {
+  border-color: #cbc8bf;
+}
+
+.home-chip:active {
+  transform: scale(0.95);
+}
+
+.home-chip--active {
+  background: #555553;
+  color: #faf8f1;
+}
+
 /* ─── Breakpoint: sidebar collapses (< 1024px) ────────────── */
 @media (max-width: 1023px) {
   .home-content {
@@ -44,5 +81,24 @@
   .projects-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  /* Chips become an edge-to-edge horizontal scroller (hidden scrollbar). */
+  .home-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px;
+    margin: 0 -24px 24px;
+    padding: 0 24px;
+  }
+
+  .home-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-chip {
+    flex: none;
+    padding: 10px 14px;
   }
 }
