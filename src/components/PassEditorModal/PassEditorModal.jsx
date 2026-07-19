@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import PassCard, { INTENT_LABELS } from '../PassCard/PassCard'
+import TiltCard from '../TiltCard/TiltCard'
 import { PASS_ACCENTS } from '../../lib/passEditor'
 import './PassEditorModal.css'
 
@@ -52,13 +53,15 @@ export default function PassEditorModal({ guest, onClose, onSave }) {
         {/* Live preview — the real PassCard, driven by the draft. */}
         <div className="pf-editor__preview">
           <div className={`pf-editor__preview-scale${saving ? ' pf-editor__preview-scale--stamp' : ''}`}>
-            <PassCard
-              intent={draft.intent}
-              name={draft.name}
-              accent={draft.accent}
-              date={guest?.date}
-              passId={guest?.passId}
-            />
+            <TiltCard>
+              <PassCard
+                intent={draft.intent}
+                name={draft.name}
+                accent={draft.accent}
+                date={guest?.date}
+                passId={guest?.passId}
+              />
+            </TiltCard>
           </div>
         </div>
 
