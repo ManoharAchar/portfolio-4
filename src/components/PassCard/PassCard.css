@@ -46,19 +46,21 @@
   width: 126px;
   height: 126px;
   opacity: 0.9;
+  border-radius: 14px;
+  overflow: hidden;
+  /* The box IS the pass accent (decoupled from intent). */
+  background: var(--pass-logo-accent, transparent);
   filter: drop-shadow(0.9px 0.9px 0 rgba(255,255,255,0.25));
 }
 
-/* Recolor the illustration to the pass accent (decoupled from intent): the
-   overlay's hue/chroma + the artwork's luminance, so the box + line art
-   always track the pass color. Transparent areas blend into the pass bg. */
-.pass-card__logo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--pass-logo-accent, transparent);
-  mix-blend-mode: color;
-  pointer-events: none;
+/* The per-intent artwork is fully opaque and colored in its own intent color,
+   so we ignore its color and use only its luminance over the accent box:
+   grayscale strips the intent hue, low contrast flattens each intent to a
+   similar brightness (so the box reads the same across intents), and the
+   luminosity blend paints the accent through the artwork. */
+.pass-card__logo-img {
+  mix-blend-mode: luminosity;
+  filter: grayscale(1) contrast(0.82) brightness(1.08);
 }
 
 .pass-card__logo-img {
