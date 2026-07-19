@@ -53,14 +53,16 @@
   filter: drop-shadow(0.9px 0.9px 0 rgba(255,255,255,0.25));
 }
 
-/* The per-intent artwork is fully opaque and colored in its own intent color,
-   so we ignore its color and use only its luminance over the accent box:
-   grayscale strips the intent hue, low contrast flattens each intent to a
-   similar brightness (so the box reads the same across intents), and the
-   luminosity blend paints the accent through the artwork. */
+/* Each intent's artwork is a fully opaque square in its own intent color with
+   darker line art. To make the BOX read as the exact same accent across every
+   intent, we blow the square out to near-white (grayscale removes the intent
+   hue; high brightness clamps every intent's square to white regardless of its
+   base lightness) and multiply it over the accent box: white x accent = the
+   accent (a consistent box), while the darker line art multiplies down to a
+   deeper accent. Only the symbol changes between intents, never the box shade. */
 .pass-card__logo-img {
-  mix-blend-mode: luminosity;
-  filter: grayscale(1) contrast(0.82) brightness(1.08);
+  mix-blend-mode: multiply;
+  filter: grayscale(1) brightness(1.95) contrast(1.12);
 }
 
 .pass-card__logo-img {
