@@ -61,7 +61,11 @@
    deeper accent. Only the symbol changes between intents, never the box shade. */
 .pass-card__logo-img {
   mix-blend-mode: multiply;
-  filter: grayscale(1) brightness(1.95) contrast(1.12);
+  /* Contrast first pushes the line art away from the square, then a high
+     brightness clamps EVERY intent's square to pure white (see-work's slate is
+     the darkest and still clamps), so multiply leaves the box exactly the
+     accent while the art stays visibly darker. */
+  filter: grayscale(1) contrast(1.35) brightness(2.6);
   /* Overfill slightly so the artwork's own edge is clipped away by the
      rounded box — no sliver of the square edge can show. */
   transform: scale(1.06);
