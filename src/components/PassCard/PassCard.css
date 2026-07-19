@@ -50,7 +50,6 @@
   overflow: hidden;
   /* The box IS the pass accent (decoupled from intent). */
   background: var(--pass-logo-accent, transparent);
-  filter: drop-shadow(0.9px 0.9px 0 rgba(255,255,255,0.25));
 }
 
 /* Each intent's artwork is a fully opaque square in its own intent color with
@@ -63,6 +62,9 @@
 .pass-card__logo-img {
   mix-blend-mode: multiply;
   filter: grayscale(1) brightness(1.95) contrast(1.12);
+  /* Overfill slightly so the artwork's own edge is clipped away by the
+     rounded box — no sliver of the square edge can show. */
+  transform: scale(1.06);
 }
 
 .pass-card__logo-img {
