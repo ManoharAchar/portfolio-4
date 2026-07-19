@@ -62,7 +62,9 @@
 .cs-sidebar__toc-card {
   background: #3c3c3a;
   border-radius: 14px;
-  padding: 17px 12px;
+  /* No horizontal padding — rows span the card so they line up with the
+     heading and "← HOME" (the item's own 10px keeps the label inset). */
+  padding: 17px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
