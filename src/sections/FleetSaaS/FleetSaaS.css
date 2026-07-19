@@ -142,14 +142,16 @@
 /* The exhibits carry their own card chrome (border, radius,
    shadow) at product scale; the wrapper adds the page-level
    drop shadow the handoff shows, hugging the content shape. */
+/* Figma clips every FitExhibit to a 10px radius (the dark stage is the one
+   exception — it stays sharp, and isn't wrapped in flx-exhibit-shadow).
+   The radius + overflow live here, on the filter'd wrapper: a `filter`
+   establishes a clipping context, so the transform-scaled exhibit inside
+   actually gets clipped to the rounded corners (border-radius on the
+   scaled element alone would not clip a transformed child). */
 .flx-exhibit-shadow {
   filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.45));
-}
-
-/* Figma clips every FitExhibit to a 10px radius (the dark stage is the one
-   exception — it stays sharp, and isn't wrapped in flx-exhibit-shadow). */
-.flx-exhibit-shadow .hmi-exhibit {
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .flx-panel {
