@@ -4,7 +4,10 @@ import './PasscodeModal.css'
 // One passcode opens every protected study. Kept in an env var so it never
 // lives in the source; note it still inlines into the built bundle (Vite),
 // so this is a soft NDA deterrent, not real access control.
-const UNLOCK_CODE = (import.meta.env.VITE_UNLOCK_CODE ?? 'manohar').trim().toLowerCase()
+// The passcode is a soft, client-side gate (it ships in the bundle either way),
+// so the real code is the committed default. VITE_UNLOCK_CODE still overrides it
+// if it's ever set in the Vercel env.
+const UNLOCK_CODE = (import.meta.env.VITE_UNLOCK_CODE ?? 'a-good-fit').trim().toLowerCase()
 
 export default function PasscodeModal({ projectTitle, onClose, onSuccess }) {
   const [value, setValue] = useState('')
