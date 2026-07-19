@@ -139,6 +139,78 @@
   color: #faf8f1;
 }
 
+/* ── Workflow line (replaces the education line) ──────────── */
+.sidebar__workflow {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.sidebar__wf-line {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.sidebar__wf-word {
+  color: #faf8f1;
+  animation: pfWord 5.4s ease-in-out infinite;
+}
+
+.sidebar__wf-arrow {
+  color: var(--accent);
+  font-size: 15px;
+  animation: pfWord 5.4s ease-in-out infinite;
+}
+
+/* Hover panel — same shell as the nav previews. */
+.sidebar__wf-panel {
+  position: fixed;
+  left: 252px;
+  width: 240px;
+  z-index: 40;
+  pointer-events: none;
+  background: #2a2a2a;
+  border: 1px solid rgba(219, 216, 206, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  padding: 14px;
+  animation: pfScaleIn 0.3s var(--ease-out-soft) both;
+}
+
+.sidebar__wf-panel-eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+  margin: 0 0 8px;
+}
+
+.sidebar__wf-panel-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.sidebar__wf-panel-body b {
+  color: #faf8f1;
+  font-weight: 500;
+}
+
+@media (max-width: 1023px) {
+  .sidebar__wf-panel {
+    display: none;
+  }
+
+  .sidebar__wf-line {
+    font-size: 13px;
+  }
+}
+
 /* More links */
 .sidebar__more {
   display: flex;

@@ -116,6 +116,8 @@ const PAGE_ORDER = ['home', 'about', 'cave', 'archive']
 
 export default function Sidebar({ activePage = 'home', onNavigate, isOpen = false, guest, showPassCard = true, onClose }) {
   const { openPassEditor, thumbPop } = usePassEditor()
+  const [wfHover, setWfHover] = useState(false)
+  const [wfTop, setWfTop] = useState(0)
   const sidebarRef = useRef(null)
   useSidebarPush(sidebarRef)
 
@@ -149,14 +151,29 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
           <p className="sidebar__bio">
             I am a designer who loves building software that's powerful but feels simple.
           </p>
-          <p className="sidebar__edu">
-            <span className="sidebar__edu-label">HCDE</span>
-            {' '}
-            <span className="sidebar__edu-school">@ University of Michigan-Dearborn </span>
-            <span className="sidebar__edu-label">('26)</span>
-            <span className="sidebar__edu-school">.</span>
-          </p>
+          <div
+            className="sidebar__workflow"
+            onMouseEnter={(e) => { setWfHover(true); setWfTop(e.currentTarget.getBoundingClientRect().top) }}
+            onMouseLeave={() => setWfHover(false)}
+          >
+            <span className="sidebar__wf-line">
+              <span className="sidebar__wf-word" style={{ animationDelay: '0s' }}>FIGMA</span>
+              <span className="sidebar__wf-arrow" style={{ animationDelay: '0.9s' }}> ⇄ </span>
+              <span className="sidebar__wf-word" style={{ animationDelay: '1.8s' }}>LLM</span>
+              <span className="sidebar__wf-arrow" style={{ animationDelay: '2.7s' }}> ⇄ </span>
+              <span className="sidebar__wf-word" style={{ animationDelay: '3.6s' }}>CODE</span>
+            </span>
+          </div>
         </div>
+
+        {wfHover && (
+          <div className="sidebar__wf-panel" style={{ top: wfTop }} aria-hidden="true">
+            <p className="sidebar__wf-panel-eyebrow">HOW I WORK</p>
+            <p className="sidebar__wf-panel-body">
+              No fixed start or finish. Ideation, edge cases, and high-level thinking happen with <b>LLMs</b>. <b>Figma</b> stays the source of truth for design, and it all lands in <b>code</b>. The loop runs all three ways.
+            </p>
+          </div>
+        )}
 
         <NavCard
           activeIndex={activeIndex}

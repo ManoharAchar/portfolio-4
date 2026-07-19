@@ -98,6 +98,13 @@
   to { transform: translateX(-50%); }
 }
 
+/* Traveling brightness for the FIGMA ⇄ LLM ⇄ CODE workflow line. */
+@keyframes pfWord {
+  0%, 8% { opacity: 0.4; }
+  15% { opacity: 1; }
+  22%, 100% { opacity: 0.4; }
+}
+
 html, body, #root {
   min-height: 100vh;
   overscroll-behavior: none;
