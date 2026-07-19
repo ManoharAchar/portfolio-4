@@ -1,0 +1,190 @@
+/* ════════════════════════════════════════════════════════════
+   HomeBanner — personal "Right Now" banner above the home grid.
+   Desktop: portrait · [greeting over status ticker] · chip.
+   Mobile: row1 portrait+greeting+chip, row2 status ticker.
+   ════════════════════════════════════════════════════════════ */
+
+.home-banner {
+  max-width: 1408px;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #3c3c3a;
+  border-radius: 20px;
+  padding: 14px 24px 14px 14px;
+  animation: pfFadeUp 0.7s var(--ease-out-soft) both;
+  animation-delay: 0.05s;
+}
+
+.home-banner__portrait {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  object-fit: cover;
+  object-position: center 22%;
+  flex-shrink: 0;
+  transition: transform 0.45s var(--ease-out-soft);
+}
+
+.home-banner__portrait:hover {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.home-banner__mid {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.home-banner__greeting {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: #faf8f1;
+  line-height: 1.2;
+  margin: 0;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+.home-banner__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.home-banner__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  animation: pfPulse 2.2s ease-in-out infinite;
+}
+
+.home-banner__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+  flex-shrink: 0;
+}
+
+/* Ticker: fixed-height window, inner column shifts up one line per index.
+   --idx (set inline) drives the shift; line height varies by breakpoint. */
+.home-banner__ticker {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  overflow: hidden;
+}
+
+.home-banner__ticker-inner {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(calc(var(--idx, 0) * -22px));
+  transition: transform 0.55s var(--ease-out-soft);
+}
+
+.home-banner__msg {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #dbd8ce;
+  height: 22px;
+  line-height: 22px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-banner__em {
+  color: #faf8f1;
+}
+
+.home-banner__chip {
+  display: inline-flex;
+  align-items: center;
+  background: #5c5c5c;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #faf8f1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.home-banner__chip:hover {
+  background: #6a6a68;
+}
+
+.home-banner__chip:active {
+  transform: scale(0.95);
+}
+
+/* ── Mobile (≤767px) ──────────────────────────────────────────
+   The mid wrapper dissolves (display: contents) so greeting and
+   status become direct grid children: portrait+greeting+chip on
+   row 1, the ticker full width on row 2. */
+@media (max-width: 767px) {
+  .home-banner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "portrait greeting chip"
+      "status   status   status";
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 20px;
+  }
+
+  .home-banner__portrait {
+    grid-area: portrait;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+
+  .home-banner__mid {
+    display: contents;
+  }
+
+  .home-banner__greeting {
+    grid-area: greeting;
+    font-size: 17px;
+  }
+
+  .home-banner__status {
+    grid-area: status;
+  }
+
+  .home-banner__chip {
+    grid-area: chip;
+  }
+
+  .home-banner__chip-more {
+    display: none;
+  }
+
+  .home-banner__ticker {
+    height: 21px;
+  }
+
+  .home-banner__ticker-inner {
+    transform: translateY(calc(var(--idx, 0) * -21px));
+  }
+
+  .home-banner__msg {
+    height: 21px;
+    line-height: 21px;
+    font-size: 14px;
+  }
+}

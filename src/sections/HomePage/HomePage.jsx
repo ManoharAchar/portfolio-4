@@ -3,6 +3,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import Footer from '../../components/Footer/Footer'
+import HomeBanner from '../../components/HomeBanner/HomeBanner'
 import { PROJECTS, getProjectPage } from '../../data/projects'
 import './HomePage.css'
 
@@ -42,6 +43,8 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
 
       {/* Content offset by sidebar width */}
       <main className="home-content" id="work">
+        <HomeBanner onNavigate={onNavigate} />
+
         {/* All projects in document order so mobile stacks 01→02→03→04.
             CSS Grid places each slot in the correct column on desktop. */}
         <div className="projects-grid">
