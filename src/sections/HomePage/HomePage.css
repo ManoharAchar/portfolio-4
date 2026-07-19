@@ -43,7 +43,7 @@
   border: 1px solid transparent;
   cursor: inherit;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
-    transform 0.15s ease;
+    transform 0.15s ease, translate 0.2s ease-out;
 }
 
 .home-chip:hover {

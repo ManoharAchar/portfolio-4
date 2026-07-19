@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { flushSync } from 'react-dom'
+import { magnetMove, magnetLeave } from '../../lib/magnet'
 import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
@@ -97,6 +98,8 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
               type="button"
               className={`home-chip${filter === c.id ? ' home-chip--active' : ''}`}
               aria-pressed={filter === c.id}
+              onMouseMove={magnetMove}
+              onMouseLeave={magnetLeave}
               onClick={() => changeFilter(c.id)}
             >
               {c.label}

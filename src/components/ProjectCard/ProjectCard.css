@@ -63,13 +63,44 @@
 }
 
 /* Media — contained inside the panel, radius 20 */
-.project-card__image {
+/* Aspect-ratio box holds the layout; the image is an absolute layer that
+   grows flush to the card edge on hover (never cleared to empty on leave). */
+.project-card__thumb-wrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 664 / 346;
+  flex-shrink: 0;
+}
+
+.project-card__image {
+  position: absolute;
+  inset: 0;
   border-radius: 20px;
   overflow: hidden;
   background: #2a2a2a;
-  flex-shrink: 0;
+  transition: inset 0.45s var(--ease-out-soft), border-radius 0.45s var(--ease-out-soft);
+}
+
+.project-card--clickable:hover .project-card__image {
+  inset: -8px;
+  border-radius: 28px;
+}
+
+/* Press + metadata lift */
+.project-card {
+  transition: border-color 0.2s ease, opacity 0.5s ease, transform 0.15s ease;
+}
+
+.project-card--clickable:active {
+  transform: scale(0.99);
+}
+
+.project-card__meta {
+  transition: transform 0.4s ease;
+}
+
+.project-card--clickable:hover .project-card__meta {
+  transform: translateY(-2px);
 }
 
 .project-card__image img,

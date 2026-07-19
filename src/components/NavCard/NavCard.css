@@ -36,7 +36,11 @@
   border-radius: 8px;
   background: #3c3c3a;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, translate 0.2s ease-out, transform 0.15s ease;
+}
+
+.nav-card__link:active {
+  transform: scale(0.96);
 }
 
 .nav-card__link--active {

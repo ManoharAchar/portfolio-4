@@ -91,6 +91,7 @@ export default function ProjectCard({ domain, maturity, imageColor, image, video
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
+      <div className="project-card__thumb-wrap">
       <div
         className="project-card__image"
         style={{ background: !image && !video ? imageColor : undefined }}
@@ -109,6 +110,7 @@ export default function ProjectCard({ domain, maturity, imageColor, image, video
         ) : image ? (
           <img src={image} alt={title} loading="lazy" />
         ) : null}
+      </div>
       </div>
 
       {locked && (

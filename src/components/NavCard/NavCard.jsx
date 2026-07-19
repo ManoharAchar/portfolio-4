@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import NavPreview from '../NavPreview/NavPreview'
+import { magnetMove, magnetLeave } from '../../lib/magnet'
 import './NavCard.css'
 
 const NAV_LINKS = [
@@ -29,7 +30,8 @@ export default function NavCard({ activeIndex = 0, onNavClick }) {
                 setHover(i)
                 setPreviewTop(Math.max(12, e.currentTarget.getBoundingClientRect().top - 50))
               }}
-              onMouseLeave={() => setHover(-1)}
+              onMouseMove={magnetMove}
+              onMouseLeave={(e) => { magnetLeave(e); setHover(-1) }}
             >
               <span className="nav-card__link-label">
                 {i + 1}. {link.label}
