@@ -11,6 +11,7 @@ const UNLOCK_CODE = (import.meta.env.VITE_UNLOCK_CODE ?? 'a-good-fit').trim().to
 
 export default function PasscodeModal({ projectTitle, onClose, onSuccess }) {
   const [value, setValue] = useState('')
+  const [showPw, setShowPw] = useState(false)
   const [error, setError] = useState(false)
   const [shake, setShake] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -60,15 +61,37 @@ export default function PasscodeModal({ projectTitle, onClose, onSuccess }) {
         </p>
 
         <div className={`pf-passcode__row${shake ? ' pf-shake' : ''}`}>
-          <input
-            ref={inputRef}
-            type="password"
-            className={`pf-passcode__input${error ? ' pf-passcode__input--error' : ''}`}
-            placeholder="Enter passcode"
-            value={value}
-            onChange={(e) => { setValue(e.target.value); setError(false) }}
-            onKeyDown={(e) => { if (e.key === 'Enter') submit() }}
-          />
+          <div className="pf-passcode__field">
+            <input
+              ref={inputRef}
+              type={showPw ? 'text' : 'password'}
+              className={`pf-passcode__input${error ? ' pf-passcode__input--error' : ''}`}
+              placeholder="Enter passcode"
+              value={value}
+              onChange={(e) => { setValue(e.target.value); setError(false) }}
+              onKeyDown={(e) => { if (e.key === 'Enter') submit() }}
+            />
+            <button
+              type="button"
+              className="pf-passcode__eye"
+              onClick={() => setShowPw((s) => !s)}
+              aria-label={showPw ? 'Hide passcode' : 'Show passcode'}
+              tabIndex={-1}
+            >
+              {showPw ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 3l18 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <path d="M10.6 10.6a2 2 0 002.8 2.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  <path d="M9.4 5.2A9.4 9.4 0 0112 5c5 0 8.5 4.2 9.4 6.3a1.7 1.7 0 010 1.4 15.7 15.7 0 01-2.4 3.5M6.2 6.6C3.9 8 2.4 10 1.6 11.3a1.7 1.7 0 000 1.4C2.5 14.8 6 19 11 19a9.9 9.9 0 004.3-1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M1.6 12.3a1.7 1.7 0 010-1.4C2.6 8.6 6 4.5 12 4.5s9.4 4.1 10.4 6.4a1.7 1.7 0 010 1.4C21.4 14.4 18 18.5 12 18.5S2.6 14.4 1.6 12.3z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="12" cy="11.5" r="2.6" stroke="currentColor" strokeWidth="1.6" />
+                </svg>
+              )}
+            </button>
+          </div>
           <button
             type="button"
             className={`pf-passcode__submit${success ? ' pf-passcode__submit--ok' : ''}`}
