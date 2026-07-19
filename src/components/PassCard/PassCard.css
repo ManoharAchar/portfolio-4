@@ -49,6 +49,18 @@
   filter: drop-shadow(0.9px 0.9px 0 rgba(255,255,255,0.25));
 }
 
+/* Recolor the illustration to the pass accent (decoupled from intent): the
+   overlay's hue/chroma + the artwork's luminance, so the box + line art
+   always track the pass color. Transparent areas blend into the pass bg. */
+.pass-card__logo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--pass-logo-accent, transparent);
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
 .pass-card__logo-img {
   position: absolute;
   inset: 0;

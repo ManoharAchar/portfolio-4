@@ -57,7 +57,7 @@ const PassCard = forwardRef(function PassCard({ intent, name, date, passId, acce
         <img className="pass-card__bg pass-card__bg--2" src={config.bgLayer} alt="" aria-hidden="true" />
         <img className="pass-card__lines" src={config.lines} alt="" aria-hidden="true" />
 
-        <div className="pass-card__logo">
+        <div className="pass-card__logo" style={{ '--pass-logo-accent': bg }}>
           {Object.entries(PASS_CONFIG).map(([key, cfg]) => (
             <img
               key={key}
