@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import PassCard from '../../components/PassCard/PassCard'
@@ -153,6 +153,24 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
     const id = setInterval(() => setLiveMetrics(getSessionMetrics()), 2000)
     return () => clearInterval(id)
   }, [])
+
+  // Scroll reveals: arm each section (hidden) then reveal it as it nears the
+  // viewport. useLayoutEffect arms before paint (no flash); re-runs as content
+  // loads so late sections get armed; a fallback guarantees reveal if the
+  // observer can't fire. Content is visible by default until armed, so it can
+  // never be left permanently hidden.
+  useLayoutEffect(() => {
+    const els = [...document.querySelectorAll('[data-ga-reveal]:not(.ga-reveal--in)')]
+    if (!els.length) return undefined
+    els.forEach((el) => el.classList.add('ga-reveal--armed'))
+    const reveal = (el) => el.classList.add('ga-reveal--in')
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target) } })
+    }, { threshold: 0.12, rootMargin: '600px 0px -5%' })
+    els.forEach((el) => io.observe(el))
+    const fallback = setTimeout(() => els.forEach(reveal), 2500)
+    return () => { io.disconnect(); clearTimeout(fallback) }
+  }, [aggregate, guest, ledgerLoading])
 
   const [passStats, setPassStats] = useState(undefined)
 
@@ -362,7 +380,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
           </header>
 
           {/* YouPanel — current visitor */}
-          <section className="ga-you-panel">
+          <section className="ga-you-panel ga-reveal" data-ga-reveal>
             <div className="ga-you-panel__label">{passNumber} · FIRST VISIT · YOURS TO KEEP</div>
             <div className="ga-you-panel__body">
               <div
@@ -443,7 +461,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
           <div className="ga-sections">
 
             {/* Archetype breakdown */}
-            <section className="ga-archetype-section">
+            <section className="ga-archetype-section ga-reveal" data-ga-reveal>
               <div className="ga-archetype-section__copy">
                 <p className="ga-section-label">VISITOR ARCHETYPE / ALL VISITORS ALL TIME</p>
                 <p className="ga-archetype-section__body">
@@ -517,7 +535,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
             </div>
 
             {/* Guest log */}
-            <section className="ga-guest-log">
+            <section className="ga-guest-log ga-reveal" data-ga-reveal>
               {/* Filter bar — shared by carousel, grid, and ledger */}
               <div className="ga-guest-log__header">
                 <div className="ga-filter-group">
