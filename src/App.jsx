@@ -354,9 +354,10 @@ function App() {
     <PassEditorContext.Provider value={{ openPassEditor, thumbPop }}>
       <CustomCursor />
 
-      {/* Shared starfield — persists across splash → welcome, and stays alive
-          during the returning-visitor particle flight into the home page */}
-      {(page === 'splash' || page === 'welcome' || keepStarfield) && (
+      {/* Shared starfield — takes over for welcome/home. During the splash the
+          SplashScreen canvas draws its own starfield so the eroding mark's
+          flight particles blend into it. */}
+      {(page === 'welcome' || keepStarfield) && (
         <StarfieldCursorFollow
           ref={starfieldRef}
           backgroundColor="#2a2a2a"
@@ -368,7 +369,7 @@ function App() {
       )}
 
       {page === 'splash' && (
-        <SplashScreen ref={splashRef} onBurst={(points) => starfieldRef.current?.spawnBurst(points)} />
+        <SplashScreen ref={splashRef} />
       )}
 
       {/* Welcome screen stays mounted during its exit animation */}
