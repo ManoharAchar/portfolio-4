@@ -1,17 +1,20 @@
+/* Dark, minimalist nav card (Figma "Home / Desktop" — the cream card was
+   replaced by a #3c3c3a card that sits quietly on the sidebar; only the
+   active row lifts to #555553). */
 .nav-card {
-  background: #dbd8ce;
+  background: #3c3c3a;
   border-radius: 14px;
   padding: 14px 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
 }
 
 .nav-card__heading {
   font-family: 'Source Code Pro', monospace;
   font-size: 13px;
-  color: #2a2a2a;
+  color: #dbd8ce;
   line-height: normal;
   padding: 0 4px;
 }
@@ -29,13 +32,13 @@
   height: 34px;
   padding: 0 10px;
   border-radius: 8px;
-  background: #dbd8ce;
+  background: #3c3c3a;
   text-decoration: none;
   transition: background 0.2s ease;
 }
 
 .nav-card__link--active {
-  background: #faf8f1;
+  background: #555553;
 }
 
 .nav-card__link-label {
@@ -47,7 +50,7 @@
 }
 
 .nav-card__link--active .nav-card__link-label {
-  color: #2a2a2a;
+  color: #faf8f1;
 }
 
 .nav-card__link-arrow {
@@ -57,11 +60,11 @@
 }
 
 .nav-card__link--active .nav-card__link-arrow {
-  color: #2a2a2a;
+  color: #faf8f1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .nav-card__link:hover:not(.nav-card__link--active) {
-    background: #e8e5dc;
+    background: #4a4a48;
   }
 }

@@ -60,7 +60,7 @@
 }
 
 .cs-sidebar__toc-card {
-  background: #dbd8ce;
+  background: #3c3c3a;
   border-radius: 14px;
   padding: 17px 12px;
   display: flex;
@@ -71,7 +71,7 @@
 .cs-sidebar__toc-heading {
   font-family: 'Source Code Pro', monospace;
   font-size: 13px;
-  color: #2a2a2a;
+  color: #dbd8ce;
   margin: 0;
 }
 
@@ -89,7 +89,7 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: #dbd8ce;
+  background: #3c3c3a;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   color: #7a7a7a;
@@ -99,13 +99,13 @@
 }
 
 .cs-sidebar__toc-item--active {
-  background: #faf8f1;
-  color: #2a2a2a;
+  background: #555553;
+  color: #faf8f1;
 }
 
 .cs-sidebar__toc-item:hover:not(.cs-sidebar__toc-item--active) {
-  background: #cbc8bf;
-  color: #2a2a2a;
+  background: #4a4a48;
+  color: #faf8f1;
 }
 
 .cs-sidebar__back-top {
