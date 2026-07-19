@@ -120,6 +120,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
   const [ledgerOffset, setLedgerOffset] = useState(0)
   const [pinnedYouRow, setPinnedYouRow] = useState(null)
   const [youPulse, setYouPulse] = useState(false)
+  const [youEnterDone, setYouEnterDone] = useState(false)
   const youRowRef = useRef(null)
   const carouselRef = useRef(null)
 
@@ -153,6 +154,14 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
     const id = setInterval(() => setLiveMetrics(getSessionMetrics()), 2000)
     return () => clearInterval(id)
   }, [])
+
+  // YOU-row entrance: play once when the row first appears, then drop the
+  // class so it can't conflict with the click pulse (which shares `animation`).
+  useEffect(() => {
+    if (!pinnedYouRow) return undefined
+    const t = setTimeout(() => setYouEnterDone(true), 1200)
+    return () => clearTimeout(t)
+  }, [pinnedYouRow])
 
   // Scroll reveals: arm each section (hidden) then reveal it as it nears the
   // viewport. useLayoutEffect arms before paint (no flash); re-runs as content
@@ -677,7 +686,7 @@ export default function GuestArchivePage({ activePage = 'archive', onNavigate, g
                     <>
                       <div 
                         ref={youRowRef}
-                        className={`ga-table__row ga-table__row--you ga-table__row--pinned-below ${youPulse ? 'ga-table__row--pulse' : ''}`}
+                        className={`ga-table__row ga-table__row--you ga-table__row--pinned-below ${youPulse ? 'ga-table__row--pulse' : ''} ${!youEnterDone ? 'ga-table__row--enter' : ''}`}
                       >
                         <div className="ga-table__cell ga-table__cell--no">
                           <span className="ga-table__no">{formatPassNumber(pinnedYouRow.passes?.id)}</span>
