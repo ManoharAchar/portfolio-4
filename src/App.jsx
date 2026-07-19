@@ -33,6 +33,7 @@ import FlyingCard from './components/FlyingCard/FlyingCard'
 import PassEditorModal from './components/PassEditorModal/PassEditorModal'
 import { PassEditorContext } from './lib/passEditor'
 import { accentBurst } from './lib/accentBurst'
+import { initIdleCursorTrail } from './lib/idleCursorTrail'
 import { resolveVisitor, createPass, passToGuest, updatePass } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
@@ -107,6 +108,8 @@ const WELCOME_FADE_MS = 380
 const SPLASH_MIN_VISIBLE_MS = 1000
 
 function App() {
+  useEffect(() => { initIdleCursorTrail() }, [])
+
   const [previewMode] = useState(isPreviewMode)
   const [skipSplash] = useState(shouldBypassSplash)
   const [page, setPage] = useState(() => (isPreviewMode() || shouldBypassSplash()) ? 'welcome' : 'splash')
