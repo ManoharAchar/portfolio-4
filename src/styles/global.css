@@ -82,6 +82,22 @@
   45% { transform: scale(1.05); }
 }
 
+/* Nav-preview mockup motion */
+@keyframes pfFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes pfShimmer {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+
+@keyframes pfSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 html, body, #root {
   min-height: 100vh;
   overscroll-behavior: none;

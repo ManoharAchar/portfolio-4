@@ -1,0 +1,156 @@
+/* Nav hover preview — fixed card just right of the 240px sidebar. */
+.nav-preview {
+  position: fixed;
+  left: 252px;
+  width: 200px;
+  height: 134px;
+  z-index: 40;
+  pointer-events: none;
+  background: #2a2a2a;
+  border: 1px solid rgba(219, 216, 206, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  padding: 10px;
+  animation: pfScaleIn 0.3s var(--ease-out-soft) both;
+}
+
+.nav-preview__float {
+  animation: pfFloat 3.2s ease-in-out infinite;
+}
+
+/* Shared skeleton bars */
+.nav-preview__bar {
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(219, 216, 206, 0.3);
+}
+.nav-preview__bar--35 { width: 14px; background: rgba(219, 216, 206, 0.35); }
+.nav-preview__bar--20 { width: 14px; background: rgba(219, 216, 206, 0.2); }
+.nav-preview__bar--80 { width: 80%; background: rgba(219, 216, 206, 0.4); }
+.nav-preview__bar--55 { width: 55%; background: rgba(219, 216, 206, 0.2); }
+.nav-preview__bar--95 { width: 95%; }
+.nav-preview__bar--88 { width: 88%; }
+.nav-preview__bar--60 { width: 60%; }
+.nav-preview__bar--40 { width: 40%; background: rgba(219, 216, 206, 0.25); margin-left: 2px; }
+.nav-preview__bar--head { width: 70%; height: 6px; background: rgba(250, 248, 241, 0.55); }
+.nav-preview__bar--head2 { width: 60%; height: 5px; background: rgba(250, 248, 241, 0.5); margin-left: 2px; }
+
+/* ── My Work: mini sidebar + 2×2 card grid ────────────────── */
+.nav-preview__work { display: flex; gap: 7px; height: 100%; }
+.nav-preview__work-rail {
+  width: 26px;
+  flex-shrink: 0;
+  background: #3c3c3a;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6px;
+  gap: 4px;
+}
+.nav-preview__work-sq { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+.nav-preview__work-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.nav-preview__work-card {
+  background: #3c3c3a;
+  border-radius: 6px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nav-preview__work-thumb { height: 26px; border-radius: 4px; }
+
+/* ── About: portrait + copy + chips ───────────────────────── */
+.nav-preview__about { display: flex; gap: 8px; height: 100%; }
+.nav-preview__portrait {
+  width: 44%;
+  background: #5c5c5c;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.nav-preview__portrait-head {
+  position: absolute; left: 50%; top: 26%;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(250, 248, 241, 0.35); transform: translateX(-50%);
+}
+.nav-preview__portrait-body {
+  position: absolute; left: 50%; top: 52%;
+  width: 40px; height: 30px; border-radius: 10px 10px 0 0;
+  background: rgba(250, 248, 241, 0.25); transform: translateX(-50%);
+}
+.nav-preview__shimmer {
+  position: absolute; top: 0; bottom: 0; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(250, 248, 241, 0.18), transparent);
+  animation: pfShimmer 2.6s ease-in-out infinite;
+}
+.nav-preview__about-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+}
+.nav-preview__chips { display: flex; gap: 4px; margin-top: auto; flex-wrap: wrap; }
+.nav-preview__chip { height: 9px; border-radius: 3px; background: #3c3c3a; }
+.nav-preview__chip:nth-child(1) { width: 26px; }
+.nav-preview__chip:nth-child(2) { width: 20px; }
+.nav-preview__chip:nth-child(3) { width: 30px; }
+.nav-preview__chips .nav-preview__float { animation-duration: 3s; }
+
+/* ── The Cave: 2×2 tinted video tiles ─────────────────────── */
+.nav-preview__cave {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 7px;
+  height: 100%;
+}
+.nav-preview__cave-tile {
+  background: #3c3c3a;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  animation-duration: 3.4s;
+}
+.nav-preview__cave-tint { position: absolute; inset: 0; opacity: 0.25; }
+.nav-preview__play {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0; height: 0;
+  border-left: 8px solid rgba(250, 248, 241, 0.8);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* ── Guest Archive: heading + two marquee rows ────────────── */
+.nav-preview__archive {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  justify-content: center;
+}
+.nav-preview__marquee { overflow: hidden; }
+.nav-preview__marquee-row { display: flex; gap: 6px; width: max-content; }
+.nav-preview__marquee-row--a { animation: pfSlide 8s linear infinite; }
+.nav-preview__marquee-row--b { animation: pfSlide 11s linear infinite; }
+.nav-preview__mini-pass {
+  width: 38px;
+  height: 18px;
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+}
+.nav-preview__mini-pass-logo {
+  position: absolute; left: 3px; top: 3px;
+  width: 9px; height: 12px; border-radius: 2px;
+  background: rgba(18, 11, 6, 0.25);
+}
+
+/* Desktop only — below 1024 the sidebar becomes a drawer. */
+@media (max-width: 1023px) {
+  .nav-preview { display: none; }
+}
