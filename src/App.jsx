@@ -32,6 +32,7 @@ const CavePage          = lazy(PAGE_LOADERS.cave)
 import FlyingCard from './components/FlyingCard/FlyingCard'
 import PassEditorModal from './components/PassEditorModal/PassEditorModal'
 import { PassEditorContext } from './lib/passEditor'
+import { accentBurst } from './lib/accentBurst'
 import { resolveVisitor, createPass, passToGuest, updatePass } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
@@ -330,9 +331,8 @@ function App() {
     }
     setThumbPop(true)
     setTimeout(() => setThumbPop(false), 800)
-    if (changed) {
-      // Accent burst (Feature 5) fires ~140ms after commit — wired there.
-    }
+    // Accent burst fires ~140ms after commit when the color actually changed.
+    if (changed) setTimeout(() => accentBurst(draft.accent), 140)
   }
 
   const sharedProps = { onNavigate: navigate, guest, showPassCard: !flyingCard }
