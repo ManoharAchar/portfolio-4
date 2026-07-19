@@ -2,7 +2,8 @@ import { useRef, useEffect } from 'react'
 import { tryPlay, cancelPlay } from '../../lib/playInView'
 import './ProjectCard.css'
 
-export default function ProjectCard({ domain, maturity, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, metadata, description, onClick, dimmed = false, viewName }) {
+export default function ProjectCard({ domain, maturity, imageColor, image, video, poster, thumbTime = 0, loopAlways = false, title, metadata, description, onClick, dimmed = false, viewName, locked = false, unlocked = false }) {
+  const lockedNow = locked && !unlocked
   const cardRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -84,7 +85,7 @@ export default function ProjectCard({ domain, maturity, imageColor, image, video
     <div
       ref={cardRef}
       className={`project-card${onClick ? ' project-card--clickable' : ''}${dimmed ? ' project-card--dimmed' : ''}`}
-      data-cursor={onClick ? 'view-project' : 'coming-soon'}
+      data-cursor={lockedNow ? 'passcode' : onClick ? 'view-project' : 'coming-soon'}
       style={viewName ? { viewTransitionName: viewName } : undefined}
       onClick={onClick}
       onMouseEnter={handleEnter}
@@ -109,6 +110,25 @@ export default function ProjectCard({ domain, maturity, imageColor, image, video
           <img src={image} alt={title} loading="lazy" />
         ) : null}
       </div>
+
+      {locked && (
+        <div
+          className={`project-card__lock${unlocked ? ' project-card__lock--open' : ''}`}
+          aria-hidden="true"
+        >
+          {unlocked ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="10.5" width="14" height="9.5" rx="2.5" stroke="var(--accent)" strokeWidth="1.8" />
+              <path d="M8 10.5 V7.5 a4 4 0 0 1 7.4 -2" stroke="var(--accent)" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="10.5" width="14" height="9.5" rx="2.5" stroke="#faf8f1" strokeWidth="1.8" />
+              <path d="M8 10.5 V7.5 a4 4 0 0 1 8 0 v3" stroke="#faf8f1" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          )}
+        </div>
+      )}
 
       <div className="project-card__body">
         <h2 className="project-card__title">{title}</h2>

@@ -1,0 +1,62 @@
+/* ════════════════════════════════════════════════════════════
+   Shared modal shell — used by the passcode + pass-editor modals.
+   Desktop: centered dialog, no border (shadow + backdrop only).
+   Mobile: bottom sheet that slides up with a grab handle.
+   ════════════════════════════════════════════════════════════ */
+
+.pf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 11, 6, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: pfFadeIn 0.3s ease both;
+}
+
+.pf-modal__panel {
+  position: relative;
+  background: #3c3c3a;
+  border: none;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: calc(100vw - 48px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  animation: pfScaleIn 0.4s var(--ease-out-soft) both;
+}
+
+/* ── Mobile: bottom sheet ─────────────────────────────────── */
+@media (max-width: 767px) {
+  .pf-modal {
+    align-items: flex-end;
+  }
+
+  .pf-modal__panel {
+    width: 100%;
+    max-width: none;
+    border-radius: 20px 20px 0 0;
+    padding-top: 30px;
+    animation: pfSheetUp 0.4s var(--ease-out-soft) both;
+  }
+
+  /* 36×4 grab handle */
+  .pf-modal__panel::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(219, 216, 206, 0.3);
+  }
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, lazy, Suspense, startTransition } from 'react'
 import './styles/global.css'
+import './styles/modal.css'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import StarfieldCursorFollow from './components/StarfieldCursorFollow/StarfieldCursorFollow'
 import SplashScreen from './sections/SplashScreen/SplashScreen'

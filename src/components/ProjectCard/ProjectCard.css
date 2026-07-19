@@ -14,6 +14,7 @@
 
 .project-card {
   box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -24,6 +25,28 @@
   border-radius: 30px;
   padding: 8px 8px 24px;
   transition: border-color 0.2s ease, opacity 0.5s ease;
+}
+
+/* Lock badge — sits on the card, bottom-right. Closed = cream padlock;
+   unlocked = accent open-shackle padlock with a one-shot pop. */
+.project-card__lock {
+  position: absolute;
+  right: 14px;
+  bottom: 18px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #5c5c5c;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.4s ease;
+}
+
+.project-card__lock--open {
+  border-color: var(--accent);
+  animation: pfLockPop 0.9s var(--ease-out-soft);
 }
 
 /* Non-matching cards under an active filter stay visible but recede. */
@@ -114,6 +137,12 @@
 @media (max-width: 767px) {
   .project-card {
     gap: 16px;
+  }
+
+  .project-card__lock {
+    width: 34px;
+    height: 34px;
+    bottom: 16px;
   }
 
   .project-card__title {

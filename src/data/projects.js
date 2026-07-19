@@ -21,6 +21,7 @@ import posterFleet from '../assets/thumbnails/poster-fleet.jpg'
 export const PROJECTS = [
   {
     id: 'fleet',
+    locked: true,
     tags: ['saas', 'web'],
     number: '01',
     domain: 'Enterprise SaaS',
@@ -59,6 +60,7 @@ export const PROJECTS = [
   },
   {
     id: 'industrial-hmi',
+    locked: true,
     tags: ['hmi'],
     number: '03',
     domain: 'Industrial HMI',

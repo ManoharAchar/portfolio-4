@@ -1,0 +1,141 @@
+/* Passcode modal — content inside the shared .pf-modal shell. */
+
+.pf-passcode {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pf-passcode__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pf-passcode__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+}
+
+.pf-passcode__close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #cbc8bf;
+  transition: color 0.2s ease;
+}
+
+.pf-passcode__close:hover {
+  color: #faf8f1;
+}
+
+.pf-passcode__title {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #faf8f1;
+  margin: 0;
+  line-height: 1.25;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+}
+
+.pf-passcode__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #dbd8ce;
+  line-height: 26px;
+  margin: 0;
+}
+
+.pf-passcode__project {
+  color: #faf8f1;
+}
+
+.pf-passcode__row {
+  display: flex;
+  gap: 10px;
+}
+
+.pf-passcode__row.pf-shake {
+  animation: pfShake 0.45s ease;
+}
+
+.pf-passcode__input {
+  flex: 1;
+  min-width: 0;
+  background: #2a2a2a;
+  border: 1px solid rgba(219, 216, 206, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 15px;
+  color: #faf8f1;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.pf-passcode__input:focus {
+  border-color: var(--accent);
+}
+
+.pf-passcode__input--error {
+  border-color: #c87a5a;
+}
+
+.pf-passcode__submit {
+  background: #faf8f1;
+  color: #120b06;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.pf-passcode__submit:hover {
+  background: #e9e6dc;
+}
+
+.pf-passcode__submit:active {
+  transform: scale(0.96);
+}
+
+.pf-passcode__submit--ok {
+  background: var(--accent);
+}
+
+.pf-passcode__error {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #c87a5a;
+  margin: -6px 0 0;
+}
+
+.pf-passcode__mail {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #cbc8bf;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.pf-passcode__mail:hover {
+  color: #faf8f1;
+}
+
+@media (max-width: 767px) {
+  .pf-passcode {
+    width: 100%;
+  }
+
+  .pf-passcode__submit {
+    padding: 14px 22px;
+  }
+}

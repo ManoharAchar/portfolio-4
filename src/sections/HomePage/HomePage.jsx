@@ -5,6 +5,7 @@ import MobileTopBar from '../../components/MobileTopBar/MobileTopBar'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import Footer from '../../components/Footer/Footer'
 import HomeBanner from '../../components/HomeBanner/HomeBanner'
+import PasscodeModal from '../../components/PasscodeModal/PasscodeModal'
 import { PROJECTS, getProjectPage } from '../../data/projects'
 import './HomePage.css'
 
@@ -22,6 +23,16 @@ const CHIPS = [
 export default function HomePage({ activePage = 'home', onNavigate, guest, showPassCard }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filter, setFilter] = useState('all')
+  const [unlocked, setUnlocked] = useState(() => {
+    try { return localStorage.getItem('pf3_unlocked') === '1' } catch { return false }
+  })
+  const [lockModalId, setLockModalId] = useState(null)
+  const lockModalProject = PROJECTS.find((p) => p.id === lockModalId)
+
+  const handleCardClick = (project) => {
+    if (project.locked && !unlocked) setLockModalId(project.id)
+    else onNavigate(getProjectPage(project.id))
+  }
 
   const matches = (p) => filter === 'all' || (p.tags || []).includes(filter)
   // Matching projects re-sort to the top; Array.sort is stable so relative
@@ -102,7 +113,8 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
               {...project}
               dimmed={!matches(project)}
               viewName={`card-${project.id}`}
-              onClick={() => onNavigate(getProjectPage(project.id))}
+              unlocked={unlocked}
+              onClick={() => handleCardClick(project)}
             />
           ))}
         </div>
@@ -110,6 +122,14 @@ export default function HomePage({ activePage = 'home', onNavigate, guest, showP
 
       {/* Full-width footer, z-index: 10 — slides over the fixed sidebar as it scrolls up */}
       <Footer activePage={activePage} onNavigate={onNavigate} />
+
+      {lockModalProject && (
+        <PasscodeModal
+          projectTitle={lockModalProject.title}
+          onClose={() => setLockModalId(null)}
+          onSuccess={() => { setUnlocked(true); setLockModalId(null) }}
+        />
+      )}
     </div>
   )
 }

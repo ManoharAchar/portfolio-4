@@ -38,6 +38,36 @@
   animation-timing-function: var(--ease-out-soft);
 }
 
+/* Modal + lock-badge motion (shared by passcode + pass-editor modals) */
+@keyframes pfFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pfScaleIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pfSheetUp {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+@keyframes pfShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@keyframes pfLockPop {
+  0% { transform: scale(1) rotate(0); box-shadow: 0 0 0 0 transparent; }
+  40% { transform: scale(1.2) rotate(-8deg); box-shadow: 0 0 16px 2px var(--accent); }
+  100% { transform: scale(1) rotate(0); box-shadow: 0 0 0 0 transparent; }
+}
+
 html, body, #root {
   min-height: 100vh;
   overscroll-behavior: none;
