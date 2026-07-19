@@ -4,7 +4,9 @@
 .nav-card {
   background: #3c3c3a;
   border-radius: 14px;
-  padding: 14px 10px;
+  /* No horizontal padding — the nav rows span the card so they line up with
+     the rest of the sidebar content (the item's own 10px keeps text inset). */
+  padding: 14px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
