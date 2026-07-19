@@ -87,6 +87,25 @@ export function passToGuest(pass) {
 }
 
 /**
+ * Read the device-local pass customization saved by the editor. Survives even
+ * when the Supabase write-through is blocked (e.g. no UPDATE RLS policy), so a
+ * saved name/intent/accent still persists across visits on this device.
+ */
+export function readLocalGuest() {
+  try {
+    const g = JSON.parse(localStorage.getItem('pf3_guest') || 'null')
+    if (!g || typeof g !== 'object') return null
+    const out = {}
+    if (g.name) out.name = g.name
+    if (g.intent) out.intent = g.intent
+    if (g.accent) out.accent = g.accent
+    return Object.keys(out).length ? out : null
+  } catch {
+    return null
+  }
+}
+
+/**
  * Best-effort update of the current visitor's pass appearance (name, intent,
  * color) when they customize it in the pass editor. Uses the token already in
  * localStorage. If RLS has no UPDATE policy for a token match this fails

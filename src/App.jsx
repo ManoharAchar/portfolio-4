@@ -34,7 +34,7 @@ import PassEditorModal from './components/PassEditorModal/PassEditorModal'
 import { PassEditorContext } from './lib/passEditor'
 import { accentBurst } from './lib/accentBurst'
 import { initIdleCursorTrail } from './lib/idleCursorTrail'
-import { resolveVisitor, createPass, passToGuest, updatePass } from './lib/visitor'
+import { resolveVisitor, createPass, passToGuest, updatePass, readLocalGuest } from './lib/visitor'
 import { startSession, recordPageVisit } from './lib/session'
 import { PROJECTS } from './data/projects'
 import { capture } from './lib/analytics'
@@ -192,6 +192,11 @@ function App() {
     resolveVisitor().then(({ pass, isNew }) => {
       if (!isNew && pass) {
         const guestData = passToGuest(pass)
+        // Apply any device-local customization (name/intent/accent) saved by the
+        // pass editor, so it persists even if the Supabase write-through was
+        // blocked by RLS.
+        const local = readLocalGuest()
+        if (local) Object.assign(guestData, local)
         // Accent follows the saved pass color (decoupled from intent).
         const accent = guestData.accent ?? ACCENT_COLORS[pass.intent]
         const requested = pathToPage(window.location.pathname)
