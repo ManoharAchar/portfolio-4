@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/resume.pdf", "destination": "/Manohar-Achar-Resume.pdf", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],

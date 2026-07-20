@@ -23,7 +23,7 @@ export default function Footer({ activePage = 'home', onNavigate }) {
         <div className="footer__link-col">
           <a href="mailto:manohar.create@gmail.com" className="footer__link footer__link--muted">EMAIL</a>
           <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="footer__link footer__link--muted">LINKEDIN</a>
-          <a href="/resume.pdf" target="_blank" rel="noreferrer" className="footer__link footer__link--muted">RESUME</a>
+          <a href="/Manohar-Achar-Resume.pdf" target="_blank" rel="noreferrer" className="footer__link footer__link--muted">RESUME</a>
         </div>
         <div className="footer__link-col">
           {NAV_LINKS.map(({ label, page }) => (

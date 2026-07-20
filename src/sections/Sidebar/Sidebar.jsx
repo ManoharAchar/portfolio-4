@@ -187,7 +187,7 @@ export default function Sidebar({ activePage = 'home', onNavigate, isOpen = fals
             <span className="sidebar__more-sep">, </span>
             <a href="https://www.linkedin.com/in/manohar-achar/" target="_blank" rel="noreferrer" className="sidebar__more-link">LinkedIn</a>
             <span className="sidebar__more-sep">, </span>
-            <a href="/resume.pdf" target="_blank" rel="noreferrer" className="sidebar__more-link">Resume</a>
+            <a href="/Manohar-Achar-Resume.pdf" target="_blank" rel="noreferrer" className="sidebar__more-link">Resume</a>
           </div>
         </div>
       </div>
