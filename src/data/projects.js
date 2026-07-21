@@ -18,7 +18,14 @@ import posterFleet from '../assets/thumbnails/poster-fleet.jpg'
 // `domain · maturity` chip pinned to the bottom. `compact` is the shorter line
 // used on related / View Next cards. `number` drives mobile sort order. Order
 // reflects hiring priority (enterprise scale first, self-initiated last).
-export const PROJECTS = [
+// ── Passcode gate ──────────────────────────────────────────
+// Flip to true to protect the NDA case studies behind the passcode again.
+// Nothing is deleted: the lock badge, PasscodeModal, ENTER PASSCODE cursor and
+// the `locked: true` flags below all stay in place. This switch simply
+// neutralizes `locked`, so those cards navigate straight through.
+export const PASSCODE_GATE_ENABLED = false
+
+const ALL_PROJECTS = [
   {
     id: 'fleet',
     locked: true,
@@ -136,6 +143,14 @@ export const PROJECTS = [
     column: 'right',
   },
 ]
+
+// `locked` only survives while the gate is on; otherwise it is forced off so
+// every consumer (lock badge, cursor variant, card click) treats the study as
+// open. Turning the gate back on restores all of it with no other changes.
+export const PROJECTS = ALL_PROJECTS.map((p) => ({
+  ...p,
+  locked: PASSCODE_GATE_ENABLED && !!p.locked,
+}))
 
 // Picks the next 2 projects after currentId, wrapping around, never the current one.
 export function getViewNext(currentId) {
