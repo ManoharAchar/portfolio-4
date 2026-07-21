@@ -1,0 +1,82 @@
+/* NDA notice — content inside the shared .pf-modal shell. */
+
+.pf-nda {
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pf-nda__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pf-nda__eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #dbd8ce;
+}
+
+.pf-nda__title {
+  font-family: 'Fraunces', serif;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.25;
+  color: #faf8f1;
+  margin: 0;
+}
+
+.pf-nda__body {
+  font-family: 'DM Sans', sans-serif;
+  font-variation-settings: 'opsz' 14;
+  font-size: 15px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.pf-nda__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.pf-nda__ok {
+  background: #faf8f1;
+  color: #120b06;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.pf-nda__ok:hover {
+  background: #e9e6dc;
+}
+
+.pf-nda__ok:active {
+  transform: scale(0.96);
+}
+
+/* Mobile: the shared shell becomes a bottom sheet; go full width. */
+@media (max-width: 767px) {
+  .pf-nda {
+    width: 100%;
+  }
+
+  .pf-nda__title {
+    font-size: 22px;
+  }
+
+  .pf-nda__ok {
+    width: 100%;
+    padding: 14px 26px;
+  }
+}

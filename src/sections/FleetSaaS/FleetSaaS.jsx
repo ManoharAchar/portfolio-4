@@ -5,6 +5,7 @@ import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
 import { playInView } from '../../lib/playInView'
 import FitExhibit from '../../components/FitExhibit/FitExhibit'
+import NdaNoticeModal from '../../components/NdaNoticeModal/NdaNoticeModal'
 import { FLEET_EXHIBITS } from './exhibits'
 import '../CooperantLearning/CooperantLearning.css'
 import './exhibits.css'
@@ -195,6 +196,7 @@ export default function FleetSaaS({ onNavigate, guest, showPassCard }) { // esli
 
   return (
     <div className="cs-page flx-page">
+      <NdaNoticeModal studyKey="fleet" projectTitle="Fleet Coordination Platform" />
       <div className="cs-mobile-topbar">
         <button className="cs-mobile-topbar__back" onClick={() => onNavigate?.('home')} aria-label="Back to home" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true">

@@ -5,6 +5,7 @@ import { useIsMobile } from '../../lib/useIsMobile'
 import { getViewNext, getProjectPage } from '../../data/projects'
 import { playInView } from '../../lib/playInView'
 import FitExhibit from '../../components/FitExhibit/FitExhibit'
+import NdaNoticeModal from '../../components/NdaNoticeModal/NdaNoticeModal'
 import { EXHIBITS } from './exhibits'
 import '../CooperantLearning/CooperantLearning.css'
 import './IndustrialHMI.css'
@@ -186,6 +187,7 @@ export default function IndustrialHMI({ onNavigate, guest, showPassCard }) { // 
 
   return (
     <div className="cs-page hmi-page">
+      <NdaNoticeModal studyKey="industrial-hmi" projectTitle="Industrial HMI, Machine Controller" />
       <div className="cs-mobile-topbar">
         <button className="cs-mobile-topbar__back" onClick={() => onNavigate?.('home')} aria-label="Back to home" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true">
