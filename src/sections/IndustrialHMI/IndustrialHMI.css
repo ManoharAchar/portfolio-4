@@ -70,11 +70,10 @@
 
 .hmi-section-heading {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 30px;
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+  line-height: normal;
   color: #faf8f1;
   margin: 18px 0 0;
   text-wrap: balance;
@@ -86,7 +85,6 @@
 
 .hmi-body {
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-size: 16px;
   line-height: 1.65;
   color: #dbd8ce;
@@ -96,7 +94,6 @@
 
 .hmi-lead {
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-size: 16px;
   line-height: 1.625;
   color: #dbd8ce;
@@ -106,7 +103,6 @@
 
 .hmi-small {
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-size: 15px;
   line-height: 1.6;
   color: #dbd8ce;
@@ -141,7 +137,6 @@
 .hmi-standing-caption {
   text-align: center;
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-style: italic;
   font-size: 14px;
   line-height: 1.6;
@@ -197,7 +192,6 @@
   border-radius: 12px;
   padding: 9px 15px;
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-weight: 500;
   font-size: 13px;
   line-height: 1;
@@ -309,7 +303,7 @@
 
 .hmi-stat-card__num {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 60px;
   line-height: 0.85;
@@ -318,7 +312,7 @@
 
 .hmi-stat-card__unit {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 40, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 24px;
   color: var(--accent);
@@ -351,7 +345,7 @@
 
 .hmi-constraint-card__title {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 40, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.2;
@@ -378,11 +372,10 @@
 
 .hmi-decision-headline {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 27px;
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+  line-height: normal;
   color: #faf8f1;
   max-width: 900px;
   margin: 12px 0 0;
@@ -499,7 +492,7 @@
 
 .hmi-receipt-card__title {
   font-family: 'Fraunces', serif;
-  font-variation-settings: 'opsz' 40, 'SOFT' 0, 'WONK' 1;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.25;
@@ -509,7 +502,6 @@
 
 .hmi-receipt-card__note {
   font-family: 'DM Sans', sans-serif;
-  font-variation-settings: 'opsz' 14;
   font-size: 14px;
   line-height: 1.55;
   color: #dbd8ce;
