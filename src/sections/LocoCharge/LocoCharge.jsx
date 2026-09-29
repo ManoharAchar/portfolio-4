@@ -13,9 +13,10 @@ import stripNearby from '../../assets/loco-charge/S1-1_nearby-freshness.webp'
 import stripDetail from '../../assets/loco-charge/S1-2_station-detail.webp'
 import stripBay from '../../assets/loco-charge/S1-3_bay-picker-F304.webp'
 import stripNav from '../../assets/loco-charge/S1-4_nav-holding-F304.webp'
-import iconOffline from '../../assets/loco-charge/I-1_charger-offline.svg'
-import iconOverstay from '../../assets/loco-charge/I-2_car-overstay.svg'
-import iconStale from '../../assets/loco-charge/I-3_data-stale.svg'
+// Problem-card icons are exported straight from the Figma frame, colors included.
+import iconOffline from '../../assets/loco-charge/icon-no-network.svg'
+import iconOverstay from '../../assets/loco-charge/icon-time-machine.svg'
+import iconStale from '../../assets/loco-charge/icon-expired.svg'
 import iconCompass from '../../assets/loco-charge/I-4_directional-compass.svg'
 import protoPoster from '../../assets/loco-charge/prototype-poster.webp'
 import fR1 from '../../assets/loco-charge/F-R1_map-home.webp'
@@ -509,11 +510,7 @@ export default function LocoCharge({ onNavigate }) {
                   {PROBLEM_CARDS.map(({ icon, title, body }) => (
                     <div key={title} className="cs-problem-card">
                       <div className="cs-problem-card__top">
-                        <span
-                          aria-hidden="true"
-                          className="loco-mask-icon cs-problem-card__icon"
-                          style={{ maskImage: `url(${icon})`, WebkitMaskImage: `url(${icon})` }}
-                        />
+                        <img loading="lazy" decoding="async" src={icon} alt="" className="cs-problem-card__icon" />
                         <p className="cs-problem-card__title">{title}</p>
                       </div>
                       <p className="cs-problem-card__body">{body}</p>
