@@ -192,15 +192,29 @@ function PrototypeEmbed() {
     return () => obs.disconnect()
   }, [])
 
-  // The prototype is laid out at 393 × 852; narrower screens scale it down.
+  // The prototype is laid out at 393 × 852. Scale it so the whole device,
+  // bezel and panel padding included, fits in one viewport height, and on
+  // narrow screens within the panel's width.
   useEffect(() => {
-    const el = wrapRef.current
-    if (!el || typeof ResizeObserver === 'undefined') return
-    const ro = new ResizeObserver(([entry]) => {
-      setScale(Math.min(1, entry.contentRect.width / 393))
-    })
-    ro.observe(el)
-    return () => ro.disconnect()
+    const panel = wrapRef.current?.closest('.loco-embed')
+    if (!panel) return
+    const fit = () => {
+      const styles = getComputedStyle(panel)
+      const bezel = window.innerWidth <= 767 ? 16 : 24
+      const padY = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom)
+      const padX = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight)
+      const byHeight = (window.innerHeight - 120 - padY - bezel) / 852
+      const byWidth = window.innerWidth <= 767 ? (panel.clientWidth - padX - bezel) / 393 : 1
+      setScale(Math.max(0.5, Math.min(1, byHeight, byWidth)))
+    }
+    fit()
+    window.addEventListener('resize', fit)
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(fit) : null
+    ro?.observe(panel)
+    return () => {
+      window.removeEventListener('resize', fit)
+      ro?.disconnect()
+    }
   }, [])
 
   useEffect(() => {
@@ -215,7 +229,7 @@ function PrototypeEmbed() {
   const src = attempt === 0 ? EMBED_SRC : `${EMBED_SRC}&retry=${attempt}`
 
   return (
-    <div className="loco-proto">
+    <div className="loco-proto" style={{ width: 393 * scale }}>
       <div className="loco-proto__screen" ref={wrapRef} style={{ height: 852 * scale }}>
         {near && !failed && (
           <iframe

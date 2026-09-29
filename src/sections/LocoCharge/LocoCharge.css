@@ -821,8 +821,6 @@
   .loco-proto {
     padding: 8px;
     border-radius: 34px;
-    box-sizing: border-box;
-    width: 100%;
   }
 
   .loco-proto__screen {
