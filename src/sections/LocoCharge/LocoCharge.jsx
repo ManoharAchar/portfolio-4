@@ -74,7 +74,7 @@ const META_CHIPS = [
   { label: 'MY ROLE', value: 'Product Designer, interaction + prototype' },
   { label: 'TYPE', value: 'Tested concept' },
   { label: 'TEAM', value: '4-person team · prototype solo' },
-  { label: 'TIMELINE', value: '2024 to 2026' },
+  { label: 'TIMELINE', value: '2026' },
 ]
 
 const STRIP = [
