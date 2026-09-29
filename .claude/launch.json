@@ -4,14 +4,44 @@
     {
       "name": "portfolio-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--port", "5198", "--strictPort"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5198",
+        "--strictPort"
+      ],
       "port": 5198
     },
     {
       "name": "fridge-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/manohar_achar/fridge-management", "run", "dev", "--", "--host", "0.0.0.0"],
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/manohar_achar/fridge-management",
+        "run",
+        "dev",
+        "--",
+        "--host",
+        "0.0.0.0"
+      ],
       "port": 5273
+    },
+    {
+      "name": "sparks-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/manohar_achar/Sparks FBA",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5174",
+        "--strictPort"
+      ],
+      "port": 5174
     }
   ]
 }
