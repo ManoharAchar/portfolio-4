@@ -4,7 +4,7 @@ import './SplashScreen.css'
 
 // Progressive dematerialize: a single canvas renders an ambient starfield, a
 // crisp logo mark that breathes, then — on exit — erodes the mark left-to-right
-// into round dots of mixed size and tone that drift, then fly into the field. Self-contained,
+// into square particles that drift, then fly into the field. Self-contained,
 // so the shared starfield is hidden during the splash for continuity.
 const FRAME_W = 178
 const FRAME_H = 135
@@ -16,8 +16,6 @@ const HOLD_FADE_MS = 700
 const ERODE_MS = 2400
 const DRIFT = 16
 const DENSITY = 1
-// Dot colors: cream, the two secondary creams, and (per dot, ~10%) the accent.
-const TONES = ['250, 248, 241', '219, 216, 206', '203, 200, 191']
 
 const SplashScreen = forwardRef(function SplashScreen(_props, ref) {
   const canvasRef = useRef(null)
@@ -127,10 +125,7 @@ const SplashScreen = forwardRef(function SplashScreen(_props, ref) {
           const driftAngle = noise(lx * 1.7 + 40, ly * 1.7 + 9) * Math.PI * 4
           pts.push({
             hx: cx + lx, hy: cy + ly, lx, ly, t0, cell: g / S,
-            // Round dots in mixed sizes and brightness, like the original
-            // starfield burst: biased small, with a few larger globules.
-            tier: Math.pow(Math.random(), 1.6),
-            tone: TONES[Math.floor(Math.random() * TONES.length)],
+            size: 1.1 + Math.random() * 1.3,
             driftX: Math.cos(driftAngle), driftY: Math.sin(driftAngle) - 0.55,
             isAccent: Math.random() < 0.1,
             ox: 0, oy: 0, detachAt: -1, dirX: 0, dirY: 0, gone: false,
@@ -212,8 +207,7 @@ const SplashScreen = forwardRef(function SplashScreen(_props, ref) {
           l.restore()
         }
         if (p.detachAt < 0) continue
-        const radius = 0.6 + p.tier * 2.6
-        let x, y, alpha = 0.45 + p.tier * 0.55, size = radius
+        let x, y, alpha = 1, size = p.size
         const age = (now - p.detachAt) / 1000
         if (age < 0.45) {
           p.ox += p.driftX * DRIFT * dt * (1 + age * 2)
@@ -225,15 +219,13 @@ const SplashScreen = forwardRef(function SplashScreen(_props, ref) {
           p.ox += (p.dirX * 0.75 + p.driftX * 0.25) * v * dt
           p.oy += (p.dirY * 0.75 + p.driftY * 0.25) * v * dt
           x = p.hx + p.ox; y = p.hy + p.oy
-          size = radius * (1 + fa * 2.2)
-          alpha *= fa < 0.5 ? 1 : Math.max(0, 1 - (fa - 0.5) / 0.45)
+          size = p.size * (1 + fa * 2.2)
+          alpha = fa < 0.5 ? 1 : Math.max(0, 1 - (fa - 0.5) / 0.45)
           if (alpha <= 0 || x < -20 || x > W + 20 || y < -20 || y > H + 20) { p.gone = true; continue }
         }
-        const col = p.isAccent ? accent : p.tone
+        const col = p.isAccent ? accent : '250, 248, 241'
         ctx.fillStyle = `rgba(${col}, ${alpha})`
-        ctx.beginPath()
-        ctx.arc(x, y, size, 0, Math.PI * 2)
-        ctx.fill()
+        ctx.fillRect(x - size / 2, y - size / 2, size, size)
       }
 
       // finished eroding + flying — resolve the exit
