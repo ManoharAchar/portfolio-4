@@ -118,7 +118,7 @@ const ALL_PROJECTS = [
     thumbTime: 0,
     loopAlways: true,
     title: 'Loco Charge',
-    metadata: 'PRODUCT DESIGNER · TESTED CONCEPT · 2024–2026',
+    metadata: 'PRODUCT DESIGNER · TESTED CONCEPT · 2026',
     description:
       "An EV charging concept that warns drivers when a reserved bay won't be ready, while there's still time to choose. Tested with six drivers, built as a working prototype.",
     compact:
