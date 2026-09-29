@@ -1,0 +1,967 @@
+/* ════════════════════════════════════════════════════════════
+   Loco Charge — Case Study Page
+   Base chrome comes from CooperantLearning.css, and the Mochitta
+   patterns (tag pills, problem cards, What Broke rows, impact banner)
+   from Mochitta.css. Everything here is Loco-specific, built to the
+   Figma frame "Loco Charge v1 / Desktop".
+   ════════════════════════════════════════════════════════════ */
+
+.loco-page .cs-sections {
+  gap: 120px;
+}
+
+.loco-page .loco-overview {
+  gap: 64px;
+}
+
+.loco-section--gap-56 { gap: 56px; }
+.loco-section--gap-48 { gap: 48px; }
+.loco-section--gap-32 { gap: 32px; }
+
+.loco-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.loco-stack--8 { gap: 8px; }
+.loco-stack--12 { gap: 12px; }
+.loco-stack--20 { gap: 20px; }
+.loco-stack--24 { gap: 24px; }
+
+.loco-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(219, 216, 206, 0.2);
+  flex-shrink: 0;
+}
+
+.loco-caption {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+.loco-wide {
+  max-width: none;
+}
+
+/* Icons are single-color SVGs tinted with the visitor's accent. */
+.loco-mask-icon {
+  display: block;
+  flex-shrink: 0;
+  background-color: var(--accent);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* Full phone screens (strip + flows), 393:852 renders */
+.loco-phone {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 230 / 497;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 20px;
+  border: 1px solid #555553;
+  background: #f3f5f8;
+  box-sizing: border-box;
+}
+
+/* ── Scenario strip (under the hero) ─────────────────────── */
+
+.loco-strip,
+.loco-flow__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 230px));
+  justify-content: space-between;
+  row-gap: 32px;
+  width: 100%;
+}
+
+.loco-strip__item,
+.loco-flow__step {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.loco-strip__caption {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+}
+
+/* ── Contribution strip ──────────────────────────────────── */
+
+.loco-contrib {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.loco-contrib__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.loco-contrib__col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.loco-contrib__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.loco-contrib__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+/* ── Prototype embed ─────────────────────────────────────── */
+
+.loco-embed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  padding: 30px 0;
+  background: #3c3c3a;
+  border-radius: 20px;
+}
+
+.loco-embed__intro {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loco-embed__text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.loco-embed__text strong {
+  font-weight: 500;
+  color: #faf8f1;
+}
+
+.loco-proto {
+  width: 393px;
+  max-width: 100%;
+  padding: 12px;
+  background: #1d1d1c;
+  border-radius: 44px;
+  box-sizing: content-box;
+  flex-shrink: 0;
+}
+
+.loco-proto__screen {
+  position: relative;
+  width: 100%;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #f3f5f8;
+  isolation: isolate;
+}
+
+.loco-proto__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-origin: top left;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.loco-proto__frame--ready {
+  opacity: 1;
+}
+
+.loco-proto__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.loco-proto__poster--hidden {
+  opacity: 0;
+}
+
+.loco-proto__fallback {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  color: #faf8f1;
+  background: #1d1d1c;
+  border-radius: 12px;
+  padding: 12px 18px;
+  white-space: nowrap;
+}
+
+/* ── Flow blocks ─────────────────────────────────────────── */
+
+.loco-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.loco-flow__line {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #faf8f1;
+  margin: 0;
+  max-width: 760px;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.loco-flow__note {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 18px;
+  color: #cbc8bf;
+}
+
+.loco-flow__connect {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 23px;
+  color: #cbc8bf;
+  max-width: 640px;
+  margin: 0;
+}
+
+/* ── Beige media panels (What was hard + Key decisions) ──── */
+
+.loco-panel {
+  position: relative;
+  background: #eaeae1;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.loco-panel img {
+  display: block;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.loco-chip {
+  display: inline-block;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: #faf8f1;
+  background: var(--accent);
+  border-radius: 8px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.loco-chip--dark {
+  background: #3c3c3a;
+}
+
+.loco-annot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.loco-annot__line {
+  display: block;
+  height: 1.5px;
+  background: var(--accent);
+}
+
+/* What was hard, row 1: the 2024 confirmation sheet */
+.loco-broke-row--confirm {
+  height: 414px;
+}
+
+.loco-panel--confirm,
+.loco-panel--review {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.loco-panel__confirm {
+  position: absolute;
+  left: 70px;
+  bottom: 0;
+  width: 330px;
+  height: auto;
+  border-radius: 16px 16px 0 0;
+}
+
+.loco-annot--confirm {
+  left: 400px;
+  top: 250px;
+}
+
+.loco-annot--confirm .loco-annot__line {
+  width: 52px;
+}
+
+/* What was hard, row 2: the 2024 sample review */
+.loco-panel--review {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loco-panel__review {
+  width: 393px;
+  max-width: calc(100% - 40px);
+  height: auto;
+  border-radius: 16px;
+}
+
+.loco-broke-why {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.loco-broke-why .cs-broke-info__quote {
+  margin: 0;
+}
+
+.loco-broke-why__label,
+.loco-banner-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.loco-banner-label {
+  color: inherit;
+}
+
+.loco-broke-metric {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--accent);
+  margin: auto 0 0;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+/* ── Key decisions ───────────────────────────────────────── */
+
+.loco-decision {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-margin-top: 40px;
+}
+
+.loco-decision__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.loco-decision__head .cs-decision-heading {
+  margin-top: -2px;
+}
+
+.loco-decision__kicker {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 -2px;
+}
+
+/* Decision 01: without vs kept, phone tops flush with the panel bottom */
+.loco-panel--compare {
+  height: 430px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 80px;
+}
+
+.loco-compare__side {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.loco-panel__crop {
+  width: 330px;
+  height: auto;
+  border-radius: 16px 16px 0 0;
+}
+
+.loco-compare__vs {
+  align-self: center;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  letter-spacing: 0.07em;
+  color: #737370;
+}
+
+/* Decision 02: freshness states (live component, from D2_freshness-states.html) */
+.loco-panel--fresh {
+  padding: 24px 32px;
+}
+
+.loco-fresh {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  font-family: 'Public Sans', 'DM Sans', -apple-system, sans-serif;
+}
+
+.loco-fresh__card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 2px rgba(20, 23, 28, 0.06), 0 5px 14px rgba(20, 23, 28, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.loco-fresh__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+}
+
+.loco-fresh__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #14171c;
+}
+
+.loco-fresh__dist {
+  font-size: 11px;
+  font-weight: 600;
+  color: #545c66;
+  white-space: nowrap;
+}
+
+.loco-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid #aeb6c2;
+  color: #545c66;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.loco-pill--stale { border-style: dashed; }
+.loco-pill--unknown { border-style: dotted; }
+
+.loco-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.loco-dot--filled { background: #545c66; }
+.loco-dot--hollow { border: 1.5px solid #545c66; }
+
+.loco-fresh__state {
+  margin: 12px 0 0;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #14171c;
+}
+
+.loco-fresh__desc {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #545c66;
+}
+
+/* Decision 03: the alert, annotated from both sides */
+.loco-panel--alert {
+  height: 400px;
+}
+
+.loco-panel__alert {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 354px;
+  height: auto;
+  transform: translateX(-50%);
+  border-radius: 16px 16px 0 0;
+}
+
+.loco-annot--left {
+  right: calc(50% + 157px);
+  top: 42px;
+}
+
+.loco-annot--left .loco-annot__line {
+  width: 60px;
+}
+
+.loco-annot--right {
+  left: calc(50% + 110px);
+  top: 180px;
+}
+
+.loco-annot--right .loco-annot__line {
+  width: 107px;
+}
+
+/* Metric bar (Mochitta "Fix Metric", with evidence + tradeoff) */
+.loco-metric {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 22px 28px;
+  background: #3c3c3a;
+  border-radius: 12px;
+}
+
+.loco-metric__value {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: var(--accent);
+  margin: 0;
+  min-width: 110px;
+  white-space: nowrap;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+.loco-metric__col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.loco-metric__col:first-of-type {
+  width: 390px;
+  flex-shrink: 0;
+}
+
+.loco-metric__col:last-of-type {
+  flex: 1;
+  min-width: 0;
+}
+
+.loco-metric__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.loco-metric__text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #dbd8ce;
+  margin: 0;
+}
+
+.loco-payoff {
+  margin: 0;
+  max-width: 760px;
+  padding-left: 20px;
+  border-left: 3px solid var(--accent);
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: #faf8f1;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+}
+
+/* ── Method ──────────────────────────────────────────────── */
+
+.loco-evidence {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.loco-evidence__card {
+  height: 120px;
+  box-sizing: border-box;
+}
+
+.loco-evidence__label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  color: #cbc8bf;
+  margin: 0;
+}
+
+/* ── What's next ─────────────────────────────────────────── */
+
+.loco-next-card {
+  height: auto;
+  min-height: 74px;
+  padding: 20px;
+}
+
+.loco-next-card__arrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 18px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ── Receipts ────────────────────────────────────────────── */
+
+.loco-receipts {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(219, 216, 206, 0.2);
+}
+
+.loco-receipt {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0;
+  padding: 20px 0;
+  border: none;
+  border-bottom: 1px solid rgba(219, 216, 206, 0.2);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.loco-receipt__id {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  line-height: 22px;
+  color: var(--accent);
+}
+
+.loco-receipt__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.loco-receipt__title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #faf8f1;
+}
+
+.loco-receipt__line {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 23px;
+  color: #cbc8bf;
+}
+
+.loco-receipt__to {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px;
+  line-height: 22px;
+  letter-spacing: 0.06em;
+  color: #dbd8ce;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.loco-receipt:hover .loco-receipt__to,
+.loco-receipt:focus-visible .loco-receipt__to {
+  color: var(--accent);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .loco-page .cs-sections {
+    gap: 96px;
+  }
+
+  .loco-broke-row--confirm {
+    height: auto;
+  }
+
+  .loco-panel--confirm {
+    flex: 0 0 414px;
+    height: 414px;
+  }
+
+  .loco-panel--review {
+    flex: 0 0 332px;
+    height: 332px;
+  }
+
+  .loco-embed {
+    gap: 40px;
+    padding: 30px 24px;
+  }
+
+  .loco-metric {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .loco-metric__col:first-of-type {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .loco-page .cs-sections {
+    gap: 72px;
+  }
+
+  .loco-page .loco-overview {
+    gap: 40px;
+  }
+
+  /* Mochitta re-sequences the hero copy on mobile (title, body, pills,
+     chips); the prototype CTA closes that sequence. */
+  .loco-page .cs-v2-hero-copy .cs-live-cta {
+    order: 4;
+  }
+
+  .loco-section--gap-56,
+  .loco-section--gap-48 {
+    gap: 40px;
+  }
+
+  .loco-strip,
+  .loco-flow__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 24px;
+  }
+
+  .loco-phone {
+    border-radius: 14px;
+  }
+
+  .loco-contrib__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 16px;
+  }
+
+  .loco-contrib__body {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .loco-embed {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 16px;
+  }
+
+  .loco-embed__intro {
+    width: 100%;
+  }
+
+  .loco-proto {
+    padding: 8px;
+    border-radius: 34px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .loco-proto__screen {
+    border-radius: 26px;
+  }
+
+  /* Media panels: annotations drop their leader lines and sit above the art */
+  .loco-panel--confirm,
+  .loco-panel--review,
+  .loco-panel--alert {
+    order: 0;
+    flex: 0 0 auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 20px 0;
+  }
+
+  .loco-panel--review {
+    padding-bottom: 20px;
+  }
+
+  .loco-annot,
+  .loco-annot--confirm,
+  .loco-annot--left,
+  .loco-annot--right {
+    position: static;
+  }
+
+  .loco-annot__line {
+    display: none;
+  }
+
+  .loco-annot {
+    order: -1;
+  }
+
+  .loco-panel__confirm,
+  .loco-panel__alert {
+    position: static;
+    width: 78%;
+    transform: none;
+  }
+
+  .loco-panel__review {
+    width: 100%;
+    max-width: none;
+  }
+
+  .loco-panel--alert {
+    padding-top: 16px;
+  }
+
+  .loco-panel--compare {
+    height: auto;
+    gap: 10px;
+    padding: 16px 12px 0;
+  }
+
+  .loco-compare__side {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .loco-panel__crop {
+    width: 100%;
+  }
+
+  .loco-compare__vs {
+    font-size: 11px;
+  }
+
+  .loco-chip {
+    font-size: 11px;
+    padding: 5px 8px;
+    white-space: normal;
+  }
+
+  .loco-panel--fresh {
+    padding: 16px;
+  }
+
+  .loco-fresh {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .loco-metric {
+    padding: 16px 18px;
+  }
+
+  .loco-metric__value {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .loco-metric__text {
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .loco-payoff {
+    font-size: 20px;
+    line-height: 28px;
+    padding-left: 16px;
+  }
+
+  .loco-evidence {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .loco-evidence__card {
+    height: 104px;
+    border-radius: 16px;
+  }
+
+  .loco-evidence__card .cs-impact-card__value {
+    font-size: 28px;
+  }
+
+  .loco-evidence__label {
+    font-size: 11px;
+  }
+
+  .loco-next-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .loco-receipt {
+    grid-template-columns: 40px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .loco-receipt__to {
+    grid-column: 2;
+  }
+}

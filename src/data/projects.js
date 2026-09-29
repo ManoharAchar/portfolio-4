@@ -4,6 +4,7 @@ import thumbBlackbaza from '../assets/thumbnails/3 - Blackbaza Thumbnail.mp4'
 import thumbMochitta from '../assets/thumbnails/4 - Mochitta Thumbnail.mp4'
 import thumbIndustrialHmi from '../assets/thumbnails/5 - Industrial HMI Thumbnail.mp4'
 import thumbFleet from '../assets/thumbnails/0 - Fleet SaaS Thumbnail.mp4'
+import thumbLocoCharge from '../assets/thumbnails/6 - Loco Charge Thumbnail.mp4'
 // Poster frames (extracted at each video's thumbTime), shown when the
 // browser refuses to decode video, e.g. iOS Low Power Mode.
 import posterCooperant from '../assets/thumbnails/poster-cooperant.jpg'
@@ -12,6 +13,7 @@ import posterBlackbaza from '../assets/thumbnails/poster-black-baza.jpg'
 import posterMochitta from '../assets/thumbnails/poster-mochitta.jpg'
 import posterIndustrialHmi from '../assets/thumbnails/poster-industrial-hmi.jpg'
 import posterFleet from '../assets/thumbnails/poster-fleet.jpg'
+import posterLocoCharge from '../assets/thumbnails/poster-loco-charge.jpg'
 
 // Home cards (Figma "Home / Desktop"): media, title, an uppercase `metadata`
 // line (role · context · years), a short `description`, and a combined
@@ -105,9 +107,28 @@ const ALL_PROJECTS = [
     column: 'right',
   },
   {
+    id: 'loco-charge',
+    tags: ['mobile', 'zero'],
+    number: '05',
+    domain: 'EV Charging',
+    maturity: 'Tested',
+    imageColor: '#b08a9a',
+    video: thumbLocoCharge,
+    poster: posterLocoCharge,
+    thumbTime: 0,
+    loopAlways: true,
+    title: 'Loco Charge',
+    metadata: 'PRODUCT DESIGNER · TESTED CONCEPT · 2024–2026',
+    description:
+      "An EV charging concept that warns drivers when a reserved bay won't be ready, while there's still time to choose. Tested with six drivers, built as a working prototype.",
+    compact:
+      "An EV charging concept that warns drivers when a reserved bay won't be ready, tested with six drivers and built as a working prototype.",
+    column: 'left',
+  },
+  {
     id: 'black-baza',
     tags: ['web', 'zero'],
-    number: '05',
+    number: '06',
     domain: 'Commerce + Traceability',
     maturity: 'In Production',
     imageColor: '#829eb0',
@@ -121,12 +142,12 @@ const ALL_PROJECTS = [
       'A commerce and traceability platform connecting purchases to farmer origins, validated with 16 participants across three stakeholder groups.',
     compact:
       'A commerce and traceability platform for buyers and retailers, validated with farmer partners and 16 participants.',
-    column: 'left',
+    column: 'right',
   },
   {
     id: 'senior-mode',
     tags: ['mobile', 'access'],
-    number: '06',
+    number: '07',
     domain: 'Accessibility',
     maturity: 'Tested',
     imageColor: '#8eb082',
@@ -140,7 +161,7 @@ const ALL_PROJECTS = [
       'An accessibility concept making silent mode legible for seniors and recoverable for caregivers, improving recognition from 70% to 100%.',
     compact:
       'An accessibility concept that makes silent mode legible for seniors and recoverable for caregivers.',
-    column: 'right',
+    column: 'left',
   },
 ]
 
@@ -165,6 +186,7 @@ const PROJECT_PAGES = {
   'industrial-hmi': 'industrial-hmi',
   cooperant: 'cooperant',
   mochitta: 'mochitta',
+  'loco-charge': 'loco-charge',
   'black-baza': 'black-bazaar',
   'senior-mode': 'senior-mode',
 }

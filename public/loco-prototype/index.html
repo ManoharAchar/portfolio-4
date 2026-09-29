@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#E9ECF1}
+*,*::before,*::after{box-sizing:border-box}
+a{color:#3B2BD4}a:hover{color:#2A1DA8}
+button,input{font:inherit}
+button:focus{outline:none}
+button:focus-visible,input:focus-visible{outline:2px solid #3B2BD4;outline-offset:2px}
+::-webkit-scrollbar{width:0;height:0}
+@keyframes lcFadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes lcFade{from{opacity:0}to{opacity:1}}
+@keyframes lcSlideIn{from{transform:translateX(-100%)}to{transform:none}}
+@keyframes lcSlideInR{from{transform:translateX(100%)}to{transform:none}}
+.no-frame{padding:0!important;min-height:0!important;display:block!important}
+.no-frame .lc-frame{border:none!important;border-radius:0!important;box-shadow:none!important}
+.no-frame .lc-app{border-radius:0!important}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div class="{{frameShellClass}}" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;background:#E9ECF1;font-family:'Public Sans',system-ui,'Segoe UI',sans-serif;color:#14171C">
+<div class="lc-frame" style="border:9px solid #14171C;border-radius:52px;box-shadow:0 24px 60px rgba(20,23,28,.28);overflow:hidden">
+<div class="lc-app" style="position:relative;width:393px;height:852px;background:#F3F5F8;overflow:hidden">
+
+<div data-screen-label="Map home" style="position:absolute;inset:0">
+<svg viewBox="0 0 393 852" width="393" height="852" style="position:absolute;inset:0;display:block" aria-hidden="true">
+<rect width="393" height="852" fill="#F3F5F8"></rect>
+<path d="M236 0 C252 120 316 196 393 244 L393 302 C300 252 230 150 216 0 Z" fill="#DBE3EF"></path>
+<path d="M0 706 L393 640 L393 672 L0 740 Z" fill="#DBE3EF"></path>
+<rect x="44" y="304" width="92" height="66" rx="14" fill="#E4EAE2"></rect>
+<polygon points="252,432 336,414 354,470 272,494" fill="#E4EAE2"></polygon>
+<g stroke="#B7C1D1" stroke-width="8" fill="none" stroke-linecap="round">
+<path d="M-10 522 L120 474 L262 452 L403 404"></path>
+<path d="M62 -10 L108 180 L142 380 L122 622"></path>
+<path d="M403 300 L302 362 L212 522 L184 862"></path>
+</g>
+<g stroke="#C7CFDB" stroke-width="3" fill="none" stroke-linecap="round">
+<path d="M0 202 L162 172 L300 192"></path>
+<path d="M162 172 L182 42"></path>
+<path d="M204 300 L332 282"></path>
+<path d="M22 382 L204 342"></path>
+<path d="M242 92 L262 242"></path>
+<path d="M300 192 L360 262"></path>
+<path d="M0 482 L182 472"></path>
+<path d="M92 562 L282 542 L393 562"></path>
+<path d="M142 622 L152 762"></path>
+<path d="M252 642 L262 802"></path>
+<path d="M42 702 L362 692"></path>
+<path d="M330 100 L393 140"></path>
+</g>
+</svg>
+<sc-for list="{{pins}}" as="p" hint-placeholder-count="4">
+<button onClick="{{p.open}}" aria-label="{{p.name}}" style="position:absolute;left:{{p.left}};top:{{p.top}};width:48px;height:48px;border-radius:50%;background:#FFFFFF;border:2px solid {{p.color}};box-shadow:0 4px 12px rgba(20,23,28,.18);display:flex;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0">
+<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="{{p.color}}"></path></svg>
+<span style="font-size:13px;font-weight:700;color:#14171C;font-variant-numeric:tabular-nums">{{p.count}}</span>
+</button>
+</sc-for>
+<div style="position:absolute;left:184px;top:292px;width:22px;height:22px;border-radius:50%;background:#3B2BD4;border:3px solid #FFFFFF;box-shadow:0 0 0 3px #3B2BD4,0 4px 10px rgba(59,43,212,.4)" aria-hidden="true"></div>
+
+<div style="position:absolute;left:16px;right:16px;top:56px;display:flex;gap:10px;z-index:14">
+<div style="flex:1;display:flex;align-items:center;gap:9px;height:46px;background:#FFFFFF;border-radius:999px;padding:0 16px;box-shadow:0 2px 8px rgba(20,23,28,.10)">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#545C66" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+<input placeholder="Search for EV chargers" aria-label="Search for EV chargers" value="{{searchQ}}" onChange="{{onSearchInput}}" onFocus="{{openSearch}}" style="border:none;outline:none;flex:1;font-size:14.5px;color:#14171C;background:transparent;min-width:0">
+</div>
+<button onClick="{{openMenu}}" aria-label="Menu" style="width:46px;height:46px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+</div>
+<sc-if value="{{searchOpen}}">
+<div onClick="{{closeSearch}}" style="position:absolute;inset:0;background:rgba(20,23,28,.20);z-index:12;animation:lcFade .15s ease"></div>
+<div data-screen-label="Search results" style="position:absolute;left:16px;right:16px;top:110px;z-index:14;background:#FFFFFF;border-radius:16px;box-shadow:0 10px 30px rgba(20,23,28,.16);padding:6px;max-height:340px;overflow-y:auto;scrollbar-width:none;animation:lcFadeUp .15s ease">
+<sc-if value="{{searchEmpty}}">
+<div style="padding:16px;text-align:center;font-size:12.5px;color:#545C66">No chargers match your search</div>
+</sc-if>
+<sc-for list="{{searchResults}}" as="s" hint-placeholder-count="4">
+<button onClick="{{s.open}}" style="width:100%;border:none;background:transparent;display:flex;align-items:center;gap:11px;padding:11px 10px;cursor:pointer;text-align:left;border-radius:10px" style-hover="background:#F1F3F7">
+<span style="width:34px;height:34px;border-radius:50%;background:#EEECFD;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg></span>
+<span style="flex:1;min-width:0"><span style="display:block;font-size:13.5px;font-weight:600;color:#14171C">{{s.name}}</span><span style="display:block;font-size:11.5px;color:#545C66;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{s.sub}}</span></span>
+<span style="font-size:11.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.dist}}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<div style="position:absolute;left:0;right:0;top:114px;display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;z-index:10;scrollbar-width:none">
+<button onClick="{{openFilters}}" aria-label="Filters" style="flex:0 0 auto;width:40px;height:40px;border-radius:12px;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v5l-4 2v-7z"></path></svg>
+</button>
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="5">
+<button onClick="{{c.pick}}" style="flex:0 0 auto;height:40px;padding:0 15px;border-radius:999px;border:none;background:{{c.bg}};color:{{c.fg}};font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(20,23,28,.08)">{{c.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{sheetOpen}}">
+<div onClick="{{toggleSheet}}" style="position:absolute;inset:0;background:rgba(20,23,28,.30);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);z-index:20;animation:lcFade .15s ease"></div>
+</sc-if>
+
+<div style="position:absolute;left:0;right:0;bottom:64px;top:{{sheetTop}};z-index:25;background:#F0F2F6;border-radius:22px 22px 0 0;box-shadow:0 -8px 28px rgba(20,23,28,.14);transition:top .15s ease;display:flex;flex-direction:column;overflow:hidden">
+<button onClick="{{toggleSheet}}" aria-label="Toggle station list" style="border:none;background:transparent;padding:9px 0 3px;cursor:pointer;display:flex;justify-content:center;width:100%">
+<span style="width:40px;height:4.5px;border-radius:999px;background:#C3CAD5;display:block"></span>
+</button>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:2px 16px 0">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Nearby stations</div>
+<sc-if value="{{sheetOpen}}">
+<button onClick="{{toggleSheet}}" aria-label="Collapse list" style="width:36px;height:36px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 1px 4px rgba(20,23,28,.12);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</sc-if>
+</div>
+<div style="margin:12px 16px 0;display:flex;background:#E2E6ED;border-radius:12px;padding:3px">
+<button onClick="{{segPublic}}" style="flex:1;height:38px;border:none;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;background:{{pubBg}};color:{{pubFg}}">Public</button>
+<button onClick="{{segPrivate}}" style="flex:1;height:38px;border:none;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;background:{{privBg}};color:{{privFg}}">Private</button>
+</div>
+<div style="flex:1;overflow-y:auto;padding:14px 16px 22px;display:flex;flex-direction:column;gap:12px;scrollbar-width:none">
+<sc-if value="{{segIsPublic}}" hint-placeholder-val="{{true}}">
+<sc-for list="{{stations}}" as="s" hint-placeholder-count="5">
+<button onClick="{{s.open}}" style="border:none;text-align:left;display:grid;grid-template-columns:1fr 56px;gap:8px;background:#FFFFFF;border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(20,23,28,.06),0 5px 14px rgba(20,23,28,.05);cursor:pointer;width:100%;color:#14171C">
+<div style="min-width:0">
+<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<span style="font-family:'Archivo','Public Sans',sans-serif;font-weight:600;font-size:17px">{{s.name}}</span>
+<span style="display:inline-flex;gap:1.5px" aria-hidden="true"><sc-for list="{{s.stars}}" as="t" hint-placeholder-count="5"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+<span style="font-size:12px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.ratingTxt}}</span>
+</div>
+<div style="display:flex;margin-top:10px">
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">HOURS</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.hours}}</div></div>
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PRICE</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.price}}</div></div>
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">CHARGERS</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.chargers}}</div></div>
+<div style="min-width:0"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">STATUS</div><div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;margin-top:2px;color:{{s.statusColor}}">
+<sc-if value="{{s.dotOk}}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;flex:0 0 auto"></span></sc-if>
+<sc-if value="{{s.dotWarn}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block;flex:0 0 auto"></span></sc-if>
+<sc-if value="{{s.dotUnknown}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px dotted currentColor;display:inline-block;flex:0 0 auto"></span></sc-if>
+<span>{{s.statusText}}</span></div></div>
+</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:3px 9px;border-radius:999px;border:1px {{s.freshBorder}} #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500">
+<sc-if value="{{s.freshFilled}}"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span></sc-if>
+<sc-if value="{{s.freshHollow}}"><span style="width:6px;height:6px;border-radius:50%;border:1.5px solid #545C66;display:inline-block"></span></sc-if>
+<span>{{s.freshLabel}}</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:center">
+<span style="width:44px;height:44px;border-radius:50%;border:1.5px solid #DCE0E6;display:flex;align-items:center;justify-content:center;background:#FFFFFF" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-7a4 4 0 0 1 4-4h9"></path><path d="M14 5l4 4-4 4"></path></svg>
+</span>
+<span style="font-size:11.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.dist}}</span>
+</div>
+</button>
+</sc-for>
+<sc-if value="{{hasHidden}}">
+<div style="text-align:center;font-size:12px;color:#545C66;padding:2px 0">{{hiddenNote}} · <button onClick="{{resetFilters}}" style="border:none;background:transparent;color:#3B2BD4;font-weight:600;font-size:12px;cursor:pointer;padding:4px">Reset</button></div>
+</sc-if>
+</sc-if>
+<sc-if value="{{segIsPrivate}}">
+<sc-for list="{{pstations}}" as="s" hint-placeholder-count="3">
+<button onClick="{{s.open}}" style="border:none;text-align:left;display:grid;grid-template-columns:1fr 56px;gap:8px;background:#FFFFFF;border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(20,23,28,.06),0 5px 14px rgba(20,23,28,.05);cursor:pointer;width:100%;color:#14171C">
+<div style="min-width:0">
+<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<span style="font-family:'Archivo','Public Sans',sans-serif;font-weight:600;font-size:17px">{{s.name}}</span>
+<span style="display:inline-flex;gap:1.5px" aria-hidden="true"><sc-for list="{{s.stars}}" as="t" hint-placeholder-count="5"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+<span style="font-size:12px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.ratingTxt}}</span>
+</div>
+<div style="display:flex;margin-top:10px">
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">HOURS</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.hours}}</div></div>
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PRICE</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.price}}</div></div>
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">TYPE</div><div style="font-size:12px;font-weight:600;margin-top:2px">{{s.ctype}}</div></div>
+<div style="min-width:0"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PARKING</div><div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;margin-top:2px;color:{{s.statusColor}}">
+<sc-if value="{{s.dotOk}}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;flex:0 0 auto"></span></sc-if>
+<sc-if value="{{s.dotWarn}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block;flex:0 0 auto"></span></sc-if>
+<span>{{s.statusText}}</span></div></div>
+</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:3px 9px;border-radius:999px;border:1px {{s.freshBorder}} #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500">
+<sc-if value="{{s.freshFilled}}"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span></sc-if>
+<sc-if value="{{s.freshHollow}}"><span style="width:6px;height:6px;border-radius:50%;border:1.5px solid #545C66;display:inline-block"></span></sc-if>
+<span>{{s.freshLabel}}</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:center">
+<span style="width:44px;height:44px;border-radius:50%;border:1.5px solid #DCE0E6;display:flex;align-items:center;justify-content:center;background:#FFFFFF" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-7a4 4 0 0 1 4-4h9"></path><path d="M14 5l4 4-4 4"></path></svg>
+</span>
+<span style="font-size:11.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.dist}}</span>
+</div>
+</button>
+</sc-for>
+</sc-if>
+</div>
+</div>
+
+<div style="position:absolute;left:0;right:0;bottom:0;height:64px;background:#FFFFFF;border-top:1px solid #DCE0E6;display:flex;z-index:30">
+<button onClick="{{goTabChargers}}" style="flex:1;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{tabChargersColor}}">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="currentColor"></path></svg>
+<span style="font-size:10.5px;font-weight:600">Chargers</span>
+</button>
+<button onClick="{{goTabTrip}}" style="flex:1;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{tabTripColor}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"></path><path d="M9 4v14M15 6v14"></path></svg>
+<span style="font-size:10.5px;font-weight:600">Trip</span>
+</button>
+<button onClick="{{goTabActivity}}" style="flex:1;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{tabActivityColor}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>
+<span style="font-size:10.5px;font-weight:600">Activity</span>
+</button>
+<button onClick="{{goTabChats}}" style="flex:1;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:{{tabChatsColor}}">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8c-1.2 0-2.4-.2-3.4-.7L4 21l1.7-4.2A8 8 0 0 1 12 4z"></path></svg>
+<span style="font-size:10.5px;font-weight:600">Chats</span>
+</button>
+</div>
+</div>
+
+<sc-if value="{{isActivityTab}}">
+<div data-screen-label="Activity" style="position:absolute;left:0;right:0;top:0;bottom:64px;z-index:28;background:#F3F5F8;display:flex;flex-direction:column;animation:lcFade .15s ease">
+<div style="padding:60px 16px 6px;font-family:'Archivo','Public Sans',sans-serif;font-size:22px;font-weight:700">Activity</div>
+<div style="flex:1;overflow-y:auto;padding:4px 16px 20px;scrollbar-width:none">
+<sc-if value="{{actHasSession}}">
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:8px">ACTIVE SESSION</div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px;margin-top:10px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+<div><div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:700">{{actName}}</div><div style="font-size:12px;color:#545C66;margin-top:2px">Bay {{actBay}} · {{actKw}}</div></div>
+<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;border:1px solid #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span>live</span>
+</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12.5px;font-weight:600;color:#0B7A45">
+<span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>
+Charging · started just now</div>
+<div style="display:flex;gap:10px;margin-top:12px">
+<button onClick="{{actEnd}}" style="flex:0 0 100px;height:44px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13.5px;font-weight:600;cursor:pointer">End</button>
+<button onClick="{{actView}}" style="flex:1;height:44px;border:none;border-radius:12px;background:#3B2BD4;color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer">View session</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{actHasRes}}">
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:8px">UPCOMING RESERVATION</div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px;margin-top:10px">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:700">{{actName}}</div>
+<div style="display:flex;gap:10px;margin-top:10px">
+<div style="flex:1.4;background:#F1F3F7;border-radius:12px;padding:11px 12px;display:flex;gap:10px;align-items:center">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5.5" width="16" height="15" rx="2.5"></rect><path d="M4 10h16M8.5 3.5v3M15.5 3.5v3"></path></svg>
+<div><div style="font-size:10.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{actDate}}</div><div style="font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px">{{actSlot}}</div></div>
+</div>
+<div style="flex:1;background:#F1F3F7;border-radius:12px;padding:11px 12px;display:flex;gap:10px;align-items:center">
+<svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg>
+<div><div style="font-size:12.5px;font-weight:700">{{actBay}}</div><div style="font-size:10.5px;color:#545C66;font-variant-numeric:tabular-nums;margin-top:1px">{{actKw}}</div></div>
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:12px">
+<button onClick="{{actCancel}}" style="flex:1;height:44px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13.5px;font-weight:600;cursor:pointer">Cancel</button>
+<button onClick="{{actChange}}" style="flex:1;height:44px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13.5px;font-weight:600;cursor:pointer">Change</button>
+<button onClick="{{actNavigate}}" style="flex:1;height:44px;border:none;border-radius:12px;background:#3B2BD4;color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer">Navigate</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{actEmpty}}">
+<div style="background:#FFFFFF;border-radius:16px;padding:22px 16px;margin-top:8px;text-align:center">
+<div style="font-size:14px;font-weight:600">No active or upcoming charging</div>
+<div style="font-size:12px;color:#545C66;margin-top:4px">Reserve a bay to see it here.</div>
+<button onClick="{{actFind}}" style="margin-top:14px;height:44px;padding:0 18px;border:none;border-radius:12px;background:#3B2BD4;color:#FFFFFF;font-size:13.5px;font-weight:600;cursor:pointer">Find a charger</button>
+</div>
+</sc-if>
+<sc-if value="{{actTrip}}">
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:20px">PLANNED TRIP</div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px;margin-top:10px">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:700">Evansville, KY → Columbus, OH</div>
+<div style="font-size:12px;color:#545C66;margin-top:3px">{{actTripMeta}}</div>
+<button onClick="{{actTripView}}" style="margin-top:12px;width:100%;height:42px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13.5px;font-weight:600;cursor:pointer">View trip</button>
+</div>
+</sc-if>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:20px">PAST SESSIONS</div>
+<sc-for list="{{pastSessions}}" as="p" hint-placeholder-count="3">
+<button onClick="{{p.openReceipt}}" style="width:100%;border:none;text-align:left;background:#FFFFFF;border-radius:14px;padding:12px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;color:#14171C">
+<div><div style="font-size:13.5px;font-weight:600">{{p.name}}</div><div style="font-size:11.5px;color:#545C66;margin-top:2px;font-variant-numeric:tabular-nums">{{p.meta}}</div></div>
+<span style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums">{{p.cost}}</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#98A0AC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"></path></svg></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isDetail}}">
+<div data-screen-label="Station detail" style="position:absolute;inset:0;z-index:40;background:#F3F5F8;animation:lcFadeUp .15s ease;overflow-y:auto;scrollbar-width:none;padding:56px 16px 28px">
+<sc-if value="{{parityOn}}" hint-placeholder-val="{{false}}">
+<div style="margin:-6px 0 14px;background:#14171C;color:#FFFFFF;border-radius:10px;padding:8px 12px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-align:center">COMPARISON STATE · OWNER CHECK-IN REMOVED · NOT IN PRODUCT</div>
+</sc-if>
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{goHome}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center;min-width:0">
+<div style="font-size:12.5px;color:#545C66">{{st.kindLabel}}</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{st.headerName}}</div>
+</div>
+<button onClick="{{goHome}}" aria-label="Close" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</div>
+<div style="margin-top:20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<span style="font-family:'Archivo','Public Sans',sans-serif;font-size:21px;font-weight:700">{{st.name}}</span>
+<span style="display:inline-flex;gap:2px" aria-hidden="true"><sc-for list="{{st.stars}}" as="t" hint-placeholder-count="5"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+<span style="font-size:13px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{st.ratingTxt}}</span>
+</div>
+<div style="font-size:13px;color:#545C66;margin-top:4px">{{st.addr}}</div>
+<div style="display:flex;margin-top:16px;flex-wrap:wrap;row-gap:10px">
+<div style="padding-right:11px;margin-right:11px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">HOURS</div><div style="font-size:12.5px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{st.hours}}</div></div>
+<div style="padding-right:11px;margin-right:11px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PRICE</div><div style="font-size:12.5px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{st.price}}</div></div>
+<sc-if value="{{stIsPublic}}" hint-placeholder-val="{{true}}">
+<div style="display:flex">
+<div style="padding-right:11px;margin-right:11px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">DISTANCE</div><div style="font-size:12.5px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{st.dist}}</div></div>
+<div style="padding-right:11px;margin-right:11px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">CHARGERS</div><div style="font-size:12.5px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{st.chargers}}</div></div>
+<div><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">STATUS</div><div style="display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;margin-top:2px;color:{{st.statusColor}}">
+<sc-if value="{{st.dotOk}}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span></sc-if>
+<sc-if value="{{st.dotWarn}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block"></span></sc-if>
+<sc-if value="{{st.dotUnknown}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px dotted currentColor;display:inline-block"></span></sc-if>
+<span>{{st.statusShort}}</span></div></div>
+</div>
+</sc-if>
+<sc-if value="{{stIsPrivate}}">
+<div style="display:flex">
+<div style="padding-right:11px;margin-right:11px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">TYPE</div><div style="font-size:12.5px;font-weight:600;margin-top:2px">{{st.ctype}}</div></div>
+<div><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PARKING</div><div style="display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;margin-top:2px;color:{{st.statusColor}}">
+<sc-if value="{{st.dotOk}}"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span></sc-if>
+<sc-if value="{{st.dotWarn}}"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block"></span></sc-if>
+<span>{{st.statusShort}}</span></div></div>
+</div>
+</sc-if>
+</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:4px 10px;border-radius:999px;border:1px {{st.freshBorder}} #AEB6C2;color:#545C66;font-size:11px;font-weight:500">
+<sc-if value="{{st.freshFilled}}"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span></sc-if>
+<sc-if value="{{st.freshHollow}}"><span style="width:6px;height:6px;border-radius:50%;border:1.5px solid #545C66;display:inline-block"></span></sc-if>
+<span>{{st.freshDetail}}</span>
+</div>
+<button onClick="{{navGoDetail}}" style="margin-top:16px;width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-7a4 4 0 0 1 4-4h9"></path><path d="M14 5l4 4-4 4"></path></svg>
+<span>{{st.eta}}</span>
+</button>
+<div style="margin-top:10px;display:flex;gap:10px">
+<button onClick="{{goSlots}}" style="flex:1;height:48px;border-radius:14px;border:1.5px solid #3B2BD4;background:#FFFFFF;color:#3B2BD4;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>
+Reserve</button>
+<sc-if value="{{showChatBtn}}" hint-placeholder-val="{{true}}">
+<button onClick="{{chatToast}}" style="flex:1;height:48px;border-radius:14px;border:1.5px solid #3B2BD4;background:#FFFFFF;color:#3B2BD4;font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8c-1.2 0-2.4-.2-3.4-.7L4 21l1.7-4.2A8 8 0 0 1 12 4z"></path></svg>
+{{st.chatLabel}}</button>
+</sc-if>
+</div>
+<sc-if value="{{stFromTrip}}">
+<button onClick="{{addToTrip}}" style="margin-top:10px;width:100%;height:48px;border:1.5px solid #3B2BD4;border-radius:14px;background:#EEECFD;color:#3B2BD4;font-size:14.5px;font-weight:600;cursor:pointer">Add to Trip</button>
+</sc-if>
+<div style="height:1px;background:#DCE0E6;margin:20px 0 16px"></div>
+<div style="display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px" aria-hidden="true">
+<div style="flex:0 0 auto;width:138px;height:104px;border-radius:14px;background:#E7EBF1;position:relative;overflow:hidden">
+<div style="position:absolute;left:0;bottom:0;width:72%;height:42px;background:#D6DCE5"></div>
+<div style="position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;background:#C8D0DC"></div>
+<svg width="22" height="22" viewBox="0 0 24 24" style="position:absolute;left:14px;top:16px"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#545C66"></path></svg>
+</div>
+<div style="flex:0 0 auto;width:138px;height:104px;border-radius:14px;background:#E2E7EE;position:relative;overflow:hidden">
+<div style="position:absolute;right:-14px;bottom:-14px;width:76px;height:76px;border-radius:50%;background:#D0D7E1"></div>
+<div style="position:absolute;left:12px;top:12px;width:52px;height:16px;border-radius:6px;background:#C8D0DC"></div>
+<svg width="22" height="22" viewBox="0 0 24 24" style="position:absolute;left:16px;bottom:16px"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#545C66"></path></svg>
+</div>
+<div style="flex:0 0 auto;width:138px;height:104px;border-radius:14px;background:#E7EBF1;position:relative;overflow:hidden">
+<div style="position:absolute;left:0;top:0;width:44%;height:100%;background:#DBE1EA"></div>
+<div style="position:absolute;right:14px;bottom:14px;width:30px;height:30px;border-radius:8px;background:#C8D0DC"></div>
+<svg width="22" height="22" viewBox="0 0 24 24" style="position:absolute;right:18px;top:16px"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#545C66"></path></svg>
+</div>
+<div style="flex:0 0 auto;width:138px;height:104px;border-radius:14px;background:#E2E7EE;position:relative;overflow:hidden">
+<div style="position:absolute;left:14px;bottom:-20px;width:60px;height:60px;border-radius:50%;background:#D6DCE5"></div>
+<div style="position:absolute;right:0;top:0;width:38%;height:52px;background:#D0D7E1"></div>
+<svg width="22" height="22" viewBox="0 0 24 24" style="position:absolute;left:16px;top:14px"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#545C66"></path></svg>
+</div>
+</div>
+<div style="height:1px;background:#DCE0E6;margin:16px 0"></div>
+<sc-if value="{{stIsPrivate}}">
+<div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600">Parking details</div>
+<svg viewBox="0 0 361 190" style="width:100%;height:auto;margin-top:12px;display:block" role="img" aria-label="Driveway diagram with two numbered bays">
+<rect x="0" y="0" width="361" height="190" rx="14" fill="#EFF2F6"></rect>
+<rect x="0" y="0" width="46" height="190" fill="#DBE1EA"></rect>
+<rect x="21" y="10" width="4" height="22" rx="2" fill="#FFFFFF"></rect>
+<rect x="21" y="52" width="4" height="22" rx="2" fill="#FFFFFF"></rect>
+<rect x="21" y="94" width="4" height="22" rx="2" fill="#FFFFFF"></rect>
+<rect x="21" y="136" width="4" height="22" rx="2" fill="#FFFFFF"></rect>
+<rect x="21" y="170" width="4" height="12" rx="2" fill="#FFFFFF"></rect>
+<rect x="46" y="58" width="150" height="76" fill="#E2E7EE"></rect>
+<rect x="196" y="26" width="140" height="140" rx="8" fill="#D0D7E1"></rect>
+<rect x="196" y="26" width="140" height="18" rx="8" fill="#C4CCDA"></rect>
+<rect x="252" y="126" width="30" height="40" rx="3" fill="#EFF2F6"></rect>
+<circle cx="120" cy="30" r="17" fill="#E4EAE2"></circle>
+<circle cx="156" cy="24" r="12" fill="#E4EAE2"></circle>
+<rect x="58" y="64" width="62" height="30" rx="6" fill="#FFFFFF" stroke="#3B2BD4" stroke-width="1.5"></rect>
+<rect x="58" y="100" width="62" height="30" rx="6" fill="#FFFFFF" stroke="#3B2BD4" stroke-width="1.5"></rect>
+<rect x="66" y="71" width="26" height="16" rx="5" fill="#3B2BD4"></rect>
+<text x="79" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF" font-family="'Public Sans',sans-serif">P1</text>
+<rect x="66" y="107" width="26" height="16" rx="5" fill="#3B2BD4"></rect>
+<text x="79" y="119" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF" font-family="'Public Sans',sans-serif">P2</text>
+<rect x="134" y="70" width="12" height="24" rx="3" fill="#3B2BD4"></rect>
+<path d="M141.5 74 138 80h3l-1.5 6 4.5-7h-3z" fill="#FFFFFF"></path>
+</svg>
+<div style="font-size:11.5px;color:#545C66;margin-top:8px">Note: you will need to book these bays in order to charge.</div>
+</div>
+</sc-if>
+<sc-if value="{{stIsPublic}}" hint-placeholder-val="{{true}}">
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600">Busy times &amp; price per kWh</div>
+<div style="font-size:10.5px;color:#545C66">typical · last 30 days</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:7px;height:148px;margin-top:14px">
+<sc-for list="{{chart}}" as="b" hint-placeholder-count="8">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;height:100%">
+<div style="font-size:9.5px;font-weight:600;color:#545C66;text-align:center;font-variant-numeric:tabular-nums">{{b.price}}</div>
+<div style="height:{{b.h}};background:#232833;border-radius:6px 6px 2px 2px"></div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:10.5px;color:#545C66;margin-top:6px;font-variant-numeric:tabular-nums"><span>8 AM</span><span>2 PM</span><span>10 PM</span></div>
+</div>
+</sc-if>
+<div style="height:1px;background:#DCE0E6;margin:18px 0 16px"></div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600">Charger support</div>
+<div style="display:flex;gap:26px;margin-top:12px">
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="none" stroke="#14171C" stroke-width="1.8" stroke-linejoin="round"></path></svg><span style="font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">150 kWh</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="none" stroke="#14171C" stroke-width="1.8" stroke-linejoin="round"></path></svg><span style="font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">220 kWh</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="none" stroke="#14171C" stroke-width="1.8" stroke-linejoin="round"></path></svg><span style="font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">300 kWh</span></div>
+</div>
+<div style="height:1px;background:#DCE0E6;margin:18px 0 16px"></div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600">Amenities</div>
+<div style="display:flex;gap:26px;margin-top:12px">
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#545C66" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 9.5a13.5 13.5 0 0 1 18 0"></path><path d="M6.2 13a9 9 0 0 1 11.6 0"></path><path d="M9.4 16.4a4.5 4.5 0 0 1 5.2 0"></path><circle cx="12" cy="19.4" r="1.1" fill="#545C66" stroke="none"></circle></svg><span style="font-size:12px;font-weight:600">Wifi</span></div>
+<sc-if value="{{stIsPublic}}" hint-placeholder-val="{{true}}"><div style="display:flex;flex-direction:column;gap:6px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#545C66" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 3v7M5 3v4a2 2 0 0 0 4 0V3"></path><path d="M7 12v9"></path><path d="M16 3v18"></path><path d="M16 3c2.2 0 3.8 2.2 3.8 5s-1.6 4.5-3.8 4.5"></path></svg><span style="font-size:12px;font-weight:600">Food</span></div></sc-if>
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#545C66" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"></circle><path d="M12 8v6"></path><path d="M8 10.5h8"></path><path d="M12 14l-2.4 6.5M12 14l2.4 6.5"></path></svg><span style="font-size:12px;font-weight:600">Toilets</span></div>
+<sc-if value="{{stIsPublic}}" hint-placeholder-val="{{true}}"><div style="display:flex;flex-direction:column;gap:6px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#545C66" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1.2 12H7.2z"></path><path d="M9 10V7a3 3 0 0 1 6 0v3"></path></svg><span style="font-size:12px;font-weight:600">Shopping</span></div></sc-if>
+</div>
+<div style="height:1px;background:#DCE0E6;margin:18px 0 16px"></div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600">Reviews</div>
+<div style="display:flex;gap:18px;align-items:center;margin-top:14px">
+<div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:40px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">{{st.ratingTxt}}</div>
+<span style="display:inline-flex;gap:2px;margin-top:6px" aria-hidden="true"><sc-for list="{{st.stars}}" as="t" hint-placeholder-count="5"><svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{distBars}}" as="d" hint-placeholder-count="5">
+<div style="height:5px;border-radius:999px;background:#E2E6EC;position:relative;overflow:hidden"><div style="position:absolute;left:0;top:0;bottom:0;width:{{d.w}};background:#3B2BD4;border-radius:999px"></div></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:12px">
+<span style="font-size:12.5px;color:#545C66;font-weight:500;margin-right:6px">Rate &amp; review</span>
+<sc-for list="{{myStars}}" as="m" hint-placeholder-count="5">
+<button onClick="{{m.pick}}" aria-label="Rate" style="border:none;background:transparent;padding:7px;cursor:pointer;line-height:0">
+<svg width="25" height="25" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{m.f}}" stroke="#3B2BD4" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{composerOpen}}">
+<div style="margin-top:10px;background:#FFFFFF;border-radius:14px;padding:12px">
+<textarea rows="3" placeholder="Share what other drivers should know" aria-label="Your review" value="{{reviewDraft}}" onChange="{{onReviewInput}}" style="width:100%;border:1px solid #DCE0E6;border-radius:10px;padding:10px 12px;font-family:inherit;font-size:13px;line-height:1.5;color:#14171C;resize:none;outline:none;box-sizing:border-box"></textarea>
+<button onClick="{{postReview}}" style="margin-top:8px;height:40px;padding:0 16px;border:none;border-radius:10px;background:{{postBg}};color:{{postFg}};font-size:13px;font-weight:600;cursor:pointer">Post review</button>
+</div>
+</sc-if>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<sc-for list="{{stReviews}}" as="r" hint-placeholder-count="3">
+<div style="background:#FFFFFF;border-radius:14px;padding:13px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:10px">
+<span style="width:36px;height:36px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:0 0 auto">{{r.init}}</span>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:13.5px;font-weight:600">{{r.name}}</span>
+<span style="display:inline-flex;gap:1px" aria-hidden="true"><sc-for list="{{r.stars}}" as="t" hint-placeholder-count="5"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+</div>
+<div style="font-size:11.5px;color:#545C66">{{r.meta}}</div>
+</div>
+<button onClick="{{chatToast}}" aria-label="Message" style="border:none;background:transparent;cursor:pointer;padding:6px;line-height:0;flex:0 0 auto">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8c-1.2 0-2.4-.2-3.4-.7L4 21l1.7-4.2A8 8 0 0 1 12 4z"></path></svg>
+</button>
+</div>
+<div style="font-size:13px;line-height:1.5">{{r.text}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isSlots}}">
+<div data-screen-label="Slot picker" style="position:absolute;inset:0;z-index:45;background:#F3F5F8;animation:lcFadeUp .15s ease;display:flex;flex-direction:column">
+<div style="padding:56px 16px 0">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{backToDetail}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center;min-width:0">
+<div style="font-size:12.5px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{st.name}}</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Reserve</div>
+</div>
+<span></span>
+</div>
+<div style="padding:18px 0 10px;font-size:14px;font-weight:600;line-height:1.45">{{slotCopy}}</div>
+</div>
+<div style="flex:1;overflow-y:auto;padding:4px 16px 12px;scrollbar-width:none">
+<sc-if value="{{slotsFull}}">
+<div style="background:#FFFFFF;border-radius:14px;padding:14px;margin-bottom:12px">
+<div style="font-size:14px;font-weight:600">Every slot is booked today</div>
+<div style="font-size:12px;color:#545C66;margin-top:4px;line-height:1.5">Two nearby options still have capacity:</div>
+<button onClick="{{goMercury}}" style="margin-top:10px;width:100%;height:46px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 14px"><span>Mercury Drive, MI · 6 working · 3.4 mi</span><span aria-hidden="true">→</span></button>
+<button onClick="{{goHollan}}" style="margin-top:8px;width:100%;height:46px;border:1.5px solid #3B2BD4;border-radius:12px;background:#FFFFFF;color:#3B2BD4;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 14px"><span>Hollan P · private · 1.4 mi</span><span aria-hidden="true">→</span></button>
+</div>
+</sc-if>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{slots}}" as="sl" hint-placeholder-count="18">
+<div style="position:relative">
+<sc-if value="{{sl.un}}">
+<div aria-disabled="true" style="background:#EAEDF2;border-radius:12px;padding:15px 4px;text-align:center;font-size:13px;font-weight:600;color:#98A0AC;font-variant-numeric:tabular-nums;cursor:not-allowed">{{sl.label}}</div>
+</sc-if>
+<sc-if value="{{sl.sel}}">
+<button onClick="{{sl.pick}}" style="width:100%;background:#FFFFFF;border:1.5px solid #3B2BD4;border-radius:12px;padding:14px 4px;text-align:center;font-size:13px;font-weight:600;color:#3B2BD4;font-variant-numeric:tabular-nums;cursor:pointer;position:relative">{{sl.label}}
+<span style="position:absolute;top:-7px;right:-6px;width:18px;height:18px;border-radius:50%;background:#3B2BD4;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+</button>
+</sc-if>
+<sc-if value="{{sl.norm}}">
+<button onClick="{{sl.pick}}" style="width:100%;background:#FFFFFF;border:1px solid #DCE0E6;border-radius:12px;padding:14px 4px;text-align:center;font-size:13px;font-weight:600;color:#14171C;font-variant-numeric:tabular-nums;cursor:pointer">{{sl.label}}</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="padding:12px 16px 22px">
+<button onClick="{{ctaSlots}}" style="width:100%;height:52px;border:none;border-radius:14px;background:{{ctaBg}};color:{{ctaFg}};font-size:15.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s ease">{{slotCtaLabel}}
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg>
+</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBays}}">
+<div data-screen-label="Bay select" style="position:absolute;inset:0;z-index:46;background:#F3F5F8;animation:lcFadeUp .15s ease;display:flex;flex-direction:column">
+<div style="padding:56px 16px 0">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{backToSlots}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center;min-width:0">
+<div style="font-size:12.5px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{st.name}}</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Parking space</div>
+</div>
+<span></span>
+</div>
+<div style="padding:16px 0 10px;font-size:14px;font-weight:600;line-height:1.45">Select a bay for your {{curSlotLabel}} slot.</div>
+</div>
+<sc-if value="{{stIsPublic}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;gap:8px;overflow-x:auto;padding:0 16px 4px;scrollbar-width:none">
+<sc-for list="{{bayChips}}" as="c" hint-placeholder-count="4">
+<button onClick="{{c.pick}}" style="flex:0 0 auto;height:38px;padding:0 14px;border-radius:999px;border:none;background:{{c.bg}};color:{{c.fg}};font-size:12.5px;font-weight:600;cursor:pointer">{{c.label}}</button>
+</sc-for>
+</div>
+<div style="flex:1;overflow-y:auto;padding:10px 16px 12px;scrollbar-width:none">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{bays}}" as="b" hint-placeholder-count="12">
+<div style="position:relative">
+<sc-if value="{{b.un}}">
+<div aria-disabled="true" style="background:#EAEDF2;border-radius:12px;padding:12px;display:flex;align-items:center;gap:9px;cursor:not-allowed">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#98A0AC" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 22 20H2z"></path><path d="M12 10.5v4M12 17.4h.01"></path></svg>
+<div><div style="font-size:14px;font-weight:600;color:#98A0AC">{{b.id}}</div><div style="font-size:11px;color:#98A0AC">Unavailable</div></div>
+</div>
+</sc-if>
+<sc-if value="{{b.bk}}">
+<div aria-disabled="true" style="background:#EAEDF2;border-radius:12px;padding:12px;display:flex;align-items:center;gap:9px;cursor:not-allowed">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#98A0AC"></path></svg>
+<div><div style="font-size:14px;font-weight:600;color:#98A0AC">{{b.id}}</div><div style="font-size:11px;color:#98A0AC">Booked</div></div>
+</div>
+</sc-if>
+<sc-if value="{{b.ok}}">
+<button onClick="{{b.pick}}" style="width:100%;background:#FFFFFF;border:1px solid #DCE0E6;border-radius:12px;padding:12px;display:flex;align-items:center;gap:9px;cursor:pointer;text-align:left">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#14171C"></path></svg>
+<div><div style="font-size:14px;font-weight:600;color:#14171C">{{b.id}}</div><div style="font-size:11px;color:#545C66">{{b.kwTxt}}</div></div>
+</button>
+</sc-if>
+<sc-if value="{{b.sel}}">
+<button onClick="{{b.pick}}" style="width:100%;background:#FFFFFF;border:1.5px solid #3B2BD4;border-radius:12px;padding:12px;display:flex;align-items:center;gap:9px;cursor:pointer;text-align:left;position:relative">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg>
+<div><div style="font-size:14px;font-weight:600;color:#3B2BD4">{{b.id}}</div><div style="font-size:11px;color:#3B2BD4">{{b.kwTxt}}</div></div>
+<span style="position:absolute;top:-7px;right:-6px;width:18px;height:18px;border-radius:50%;background:#3B2BD4;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{stIsPrivate}}">
+<div style="flex:1;overflow-y:auto;padding:4px 16px 12px;scrollbar-width:none">
+<svg viewBox="0 0 361 150" style="width:100%;height:auto;display:block;border-radius:14px" aria-hidden="true">
+<rect x="0" y="0" width="361" height="150" rx="14" fill="#EFF2F6"></rect>
+<rect x="0" y="0" width="40" height="150" fill="#DBE1EA"></rect>
+<rect x="18" y="8" width="4" height="20" rx="2" fill="#FFFFFF"></rect>
+<rect x="18" y="46" width="4" height="20" rx="2" fill="#FFFFFF"></rect>
+<rect x="18" y="84" width="4" height="20" rx="2" fill="#FFFFFF"></rect>
+<rect x="18" y="122" width="4" height="20" rx="2" fill="#FFFFFF"></rect>
+<rect x="40" y="44" width="150" height="66" fill="#E2E7EE"></rect>
+<rect x="190" y="16" width="150" height="120" rx="8" fill="#D0D7E1"></rect>
+<rect x="52" y="50" width="58" height="26" rx="6" fill="#FFFFFF" stroke="#3B2BD4" stroke-width="1.5"></rect>
+<rect x="52" y="82" width="58" height="26" rx="6" fill="#FFFFFF" stroke="#3B2BD4" stroke-width="1.5"></rect>
+<rect x="60" y="56" width="24" height="14" rx="4" fill="#3B2BD4"></rect>
+<text x="72" y="67" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF" font-family="'Public Sans',sans-serif">P1</text>
+<rect x="60" y="88" width="24" height="14" rx="4" fill="#3B2BD4"></rect>
+<text x="72" y="99" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF" font-family="'Public Sans',sans-serif">P2</text>
+<rect x="126" y="56" width="12" height="24" rx="3" fill="#3B2BD4"></rect>
+<path d="M133.5 60 130 66h3l-1.5 6 4.5-7h-3z" fill="#FFFFFF"></path>
+</svg>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<sc-for list="{{pbays}}" as="b" hint-placeholder-count="2">
+<div style="position:relative">
+<sc-if value="{{b.ok}}">
+<button onClick="{{b.pick}}" style="width:100%;background:#FFFFFF;border:1px solid #DCE0E6;border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#14171C"></path></svg>
+<span style="font-size:14.5px;font-weight:600;flex:1">{{b.id}}</span>
+<span style="font-size:12px;color:#545C66;font-variant-numeric:tabular-nums">{{b.kwTxt}}</span>
+</button>
+</sc-if>
+<sc-if value="{{b.sel}}">
+<button onClick="{{b.pick}}" style="width:100%;background:#FFFFFF;border:1.5px solid #3B2BD4;border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg>
+<span style="font-size:14.5px;font-weight:600;flex:1;color:#3B2BD4">{{b.id}}</span>
+<span style="font-size:12px;color:#3B2BD4;font-variant-numeric:tabular-nums">{{b.kwTxt}}</span>
+<span style="width:18px;height:18px;border-radius:50%;background:#3B2BD4;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+</button>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<div style="padding:12px 16px 22px">
+<button onClick="{{bayCtaGo}}" style="width:100%;height:52px;border:none;border-radius:14px;background:{{bayCtaBg}};color:{{bayCtaFg}};font-size:15.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s ease">{{bayCtaLabel}}
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg>
+</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{confirmOpen}}">
+<div style="position:absolute;inset:0;background:rgba(20,23,28,.45);z-index:48;animation:lcFade .15s ease"></div>
+<div data-screen-label="Reservation confirmed" style="position:absolute;left:0;right:0;bottom:0;z-index:49;background:#FFFFFF;border-radius:22px 22px 0 0;padding:26px 20px 30px;animation:lcFadeUp .2s ease">
+<div style="width:64px;height:64px;border-radius:50%;background:#EEECFD;display:flex;align-items:center;justify-content:center;margin:0 auto">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.8 2.8L16.5 9"></path></svg>
+</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:19px;font-weight:700;text-align:center;margin-top:16px;line-height:1.3;text-wrap:pretty">Bay {{resBay}} held for {{resHoldTxt}}</div>
+<div style="height:1px;background:#DCE0E6;margin:18px 0 14px"></div>
+<div style="font-size:12px;font-weight:600;color:#545C66">Upcoming slot</div>
+<div style="display:flex;gap:10px;margin-top:10px">
+<div style="flex:1.4;background:#F1F3F7;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5.5" width="16" height="15" rx="2.5"></rect><path d="M4 10h16M8.5 3.5v3M15.5 3.5v3"></path></svg>
+<div><div style="font-size:10.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{resDate}}</div><div style="font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px">{{resSlotLabel}}</div></div>
+<button onClick="{{editSlot}}" aria-label="Edit time" style="margin-left:auto;border:none;background:transparent;cursor:pointer;padding:4px;line-height:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-.8L19.5 7.7a2 2 0 0 0-2.8-2.8L5.2 16.4 4 20z"></path></svg></button>
+</div>
+<div style="flex:1;background:#F1F3F7;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg>
+<div><div style="font-size:13px;font-weight:700">{{resBay}}</div><div style="font-size:11px;color:#545C66;font-variant-numeric:tabular-nums;margin-top:1px">{{resKw}}</div></div>
+<button onClick="{{editBay}}" aria-label="Edit bay" style="margin-left:auto;border:none;background:transparent;cursor:pointer;padding:4px;line-height:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-.8L19.5 7.7a2 2 0 0 0-2.8-2.8L5.2 16.4 4 20z"></path></svg></button>
+</div>
+</div>
+<div style="display:flex;justify-content:flex-end;margin-top:8px"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;border:1px solid #AEB6C2;color:#545C66;font-size:11px;font-weight:500"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span><span>live · checked 1 min ago</span></span></div>
+<div style="font-size:13px;color:#14171C;margin-top:12px;line-height:1.45">We'll tell you en route if this bay changes.</div>
+<sc-if value="{{resOwnerOk}}">
+<div style="display:flex;align-items:center;gap:7px;margin-top:12px;font-size:12.5px;font-weight:600;color:#0B7A45">
+<span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block"></span>
+Owner confirmed · 2 min ago</div>
+</sc-if>
+<sc-if value="{{resOwnerSilent}}">
+<div style="margin-top:12px;background:#F1F3F7;border-radius:12px;padding:12px">
+<div style="display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#A6690A">
+<span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block"></span>
+Owner hasn't replied · sent 24 min ago</div>
+<div style="font-size:12px;color:#545C66;margin-top:4px;line-height:1.45">Book anyway, or switch to a host who responds quickly before you start driving.</div>
+<button onClick="{{resSwitchHollan}}" style="margin-top:10px;height:38px;padding:0 14px;border-radius:10px;border:1.5px solid #3B2BD4;background:#FFFFFF;color:#3B2BD4;font-size:12.5px;font-weight:600;cursor:pointer">Switch to Hollan P · replies in ~5 min</button>
+</div>
+</sc-if>
+<div style="font-size:12px;color:#545C66;margin-top:12px">Note: you have to be at the location 10 mins in advance.</div>
+<div style="display:flex;gap:10px;margin-top:16px">
+<button onClick="{{resHome}}" style="flex:0 0 108px;height:52px;border:1.5px solid #3B2BD4;border-radius:14px;background:#FFFFFF;color:#3B2BD4;font-size:15px;font-weight:600;cursor:pointer">Home</button>
+<button onClick="{{startNavGo}}" style="flex:1;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-7a4 4 0 0 1 4-4h9"></path><path d="M14 5l4 4-4 4"></path></svg>
+{{resEta}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isNav}}">
+<div data-screen-label="Navigation" style="position:absolute;inset:0;z-index:50;background:#F3F5F8;display:flex;flex-direction:column;animation:lcFade .15s ease">
+<div style="flex:1;position:relative;overflow:hidden">
+<svg viewBox="0 0 393 620" width="393" height="620" style="position:absolute;top:0;left:0;display:block" aria-hidden="true">
+<rect width="393" height="620" fill="#F3F5F8"></rect>
+<g stroke="#B7C1D1" stroke-width="8" fill="none" stroke-linecap="round">
+<path d="M-10 522 L120 474 L262 452 L403 404"></path>
+<path d="M62 -10 L108 180 L142 380 L122 622"></path>
+<path d="M403 300 L302 362 L212 522 L184 622"></path>
+</g>
+<g stroke="#C7CFDB" stroke-width="3" fill="none" stroke-linecap="round">
+<path d="M0 202 L162 172 L300 192"></path>
+<path d="M162 172 L182 42"></path>
+<path d="M204 300 L332 282"></path>
+<path d="M22 382 L204 342"></path>
+<path d="M242 92 L262 242"></path>
+<path d="M300 192 L360 262"></path>
+<path d="M0 482 L182 472"></path>
+<path d="M92 562 L282 542 L393 562"></path>
+</g>
+<path d="M196 620 L188 560 L150 420 L122 260 L108 180" fill="none" stroke="#3B2BD4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<div style="position:absolute;left:92px;top:150px;width:34px;height:34px;border-radius:50%;background:#14171C;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(20,23,28,.3)" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" aria-hidden="true"><circle cx="12" cy="10" r="3"></circle><path d="M12 21c4-4.5 7-8 7-11a7 7 0 1 0-14 0c0 3 3 6.5 7 11z"></path></svg>
+</div>
+<div style="position:absolute;left:{{navX}};top:{{navY}};width:34px;height:34px;border-radius:50%;background:#3B2BD4;border:3px solid #FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(59,43,212,.4);transition:left 1s linear,top 1s linear" aria-hidden="true">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M12 5 19 19l-7-3.5L5 19z"></path></svg>
+</div>
+<div style="position:absolute;left:16px;right:16px;top:56px;background:#FFFFFF;border-radius:14px;box-shadow:0 6px 20px rgba(20,23,28,.14);padding:12px 14px;display:flex;gap:14px;align-items:center">
+<div style="text-align:center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20v-9a4 4 0 0 1 4-4h9"></path><path d="M14 3l4 4-4 4"></path></svg>
+<div style="font-size:15px;font-weight:700;color:#3B2BD4;font-variant-numeric:tabular-nums">{{turnDist}}</div>
+</div>
+<div style="min-width:0">
+<div style="font-size:11.5px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{resAddr}}</div>
+<div style="font-size:16px;font-weight:700;margin-top:2px">{{turnText}}</div>
+</div>
+</div>
+</div>
+<sc-if value="{{navEventOn}}">
+<div style="background:#FFFFFF;border-top:1px solid #DCE0E6;padding:14px 16px;animation:lcFadeUp .2s ease">
+<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;border:1px solid #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500">
+<span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span>
+<span>{{navEvFresh}}</span>
+</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:15.5px;font-weight:700;margin-top:8px">{{navEvTitle}}</div>
+<div style="font-size:12.5px;color:#545C66;margin-top:3px;line-height:1.45">{{navEvBody}}</div>
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+<sc-for list="{{navEvActions}}" as="a" hint-placeholder-count="2">
+<button onClick="{{a.go}}" style="height:40px;padding:0 14px;border-radius:10px;border:1.5px solid #3B2BD4;background:{{a.bg}};color:{{a.fg}};font-size:12.5px;font-weight:600;cursor:pointer">{{a.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{navNoteOn}}">
+<div style="background:#FFFFFF;border-top:1px solid #DCE0E6;padding:11px 16px;display:flex;align-items:center;gap:8px">
+<span style="width:7px;height:7px;border-radius:50%;background:{{navNoteDot}};display:inline-block;flex:0 0 auto"></span>
+<span style="font-size:12.5px;font-weight:600">{{navNote}}</span>
+</div>
+</sc-if>
+<sc-if value="{{navArrivedOff}}" hint-placeholder-val="{{true}}">
+<div style="background:#FFFFFF;border-radius:22px 22px 0 0;box-shadow:0 -8px 28px rgba(20,23,28,.14);padding:10px 16px 26px">
+<div style="display:flex;justify-content:center;padding-bottom:4px"><span style="width:40px;height:4.5px;border-radius:999px;background:#C3CAD5;display:block"></span></div>
+<sc-if value="{{navNoRes}}">
+<div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+<span style="width:7px;height:7px;border-radius:50%;background:#3B2BD4;display:inline-block"></span>
+<span style="font-size:13px;font-weight:600">Driving to {{navDestName}}, no reservation yet</span>
+</div>
+</sc-if>
+<sc-if value="{{navHasRes}}" hint-placeholder-val="{{true}}">
+<div style="font-size:12px;font-weight:600;color:#545C66;margin-top:4px">Upcoming slot</div>
+<div style="display:flex;gap:10px;margin-top:8px">
+<div style="flex:1.4;background:#F1F3F7;border-radius:12px;padding:11px 12px;display:flex;gap:10px;align-items:center">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5.5" width="16" height="15" rx="2.5"></rect><path d="M4 10h16M8.5 3.5v3M15.5 3.5v3"></path></svg>
+<div><div style="font-size:10.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{resDate}}</div><div style="font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px">{{resSlotLabel}}</div></div>
+</div>
+<div style="flex:1;background:#F1F3F7;border-radius:12px;padding:11px 12px;display:flex;gap:10px;align-items:center">
+<svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg>
+<div><div style="font-size:12.5px;font-weight:700">{{resBay}}</div><div style="font-size:10.5px;color:#545C66;font-variant-numeric:tabular-nums;margin-top:1px">{{resKw}}</div></div>
+</div>
+</div>
+</sc-if>
+<div style="height:1px;background:#DCE0E6;margin:14px 0 12px"></div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums">{{navEtaTxt}}</div>
+<div style="font-size:12px;color:#545C66;margin-top:2px;font-variant-numeric:tabular-nums">Tentative arrival by {{navArrTime}}</div>
+</div>
+<button onClick="{{navExit}}" style="height:48px;padding:0 18px;border-radius:14px;border:none;background:#14171C;color:#FFFFFF;font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+Exit</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{navArrived}}">
+<div style="background:#FFFFFF;border-radius:22px 22px 0 0;box-shadow:0 -8px 28px rgba(20,23,28,.14);padding:20px 16px 28px;text-align:center;animation:lcFadeUp .2s ease">
+<div style="width:56px;height:56px;border-radius:50%;background:#EEECFD;display:flex;align-items:center;justify-content:center;margin:0 auto">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.8 2.8L16.5 9"></path></svg>
+</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:700;margin-top:12px">You've arrived</div>
+<div style="font-size:12.5px;color:#545C66;margin-top:4px;font-variant-numeric:tabular-nums">{{arrSub}}</div>
+<div style="display:flex;gap:10px;margin-top:16px">
+<button onClick="{{navExit}}" style="flex:0 0 100px;height:50px;border:1.5px solid #3B2BD4;border-radius:14px;background:#FFFFFF;color:#3B2BD4;font-size:14.5px;font-weight:600;cursor:pointer">Done</button>
+<button onClick="{{arrCtaGo}}" style="flex:1;height:50px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:14.5px;font-weight:600;cursor:pointer">{{arrCta}}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{menuOpen}}">
+<div onClick="{{closeMenu}}" style="position:absolute;inset:0;background:rgba(20,23,28,.35);z-index:32;animation:lcFade .15s ease"></div>
+<div data-screen-label="Menu" style="position:absolute;right:0;top:0;bottom:0;width:300px;z-index:33;background:#FFFFFF;border-radius:20px 0 0 20px;box-shadow:-12px 0 40px rgba(20,23,28,.18);display:flex;flex-direction:column;animation:lcSlideInR .15s ease;padding:58px 20px 22px">
+<div style="display:flex;gap:12px;align-items:center">
+<span style="width:48px;height:48px;border-radius:50%;background:#EEECFD;color:#2A1DA8;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex:0 0 auto">SP</span>
+<div><div style="font-family:'Archivo','Public Sans',sans-serif;font-size:17px;font-weight:700">Sam Parker</div><div style="font-size:12px;color:#545C66;margin-top:1px">Tesla Model Y · 310 mi range</div></div>
+</div>
+<div style="height:1px;background:#DCE0E6;margin:18px 0 6px"></div>
+<button onClick="{{menuVehicle}}" style="width:100%;border:none;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 2px;cursor:pointer;color:#14171C">
+<span style="font-size:14px;font-weight:600">My vehicle</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="font-size:12px;color:#545C66">{{vehName}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#98A0AC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"></path></svg></span>
+</button>
+<button onClick="{{menuActivity}}" style="width:100%;border:none;border-top:1px solid #EDF0F4;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 2px;cursor:pointer;color:#14171C">
+<span style="font-size:14px;font-weight:600">Activity &amp; reservations</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#98A0AC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"></path></svg>
+</button>
+<button onClick="{{menuChats}}" style="width:100%;border:none;border-top:1px solid #EDF0F4;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 2px;cursor:pointer;color:#14171C">
+<span style="font-size:14px;font-weight:600">Chats</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#98A0AC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"></path></svg>
+</button>
+<div style="height:1px;background:#DCE0E6;margin:6px 0 14px"></div>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66">ABOUT</div>
+<div style="font-size:12px;color:#545C66;line-height:1.55;margin-top:8px;text-wrap:pretty">Loco Charge is a prototype about honest availability: every live number says how fresh it is and where it came from.</div>
+<div style="flex:1"></div>
+<div style="font-size:11px;color:#98A0AC">Prototype · no account required</div>
+</div>
+</sc-if>
+
+<sc-if value="{{filtersOpen}}">
+<div onClick="{{closeFilters}}" style="position:absolute;inset:0;background:rgba(20,23,28,.35);z-index:32;animation:lcFade .15s ease"></div>
+<div data-screen-label="Filter panel" style="position:absolute;left:0;top:0;bottom:0;width:322px;z-index:33;background:#FFFFFF;border-radius:0 20px 20px 0;box-shadow:12px 0 40px rgba(20,23,28,.18);display:flex;flex-direction:column;animation:lcSlideIn .15s ease">
+<div style="padding:58px 20px 4px;display:flex;align-items:center;justify-content:space-between">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:20px;font-weight:700">Filters</div>
+<button onClick="{{resetFilters}}" style="border:none;background:transparent;color:#3B2BD4;font-size:13px;font-weight:600;cursor:pointer;padding:8px">Reset</button>
+</div>
+<div style="flex:1;overflow-y:auto;padding:4px 20px 16px;scrollbar-width:none">
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:12px">PARKING SPACES</div>
+<sc-for list="{{parkOpts}}" as="o" hint-placeholder-count="3">
+<button onClick="{{o.pick}}" style="display:flex;align-items:center;gap:12px;border:none;background:transparent;padding:10px 0;cursor:pointer;width:100%;text-align:left">
+<span style="width:22px;height:22px;border-radius:7px;border:1.5px solid {{o.bc}};background:{{o.bg}};display:flex;align-items:center;justify-content:center;flex:0 0 auto">
+<sc-if value="{{o.on}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+<span style="font-size:14px;font-weight:500;color:#14171C">{{o.label}}</span>
+</button>
+</sc-for>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:16px">AMENITIES</div>
+<sc-for list="{{amenOpts}}" as="o" hint-placeholder-count="4">
+<button onClick="{{o.pick}}" style="display:flex;align-items:center;gap:12px;border:none;background:transparent;padding:10px 0;cursor:pointer;width:100%;text-align:left">
+<span style="width:22px;height:22px;border-radius:7px;border:1.5px solid {{o.bc}};background:{{o.bg}};display:flex;align-items:center;justify-content:center;flex:0 0 auto">
+<sc-if value="{{o.on}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+<span style="font-size:14px;font-weight:500;color:#14171C">{{o.label}}</span>
+</button>
+</sc-for>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:16px">PRICING</div>
+<div style="display:flex;gap:8px;margin-top:10px">
+<sc-for list="{{priceOpts}}" as="o" hint-placeholder-count="3">
+<button onClick="{{o.pick}}" style="height:38px;padding:0 16px;border-radius:999px;border:none;background:{{o.bg}};color:{{o.fg}};font-size:13px;font-weight:600;cursor:pointer">{{o.label}}</button>
+</sc-for>
+</div>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:18px">NO. OF CHARGERS</div>
+<div style="display:flex;gap:8px;margin-top:10px">
+<sc-for list="{{chOpts}}" as="o" hint-placeholder-count="3">
+<button onClick="{{o.pick}}" style="height:38px;padding:0 16px;border-radius:999px;border:none;background:{{o.bg}};color:{{o.fg}};font-size:13px;font-weight:600;cursor:pointer">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="padding:12px 20px 26px;border-top:1px solid #DCE0E6">
+<button onClick="{{applyFilters}}" style="width:100%;height:50px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15px;font-weight:600;cursor:pointer">{{applyLabel}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isSession}}">
+<div data-screen-label="Charging session" style="position:absolute;inset:0;z-index:47;background:#F3F5F8;animation:lcFadeUp .15s ease;display:flex;flex-direction:column;padding:56px 16px 24px">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{backSession}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center;min-width:0">
+<div style="font-size:12.5px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{resName}}</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Charging</div>
+</div>
+<span></span>
+</div>
+<div style="margin-top:18px;background:#FFFFFF;border-radius:16px;padding:18px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;border:1px solid #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span>live · station telemetry</span>
+<span style="font-size:12px;color:#545C66;font-variant-numeric:tabular-nums">Bay {{resBay}} · {{resKw}}</span>
+</div>
+<div style="display:flex;align-items:baseline;gap:8px;margin-top:16px">
+<span style="font-family:'Archivo','Public Sans',sans-serif;font-size:44px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums">130</span>
+<span style="font-size:14px;font-weight:600;color:#545C66">kW delivering</span>
+</div>
+<div style="margin-top:16px;height:8px;border-radius:999px;background:#E2E6EC;overflow:hidden"><div style="width:34%;height:100%;background:#3B2BD4;border-radius:999px"></div></div>
+<div style="font-size:12px;color:#545C66;margin-top:8px;font-variant-numeric:tabular-nums">34% now → est. 80% by {{sessEnd}}</div>
+</div>
+<div style="display:flex;margin-top:14px;background:#FFFFFF;border-radius:16px;padding:14px">
+<div style="flex:1;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">STARTED</div><div style="font-size:13px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums">{{sessStart}}</div></div>
+<div style="flex:1;border-right:1px solid #DCE0E6;padding-left:12px"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">DELIVERED</div><div style="font-size:13px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums">4.2 kWh</div></div>
+<div style="flex:1;padding-left:12px"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">COST SO FAR</div><div style="font-size:13px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums">$2.52</div></div>
+</div>
+<div style="flex:1"></div>
+<button onClick="{{sessEndGo}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#14171C;color:#FFFFFF;font-size:15px;font-weight:600;cursor:pointer">End session</button>
+</div>
+</sc-if>
+
+<sc-if value="{{receiptOpen}}">
+<div onClick="{{closeReceipt}}" style="position:absolute;inset:0;background:rgba(20,23,28,.45);z-index:66;animation:lcFade .15s ease"></div>
+<div data-screen-label="Session receipt" style="position:absolute;left:0;right:0;bottom:0;z-index:67;background:#FFFFFF;border-radius:22px 22px 0 0;padding:22px 20px 28px;animation:lcFadeUp .2s ease">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:700">{{rcName}}</div>
+<div style="font-size:12px;color:#545C66;margin-top:2px;font-variant-numeric:tabular-nums">{{rcDate}}</div>
+<div style="height:1px;background:#DCE0E6;margin:14px 0 6px"></div>
+<sc-for list="{{rcRows}}" as="r" hint-placeholder-count="4">
+<div style="display:flex;justify-content:space-between;padding:7px 0"><span style="font-size:13px;color:#545C66">{{r.l}}</span><span style="font-size:13px;font-weight:600;font-variant-numeric:tabular-nums">{{r.v}}</span></div>
+</sc-for>
+<div style="height:1px;background:#DCE0E6;margin:6px 0 10px"></div>
+<div style="display:flex;justify-content:space-between"><span style="font-size:14.5px;font-weight:700">Total</span><span style="font-size:14.5px;font-weight:700;font-variant-numeric:tabular-nums">{{rcTotal}}</span></div>
+<button onClick="{{closeReceipt}}" style="margin-top:16px;width:100%;height:48px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:14.5px;font-weight:600;cursor:pointer">Close</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isChatsTab}}">
+<div data-screen-label="Chats" style="position:absolute;left:0;right:0;top:0;bottom:64px;z-index:28;background:#F3F5F8;display:flex;flex-direction:column;animation:lcFade .15s ease">
+<div style="padding:60px 16px 6px;font-family:'Archivo','Public Sans',sans-serif;font-size:22px;font-weight:700">Chats</div>
+<div style="flex:1;overflow-y:auto;padding:4px 16px 20px;scrollbar-width:none">
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:8px">PRIVATE HOSTS</div>
+<sc-for list="{{chatHosts}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.open}}" style="width:100%;border:none;text-align:left;display:flex;gap:12px;align-items:center;background:#FFFFFF;border-radius:14px;padding:12px;margin-top:10px;cursor:pointer;color:#14171C">
+<span style="width:42px;height:42px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto">{{c.init}}</span>
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:600">{{c.name}}</span><span style="font-size:11px;color:#545C66;font-variant-numeric:tabular-nums">{{c.when}}</span></div>
+<div style="font-size:12px;color:{{c.snipColor}};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">{{c.snippet}}</div>
+</div>
+</button>
+</sc-for>
+<div style="font-size:11px;font-weight:600;letter-spacing:.07em;color:#545C66;margin-top:18px">DRIVERS</div>
+<sc-for list="{{chatDriverRows}}" as="c" hint-placeholder-count="2">
+<button onClick="{{c.open}}" style="width:100%;border:none;text-align:left;display:flex;gap:12px;align-items:center;background:#FFFFFF;border-radius:14px;padding:12px;margin-top:10px;cursor:pointer;color:#14171C">
+<span style="width:42px;height:42px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto">{{c.init}}</span>
+<div style="flex:1;min-width:0">
+<div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:14px;font-weight:600">{{c.name}}</span><span style="font-size:11px;color:#545C66;font-variant-numeric:tabular-nums">{{c.when}}</span></div>
+<div style="font-size:12px;color:{{c.snipColor}};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px">{{c.snippet}}</div>
+</div>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isChatList}}">
+<div data-screen-label="Driver chat list" style="position:absolute;inset:0;z-index:52;background:#F3F5F8;animation:lcFadeUp .15s ease;display:flex;flex-direction:column">
+<div style="padding:56px 16px 0">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{closeChatList}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center;min-width:0">
+<div style="font-size:12.5px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{st.name}}</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Driver chat</div>
+</div>
+<span></span>
+</div>
+</div>
+<div style="flex:1;overflow-y:auto;padding:16px 16px 20px;scrollbar-width:none">
+<div style="font-size:14px;font-weight:600">Drivers currently charging at this station</div>
+<sc-for list="{{curDrivers}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.open}}" style="width:100%;border:none;border-bottom:1px solid #DCE0E6;text-align:left;display:flex;gap:12px;align-items:center;background:transparent;padding:14px 2px;cursor:pointer;color:#14171C">
+<span style="width:42px;height:42px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto">{{c.init}}</span>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:600">{{c.name}}</div>
+<div style="font-size:12px;color:#545C66;margin-top:2px">{{c.meta}}</div>
+</div>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8c-1.2 0-2.4-.2-3.4-.7L4 21l1.7-4.2A8 8 0 0 1 12 4z"></path></svg>
+</button>
+</sc-for>
+<div style="font-size:14px;font-weight:600;margin-top:22px">Previously used (last month)</div>
+<sc-for list="{{prevDrivers}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.open}}" style="width:100%;border:none;border-bottom:1px solid #DCE0E6;text-align:left;display:flex;gap:12px;align-items:center;background:transparent;padding:14px 2px;cursor:pointer;color:#14171C">
+<span style="width:42px;height:42px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto">{{c.init}}</span>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:600">{{c.name}}</span>
+<span style="display:inline-flex;gap:1px" aria-hidden="true"><sc-for list="{{c.stars}}" as="t" hint-placeholder-count="5"><svg width="10" height="10" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+</div>
+<div style="font-size:12px;color:#545C66;margin-top:2px">{{c.meta}}</div>
+</div>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 0 1 8 8 8 8 0 0 1-8 8c-1.2 0-2.4-.2-3.4-.7L4 21l1.7-4.2A8 8 0 0 1 12 4z"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isChat}}">
+<div data-screen-label="Chat thread" style="position:absolute;inset:0;z-index:53;background:#F3F5F8;animation:lcFadeUp .15s ease;display:flex;flex-direction:column">
+<div style="padding:54px 16px 10px;display:flex;gap:12px;align-items:center">
+<span style="width:44px;height:44px;border-radius:50%;background:#E3E8F0;color:#3A4250;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex:0 0 auto">{{chatInit}}</span>
+<div style="flex:1;min-width:0">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:17px;font-weight:700">{{chatName}}</div>
+<div style="font-size:12px;color:#545C66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{chatLoc}}</div>
+</div>
+<button onClick="{{closeChat}}" aria-label="Close chat" style="width:42px;height:42px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+</div>
+<div style="margin:0 16px;background:#EDF0F5;border-radius:10px;padding:10px 14px;font-size:11.5px;color:#545C66;text-align:center;line-height:1.5">{{chatNote}}</div>
+<sc-if value="{{chatSilent}}">
+<div style="margin:10px 16px 0;background:#FFFFFF;border:1px dashed #AEB6C2;border-radius:12px;padding:11px 12px">
+<div style="display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#A6690A">
+<span style="width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50%);display:inline-block"></span>
+No reply yet · sent 24 min ago</div>
+<button onClick="{{chatFallback}}" style="margin-top:9px;height:36px;padding:0 13px;border-radius:10px;border:1.5px solid #3B2BD4;background:#FFFFFF;color:#3B2BD4;font-size:12px;font-weight:600;cursor:pointer">Try Hollan P, usually replies in ~5 min</button>
+</div>
+</sc-if>
+<div style="flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none">
+<sc-if value="{{threadEmpty}}">
+<div style="text-align:center;font-size:12px;color:#98A0AC;padding:26px 0">No messages yet, say hello</div>
+</sc-if>
+<sc-for list="{{thread}}" as="m" hint-placeholder-count="4">
+<div style="display:contents">
+<sc-if value="{{m.isTime}}"><div style="text-align:center;font-size:11px;color:#98A0AC;padding:6px 0;font-variant-numeric:tabular-nums">{{m.timeTxt}}</div></sc-if>
+<sc-if value="{{m.isMe}}"><div style="align-self:flex-end;max-width:78%;background:#3B2BD4;color:#FFFFFF;border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:13.5px;line-height:1.45">{{m.x}}</div></sc-if>
+<sc-if value="{{m.isThem}}"><div style="align-self:flex-start;max-width:78%;background:#E9EDF4;color:#14171C;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:13.5px;line-height:1.45">{{m.x}}</div></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="padding:10px 16px 24px;display:flex;gap:10px;align-items:center">
+<input placeholder="{{chatPlaceholder}}" aria-label="Message" value="{{chatInput}}" onChange="{{onChatInput}}" onKeyDown="{{chatKey}}" style="flex:1;height:46px;border-radius:999px;border:1px solid #DCE0E6;background:#FFFFFF;padding:0 18px;font-size:13.5px;color:#14171C;outline:none;min-width:0">
+<button onClick="{{sendChatGo}}" aria-label="Send" style="width:46px;height:46px;border-radius:50%;border:none;background:#3B2BD4;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:0 0 auto">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 21 3.5 13.5 21l-2.5-7.5z"></path><path d="M11 13.5 21 3.5"></path></svg>
+</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isTripTab}}">
+<div data-screen-label="Plan trip" style="position:absolute;left:0;right:0;top:0;bottom:64px;z-index:28;background:#F3F5F8;display:flex;flex-direction:column;animation:lcFade .15s ease">
+<sc-if value="{{tripHasMap}}">
+<div style="position:relative;flex:0 0 auto;height:380px;overflow:hidden">
+<svg viewBox="0 0 393 390" width="393" style="display:block" aria-hidden="true">
+<rect width="393" height="390" fill="#EDF0F5"></rect>
+<path d="M20 342 C120 330 250 348 380 322" fill="none" stroke="#C9D3E4" stroke-width="5" stroke-linecap="round"></path>
+<path d="M234 30 L240 200 L228 335" fill="none" stroke="#C7CFDB" stroke-width="1.5"></path>
+<path d="M20 250 L100 245 L228 260" fill="none" stroke="#C7CFDB" stroke-width="1.5"></path>
+<g stroke="#D5DBE4" stroke-width="2" fill="none">
+<path d="M28 330 L150 300 L235 332"></path>
+<path d="M150 300 L140 95"></path>
+<path d="M215 215 L140 95"></path>
+<path d="M215 215 L235 332"></path>
+<path d="M215 215 L205 152 L320 120"></path>
+<path d="M105 200 L140 95"></path>
+<path d="M28 330 L105 200"></path>
+<path d="M235 332 L320 120"></path>
+</g>
+<g fill="#545C66">
+<circle cx="28" cy="330" r="2.5"></circle><circle cx="150" cy="300" r="2.5"></circle><circle cx="235" cy="332" r="2.5"></circle><circle cx="215" cy="215" r="2.5"></circle><circle cx="205" cy="152" r="2.5"></circle><circle cx="320" cy="120" r="3"></circle><circle cx="105" cy="200" r="2.5"></circle><circle cx="140" cy="95" r="2.5"></circle>
+</g>
+<g font-family="'Public Sans',sans-serif" font-size="10" font-weight="600" fill="#545C66">
+<text x="36" y="324">Evansville</text>
+<text x="140" y="291">Louisville</text>
+<text x="228" y="346">Lexington</text>
+<text x="205" y="207">Cincinnati</text>
+<text x="196" y="144">Dayton</text>
+<text x="250" y="112">Columbus</text>
+<text x="72" y="193">Bloomington</text>
+<text x="108" y="88">Indianapolis</text>
+</g>
+</svg>
+<sc-if value="{{tripRoutesOn}}">
+<svg viewBox="0 0 393 390" style="position:absolute;inset:0" aria-hidden="true">
+<path d="M28 330 C90 316 120 306 150 300 C185 262 200 235 215 215 C250 180 290 145 320 120" fill="none" stroke="{{r1Stroke}}" stroke-width="{{r1W}}" stroke-linecap="round"></path>
+<path d="M28 330 C90 316 120 306 150 300 C185 315 215 325 235 330 C270 290 300 200 320 120" fill="none" stroke="{{r2Stroke}}" stroke-width="{{r2W}}" stroke-linecap="round"></path>
+<path d="M28 330 C60 280 80 230 105 200 C150 170 190 155 222 150 C260 140 295 130 320 120" fill="none" stroke="{{r3Stroke}}" stroke-width="{{r3W}}" stroke-linecap="round"></path>
+</svg>
+</sc-if>
+<sc-if value="{{routeLineOn}}">
+<svg viewBox="0 0 393 390" style="position:absolute;inset:0" aria-hidden="true">
+<path d="M28 330 C90 316 120 306 150 300 C185 262 200 235 215 215 C250 180 290 145 320 120" fill="none" stroke="#3B2BD4" stroke-width="5" stroke-linecap="round"></path>
+</svg>
+</sc-if>
+<sc-if value="{{tripMarksOn}}">
+<div style="position:absolute;left:19px;top:321px;width:18px;height:18px;border-radius:50%;background:#3B2BD4;border:3px solid #FFFFFF;box-shadow:0 0 0 2px #3B2BD4" aria-hidden="true"></div>
+<div style="position:absolute;left:308px;top:96px;width:24px;height:24px;border-radius:50%;background:#14171C;border:3px solid #FFFFFF;box-shadow:0 3px 8px rgba(20,23,28,.3);display:flex;align-items:center;justify-content:center" aria-hidden="true">
+<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"></path></svg>
+</div>
+</sc-if>
+<sc-for list="{{tripPins}}" as="p" hint-placeholder-count="3">
+<div style="position:absolute;left:{{p.left}};top:{{p.top}};width:30px;height:30px;border-radius:50%;background:#FFFFFF;border:2px solid {{p.color}};display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(20,23,28,.18)" aria-hidden="true">
+<svg width="12" height="12" viewBox="0 0 24 24"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="{{p.color}}"></path></svg>
+</div>
+</sc-for>
+<sc-if value="{{tripBackOn}}">
+<button onClick="{{tripBack}}" aria-label="Back" style="position:absolute;left:16px;top:56px;width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.14);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{tripSearchOn}}">
+<div style="flex:1;background:#F0F2F6;border-radius:22px 22px 0 0;box-shadow:0 -8px 28px rgba(20,23,28,.14);padding:10px 16px 22px;margin-top:-18px;position:relative;z-index:2">
+<div style="display:flex;justify-content:center;padding-bottom:8px"><span style="width:40px;height:4.5px;border-radius:999px;background:#C3CAD5;display:block"></span></div>
+<button onClick="{{tToStops}}" style="width:100%;height:48px;border-radius:999px;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;gap:10px;padding:0 18px;color:#3B2BD4;font-size:14.5px;font-weight:500;cursor:pointer">
+<span style="flex:1;text-align:left">Where do you like to travel?</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4.5 4.5"></path></svg>
+</button>
+<div style="font-size:12px;font-weight:600;color:#545C66;margin-top:16px">Plan around charging</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+<sc-for list="{{tripChips}}" as="c" hint-placeholder-count="3">
+<button onClick="{{c.pick}}" style="height:40px;padding:0 15px;border-radius:999px;border:none;background:{{c.bg}};color:{{c.fg}};font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(20,23,28,.08)">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{tripStopsOn}}">
+<div style="flex:1;display:flex;flex-direction:column;padding:56px 16px 22px">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{tToSearch}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center">
+<div style="font-size:12.5px;color:#545C66">Plan trip</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Stops</div>
+</div>
+<span></span>
+</div>
+<div style="margin-top:20px;display:flex;align-items:center;gap:10px;height:52px;border:1px solid #DCE0E6;border-radius:999px;background:#FFFFFF;padding:0 16px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.5" fill="#14171C" stroke="none"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+<span style="font-size:14.5px;font-weight:600">Current Location · Evansville, KY</span>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 8px">
+<div style="display:flex;align-items:center;gap:12px">
+<svg width="14" height="18" viewBox="0 0 4 20" aria-hidden="true"><circle cx="2" cy="2" r="1.8" fill="#545C66"></circle><circle cx="2" cy="10" r="1.8" fill="#545C66"></circle><circle cx="2" cy="18" r="1.8" fill="#545C66"></circle></svg>
+<span style="font-size:15px;font-weight:600">{{stopsLabel}}</span>
+</div>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4v13M8 4 5 7M8 4l3 3"></path><path d="M16 20V7M16 20l-3-3M16 20l3-3"></path></svg>
+</div>
+<div style="display:flex;align-items:center;gap:10px;height:52px;border:1px solid #DCE0E6;border-radius:999px;background:#FFFFFF;padding:0 16px">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"></path></svg>
+<span style="font-size:14.5px;font-weight:600">Columbus, OH</span>
+</div>
+<button onClick="{{toggleManage}}" style="border:none;background:transparent;color:#3B2BD4;font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;padding:8px">Manage stops</button>
+<sc-if value="{{manageOn}}">
+<div style="margin-top:6px;background:#FFFFFF;border-radius:14px;padding:6px 8px">
+<sc-for list="{{stopsList}}" as="o" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 6px">
+<span style="font-size:14px;font-weight:500;color:{{o.fg}}">{{o.label}}</span>
+<button onClick="{{o.toggle}}" style="height:32px;padding:0 12px;border-radius:999px;border:1.5px solid #3B2BD4;background:#FFFFFF;color:#3B2BD4;font-size:12px;font-weight:600;cursor:pointer">{{o.act}}</button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<div style="flex:1"></div>
+<button onClick="{{tToVehicle}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;cursor:pointer">Enter vehicle details</button>
+</div>
+</sc-if>
+<sc-if value="{{tripVehicleOn}}">
+<div style="flex:1;display:flex;flex-direction:column;padding:56px 16px 22px">
+<div style="display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px">
+<button onClick="{{tToStops}}" aria-label="Back" style="width:44px;height:44px;border-radius:50%;border:none;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,23,28,.10);display:flex;align-items:center;justify-content:center;cursor:pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"></path></svg>
+</button>
+<div style="text-align:center">
+<div style="font-size:12.5px;color:#545C66">Plan trip</div>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:18px;font-weight:600">Vehicle details</div>
+</div>
+<span></span>
+</div>
+<div style="font-size:12.5px;font-weight:600;margin-top:22px">My vehicle</div>
+<button onClick="{{vehCycle}}" style="margin-top:8px;height:52px;border:1px solid #DCE0E6;border-radius:12px;background:#FFFFFF;display:flex;align-items:center;justify-content:space-between;padding:0 14px;cursor:pointer">
+<span style="font-size:15px;font-weight:600;color:#14171C">{{vehName}}</span>
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5l6 6 6-6"></path></svg>
+</button>
+<div style="font-size:12.5px;font-weight:600;margin-top:18px">Vehicle range</div>
+<div style="margin-top:8px;height:52px;background:#EFF1F5;border-radius:12px;display:flex;align-items:center;padding:0 14px">
+<span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">{{vehRange}} miles</span>
+</div>
+<div style="font-size:12.5px;font-weight:600;margin-top:18px">Starting vehicle range</div>
+<div style="margin-top:8px;height:56px;background:#EFF1F5;border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 14px">
+<span style="font-size:15px;font-weight:600;font-variant-numeric:tabular-nums">{{startRange}} miles</span>
+<div style="display:flex;gap:6px">
+<button onClick="{{rMinus}}" aria-label="Decrease range" style="width:40px;height:40px;border-radius:50%;border:1px solid #DCE0E6;background:#FFFFFF;font-size:18px;font-weight:600;color:#3B2BD4;cursor:pointer">−</button>
+<button onClick="{{rPlus}}" aria-label="Increase range" style="width:40px;height:40px;border-radius:50%;border:1px solid #DCE0E6;background:#FFFFFF;font-size:18px;font-weight:600;color:#3B2BD4;cursor:pointer">+</button>
+</div>
+</div>
+<div style="flex:1"></div>
+<button onClick="{{tToRoutes}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;cursor:pointer">Find routes</button>
+</div>
+</sc-if>
+<sc-if value="{{tripRoutesOn}}">
+<div style="flex:1;overflow-y:auto;padding:14px 16px 8px;scrollbar-width:none">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:16px;font-weight:600;text-align:center">Select from 3 route options</div>
+<sc-for list="{{routes}}" as="r" hint-placeholder-count="3">
+<button onClick="{{r.pick}}" style="width:100%;margin-top:10px;background:{{r.rowBg}};border:1.5px solid {{r.rowBorder}};border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left">
+<span style="width:30px;height:30px;border-radius:50%;border:1.5px solid #14171C;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto;font-variant-numeric:tabular-nums">{{r.n}}</span>
+<div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600">{{r.name}}</div><div style="font-size:12px;color:#545C66;margin-top:2px;font-variant-numeric:tabular-nums">{{r.mi}} · {{r.via}}</div></div>
+<sc-if value="{{r.sel}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.8 2.8L16.5 9"></path></svg></sc-if>
+</button>
+</sc-for>
+</div>
+<div style="padding:10px 16px 22px">
+<button onClick="{{tToStations}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;cursor:pointer">Find stations on route</button>
+</div>
+</sc-if>
+<sc-if value="{{tripStationsOn}}">
+<div style="flex:1;overflow-y:auto;padding:12px 16px 8px;scrollbar-width:none">
+<sc-if value="{{hasRangeNote}}">
+<div style="background:#FFFFFF;border:1px solid #DCE0E6;border-radius:12px;padding:11px 12px;display:flex;gap:8px;align-items:flex-start;margin-bottom:12px">
+<span style="width:8px;height:8px;border-radius:50%;border:1.5px solid #A6690A;background:linear-gradient(90deg,#A6690A 0 50%,transparent 50%);display:inline-block;flex:0 0 auto;margin-top:4px"></span>
+<span style="font-size:12.5px;line-height:1.5">{{rangeNote}}</span>
+</div>
+</sc-if>
+<sc-for list="{{tripCards}}" as="s" hint-placeholder-count="3">
+<button onClick="{{s.open}}" style="border:none;text-align:left;display:grid;grid-template-columns:1fr 56px;gap:8px;background:#FFFFFF;border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(20,23,28,.06),0 5px 14px rgba(20,23,28,.05);cursor:pointer;width:100%;color:#14171C;margin-bottom:12px">
+<div style="min-width:0">
+<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<span style="font-family:'Archivo','Public Sans',sans-serif;font-weight:600;font-size:17px">{{s.cardName}}</span>
+<span style="display:inline-flex;gap:1.5px" aria-hidden="true"><sc-for list="{{s.stars}}" as="t" hint-placeholder-count="5"><svg width="11" height="11" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6-5.9-3.2-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9z" fill="{{t.f}}"></path></svg></sc-for></span>
+<span style="font-size:12px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.ratingTxt}}</span>
+</div>
+<div style="display:flex;margin-top:10px">
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">HOURS</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.hours}}</div></div>
+<div style="padding-right:10px;margin-right:10px;border-right:1px solid #DCE0E6"><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">PRICE</div><div style="font-size:12px;font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums">{{s.price}}</div></div>
+<div><div style="font-size:9.5px;font-weight:600;letter-spacing:.07em;color:#545C66">{{s.c3l}}</div><div style="font-size:12px;font-weight:600;margin-top:2px">{{s.c3v}}</div></div>
+</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:3px 9px;border-radius:999px;border:1px {{s.freshBorder}} #AEB6C2;color:#545C66;font-size:10.5px;font-weight:500">
+<sc-if value="{{s.freshFilled}}"><span style="width:6px;height:6px;border-radius:50%;background:#545C66;display:inline-block"></span></sc-if>
+<sc-if value="{{s.freshHollow}}"><span style="width:6px;height:6px;border-radius:50%;border:1.5px solid #545C66;display:inline-block"></span></sc-if>
+<span>{{s.freshLabel}}</span>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:center">
+<span style="width:44px;height:44px;border-radius:50%;border:1.5px solid #DCE0E6;display:flex;align-items:center;justify-content:center;background:#FFFFFF" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-7a4 4 0 0 1 4-4h9"></path><path d="M14 5l4 4-4 4"></path></svg>
+</span>
+<span style="font-size:11.5px;font-weight:600;color:#545C66;font-variant-numeric:tabular-nums">{{s.dist}}</span>
+</div>
+</button>
+</sc-for>
+</div>
+<div style="padding:10px 16px 22px">
+<button onClick="{{tToSummary}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;cursor:pointer">Continue</button>
+</div>
+</sc-if>
+<sc-if value="{{tripSummaryOn}}">
+<div style="flex:1;overflow-y:auto;padding:14px 16px 8px;scrollbar-width:none">
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-size:17px;font-weight:700;text-align:center">Trip summary</div>
+<div style="margin-top:16px;padding:0 6px">
+<sc-for list="{{tripSteps}}" as="o" hint-placeholder-count="4">
+<div style="display:contents">
+<div style="display:flex;gap:12px;align-items:center">
+<sc-if value="{{o.isStart}}"><span style="width:34px;height:34px;border-radius:50%;border:2px solid #3B2BD4;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B2BD4" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"></path></svg></span></sc-if>
+<sc-if value="{{o.isStop}}"><span style="width:34px;height:34px;border-radius:50%;background:#EEECFD;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 6.5 13H11l-1.5 9L16 11h-4.5z" fill="#3B2BD4"></path></svg></span></sc-if>
+<sc-if value="{{o.isDest}}"><span style="width:34px;height:34px;border-radius:50%;border:2px solid #14171C;display:flex;align-items:center;justify-content:center;flex:0 0 auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#14171C" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4L17 12H5"></path></svg></span></sc-if>
+<div><div style="font-size:14px;font-weight:600">{{o.label}}</div><div style="font-size:11.5px;color:#545C66;margin-top:1px">{{o.sub}}</div></div>
+</div>
+<sc-if value="{{o.conn}}"><div style="width:2px;height:20px;border-left:2px dotted #C3CAD5;margin-left:16px"></div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="padding:10px 16px 22px">
+<button onClick="{{tripSave}}" style="width:100%;height:52px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:15.5px;font-weight:600;cursor:pointer">Save trip</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isSplash}}">
+<div data-screen-label="Splash" style="position:absolute;inset:0;z-index:60;background:#F3F5F8;display:flex;flex-direction:column;animation:lcFade .15s ease">
+<svg viewBox="0 0 393 340" width="393" height="340" style="display:block;flex:0 0 auto" aria-hidden="true">
+<rect width="393" height="340" fill="#EEF1F6"></rect>
+<rect x="24" y="96" width="58" height="184" rx="6" fill="#DDE3EC"></rect>
+<rect x="92" y="60" width="70" height="220" rx="6" fill="#D2D9E4"></rect>
+<rect x="172" y="110" width="54" height="170" rx="6" fill="#DDE3EC"></rect>
+<rect x="236" y="44" width="78" height="236" rx="6" fill="#CDD5E2"></rect>
+<rect x="324" y="120" width="48" height="160" rx="6" fill="#DDE3EC"></rect>
+<g fill="#FFFFFF">
+<rect x="102" y="84" width="12" height="12" rx="2"></rect><rect x="121" y="84" width="12" height="12" rx="2"></rect><rect x="140" y="84" width="12" height="12" rx="2"></rect>
+<rect x="102" y="146" width="12" height="12" rx="2"></rect><rect x="121" y="146" width="12" height="12" rx="2"></rect><rect x="140" y="146" width="12" height="12" rx="2"></rect>
+<rect x="102" y="168" width="12" height="12" rx="2"></rect><rect x="121" y="168" width="12" height="12" rx="2"></rect><rect x="140" y="168" width="12" height="12" rx="2"></rect>
+<rect x="182" y="128" width="10" height="10" rx="2"></rect><rect x="200" y="128" width="10" height="10" rx="2"></rect>
+<rect x="182" y="150" width="10" height="10" rx="2"></rect><rect x="200" y="150" width="10" height="10" rx="2"></rect>
+</g>
+<g fill="#EEECFD">
+<rect x="248" y="70" width="14" height="14" rx="2"></rect><rect x="269" y="70" width="14" height="14" rx="2"></rect><rect x="290" y="70" width="14" height="14" rx="2"></rect>
+<rect x="248" y="94" width="14" height="14" rx="2"></rect><rect x="269" y="94" width="14" height="14" rx="2"></rect><rect x="290" y="94" width="14" height="14" rx="2"></rect>
+<rect x="248" y="176" width="14" height="14" rx="2"></rect><rect x="269" y="176" width="14" height="14" rx="2"></rect><rect x="290" y="176" width="14" height="14" rx="2"></rect>
+</g>
+<rect x="92" y="120" width="70" height="10" rx="3" fill="#3B2BD4"></rect>
+<rect x="236" y="150" width="78" height="10" rx="3" fill="#3B2BD4"></rect>
+<rect x="34" y="130" width="38" height="8" rx="3" fill="#C4CCDA"></rect>
+<rect x="334" y="152" width="28" height="8" rx="3" fill="#C4CCDA"></rect>
+<g transform="translate(110,18) scale(0.55)"><path d="M24 3c8.6 0 15.5 6.7 15.5 15.2 0 10.6-12.3 22.6-14.6 24.8a1.3 1.3 0 0 1-1.8 0C20.8 40.8 8.5 28.8 8.5 18.2 8.5 9.7 15.4 3 24 3z" fill="#3B2BD4"></path><path d="M26.5 10 17 25h5.5l-2 10.5L30 20h-6z" fill="#FFFFFF"></path></g>
+<g transform="translate(258,4) scale(0.7)"><path d="M24 3c8.6 0 15.5 6.7 15.5 15.2 0 10.6-12.3 22.6-14.6 24.8a1.3 1.3 0 0 1-1.8 0C20.8 40.8 8.5 28.8 8.5 18.2 8.5 9.7 15.4 3 24 3z" fill="#3B2BD4"></path><path d="M26.5 10 17 25h5.5l-2 10.5L30 20h-6z" fill="#FFFFFF"></path></g>
+<g transform="translate(336,86) scale(0.45)"><path d="M24 3c8.6 0 15.5 6.7 15.5 15.2 0 10.6-12.3 22.6-14.6 24.8a1.3 1.3 0 0 1-1.8 0C20.8 40.8 8.5 28.8 8.5 18.2 8.5 9.7 15.4 3 24 3z" fill="#3B2BD4"></path><path d="M26.5 10 17 25h5.5l-2 10.5L30 20h-6z" fill="#FFFFFF"></path></g>
+<rect x="0" y="280" width="393" height="60" fill="#E4E9F0"></rect>
+<rect x="0" y="277" width="393" height="5" rx="2.5" fill="#D2D9E4"></rect>
+<circle cx="56" cy="264" r="16" fill="#E4EAE2"></circle><rect x="53" y="274" width="6" height="16" rx="2" fill="#C8D0DC"></rect>
+<circle cx="356" cy="260" r="14" fill="#E4EAE2"></circle><rect x="353" y="270" width="6" height="16" rx="2" fill="#C8D0DC"></rect>
+<rect x="150" y="286" width="86" height="24" rx="10" fill="#2A1DA8"></rect>
+<rect x="166" y="272" width="52" height="22" rx="9" fill="#3B2BD4"></rect>
+<circle cx="170" cy="312" r="9" fill="#14171C"></circle><circle cx="170" cy="312" r="3.5" fill="#FFFFFF"></circle>
+<circle cx="216" cy="312" r="9" fill="#14171C"></circle><circle cx="216" cy="312" r="3.5" fill="#FFFFFF"></circle>
+<rect x="258" y="262" width="18" height="50" rx="5" fill="#3B2BD4"></rect>
+<rect x="262" y="268" width="10" height="12" rx="2" fill="#EEECFD"></rect>
+<path d="M258 290 C246 290 250 300 240 302" stroke="#14171C" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
+</svg>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:0 24px">
+<div style="display:flex;align-items:center;gap:14px">
+<svg width="60" height="60" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3c8.6 0 15.5 6.7 15.5 15.2 0 10.6-12.3 22.6-14.6 24.8a1.3 1.3 0 0 1-1.8 0C20.8 40.8 8.5 28.8 8.5 18.2 8.5 9.7 15.4 3 24 3z" fill="#3B2BD4"></path><path d="M26.5 10 17 25h5.5l-2 10.5L30 20h-6z" fill="#FFFFFF"></path></svg>
+<div style="font-family:'Archivo','Public Sans',sans-serif;font-weight:700;font-size:30px;line-height:1.04;color:#3B2BD4;letter-spacing:.02em">LOCO<br>CHARGE</div>
+</div>
+<div style="font-size:14.5px;color:#545C66;margin-top:6px">Charging infrastructure in your hands</div>
+</div>
+<div style="padding:0 24px 42px;display:flex;flex-direction:column;gap:12px">
+<button onClick="{{enterApp}}" style="width:100%;height:54px;border:none;border-radius:14px;background:#3B2BD4;color:#FFFFFF;font-size:16px;font-weight:600;cursor:pointer">Login</button>
+<button onClick="{{enterApp}}" style="width:100%;height:54px;border:1.5px solid #14171C;border-radius:14px;background:#FFFFFF;color:#14171C;font-size:16px;font-weight:600;cursor:pointer">Register</button>
+</div>
+</div>
+</sc-if>
+
+<div style="position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;z-index:70;pointer-events:none">
+<span style="font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">9:41</span>
+<span style="display:flex;align-items:center;gap:6px" aria-hidden="true">
+<svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#14171C"></rect><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#14171C"></rect><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#14171C"></rect><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#14171C"></rect></svg>
+<svg width="16" height="12" viewBox="0 0 24 18" fill="none" stroke="#14171C" stroke-width="2.4" stroke-linecap="round"><path d="M2 6.5a15 15 0 0 1 20 0"></path><path d="M5.5 10.5a10 10 0 0 1 13 0"></path><path d="M9 14.2a5 5 0 0 1 6 0"></path><circle cx="12" cy="16.6" r="1.2" fill="#14171C" stroke="none"></circle></svg>
+<svg width="24" height="12" viewBox="0 0 25 12"><rect x="0.6" y="0.6" width="20" height="10.8" rx="3" fill="none" stroke="#14171C" stroke-opacity=".4" stroke-width="1.2"></rect><rect x="2.4" y="2.4" width="14" height="7.2" rx="1.6" fill="#14171C"></rect><path d="M22.8 4v4a2.2 2.2 0 0 0 0-4z" fill="#14171C" fill-opacity=".4"></path></svg>
+</span>
+</div>
+
+<sc-if value="{{hasToast}}">
+<div style="position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:80;background:#14171C;color:#FFFFFF;font-size:12.5px;font-weight:500;padding:10px 16px;border-radius:999px;white-space:nowrap;animation:lcFadeUp .15s ease;box-shadow:0 6px 18px rgba(20,23,28,.3)">{{toastMsg}}</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#3B2BD4"></rect><path d="M56 28 40 54h9.5l-3.5 18 16-26h-9.5z" fill="#FFFFFF"></path></svg>
+</template></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:950},
+&quot;deviceFrame&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Embed&quot;},
+&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;map home&quot;,&quot;station detail&quot;,&quot;slot picker&quot;],&quot;default&quot;:&quot;splash&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Review&quot;}}">
+class Component extends DCLogic {
+  state = {tab:'chargers', view:'splash', stationId:'livonia', sheetOpen:false, chip:'Nearby', seg:'public', slot:null, myRating:0, toast:null, filtersOpen:false, fAmen:[], fPrice:'Any', fCh:'Any', fPark:[],
+    bay:null, bayFilter:'All', confirmOpen:false, reservation:null,
+    navEta:12, navPlanned:null, navEvent:null, navNote:null, navNoteDot:'#0B7A45', navArrived:false,
+    chats:{}, chatPartner:null, chatBack:'home', chatInput:'', sessionActive:false, navDest:null, sessionStart:null,
+    searchQ:'', searchOpen:false, reviewDraft:'', myReviews:{}, receiptIdx:null, tripSaved:false, menuOpen:false, parity:false,
+    tripStep:'search', tripChip:null, vehicleIdx:0, startRange:60, routeSel:0, manageStops:false,
+    tripStops:[{id:'henderson',label:'Henderson, KY',on:false},{id:'mtvernon',label:'Mount Vernon, KY',on:true},{id:'florence',label:'Florence, KY',on:true}]};
+  componentDidMount(){ window.__lc=this; this.applyStart(); }
+  componentDidUpdate(prevProps){ if(prevProps && prevProps.startScreen!==this.props.startScreen) this.applyStart(); }
+  runFailure(){
+    const T=(ms,f)=>this._scT.push(setTimeout(f,ms)); this._scT=[];
+    const post=(step)=>{ try{ window.parent!==window&&window.parent.postMessage({type:'lococharge:scenario',scenario:'failure',step},'*'); }catch(e){} };
+    const stop=()=>{ this._scT.forEach(clearTimeout); this._scT=[]; window.removeEventListener('pointerdown',stop,true); post('user-took-over'); };
+    this._driveN=0; this._evAt=11;
+    clearInterval(this._navT);
+    this.setState({view:'detail', tab:'chargers', stationId:'livonia', sheetOpen:false, slot:null, bay:null, bayFilter:'All', reservation:null, confirmOpen:false, navEvent:null, navNote:null});
+    post('station-detail');
+    if(/[?&]autoplay=0/.test(location.search)) return;
+    setTimeout(()=>window.addEventListener('pointerdown',stop,true),0);
+    T(2600,()=>{ this.setState({view:'slots', slot:6}); post('slot-picked'); });
+    T(5200,()=>{ this.setState({view:'bays', bay:'F304'}); post('bay-picked'); });
+    T(7600,()=>{ this.setState({reservation:{name:'Livonia, MI', stationId:'livonia', addr:'4965 Heather Dr, Livonia, MI', isPrivate:false, ownerOk:false, ownerSilent:false, slotLabel:this.fmtH(12)+' \u2013 '+this.fmtH(13), bayId:'F304', kwTxt:'310 kWh', date:'AUG 14, 2026', eta:'~12 mins'}, confirmOpen:true}); post('reserved'); });
+    T(10400,()=>{ this.startNav(); post('navigating'); });
+    T(10400+2200,()=>{ window.removeEventListener('pointerdown',stop,true); });
+  }
+  applyStart(){
+    if(/[?&]scenario=failure/.test(location.search)){ this.runFailure(); return; }
+    if(/[?&]embed=1/.test(location.search)&&!/[?&]parity=1/.test(location.search)){ this.setState({view:'home', tab:'chargers'}); return; }
+    if(/[?&]parity=1/.test(location.search)){ this.setState({view:'detail', tab:'chargers', stationId:'hollan', parity:true}); return; }
+    const s=this.props.startScreen;
+    if(s==='station detail') this.setState({view:'detail', tab:'chargers'});
+    else if(s==='slot picker') this.setState({view:'slots', tab:'chargers'});
+    else if(s==='map home') this.setState({view:'home', tab:'chargers'});
+    else if(s==='splash') this.setState({view:'splash', tab:'chargers'});
+  }
+  say(msg){ clearTimeout(this._tt); this.setState({toast:msg}); this._tt=setTimeout(()=>this.setState({toast:null}),2300); }
+  stars(r){ const n=Math.round(r); return Array.from({length:5},(_,i)=>({f:i<n?'#3B2BD4':'#D3D8E0'})); }
+  fmtH(h){ const hr=((h+11)%12)+1; const ap=(h%24)<12?'AM':'PM'; return String(hr).padStart(2,'0')+':00 '+ap; }
+  etaTxt(mi){ if(mi<=12) return '~'+Math.round(mi*5.7)+' mins'; const t=Math.round(mi*1.05); return '~'+Math.floor(t/60)+' hr '+(t%60)+' min'; }
+  componentWillUnmount(){ (this._scT||[]).forEach(clearTimeout); clearInterval(this._navT); clearTimeout(this._tt); clearTimeout(this._ct); }
+  startNav(){
+    this._driveN=(this._driveN||0)+1;
+    const res=this.state.reservation;
+    const ev=(res&&!res.isPrivate)?(this._driveN%2?'occupied':'offline'):null;
+    clearInterval(this._navT);
+    this.setState({view:'nav', confirmOpen:false, navEta:12, navPlanned:ev, navEvent:null, navNote:null, navArrived:false});
+    this._navT=setInterval(()=>{
+      const s=this.state;
+      if(s.view!=='nav'){ clearInterval(this._navT); return; }
+      if(s.navEvent) return;
+      if(s.navEta<=1){ clearInterval(this._navT); this.setState({navEta:0, navArrived:true}); return; }
+      const eta=s.navEta-1;
+      if(s.navPlanned && eta===(this._evAt||8)){ this.setState({navEta:eta, navEvent:s.navPlanned, navPlanned:null}); return; }
+      this.setState({navEta:eta});
+    },1000);
+  }
+  partners(){ return {
+    hollan:{name:'Hollan P', loc:'Livonia, MI', kind:'owner', reply:'Got it, see you then. I\u2019ll leave the porch light on.', seed:[{time:'16:00'},{me:false,x:'Hi! Bay P2 is open today, pull past the mailbox and it\u2019s on your left.'},{me:true,x:'Thanks, is the plug reachable if I back in?'},{time:'16:04'},{me:false,x:'Yes, the cable reaches both sides. Ring the bell if you need an adapter.'}]},
+    sara:{name:'Sara J', loc:'Livonia, MI', kind:'owner', reply:'Sounds good, message me when you\u2019re close.', seed:[{time:'15:20'},{me:true,x:'Hi Sara, where should I park when I arrive?'},{time:'15:24'},{me:false,x:'Hello! You can park in front of the garage.'},{me:false,x:'If it rains, use the covered side, just let me know once you arrive.'}]},
+    donald:{name:'Donald Patt', loc:'Westland, MI', kind:'owner', silent:true, seed:[{time:'2:41 PM'},{me:true,x:'Hi Donald, planning to charge at 3 PM today. Is P1 clear?'}]},
+    maya:{name:'Maya R', loc:'Livonia, MI', kind:'driver', reply:'All good, a couple of us wrap up around quarter past.', seed:[{time:'16:00'},{me:true,x:'Hey, how\u2019s the queue at Livonia right now?'},{time:'16:03'},{me:false,x:'Two bays open on the north side. The 300 kWh one is free.'}]},
+    chris:{name:'Chris D', loc:'Livonia, MI', kind:'driver', reply:'No problem, happy to help.', seed:[{time:'15:48'},{me:false,x:'Heads up, F305 was flaky for me last week. F310 charged fine.'}]},
+    lena:{name:'Lena K', loc:'Livonia, MI', kind:'driver', reply:'It\u2019s pretty quiet right now.', seed:[]},
+    samo:{name:'Sam Okafor', loc:'Livonia, MI', kind:'driver', reply:'Glad to help.', seed:[]},
+    elena:{name:'Elena Ruiz', loc:'Livonia, MI', kind:'driver', reply:'Anytime!', seed:[]},
+    deshawn:{name:'DeShawn Willis', loc:'Livonia, MI', kind:'driver', reply:'Sure thing.', seed:[]}
+  }; }
+  openChat(pid, back){ const P=this.partners()[pid]; if(!P) return; const chats={...this.state.chats}; if(!chats[pid]) chats[pid]=P.seed.slice(); this.setState({chats, chatPartner:pid, chatBack:back||'home', view:'chat', chatInput:''}); }
+  sendChat(){ const pid=this.state.chatPartner; const txt=(this.state.chatInput||'').trim(); if(!txt||!pid) return; const P=this.partners()[pid]; const chats={...this.state.chats}; chats[pid]=[...(chats[pid]||[]),{me:true,x:txt}]; this.setState({chats, chatInput:''}); if(P&&!P.silent){ clearTimeout(this._ct); this._ct=setTimeout(()=>{ const c2={...this.state.chats}; c2[pid]=[...(c2[pid]||[]),{me:false,x:P.reply}]; this.setState({chats:c2}); },1200); } }
+  renderVals(){
+    const B='#3B2BD4', OK='#0B7A45', WARN='#A6690A', INK2='#545C66';
+    const S=this.state;
+    const RAW=[
+      {id:'livonia',name:'Livonia, MI',rating:4.2,addr:'4965 Heather Dr, Livonia, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'2.1 mi',chargers:8,maxKw:300,working:5,fresh:'live',freshLabel:'live',park:'Open lot',amen:['Wifi','Food','Toilets','Shopping'],pin:{x:250,y:322,count:4}},
+      {id:'mercury',name:'Mercury Drive, MI',rating:4.4,addr:'31200 Plymouth Rd, Livonia, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'3.4 mi',chargers:6,maxKw:220,working:6,fresh:'recent',freshLabel:'6 min ago',park:'Covered',amen:['Wifi','Food'],pin:{x:96,y:196,count:2}},
+      {id:'newvalley',name:'New Valley, MI',rating:3.4,addr:'9800 Middlebelt Rd, Livonia, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'3.6 mi',chargers:8,maxKw:300,working:4,fresh:'stale',freshLabel:'41 min ago \u00b7 driver report',park:'Open lot',amen:['Toilets'],pin:{x:278,y:150,count:3}},
+      {id:'knork',name:'Knork High, MI',rating:2.5,addr:'2210 Newburgh Rd, Westland, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'4.2 mi',chargers:8,maxKw:220,working:null,fresh:'unknown',freshLabel:'no live data',park:'Open lot',amen:[],pin:null},
+      {id:'hangrade',name:'Hangrade, MI',rating:4.5,addr:'660 Ann Arbor Trl, Plymouth, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'4.6 mi',chargers:4,maxKw:150,working:4,fresh:'recent',freshLabel:'12 min ago',park:'Garage',amen:['Wifi','Shopping'],pin:{x:48,y:396,count:2}}
+    ];
+    const dec=(s)=>{
+      const fb={live:'solid',recent:'solid',stale:'dashed',unknown:'dotted'}[s.fresh];
+      let statusColor, statusText, statusShort, dotOk=false, dotWarn=false, dotUnknown=false;
+      if(s.working==null){ statusColor=INK2; statusText='unknown'; statusShort='unknown'; dotUnknown=true; }
+      else if(s.working>=s.chargers){ statusColor=OK; statusText=s.working+' working'; statusShort='all '+s.chargers; dotOk=true; }
+      else { statusColor=WARN; statusText=s.working+' of '+s.chargers+' working'; statusShort=s.working+' of '+s.chargers; dotWarn=true; }
+      return {...s, type:'public', kindLabel:'Charging station', chatLabel:'Driver chat', stars:this.stars(s.rating), ratingTxt:s.rating.toFixed(1), statusColor, statusText, statusShort, dotOk, dotWarn, dotUnknown,
+        freshBorder:fb, freshFilled:s.fresh==='live', freshHollow:s.fresh==='recent',
+        freshDetail: s.fresh==='live' ? 'live \u00b7 station telemetry' : (s.fresh==='recent' ? s.freshLabel+' \u00b7 station telemetry' : s.freshLabel),
+        headerName:s.place||s.name, fromTrip:!!s.fromTrip,
+        eta:this.etaTxt(parseFloat(s.dist)),
+        open:()=>this.setState({view:'detail', stationId:s.id, sheetOpen:false})};
+    };
+    const allPub=RAW.map(dec);
+    const passes=(s)=>{
+      if(S.chip==='Super' && (s.maxKw||0)<300) return false;
+      if(S.chip==='Fast' && (s.maxKw||0)<220) return false;
+      if(S.chip==='Free') return false;
+      if(S.chip==='With Food' && !s.amen.includes('Food')) return false;
+      if(S.fPark.length && !S.fPark.includes(s.park)) return false;
+      if(S.fAmen.length && !S.fAmen.every(a=>s.amen.includes(a))) return false;
+      if(S.fPrice==='Free') return false;
+      if(S.fCh==='4+' && s.chargers<4) return false;
+      if(S.fCh==='8+' && s.chargers<8) return false;
+      return true;
+    };
+    const stations=allPub.filter(passes);
+    const hiddenCount=allPub.length-stations.length;
+    const PRIV=[
+      {id:'hollan',name:'Hollan P',rating:4.2,addr:'1408 Fairlane Meadows, Dearborn, MI',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'1.4 mi',ctype:'SAE J1772',parkState:'Available',fresh:'live',freshLabel:'live'},
+      {id:'sara',name:'Sara J',rating:4.2,addr:'22 Rosedale Ct, Livonia, MI',hours:'7AM\u201310PM',price:'$0.55/hr',dist:'2.8 mi',ctype:'SAE J1772',parkState:'Available',fresh:'recent',freshLabel:'9 min ago \u00b7 owner update'},
+      {id:'donald',name:'Donald Patt',rating:4.3,addr:'9614 Berwick St, Westland, MI',hours:'6AM\u20139PM',price:'$0.60/hr',dist:'3.2 mi',ctype:'SAE J1772',parkState:'Occupied',fresh:'stale',freshLabel:'1 hr ago \u00b7 owner update'}
+    ];
+    const decP=(s)=>{
+      const fb={live:'solid',recent:'solid',stale:'dashed',unknown:'dotted'}[s.fresh];
+      const ok=s.parkState==='Available';
+      return {...s, type:'private', kindLabel:'Private charger', chatLabel:'Owner chat',
+        stars:this.stars(s.rating), ratingTxt:s.rating.toFixed(1),
+        statusColor:ok?OK:WARN, statusText:s.parkState, statusShort:s.parkState, dotOk:ok, dotWarn:!ok, dotUnknown:false,
+        freshBorder:fb, freshFilled:s.fresh==='live', freshHollow:s.fresh==='recent',
+        freshDetail:s.fresh==='live'?'live \u00b7 owner update':s.freshLabel,
+        headerName:s.place||s.name, fromTrip:!!s.fromTrip,
+        eta:this.etaTxt(parseFloat(s.dist)),
+        open:()=>this.setState({view:'detail', stationId:s.id, sheetOpen:false})};
+    };
+    const pstations=PRIV.map(decP);
+    const TRIPS=[
+      {id:'henderson',name:'Henderson, KY',rating:3.4,addr:'2100 US-41 N, Henderson, KY',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'26 mi',chargers:8,working:8,fresh:'recent',freshLabel:'8 min ago',park:'Open lot',amen:['Wifi','Food'],pin:null,fromTrip:true},
+      {id:'mtvernon',place:'Mount Vernon, KY',name:'Hollan P',rating:4.2,addr:'310 Quarry Rd, Mount Vernon, KY',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'128 mi',ctype:'SAE J1772',parkState:'Available',fresh:'live',freshLabel:'live',fromTrip:true,priv:true},
+      {id:'florence',name:'Florence, KY',rating:4.2,addr:'7600 Mall Rd, Florence, KY',hours:'6AM\u201311PM',price:'$0.60/hr',dist:'214 mi',chargers:6,working:5,fresh:'recent',freshLabel:'11 min ago',park:'Open lot',amen:['Wifi','Food','Toilets'],pin:null,fromTrip:true}
+    ];
+    const tripStations=TRIPS.map(s=>s.priv?decP(s):dec(s));
+    const st=allPub.concat(pstations).concat(tripStations).find(x=>x.id===S.stationId)||allPub[0];
+    const pins=stations.filter(s=>s.pin).map(s=>({name:s.name, color:s.statusColor, count:s.pin.count, left:s.pin.x+'px', top:s.pin.y+'px', open:s.open}));
+    const chips=['Nearby','Super','Fast','Free','With Food'].map(l=>({label:l, bg:S.chip===l?B:'#FFFFFF', fg:S.chip===l?'#FFFFFF':'#3A4048', pick:()=>this.setState({chip:l})}));
+    const unMap={livonia:[8,13,22], mercury:[7,12,20], newvalley:[9,13], hollan:[8,13,22], sara:[10,15], donald:[9,14,21], henderson:[8,13], mtvernon:[8,13,22], florence:[7,12]};
+    const slotsFull=st.id==='hangrade';
+    const slots=Array.from({length:18},(_,i)=>{
+      const h=6+i; const un=slotsFull||((unMap[st.id]||[8,13,22]).includes(h)); const sel=!slotsFull&&S.slot===i;
+      return {label:this.fmtH(h)+' \u2013 '+this.fmtH(h+1), un, sel, norm:!un&&!sel, pick:()=>this.setState({slot:sel?null:i})};
+    });
+    const chart=[0.27,0.40,0.38,0.28,0.47,0.42,0.35,0.26].map(v=>({price:'$'+v.toFixed(2), h:Math.round(v/0.47*110)+'px'}));
+    const reviewsRaw=[
+      {name:'Priya Natarajan', veh:'Tesla Model Y', when:'3 weeks ago', r:4, text:'\u201cGreat place but they need to force folks to come back and move car when done.\u201d'},
+      {name:'Marcus Teller', veh:'VW ID.4', when:'1 week ago', r:5, text:'\u201cChargers on the north side are newer and pull the full rate. Aim for those.\u201d'},
+      {name:'Elena Ruiz', veh:'Ford Mach-E', when:'2 weeks ago', r:5, text:'\u201cStopped here twice on my commute. Never waited more than five minutes.\u201d'},
+      {name:'Sam Okafor', veh:'Tesla Model X', when:'1 month ago', r:2, text:'\u201cTwo stalls were down on a Saturday and the app said all working. Check before you commit.\u201d'},
+      {name:'DeShawn Willis', veh:'Tesla Model Y', when:'2 months ago', r:4, text:'\u201cCoffee place next door makes the 40-minute wait painless.\u201d'},
+      {name:'Grace Lin', veh:'VW ID.4', when:'3 weeks ago', r:4, text:'\u201cWell lit at night and easy to find from the highway exit.\u201d'}
+    ];
+    const reviews=reviewsRaw.map(r=>({...r, stars:this.stars(r.r), meta:r.veh+' \u00b7 '+r.when, init:r.name.split(' ').map(w=>w[0]).join('')}));
+    const privRaw=[
+      {name:'Tomas Alvarez', veh:'Ford Mach-E', when:'2 weeks ago', r:5, text:'\u201cMet me in the driveway with the cable ready. Smoothest private charge I\u2019ve had.\u201d'},
+      {name:'Nina Park', veh:'Tesla Model Y', when:'1 month ago', r:4, text:'\u201cClear instructions for the driveway. Watch the curb on the way in.\u201d'},
+      {name:'Jordan Ellis', veh:'VW ID.4', when:'3 weeks ago', r:4, text:'\u201cReplied in chat within minutes. Bay 2 is easier to back into.\u201d'},
+      {name:'Ava Thompson', veh:'Tesla Model X', when:'2 months ago', r:3, text:'\u201cGood rate, but the driveway light was off when I arrived after dark.\u201d'}
+    ];
+    const privReviews=privRaw.map(r=>({...r, stars:this.stars(r.r), meta:r.veh+' \u00b7 '+r.when, init:r.name.split(' ').map(w=>w[0]).join('')}));
+    const distBars=[62,44,16,9,5].map(w=>({w:w+'%'}));
+    const ck=(on)=>({bg:on?B:'#FFFFFF', bc:on?B:'#C3CAD5'});
+    const parkOpts=['Covered','Open lot','Garage'].map(l=>({label:l, on:S.fPark.includes(l), ...ck(S.fPark.includes(l)), pick:()=>this.setState({fPark:S.fPark.includes(l)?S.fPark.filter(x=>x!==l):[...S.fPark,l]})}));
+    const amenOpts=['Wifi','Food','Toilets','Shopping'].map(l=>({label:l, on:S.fAmen.includes(l), ...ck(S.fAmen.includes(l)), pick:()=>this.setState({fAmen:S.fAmen.includes(l)?S.fAmen.filter(x=>x!==l):[...S.fAmen,l]})}));
+    const priceOpts=['Any','Free','Paid'].map(l=>({label:l, bg:S.fPrice===l?B:'#EFF1F5', fg:S.fPrice===l?'#FFFFFF':'#3A4048', pick:()=>this.setState({fPrice:l})}));
+    const chOpts=['Any','4+','8+'].map(l=>({label:l, bg:S.fCh===l?B:'#EFF1F5', fg:S.fCh===l?'#FFFFFF':'#3A4048', pick:()=>this.setState({fCh:l})}));
+    const myStars=Array.from({length:5},(_,i)=>({f:i<S.myRating?B:'none', pick:()=>this.setState({myRating:i+1})}));
+    const goTab=(t)=>this.setState({tab:t, view:'home'});
+    const curSlotLabel=S.slot!=null?this.fmtH(6+S.slot)+' \u2013 '+this.fmtH(7+S.slot):'';
+    const KW=[220,130,220,310,130,220,310,130,220,130,310,220];
+    let bays=KW.map((kw,i)=>{
+      const id='F3'+String(i+1).padStart(2,'0');
+      const k=i+(S.slot||0);
+      const stt=(k%5===0)?'un':((k%7===3)?'bk':'ok');
+      return {id, kw, kwTxt:kw+' kWh', un:stt==='un', bk:stt==='bk', ok:stt==='ok'&&S.bay!==id, sel:S.bay===id, pick:stt==='ok'?()=>this.setState({bay:this.state.bay===id?null:id}):null};
+    });
+    const altB=bays.find(b=>(b.ok||b.sel)&&b.id!==(S.reservation?S.reservation.bayId:''))||{id:'F310',kwTxt:'220 kWh'};
+    if(S.bayFilter!=='All') bays=bays.filter(b=>b.sel||String(b.kw)===S.bayFilter.replace(' kWh',''));
+    const bayChips=['All','310 kWh','220 kWh','130 kWh'].map(l=>({label:l, bg:S.bayFilter===l?B:'#FFFFFF', fg:S.bayFilter===l?'#FFFFFF':'#3A4048', pick:()=>this.setState({bayFilter:l})}));
+    const pbays=[{id:'P1',kw:130},{id:'P2',kw:130}].map(b=>({...b, kwTxt:b.kw+' kWh', ok:S.bay!==b.id, sel:S.bay===b.id, pick:()=>this.setState({bay:this.state.bay===b.id?null:b.id})}));
+    const pickedKw=(st.type==='private'?pbays:bays).find(b=>b.id===S.bay);
+    const res=S.reservation||{};
+    const DEMO_T=new Date(2026,7,14,11,48).getTime();
+    const dateTxt='AUG 14, 2026';
+    const hh=(x)=>((x+11)%12)+1, apx=(x)=>(x%24)<12?'AM':'PM';
+    const hs=6+(S.slot||0), he=hs+1;
+    const resHoldTxt=apx(hs)===apx(he)?(hh(hs)+':00 to '+hh(he)+':00 '+apx(he)):(hh(hs)+':00 '+apx(hs)+' to '+hh(he)+':00 '+apx(he));
+    const navPts=[[196,690],[188,560],[150,420],[122,260],[108,180]];
+    const prog=Math.max(0,Math.min(1,1-(S.navEta/12)));
+    const segp=Math.min(3.999,prog*4), si=Math.floor(segp), fr=segp-si;
+    const p0=navPts[si], p1=navPts[si+1]||p0;
+    const navMi=(2.1*S.navEta/12).toFixed(1);
+    let navEvTitle='', navEvBody='', navEvFresh='', navEvActions=[];
+    const evExit=(msg,openSheet)=>{ clearInterval(this._navT); this.setState({view:'home', tab:'chargers', navEvent:null, reservation:null, sheetOpen:!!openSheet}); this.say(msg); };
+    const evAct=(label,primary,go)=>({label, bg:primary?B:'#FFFFFF', fg:primary?'#FFFFFF':B, go});
+    if(S.navEvent==='occupied'){
+      navEvTitle='Your bay may not be free on arrival';
+      navEvBody=(res.bayId||'')+'\u2019s occupant hasn\u2019t moved yet. Decide now, before you\u2019re there.';
+      navEvFresh='1 min ago \u00b7 driver report';
+      navEvActions=[
+        evAct('Switch to '+altB.id+' \u00b7 free now',true,()=>{ this.setState({reservation:{...res,bayId:altB.id,kwTxt:altB.kwTxt}, navEvent:null, navNote:'Moved to '+altB.id+' \u00b7 confirmed live', navNoteDot:OK}); }),
+        evAct('Hold '+(res.bayId||'')+' \u00b7 wait ~15 min',false,()=>{ this.setState({navEvent:null, navNote:'Holding '+res.bayId+', occupant expected out in ~15 min', navNoteDot:WARN}); }),
+        evAct('Other stations',false,()=>evExit('Reservation released, pick another station',true))
+      ];
+    } else if(S.navEvent==='offline'){
+      navEvTitle='Station update, 3 of 8 working';
+      navEvBody='Your bay '+(res.bayId||'')+' went offline between reservation and arrival. It won\u2019t be silently rebooked.';
+      navEvFresh='live \u00b7 station telemetry';
+      navEvActions=[
+        evAct('Rebook '+altB.id+' \u00b7 no extra charge',true,()=>{ this.setState({reservation:{...res,bayId:altB.id,kwTxt:altB.kwTxt}, navEvent:null, navNote:'Rebooked '+altB.id+' \u00b7 confirmed live', navNoteDot:OK}); }),
+        evAct('Refund & exit',false,()=>evExit('Refunded, reservation cancelled',false))
+      ];
+    }
+    const P=this.partners();
+    const pinit=(n)=>n.split(' ').map(w=>w[0]).join('');
+    const lastTxt=(pid)=>{ const arr=S.chats[pid]||P[pid].seed; const msgs=arr.filter(m=>!m.time); return msgs.length?msgs[msgs.length-1].x:'Start a conversation'; };
+    const chatRow=(pid,when)=>({id:pid, name:P[pid].name, init:pinit(P[pid].name), when, snippet:P[pid].silent?'No reply yet \u00b7 sent 24 min ago':lastTxt(pid), snipColor:P[pid].silent?WARN:INK2, open:()=>this.openChat(pid,'tab')});
+    const chatHosts=[chatRow('hollan','16:04'), chatRow('sara','15:24'), chatRow('donald','2:41 PM')];
+    const chatDriverRows=[chatRow('maya','16:03'), chatRow('chris','15:48')];
+    const curDrivers=[['maya','Charging \u00b7 Tesla Model Y'],['chris','Charging \u00b7 VW ID.4'],['lena','Charging \u00b7 Ford Mach-E']].map(a=>({name:P[a[0]].name, init:pinit(P[a[0]].name), meta:a[1], open:()=>this.openChat(a[0],'list')}));
+    const prevDrivers=[['samo','Tesla Model X \u00b7 3 weeks ago',4.2],['elena','Ford Mach-E \u00b7 1 month ago',4.6],['deshawn','Tesla Model Y \u00b7 1 month ago',4.0]].map(a=>({name:P[a[0]].name, init:pinit(P[a[0]].name), meta:a[1], stars:this.stars(a[2]), open:()=>this.openChat(a[0],'list')}));
+    const cp=S.chatPartner?P[S.chatPartner]:null;
+    const thread=(S.chatPartner?(S.chats[S.chatPartner]||[]):[]).map(m=>({isTime:!!m.time, timeTxt:m.time, isMe:!m.time&&!!m.me, isThem:!m.time&&!m.me, x:m.x}));
+    const VEH=[{n:'Tesla Model Y',r:310},{n:'Tesla Model X',r:348},{n:'VW ID.4',r:275},{n:'Ford Mach-E',r:312}];
+    const veh=VEH[S.vehicleIdx%4];
+    const routes=[
+      {n:'1',name:'I-64 E \u00b7 I-71 N',mi:'322 mi',via:'via Louisville & Cincinnati'},
+      {n:'2',name:'I-64 E \u00b7 US-50 E',mi:'341 mi',via:'via Lexington'},
+      {n:'3',name:'US-50 E',mi:'355 mi',via:'via Bloomington'}
+    ].map((r,i)=>({...r, sel:S.routeSel===i, rowBg:S.routeSel===i?'#EEECFD':'#FFFFFF', rowBorder:S.routeSel===i?'#3B2BD4':'#DCE0E6', pick:()=>this.setState({routeSel:i})}));
+    const stopMeta={henderson:'Public \u00b7 26 mi', mtvernon:'Hollan P \u00b7 private \u00b7 128 mi', florence:'Public \u00b7 214 mi'};
+    const stopsOn=S.tripStops.filter(x=>x.on);
+    const stopsList=S.tripStops.map((x,i)=>({...x, fg:x.on?'#14171C':'#98A0AC', act:x.on?'Remove':'Add', toggle:()=>{ const ts=this.state.tripStops.map((y,j)=>j===i?{...y,on:!y.on}:y); this.setState({tripStops:ts}); }}));
+    const tripPinPos={henderson:[76,300], mtvernon:[168,252], florence:[196,214]};
+    const tripPins=(S.tripStep==='stations'||S.tripStep==='summary')?(S.tripStep==='stations'?tripStations:tripStations.filter(s=>S.tripStops.some(x=>x.id===s.id&&x.on))).map(s=>({left:tripPinPos[s.id][0]+'px', top:tripPinPos[s.id][1]+'px', color:s.statusColor})):[];
+    const tripSteps=[{isStart:true,label:'Start',sub:'Evansville, KY',conn:true}]
+      .concat(stopsOn.map(o=>({isStop:true,label:o.label,sub:stopMeta[o.id],conn:true})))
+      .concat([{isDest:true,label:'Destination',sub:'Columbus, OH',conn:false}]);
+    const tripCards=tripStations.map(s=>({...s, cardName:s.place||s.name, c3l:s.type==='private'?'TYPE':'CHARGERS', c3v:s.type==='private'?s.ctype:s.chargers}));
+    const tGo=(step)=>()=>this.setState({tripStep:step, manageStops:false});
+    const tripBackMap={stops:'search', vehicle:'stops', routes:'vehicle', stations:'routes', summary:'stations'};
+    const PAST=[
+      {name:'Livonia, MI', meta:'Jul 18 \u00b7 42 min \u00b7 38 kWh', cost:'$22.80', date:'Jul 18, 2026 \u00b7 10:04 AM', rows:[{l:'Duration',v:'42 min'},{l:'Energy delivered',v:'38 kWh'},{l:'Energy cost',v:'$19.00'},{l:'Fees & taxes',v:'$3.80'}]},
+      {name:'Hollan P \u00b7 private', meta:'Jul 11 \u00b7 1 hr \u00b7 30 kWh', cost:'$18.00', date:'Jul 11, 2026 \u00b7 3:12 PM', rows:[{l:'Duration',v:'1 hr'},{l:'Energy delivered',v:'30 kWh'},{l:'Energy cost',v:'$15.00'},{l:'Host fee & taxes',v:'$3.00'}]},
+      {name:'Mercury Drive, MI', meta:'Jun 29 \u00b7 35 min \u00b7 26 kWh', cost:'$15.60', date:'Jun 29, 2026 \u00b7 8:47 AM', rows:[{l:'Duration',v:'35 min'},{l:'Energy delivered',v:'26 kWh'},{l:'Energy cost',v:'$13.00'},{l:'Fees & taxes',v:'$2.60'}]}
+    ];
+    const rc=S.receiptIdx!=null?PAST[S.receiptIdx]:null;
+    const sq=(S.searchQ||'').trim().toLowerCase();
+    const searchPool=allPub.concat(pstations).map(s=>({name:s.name, sub:(s.type==='private'?'Private charger':'Public station')+' \u00b7 '+s.addr, dist:s.dist, open:()=>this.setState({searchOpen:false, searchQ:'', view:'detail', stationId:s.id, sheetOpen:false})}));
+    const searchResults=sq?searchPool.filter(s=>s.name.toLowerCase().includes(sq)):searchPool.slice(0,4);
+    const timeFmt=(d)=>d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    return {
+      frameShellClass:(/[?&]frame=0/.test(location.search)||this.props.deviceFrame===false)?'no-frame':'',
+      isDetail:S.view==='detail',
+      isSlots:S.view==='slots',
+      isBays:S.view==='bays', isNav:S.view==='nav',
+      isChat:S.view==='chat', isChatList:S.view==='chatlist',
+      isChatsTab:S.tab==='chats'&&S.view==='home',
+      isTripTab:S.tab==='trip'&&S.view==='home',
+      sheetOpen:S.sheetOpen, sheetTop:S.sheetOpen?'96px':'462px',
+      toggleSheet:()=>this.setState({sheetOpen:!S.sheetOpen}),
+      stations, pstations, st, pins, chips,
+      stIsPublic:st.type!=='private', stIsPrivate:st.type==='private',
+      stReviews:(S.myReviews[st.id]?[{name:'You', stars:this.stars(S.myReviews[st.id].r), meta:'Tesla Model Y \u00b7 just now', init:'Y', text:'\u201c'+S.myReviews[st.id].text+'\u201d'}]:[]).concat(st.type==='private'?privReviews:reviews),
+      hasHidden:hiddenCount>0,
+      hiddenNote:hiddenCount+(hiddenCount===1?' station':' stations')+' hidden by filters',
+      isSplash:S.view==='splash',
+      enterApp:()=>this.setState({view:'home'}),
+      filtersOpen:S.filtersOpen,
+      openFilters:()=>this.setState({filtersOpen:true}),
+      closeFilters:()=>this.setState({filtersOpen:false}),
+      applyFilters:()=>this.setState({filtersOpen:false}),
+      resetFilters:()=>this.setState({fPark:[], fAmen:[], fPrice:'Any', fCh:'Any', chip:'Nearby'}),
+      menuOpen:S.menuOpen,
+      openMenu:()=>this.setState({menuOpen:true}),
+      closeMenu:()=>this.setState({menuOpen:false}),
+      menuVehicle:()=>this.setState({menuOpen:false, tab:'trip', view:'home', tripStep:'vehicle'}),
+      menuActivity:()=>this.setState({menuOpen:false, tab:'activity', view:'home'}),
+      menuChats:()=>this.setState({menuOpen:false, tab:'chats', view:'home'}),
+      applyLabel:'Show '+stations.length+(stations.length===1?' station':' stations'),
+      parkOpts, amenOpts, priceOpts, chOpts,
+      slotCopy:st.type==='private'?'Schedule a reservation from the available slots. You can schedule up to 2 continuous slots.':'Schedule a reservation from the available slots.',
+      segIsPublic:S.seg==='public', segIsPrivate:S.seg==='private',
+      segPublic:()=>this.setState({seg:'public'}), segPrivate:()=>this.setState({seg:'private'}),
+      pubBg:S.seg==='public'?B:'transparent', pubFg:S.seg==='public'?'#FFFFFF':B,
+      privBg:S.seg==='private'?B:'transparent', privFg:S.seg==='private'?'#FFFFFF':B,
+      goHome:()=>this.setState({view:'home', parity:false}),
+      goSlots:()=>this.setState({view:'slots'}),
+      backToDetail:()=>this.setState({view:'detail'}),
+      navGoDetail:()=>{ this.setState({navDest:{name:st.name, addr:st.addr}}); this.startNav(); },
+      chatToast:()=>{ if(st.type==='private') this.openChat(this.partners()[st.id]?st.id:'hollan','detail'); else this.setState({view:'chatlist'}); },
+      slots, chart, reviews, distBars, myStars,
+      ctaBg:S.slot!=null?B:'#C6CCD6', ctaFg:S.slot!=null?'#FFFFFF':'#5A6270',
+      ctaSlots:()=>{ if(this.state.slot==null) this.say('Pick a time slot first'); else this.setState({view:'bays', bay:null, bayFilter:'All'}); },
+      slotsFull, slotCtaLabel:slotsFull?'All slots booked today':'Go to parking space',
+      goMercury:()=>this.setState({view:'detail', stationId:'mercury', slot:null}),
+      goHollan:()=>this.setState({view:'detail', stationId:'hollan', slot:null}),
+      goTabChargers:()=>goTab('chargers'), goTabTrip:()=>goTab('trip'), goTabActivity:()=>goTab('activity'), goTabChats:()=>goTab('chats'),
+      tabChargersColor:S.tab==='chargers'?B:'#8A919C', tabTripColor:S.tab==='trip'?B:'#8A919C',
+      tabActivityColor:S.tab==='activity'?B:'#8A919C', tabChatsColor:S.tab==='chats'?B:'#8A919C',
+      isActivityTab:S.tab==='activity'&&S.view==='home',
+      actHasSession:S.sessionActive&&!!S.reservation,
+      actHasRes:!S.sessionActive&&!!S.reservation,
+      actEmpty:!S.reservation,
+      actName:res.name, actBay:res.bayId, actSlot:res.slotLabel, actKw:res.kwTxt, actDate:res.date,
+      actNavigate:()=>this.startNav(),
+      actCancel:()=>{ this.setState({reservation:null}); this.say('Reservation cancelled'); },
+      actEnd:()=>{ this.setState({sessionActive:false, reservation:null}); this.say('Session ended, receipt sent'); },
+      actFind:()=>this.setState({tab:'chargers', view:'home', sheetOpen:true}),
+      pastSessions:PAST.map((p,i)=>({...p, openReceipt:()=>this.setState({receiptIdx:i})})),
+      receiptOpen:!!rc, rcName:rc?rc.name:'', rcDate:rc?rc.date:'', rcRows:rc?rc.rows:[], rcTotal:rc?rc.cost:'',
+      closeReceipt:()=>this.setState({receiptIdx:null}),
+      searchOpen:S.searchOpen&&S.tab==='chargers'&&S.view==='home', searchQ:S.searchQ,
+      openSearch:()=>this.setState({searchOpen:true}),
+      closeSearch:()=>this.setState({searchOpen:false}),
+      onSearchInput:(e)=>this.setState({searchQ:e.target.value, searchOpen:true}),
+      searchResults, searchEmpty:sq.length>0&&searchResults.length===0,
+      isSession:S.view==='session',
+      backSession:()=>this.setState({view:'home', tab:'activity'}),
+      sessStart:timeFmt(new Date(DEMO_T+12*60000)), sessEnd:timeFmt(new Date(DEMO_T+52*60000)),
+      sessEndGo:()=>{ this.setState({sessionActive:false, reservation:null, view:'home', tab:'activity'}); this.say('Session ended, receipt sent'); },
+      actView:()=>this.setState({view:'session'}),
+      actChange:()=>this.setState({tab:'chargers', view:'slots', stationId:res.stationId||'livonia'}),
+      composerOpen:S.myRating>0&&!S.myReviews[st.id],
+      reviewDraft:S.reviewDraft,
+      onReviewInput:(e)=>this.setState({reviewDraft:e.target.value}),
+      postBg:(S.reviewDraft||'').trim()?B:'#C6CCD6', postFg:(S.reviewDraft||'').trim()?'#FFFFFF':'#5A6270',
+      postReview:()=>{ const t=(this.state.reviewDraft||'').trim(); if(!t){ this.say('Write a line first'); return; } const mr={...this.state.myReviews}; mr[st.id]={r:this.state.myRating, text:t}; this.setState({myReviews:mr, reviewDraft:''}); this.say('Review posted'); },
+      editSlot:()=>this.setState({confirmOpen:false, view:'slots', stationId:res.stationId||S.stationId}),
+      editBay:()=>this.setState({confirmOpen:false, view:'bays'}),
+      actTrip:S.tripSaved, actTripMeta:stopsOn.map(x=>x.label).join(' \u00b7 ')+' \u00b7 322 mi',
+      actTripView:()=>this.setState({tab:'trip', view:'home', tripStep:'summary'}),
+      curSlotLabel, bays, bayChips, pbays,
+      backToSlots:()=>this.setState({view:'slots'}),
+      bayCtaGo:()=>{ const b=this.state.bay; if(!b){ this.say('Pick a bay first'); return; }
+        const kwT=pickedKw?pickedKw.kwTxt:'130 kWh';
+        this.setState({reservation:{name:st.name, stationId:st.id, addr:st.addr, isPrivate:st.type==='private', ownerOk:st.type==='private'&&st.id!=='donald', ownerSilent:st.id==='donald', slotLabel:curSlotLabel, bayId:b, kwTxt:kwT, date:dateTxt, eta:st.eta}, confirmOpen:true}); },
+      bayCtaBg:S.bay?B:'#C6CCD6', bayCtaFg:S.bay?'#FFFFFF':'#5A6270',
+      bayCtaLabel:S.bay?'Reserve '+S.bay:'Select a bay',
+      confirmOpen:S.confirmOpen,
+      resDate:res.date, resSlotLabel:res.slotLabel, resBay:res.bayId, resKw:res.kwTxt, resEta:res.eta, resName:res.name,
+      resAddr:res.addr||(S.navDest?S.navDest.addr:''),
+      navHasRes:!!S.reservation, navNoRes:!S.reservation,
+      navDestName:S.navDest?S.navDest.name:'',
+      arrSub:res.bayId?(res.name+' · bay '+res.bayId+' · '+res.slotLabel):((S.navDest?S.navDest.name:'')+' · no reservation yet'),
+      arrCta:res.bayId?('Open bay '+res.bayId):'Reserve a slot',
+      arrCtaGo:res.bayId?(()=>{ this.setState({sessionActive:true, sessionStart:Date.now(), view:'home', tab:'activity'}); this.say('Bay '+res.bayId+' unlocked, charging started'); }):(()=>this.setState({view:'slots'})),
+      resOwnerOk:!!res.ownerOk, resOwnerSilent:!!res.ownerSilent, resHoldTxt, parityOn:S.parity&&S.view==='detail', showChatBtn:!S.parity,
+      resSwitchHollan:()=>{ this.setState({reservation:{...res, name:'Hollan P', stationId:'hollan', addr:'1408 Fairlane Meadows, Dearborn, MI', ownerOk:true, ownerSilent:false, eta:'~8 mins'}}); this.say('Rebooked with Hollan P'); },
+      resHome:()=>this.setState({confirmOpen:false, view:'home', tab:'chargers', sheetOpen:false}),
+      startNavGo:()=>this.startNav(),
+      navX:Math.round(p0[0]+(p1[0]-p0[0])*fr)-17+'px', navY:Math.round(p0[1]+(p1[1]-p0[1])*fr)-17+'px',
+      navEtaTxt:S.navEta+' mins ('+navMi+' mi left)',
+      navArrTime:new Date(DEMO_T+S.navEta*60000).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}),
+      turnDist:S.navEta>6?'150 m':'0.4 mi', turnText:S.navEta>6?'Head towards Mercury Dr':'Turn right on Heather Dr',
+      navEventOn:!!S.navEvent, navEvTitle, navEvBody, navEvFresh, navEvActions,
+      navNoteOn:!!S.navNote&&!S.navEvent, navNote:S.navNote, navNoteDot:S.navNoteDot,
+      navArrived:S.navArrived, navArrivedOff:!S.navArrived,
+      navExit:()=>{ clearInterval(this._navT); this.setState({view:'home', tab:'chargers', navEvent:null, navNote:null}); },
+      openBayToast:()=>{ this.setState({sessionActive:true, sessionStart:Date.now(), view:'home', tab:'activity'}); this.say('Bay '+(res.bayId||'')+' unlocked, charging started'); },
+      chatHosts, chatDriverRows, curDrivers, prevDrivers, thread,
+      chatName:cp?cp.name:'', chatInit:cp?pinit(cp.name):'', chatLoc:cp?cp.loc:'',
+      chatNote:cp&&cp.kind==='owner'?'Note: ask the owner about availability, parking and hosting before you drive.':'Note: ask the driver about their experience at this station before you go.',
+      chatSilent:!!(cp&&cp.silent),
+      chatPlaceholder:cp&&cp.kind==='owner'?'Ask about parking or hosting':'Ask about the experience',
+      chatFallback:()=>this.openChat('hollan', this.state.chatBack),
+      closeChat:()=>this.setState({view:this.state.chatBack==='list'?'chatlist':(this.state.chatBack==='detail'?'detail':'home'), chatPartner:null}),
+      closeChatList:()=>this.setState({view:'detail'}),
+      onChatInput:(e)=>this.setState({chatInput:e.target.value}),
+      chatKey:(e)=>{ if(e.key==='Enter') this.sendChat(); },
+      sendChatGo:()=>this.sendChat(),
+      chatInput:S.chatInput,
+      stFromTrip:!!st.fromTrip,
+      addToTrip:()=>{ const ts=this.state.tripStops.map(x=>x.id===st.id?{...x,on:true}:x); this.setState({tripStops:ts, view:'home', tab:'trip', tripStep:'summary'}); this.say('Added to trip'); },
+      tripHasMap:S.tripStep==='search'||S.tripStep==='routes'||S.tripStep==='stations'||S.tripStep==='summary',
+      tripSearchOn:S.tripStep==='search', tripStopsOn:S.tripStep==='stops', tripVehicleOn:S.tripStep==='vehicle',
+      tripRoutesOn:S.tripStep==='routes', tripStationsOn:S.tripStep==='stations', tripSummaryOn:S.tripStep==='summary',
+      routeLineOn:S.tripStep==='stations'||S.tripStep==='summary',
+      tripBackOn:S.tripStep!=='search',
+      tripMarksOn:S.tripStep!=='search',
+      threadEmpty:thread.length===0,
+      tripBack:()=>this.setState({tripStep:tripBackMap[this.state.tripStep]||'search'}),
+      r1Stroke:routes[0].sel?B:'#AEB6C2', r1W:routes[0].sel?5:3.5,
+      r2Stroke:routes[1].sel?B:'#AEB6C2', r2W:routes[1].sel?5:3.5,
+      r3Stroke:routes[2].sel?B:'#AEB6C2', r3W:routes[2].sel?5:3.5,
+      tToSearch:tGo('search'), tToStops:tGo('stops'), tToVehicle:tGo('vehicle'), tToRoutes:tGo('routes'), tToStations:tGo('stations'), tToSummary:tGo('summary'),
+      tripChips:['Fast Charger','Charge & Shop','Charge & Eat'].map(l=>({label:l, bg:S.tripChip===l?B:'#FFFFFF', fg:S.tripChip===l?'#FFFFFF':'#3A4048', pick:()=>this.setState({tripChip:this.state.tripChip===l?null:l})})),
+      routes, tripPins, tripCards, tripSteps, stopsList,
+      stopsLabel:stopsOn.length+(stopsOn.length===1?' Stop':' Stops'),
+      manageOn:S.manageStops, toggleManage:()=>this.setState({manageStops:!this.state.manageStops}),
+      vehName:veh.n, vehRange:veh.r, startRange:S.startRange,
+      vehCycle:()=>this.setState({vehicleIdx:(this.state.vehicleIdx+1)%4}),
+      rMinus:()=>this.setState({startRange:Math.max(10,this.state.startRange-10)}),
+      rPlus:()=>this.setState({startRange:Math.min(veh.r,this.state.startRange+10)}),
+      hasRangeNote:S.startRange<128, rangeNote:'Starting range '+S.startRange+' mi, charge before Mount Vernon (128 mi). Henderson, KY is within range.',
+      tripSave:()=>{ this.setState({tripSaved:true}); this.say('Trip saved, see Activity'); },
+      hasToast:!!S.toast, toastMsg:S.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
