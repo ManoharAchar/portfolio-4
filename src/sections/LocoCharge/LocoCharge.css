@@ -665,71 +665,6 @@
   flex-shrink: 0;
 }
 
-/* ── Receipts ────────────────────────────────────────────── */
-
-.loco-receipts {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid rgba(219, 216, 206, 0.2);
-}
-
-.loco-receipt {
-  display: grid;
-  grid-template-columns: 60px minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 0;
-  padding: 20px 0;
-  border: none;
-  border-bottom: 1px solid rgba(219, 216, 206, 0.2);
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  color: inherit;
-}
-
-.loco-receipt__id {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 13px;
-  line-height: 22px;
-  color: var(--accent);
-}
-
-.loco-receipt__text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.loco-receipt__title {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
-  color: #faf8f1;
-}
-
-.loco-receipt__line {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  line-height: 23px;
-  color: #cbc8bf;
-}
-
-.loco-receipt__to {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 12px;
-  line-height: 22px;
-  letter-spacing: 0.06em;
-  color: #dbd8ce;
-  white-space: nowrap;
-  transition: color 0.2s ease;
-}
-
-.loco-receipt:hover .loco-receipt__to,
-.loco-receipt:focus-visible .loco-receipt__to {
-  color: var(--accent);
-}
-
 /* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 1023px) {
@@ -952,14 +887,5 @@
   .loco-next-grid {
     grid-template-columns: 1fr;
     gap: 10px;
-  }
-
-  .loco-receipt {
-    grid-template-columns: 40px minmax(0, 1fr);
-    row-gap: 8px;
-  }
-
-  .loco-receipt__to {
-    grid-column: 2;
   }
 }

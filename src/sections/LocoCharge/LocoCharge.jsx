@@ -157,14 +157,6 @@ const NEXT_STEPS = [
   'Re-plan a trip when a stop goes dark mid-route.',
 ]
 
-const RECEIPTS = [
-  { id: 'R1', title: 'Feature map and IA', line: 'The four-tab structure behind every flow.', to: 'problem', label: 'PROBLEM & CONTEXT' },
-  { id: 'R2', title: 'Usability scenarios and tasks', line: 'The scenarios, tasks, and thirty-second exploration window.', to: 'method', label: 'METHOD' },
-  { id: 'R3', title: 'Metrics audit', line: 'Why the original percentage claims were retired.', to: 'method', label: 'METHOD' },
-  { id: 'R4', title: 'Freshness state spec', line: 'Four states, three scales, no status color.', to: 'decision-02', label: 'DECISION 02' },
-  { id: 'R5', title: 'Confirmation, before and after', line: 'The screen that made the promise, rewritten.', to: 'decision-03', label: 'DECISION 03' },
-]
-
 // ── Prototype embed ─────────────────────────────────────────
 // The poster stays up until the iframe reports load, so a slow network never
 // shows a blank phone. A load that stalls is retried once with a cache-busting
@@ -751,23 +743,6 @@ export default function LocoCharge({ onNavigate }) {
                     <span className="loco-next-card__arrow" aria-hidden="true">→</span>
                     <p className="cs-next-card__text">{text}</p>
                   </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Receipts */}
-            <section className="cs-section cs-section--gap-20">
-              <p className="cs-label">RECEIPTS</p>
-              <div className="loco-receipts">
-                {RECEIPTS.map(({ id, title, line, to, label }) => (
-                  <button key={id} type="button" className="loco-receipt" onClick={() => scrollToSection(to)}>
-                    <span className="loco-receipt__id">{id}</span>
-                    <span className="loco-receipt__text">
-                      <span className="loco-receipt__title">{title}</span>
-                      <span className="loco-receipt__line">{line}</span>
-                    </span>
-                    <span className="loco-receipt__to">→ {label}</span>
-                  </button>
                 ))}
               </div>
             </section>
